@@ -1,0 +1,8 @@
+.ui-rangeSlider{
+	position:relative;
+}
+
+.ui-rangeSlider .ui-rangeSlider-handle,
+.ui-rangeSlider .ui-rangeSlider-Bar{
+	position:absolute;
+}

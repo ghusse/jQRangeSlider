@@ -1,0 +1,19 @@
+.ui-rangeSlider.ui-rangeSlider-dev{
+	border:1px solid #DDD;
+	height:20px;
+	background:#EEE;
+}
+
+.ui-rangeSlider.ui-rangeSlider-dev .ui-rangeSlider-handle{
+	width:3px;
+	height:20px;
+	background:#AAA;
+	top:0;
+}
+
+.ui-rangeSlider.ui-rangeSlider-dev .ui-rangeSlider-Bar{
+	margin: 0 2px;
+	border:1px solid #CCC;
+	background:#DDD;
+	height:18px;
+}
