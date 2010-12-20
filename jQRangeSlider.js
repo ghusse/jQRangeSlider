@@ -34,11 +34,14 @@
 		
 		_create: function(){
 			this._bar = $("<div class='ui-rangeSlider-Bar' />")
-				.draggable({axis:"x"});
+				.draggable({axis:"x", containment: "parent", drag: $.proxy(this._barMoved, this)})
+				.css("position", "absolute");
 			this._leftHandle = $("<div class='ui-rangeSlider-handle  ui-rangeSlider-leftHandle' />")
-				.draggable({axis:"x"});
+				.draggable({axis:"x", containment: "parent"})
+				.css("position", "absolute");
 			this._rightHandle = $("<div class='ui-rangeSlider-handle ui-rangeSlider-rightHandle' />")
-				.draggable({axis:"x"});
+				.draggable({axis:"x", containment: "parent"})
+				.css("position", "absolute");
 			
 			this.element
 				.append(this._bar)
@@ -70,15 +73,39 @@
 			}
 		},
 		
+		_getPosition: function(value){
+			return (value - this.options.bounds.min) * this.element.innerWidth() / (this.options.bounds.max - this.options.bounds.min);
+		},
+		
+		_getValue: function(position){
+			return position * (this.options.bounds.max - this.options.bounds.min) / this.element.innerWidth() + this.options.bounds.min;
+		},
+		
 		_position: function(){
-			var width = this.element.innerWidth();
+			var leftPosition = this._getPosition(this.values.min);
+			var rightPosition = this._getPosition(this.values.max);
 			
-			var leftPosition = (this.values.min - this.options.bounds.min)*width / (this.options.bounds.max - this.options.bounds.min);
-			var rightPosition = (this.values.max - this.options.bounds.min)*width / (this.options.bounds.max - this.options.bounds.min);
-			
-			this._leftHandle.css("left", leftPosition);
-			this._rightHandle.css("left", rightPosition);
+			this._positionHandles(leftPosition, rightPosition);
 			this._bar.css("left", leftPosition).css("width", rightPosition-leftPosition);
+		},
+		
+		_positionHandles: function(leftPos, rightPos){
+			// TODO : position on their centers
+			this._leftHandle.css("left", leftPos);
+			this._rightHandle.css("left", rightPos);
+		},
+		
+		_barMoved: function(){
+			var left = this._bar.position().left;
+			var right = left + this._bar.outerWidth();
+			this.values.min = this._getValue(left);
+			this.values.max = this._getValue(right);
+			
+			this._positionHandles(left, right);
+		},
+		
+		_handleMoved: function(){
+			// TODO
 		},
 		
 		destroy: function(){

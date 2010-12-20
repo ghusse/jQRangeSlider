@@ -8,7 +8,7 @@
 	width:3px;
 	height:20px;
 	background:#AAA;
-	top:0;
+	cursor:move;
 }
 
 .ui-rangeSlider.ui-rangeSlider-dev .ui-rangeSlider-Bar{

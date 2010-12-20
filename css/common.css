@@ -5,4 +5,6 @@
 .ui-rangeSlider .ui-rangeSlider-handle,
 .ui-rangeSlider .ui-rangeSlider-Bar{
 	position:absolute;
+	top:0;
+	left:0;
 }
