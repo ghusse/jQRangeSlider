@@ -24,8 +24,7 @@
 			defaultValues: {min:20, max:50},
 			theme: "dev",
 			wheelMode: "zoom",
-			wheelSpeed: 4,
-			steps:{origin:0, step:10}
+			wheelSpeed: 4
 		},
 		
 		values: {min:20, max:50},
