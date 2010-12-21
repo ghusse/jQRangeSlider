@@ -5,7 +5,7 @@
 }
 
 .ui-rangeSlider.ui-rangeSlider-dev .ui-rangeSlider-handle{
-	width:3px;
+	width:6px;
 	height:20px;
 	background:#AAA;
 	cursor:move;

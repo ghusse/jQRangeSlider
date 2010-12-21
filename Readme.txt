@@ -25,3 +25,4 @@ jQuery
 jQuery UI core
 jQuery UI widget
 jQuery UI draggable
+jQuery Mousewheel plugin by Brandon Aaron
