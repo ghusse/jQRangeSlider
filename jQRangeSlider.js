@@ -30,24 +30,24 @@
 		values: {min:20, max:50},
 		
 		// Created elements
-		_bar: null,
-		_leftHandle: null,
-		_rightHandle: null,
+		bar: null,
+		leftHandle: null,
+		rightHandle: null,
 		
 		_create: function(){
-			this._leftHandle = $("<div class='ui-rangeSlider-handle  ui-rangeSlider-leftHandle' />")
+			this.leftHandle = $("<div class='ui-rangeSlider-handle  ui-rangeSlider-leftHandle' />")
 				.draggable({axis:"x", containment: "parent",
 					drag: $.proxy(this._handleMoved, this), 
-					stop: $.proxy(this._handleMoved, this),
+					stop: $.proxy(this._position, this),
 					containment: "parent"})
 				.css("position", "absolute");
-			this._rightHandle = $("<div class='ui-rangeSlider-handle ui-rangeSlider-rightHandle' />")
+			this.rightHandle = $("<div class='ui-rangeSlider-handle ui-rangeSlider-rightHandle' />")
 				.draggable({axis:"x", containment: "parent",
 					drag: $.proxy(this._handleMoved, this), 
-					stop: $.proxy(this._handleMoved, this),
+					stop: $.proxy(this._position, this),
 					containment: "parent"})
 				.css("position", "absolute");
-			this._bar = $("<div class='ui-rangeSlider-Bar' />")
+			this.bar = $("<div class='ui-rangeSlider-Bar' />")
 				.draggable({axis:"x", containment: "parent",
 					drag: $.proxy(this._barMoved, this), 
 					stop: $.proxy(this._position, this),
@@ -56,9 +56,9 @@
 				.bind("mousewheel", $.proxy(this._wheelOnBar, this));
 			
 			this.element
-				.append(this._bar)
-				.append(this._leftHandle)
-				.append(this._rightHandle)
+				.append(this.bar)
+				.append(this.leftHandle)
+				.append(this.rightHandle)
 				.addClass("ui-rangeSlider");
 			
 			if (this.options.theme != "")
@@ -94,40 +94,41 @@
 			var leftPosition = this._getPosition(this.values.min);
 			var rightPosition = this._getPosition(this.values.max);
 			
-			this._positionHandles(leftPosition, rightPosition);
-			this._bar
+			this._positionHandles();
+			this.bar
 				.css("left", leftPosition)
-				.css("width", rightPosition-leftPosition + this._bar.width() - this._bar.outerWidth(true) +1);
+				.css("width", rightPosition-leftPosition + this.bar.width() - this.bar.outerWidth(true) +1);
 		},
 		
-		_positionHandles: function(left, right){
-			this._leftHandle.css("left", left);
-			this._rightHandle.css("left", right - this._rightHandle.outerWidth(true) + 1);
+		_positionHandles: function(){
+			this.leftHandle.css("left", this._getPosition(this.values.min));
+			this.rightHandle.css("left", this._getPosition(this.values.max) - this.rightHandle.outerWidth(true) + 1);
 		},
 		
 		_barMoved: function(event){
-			var left = this._bar.position().left;
-			var right = left + this._bar.outerWidth(true) - 1;
+			var left = this.bar.position().left;
+			var right = left + this.bar.outerWidth(true) - 1;
 			
-			this.setValues(this._getValue(left), this._getValue(right));
+			this._setValues(this._getValue(left), this._getValue(right));
+			this._positionHandles();
 		},
 		
 		_switchHandles: function(){
-				var temp = this._leftHandle;
-				this._leftHandle = this._rightHandle;
-				this._rightHandle = temp;
+				var temp = this.leftHandle;
+				this.leftHandle = this.rightHandle;
+				this.rightHandle = temp;
 				
-				this._leftHandle
+				this.leftHandle
 					.removeClass("ui-rangeSlider-rightHandle")
 					.addClass("ui-rangeSlider-leftHandle");
-				this._rightHandle
+				this.rightHandle
 					.addClass("ui-rangeSlider-rightHandle")
 					.removeClass("ui-rangeSlider-leftHandle");
 		},
 		
 		_handleMoved: function(event){
-			var left = this._leftHandle.position().left;
-			var right = this._rightHandle.position().left + this._rightHandle.outerWidth(true) - 1;
+			var left = this.leftHandle.position().left;
+			var right = this.rightHandle.position().left + this.rightHandle.outerWidth(true) - 1;
 			
 			if (left > right){
 				this._switchHandles();
@@ -141,8 +142,8 @@
 		
 		_wheelOnBar: function(event, delta, deltaX, deltaY){
 			if (this.options.wheelMode == "zoom"){
-				var left = this._bar.position().left;
-				var right = this._bar.innerWidth() + left;
+				var left = this.bar.position().left;
+				var right = this.bar.innerWidth() + left;
 				
 				left -= deltaY * this.options.wheelSpeed;
 				right += deltaY * this.options.wheelSpeed;
@@ -165,9 +166,9 @@
 		
 		_setValuesHandles: function(min, max){	
 			this._setValues(min, max);
-			this._positionHandles(min, max);
+			this._positionHandles();
 		},
-		
+	
 		_setValues: function(min, max){	
 			var diff = min - this.options.bounds.min;
 			this.values.min = Math.max(this.options.bounds.min, min);
@@ -182,9 +183,9 @@
 		},
 		
 		destroy: function(){
-			this._bar.detach();
-			this._leftHandle.detach();
-			this._rightHandle.detach();
+			this.bar.detach();
+			this.leftHandle.detach();
+			this.rightHandle.detach();
 			this.element.removeClass("ui-rangeSlider");
 			
 			if (this.options.theme != "")
