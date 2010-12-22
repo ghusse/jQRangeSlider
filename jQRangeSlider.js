@@ -83,11 +83,11 @@
 		},
 		
 		_getPosition: function(value){
-			return (value - this.options.bounds.min) * this.element.innerWidth() / (this.options.bounds.max - this.options.bounds.min);
+			return (value - this.options.bounds.min) * (this.element.innerWidth() - 1) / (this.options.bounds.max - this.options.bounds.min);
 		},
 		
 		_getValue: function(position){
-			return position * (this.options.bounds.max - this.options.bounds.min) / this.element.innerWidth() + this.options.bounds.min;
+			return position * (this.options.bounds.max - this.options.bounds.min) / (this.element.innerWidth() - 1) + this.options.bounds.min;
 		},
 		
 		_position: function(){
@@ -97,17 +97,17 @@
 			this._positionHandles();
 			this.bar
 				.css("left", leftPosition)
-				.css("width", rightPosition-leftPosition + this.bar.width() - this.bar.outerWidth(true) +1);
+				.css("width", rightPosition- leftPosition + this.bar.width() - this.bar.outerWidth(true));
 		},
 		
 		_positionHandles: function(){
 			this.leftHandle.css("left", this._getPosition(this.values.min));
-			this.rightHandle.css("left", this._getPosition(this.values.max) - this.rightHandle.outerWidth(true) + 1);
+			this.rightHandle.css("left", this._getPosition(this.values.max) - this.rightHandle.outerWidth(true));
 		},
 		
-		_barMoved: function(event){
-			var left = this.bar.position().left;
-			var right = left + this.bar.outerWidth(true) - 1;
+		_barMoved: function(event, ui){
+			var left = ui.position.left;
+			var right = left + this.bar.outerWidth(true);
 			
 			this._setValues(this._getValue(left), this._getValue(right));
 			this._positionHandles();
@@ -126,18 +126,27 @@
 					.removeClass("ui-rangeSlider-leftHandle");
 		},
 		
-		_handleMoved: function(event){
-			var left = this.leftHandle.position().left;
-			var right = this.rightHandle.position().left + this.rightHandle.outerWidth(true) - 1;
+		_handleMoved: function(event, ui){
+			var min = this.values.min;
+			var max = this.values.max;
+
+			if (ui.helper[0] == this.leftHandle[0]){
+					min = this._getValue(ui.position.left);
+			}else if (ui.helper[0] == this.rightHandle[0])
+			{
+				max = this._getValue(ui.position.left + ui.helper.outerWidth(true));
+			}else{
+				return;
+			}
 			
-			if (left > right){
+			if (min > max){
 				this._switchHandles();
-				var temp = left;
-				left = right;
-				right = temp;
+				var temp = min;
+				min = max;
+				max = temp;
 			}
 				
-			this.setValues(this._getValue(left), this._getValue(right));
+			this.setValues(min, max);
 		},
 		
 		_wheelOnBar: function(event, delta, deltaX, deltaY){
