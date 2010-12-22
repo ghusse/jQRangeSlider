@@ -14,9 +14,9 @@
 
 .ui-rangeSlider.ui-rangeSlider-dev .ui-rangeSlider-Bar{
 	margin: 0 6px;
-	border-width:1px;
+	border-width:1px 0;
 	border-style: solid;
-	border-color:#red;
+	border-color:#EEE;
 	background:#CCC;
 	background:rgba(0,0,0, 0.2);
 	height:18px;

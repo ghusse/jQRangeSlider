@@ -97,17 +97,17 @@
 			this._positionHandles();
 			this.bar
 				.css("left", leftPosition)
-				.css("width", rightPosition- leftPosition + this.bar.width() - this.bar.outerWidth(true));
+				.css("width", rightPosition- leftPosition + this.bar.width() - this.bar.outerWidth(true) + 1);
 		},
 		
 		_positionHandles: function(){
 			this.leftHandle.css("left", this._getPosition(this.values.min));
-			this.rightHandle.css("left", this._getPosition(this.values.max) - this.rightHandle.outerWidth(true));
+			this.rightHandle.css("left", this._getPosition(this.values.max) - this.rightHandle.outerWidth(true) + 1);
 		},
 		
 		_barMoved: function(event, ui){
 			var left = ui.position.left;
-			var right = left + this.bar.outerWidth(true);
+			var right = left + this.bar.outerWidth(true) - 1;
 			
 			this._setValues(this._getValue(left), this._getValue(right));
 			this._positionHandles();
@@ -134,7 +134,7 @@
 					min = this._getValue(ui.position.left);
 			}else if (ui.helper[0] == this.rightHandle[0])
 			{
-				max = this._getValue(ui.position.left + ui.helper.outerWidth(true));
+				max = this._getValue(ui.position.left - 1 + ui.helper.outerWidth(true));
 			}else{
 				return;
 			}
