@@ -8,12 +8,15 @@
 	width:6px;
 	height:20px;
 	background:#AAA;
-	cursor:move;
+	cursor:col-resize;
 }
 
 .ui-rangeSlider.ui-rangeSlider-dev .ui-rangeSlider-Bar{
-	margin: 0 2px;
-	border:1px solid #CCC;
-	background:#DDD;
+	margin: 0 6px;
+	border-width:1px 0;
+	border-style: solid;
+	border-color:#DDD;
+	background:#EEE;
+	background:rgba(0,0,0, 0.2);
 	height:18px;
 }

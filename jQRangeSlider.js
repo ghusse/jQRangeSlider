@@ -35,18 +35,23 @@
 		_rightHandle: null,
 		
 		_create: function(){
+			this._leftHandle = $("<div class='ui-rangeSlider-handle  ui-rangeSlider-leftHandle' />")
+				.draggable({axis:"x", containment: "parent",
+					drag: $.proxy(this._handleMoved, this), 
+					stop: $.proxy(this._handleMoved, this)})
+				.css("position", "absolute");
+			this._rightHandle = $("<div class='ui-rangeSlider-handle ui-rangeSlider-rightHandle' />")
+				.draggable({axis:"x", containment: "parent",
+					drag: $.proxy(this._handleMoved, this), 
+					stop: $.proxy(this._handleMoved, this)})
+				.css("position", "absolute");
 			this._bar = $("<div class='ui-rangeSlider-Bar' />")
 				.draggable({axis:"x", containment: "parent",
 					drag: $.proxy(this._barMoved, this), 
-					stop: $.proxy(this._barMoved, this)})
+					stop: $.proxy(this._barMoved, this),
+					containment: 'parent'})
 				.css("position", "absolute")
 				.bind("mousewheel", $.proxy(this._wheelOnBar, this));
-			this._leftHandle = $("<div class='ui-rangeSlider-handle  ui-rangeSlider-leftHandle' />")
-				.draggable({axis:"x", containment: "parent"})
-				.css("position", "absolute");
-			this._rightHandle = $("<div class='ui-rangeSlider-handle ui-rangeSlider-rightHandle' />")
-				.draggable({axis:"x", containment: "parent"})
-				.css("position", "absolute");
 			
 			this.element
 				.append(this._bar)
@@ -88,22 +93,48 @@
 			var rightPosition = this._getPosition(this.values.max);
 			
 			this._positionHandles(leftPosition, rightPosition);
-			this._bar.css("left", leftPosition).css("width", rightPosition-leftPosition);
+			this._bar
+				.css("left", leftPosition)
+				.css("width", rightPosition-leftPosition + this._bar.width() - this._bar.outerWidth(true) +1);
 		},
 		
 		_positionHandles: function(){
-			this._leftHandle.css("left", this._getPosition(this.values.min) - this._leftHandle.outerWidth() / 2);
-			this._rightHandle.css("left", this._getPosition(this.values.max) - this._leftHandle.outerWidth() / 2);
+			this._leftHandle.css("left", this._getPosition(this.values.min));
+			this._rightHandle.css("left", this._getPosition(this.values.max) - this._rightHandle.outerWidth(true) + 1);
 		},
 		
 		_barMoved: function(event){
 			var left = this._bar.position().left;
-			var right = left + this._bar.outerWidth();
+			var right = left + this._bar.outerWidth(true) - 1;
+			
 			this.setValues(this._getValue(left), this._getValue(right));
 		},
 		
+		_switchHandles: function(){
+				var temp = this._leftHandle;
+				this._leftHandle = this._rightHandle;
+				this._rightHandle = temp;
+				
+				this._leftHandle
+					.removeClass("ui-rangeSlider-rightHandle")
+					.addClass("ui-rangeSlider-leftHandle");
+				this._rightHandle
+					.addClass("ui-rangeSlider-rightHandle")
+					.removeClass("ui-rangeSlider-leftHandle");
+		},
+		
 		_handleMoved: function(event){
-			// TODO
+			var left = this._leftHandle.position().left;
+			var right = this._rightHandle.position().left + this._rightHandle.outerWidth(true) - 1;
+			
+			if (left > right){
+				this._switchHandles();
+				var temp = left;
+				left = right;
+				right = temp;
+			}
+				
+			this.setValues(this._getValue(left), this._getValue(right));
 		},
 		
 		_wheelOnBar: function(event, delta, deltaX, deltaY){
@@ -135,19 +166,10 @@
 			this._positionHandles(min, max);
 		},
 		
-		_setValues: function(min, max){
-			if(this.options.steps != null 
-				&& typeof this.options.steps["origin"] != "undefined"
-				&& parseInt(this.options.steps["origin"]) == this.options.steps["origin"]
-				&& typeof this.options.steps["step"] != "undefined"
-				&& parseInt(this.options.steps["step"]) == this.options.steps["step"]
-				&& this.options.steps["step"] != 0){
-					min = Math.round((min - this.options.steps.origin) / this.options.steps.step) * this.options.steps.step + this.options.steps.origin;
-					max = Math.round((max - this.options.steps.origin) / this.options.steps.step) * this.options.steps.step + this.options.steps.origin;
-			}
-			
-			this.values.min = min;
-			this.values.max = max;
+		_setValues: function(min, max){	
+			var diff = min - this.options.bounds.min;
+			this.values.min = Math.max(this.options.bounds.min, min);
+			this.values.max = Math.min(this.options.bounds.max, Math.max(max, max - diff));
 			
 			this.element.trigger("valuesChanged", [this.values.min, this.values.max]);
 		},
