@@ -33,6 +33,7 @@
 		bar: null,
 		leftHandle: null,
 		rightHandle: null,
+		containment: null,
 		
 		_create: function(){
 			this.leftHandle = $("<div class='ui-rangeSlider-handle  ui-rangeSlider-leftHandle' />")
@@ -50,8 +51,7 @@
 			this.bar = $("<div class='ui-rangeSlider-Bar' />")
 				.draggable({axis:"x", containment: "parent",
 					drag: $.proxy(this._barMoved, this), 
-					stop: $.proxy(this._position, this),
-					containment: 'parent'})
+					stop: $.proxy(this._position, this)})
 				.css("position", "absolute")
 				.bind("mousewheel", $.proxy(this._wheelOnBar, this));
 			
@@ -65,6 +65,19 @@
 			{
 				this.element.addClass("ui-rangeSlider-"+this.options.theme);
 			}
+			
+			this.containment = $("<div class='ui-rangeSlider-containment'></div>")
+				.css("position", "absolute")
+				.css("border", "none")
+				.css("margin", 0)
+				.css("padding", 0)
+				.css("height", this.element.innerHeight())
+				.css("left", this.leftHandle.outerWidth(true))
+				.css("z-index", -1000)
+				.css("width", this.element.innerWidth() - this.rightHandle.outerWidth(true) - this.leftHandle.outerWidth(true));
+			this.element.append(this.containment);
+			
+			this.bar.draggable("option", "containment", this.containment)
 			
 			this._position();
 		},
