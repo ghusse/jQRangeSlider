@@ -38,17 +38,19 @@
 			this._leftHandle = $("<div class='ui-rangeSlider-handle  ui-rangeSlider-leftHandle' />")
 				.draggable({axis:"x", containment: "parent",
 					drag: $.proxy(this._handleMoved, this), 
-					stop: $.proxy(this._handleMoved, this)})
+					stop: $.proxy(this._handleMoved, this),
+					containment: "parent"})
 				.css("position", "absolute");
 			this._rightHandle = $("<div class='ui-rangeSlider-handle ui-rangeSlider-rightHandle' />")
 				.draggable({axis:"x", containment: "parent",
 					drag: $.proxy(this._handleMoved, this), 
-					stop: $.proxy(this._handleMoved, this)})
+					stop: $.proxy(this._handleMoved, this),
+					containment: "parent"})
 				.css("position", "absolute");
 			this._bar = $("<div class='ui-rangeSlider-Bar' />")
 				.draggable({axis:"x", containment: "parent",
 					drag: $.proxy(this._barMoved, this), 
-					stop: $.proxy(this._barMoved, this),
+					stop: $.proxy(this._position, this),
 					containment: 'parent'})
 				.css("position", "absolute")
 				.bind("mousewheel", $.proxy(this._wheelOnBar, this));
@@ -98,9 +100,9 @@
 				.css("width", rightPosition-leftPosition + this._bar.width() - this._bar.outerWidth(true) +1);
 		},
 		
-		_positionHandles: function(){
-			this._leftHandle.css("left", this._getPosition(this.values.min));
-			this._rightHandle.css("left", this._getPosition(this.values.max) - this._rightHandle.outerWidth(true) + 1);
+		_positionHandles: function(left, right){
+			this._leftHandle.css("left", left);
+			this._rightHandle.css("left", right - this._rightHandle.outerWidth(true) + 1);
 		},
 		
 		_barMoved: function(event){

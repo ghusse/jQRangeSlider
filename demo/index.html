@@ -12,7 +12,9 @@
 	<script>//<!--
 		$(document).ready(function(){
 			$("#defaultSlider").rangeSlider().bind("valuesChanged", function(event, min, max){
-	  	console.log(min, max)
+				if (typeof console != "undefined") {
+					console.log(min, max)
+				}
 	  });
 		});
 	// -->
@@ -26,7 +28,7 @@
 			border-left:1px solid black;
 			position:absolute;
 			top:0;
-			height:40px;
+			height:20px;
 			text-align:right;
 		}
 	</style>
