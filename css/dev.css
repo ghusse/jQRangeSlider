@@ -9,7 +9,7 @@
 	height:20px;
 	background:#AAA;
 	background:rgba(0,0,0.5);
-	cursor:col-resize;
+	cursor:e-resize;
 }
 
 .ui-rangeSlider.ui-rangeSlider-dev .ui-rangeSlider-Bar{
@@ -20,4 +20,12 @@
 	background:#CCC;
 	background:rgba(0,0,0, 0.2);
 	height:18px;
+	cursor:move;
+	cursor:grab;
+	cursor: -moz-grab;
+}
+
+.ui-rangeSlider.ui-rangeSlider-dev .ui-rangeSlider-Bar.ui-draggable-dragging{
+	cursor:	-moz-grabbing;
+	cursor:grabbing;
 }
