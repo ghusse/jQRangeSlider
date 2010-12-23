@@ -1,7 +1,7 @@
 jQRangeSlider
 A javascript slider selector that supports dates
 
-# License :
+# License
 
 Copyright : Guillaume Gautreau 2010
 License : GPL v3. Contact me for using this library in another context
@@ -20,9 +20,25 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-# Dependencies :
+# Dependencies
+
 jQuery
 jQuery UI core
 jQuery UI widget
 jQuery UI draggable
 jQuery Mousewheel plugin by Brandon Aaron
+
+# Options
+  * bounds (default: 0 - 100)
+    * Inclusive bounds of the selection range
+    * object with two [numerical] fields : min and max
+    * example: bounds: {min: 0, max:100}
+  * defaultValues (default: 20 - 50)
+    * Default selected range inside defined bounds
+    * object with two [numerical] fields : min and max
+    * example: defaultValues: {min: 20, max:50}
+  * wheelMode: (default: null)
+  	* Interaction mode when user uses the mouse wheel on the central bar
+  	* Possible values : "zoom", "scroll" or null
+  * wheelSpeed: (default: 8)
+    * Numerical speed (in pixels) of mouse wheel interaction
