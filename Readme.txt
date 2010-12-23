@@ -42,3 +42,12 @@ jQuery Mousewheel plugin by Brandon Aaron
   	* Possible values : "zoom", "scroll" or null
   * wheelSpeed: (default: 8)
     * Numerical speed (in pixels) of mouse wheel interaction
+
+# Events
+ * valuesChanging
+   * Triggered when the user is moving an element and changing internal values
+ * valuesChanged
+   * Triggered when the user has moved and element and changed internal values (limits the number of events).
+ 
+# Prerequisites 
+* Element on which .rangeSlider() is applied will be positionned as relative if no positionning is set.

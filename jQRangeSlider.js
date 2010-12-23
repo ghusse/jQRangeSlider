@@ -32,49 +32,61 @@
 		bar: null,
 		leftHandle: null,
 		rightHandle: null,
-		containment: null,
+		innerBar: null,
+		
+		// Scroll managment
+		lastWheel : 0,
 		
 		_create: function(){
-			this.leftHandle = $("<div class='ui-rangeSlider-handle  ui-rangeSlider-leftHandle' />")
+			this.leftHandle = $("<div class='ui-rangeSlider-handle  ui-rangeSlider-leftHandle'>&nbsp;</div>")
 				.draggable({axis:"x", containment: "parent",
 					drag: $.proxy(this._handleMoved, this), 
-					stop: $.proxy(this._position, this),
+					stop: $.proxy(this._handleStop, this),
 					containment: "parent"})
 				.css("position", "absolute");
-			this.rightHandle = $("<div class='ui-rangeSlider-handle ui-rangeSlider-rightHandle' />")
+			this.rightHandle = $("<div class='ui-rangeSlider-handle ui-rangeSlider-rightHandle'>&nbsp;</div>")
 				.draggable({axis:"x", containment: "parent",
 					drag: $.proxy(this._handleMoved, this), 
-					stop: $.proxy(this._position, this),
+					stop: $.proxy(this._handleStop, this),
 					containment: "parent"})
 				.css("position", "absolute");
-			this.bar = $("<div class='ui-rangeSlider-Bar' />")
+			
+			this.innerBar = $("<div class='ui-rangeSlider-innerBar'>&nbsp;</div>")
+				.css("position", "absolute")
+				.css("top", 0)
+				.css("left", 0);
+			
+			this.bar = $("<div class='ui-rangeSlider-Bar'>&nbsp;</div>")
 				.draggable({axis:"x", containment: "parent",
 					drag: $.proxy(this._barMoved, this), 
-					stop: $.proxy(this._position, this)})
+					stop: $.proxy(this._barStop, this),
+					containment: this.element})
 				.css("position", "absolute")
 				.bind("mousewheel", $.proxy(this._wheelOnBar, this));
 			
 			this.element
-				.append(this.bar)
 				.append(this.leftHandle)
 				.append(this.rightHandle)
+				.append(this.innerBar)
+				.append(this.bar)
 				.addClass("ui-rangeSlider")
 				.bind("mousewheel", $.proxy(this._wheelOnContainer, this));
 			
-			this.containment = $("<div class='ui-rangeSlider-containment'></div>")
-				.css("position", "absolute")
-				.css("border", "none")
-				.css("margin", 0)
-				.css("padding", 0)
-				.css("height", this.element.innerHeight())
-				.css("left", this.leftHandle.outerWidth(true))
-				.css("z-index", -1000)
-				.css("width", this.element.innerWidth() - this.rightHandle.outerWidth(true) - this.leftHandle.outerWidth(true));
-			this.element.append(this.containment);
+			if (this.element.css("position") != "absolute"){
+				this.element.css("position", "relative");
+			}
 			
-			this.bar.draggable("option", "containment", this.containment)
+			this.innerBar.outerWidth(this.element.width());
 			
 			this.values(this.options.defaultValues.min, this.options.defaultValues.max);
+			
+			// Seems that all the elements are not ready, outerWidth does not return the good value
+			setTimeout($.proxy(this._initWidth, this),
+			1);
+		},
+		
+		_initWidth: function(){
+			this.innerBar.css("width", this.element.width() - this.innerBar.outerWidth(true) + this.innerBar.width());
 		},
 		
 		_setOption: function(key, value) {
@@ -98,6 +110,16 @@
 			return position * (this.options.bounds.max - this.options.bounds.min) / (this.element.innerWidth() - 1) + this.options.bounds.min;
 		},
 		
+		_trigger: function(eventName){
+			this.element.trigger(eventName, {
+			  	helper: this.element,
+			  	values: {
+			  		min: this._values.min,
+			  		max: this._values.max
+			  	}
+			  });
+		},
+		
 		_position: function(){
 			var leftPosition = this._getPosition(this._values.min);
 			var rightPosition = this._getPosition(this._values.max);
@@ -119,6 +141,11 @@
 			
 			this._setValues(this._getValue(left), this._getValue(right));
 			this._positionHandles();
+		},
+		
+		_barStop: function(event, ui){
+			this._position();
+			this._trigger("valuesChanged");
 		},
 		
 		_switchHandles: function(){
@@ -157,6 +184,23 @@
 			this.values(min, max);
 		},
 		
+		_handleStop: function(event, ui){
+			this._position();
+			this._trigger("valuesChanged");
+		},
+		
+		_prepareFiringChanged: function(){
+			this.lastWheel = Math.random();
+			var last = this.lastWheel;
+			setTimeout($.proxy(function(){this._fireChanged(last);}, this), 200);
+		},
+		
+		_fireChanged: function(last){
+			if (this.lastWheel == last){
+				this._trigger("valuesChanged");
+			}
+		},
+		
 		_wheelOnBar: function(event, delta, deltaX, deltaY){
 			if (this.options.wheelMode == "zoom"){
 				var left = this.bar.position().left;
@@ -166,6 +210,9 @@
 				right += deltaY * this.options.wheelSpeed / 2;
 				
 				this.values(this._getValue(left), this._getValue(right));
+				
+				this._prepareFiringChanged();
+				
 				return false;
 			}
 		},
@@ -179,6 +226,12 @@
 				right -= deltaY * this.options.wheelSpeed;
 				
 				this.values(this._getValue(left), this._getValue(right));
+				
+				var last = this.lastWheel;
+				setTimeout($.proxy(function(){this._fireChanged(last);}, this), 500);
+				
+				this._prepareFiringChanged();
+				
 				return false;
 			}
 		},
@@ -195,13 +248,7 @@
 			this._values.min = Math.max(this.options.bounds.min, Math.min(min, min + diffMax));
 			this._values.max = Math.min(this.options.bounds.max, Math.max(max, max - diffMin));
 			
-			this.element.trigger("valuesChanged", {
-	  	helper: this.element,
-	  	values: {
-	  		min: this._values.min,
-	  		max: this._values.max
-	  	}
-	  });
+			this._trigger("valuesChanging");
 		},
 		
 		values: function(min, max){

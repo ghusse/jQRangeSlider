@@ -22,15 +22,24 @@
 		function makeSlider(selector, options){
 			var slider = $(selector)
 				.rangeSlider(options)
+				.bind("valuesChanging", updateValues)
+				.addClass("ui-rangeSlider-dev");
+			displayValues(slider, slider.rangeSlider("values"));
+		}
+		
+		function makeSliderStop(selector, options){
+			var slider = $(selector)
+				.rangeSlider(options)
 				.bind("valuesChanged", updateValues)
 				.addClass("ui-rangeSlider-dev");
 			displayValues(slider, slider.rangeSlider("values"));
 		}
 		
 		$(document).ready(function(){
-			makeSlider("#defaultSlider", {})
-			makeSlider("#scrollSlider", {wheelMode: "scroll"})
-			makeSlider("#zoomSlider", {wheelMode: "zoom"})
+			makeSlider("#defaultSlider", {});
+			makeSlider("#scrollSlider", {wheelMode: "scroll"});
+			makeSlider("#zoomSlider", {wheelMode: "zoom"});
+			makeSliderStop("#zoomSliderStop", {wheelMode: "zoom"});
 			
 			$("form").submit(function(){return false;});
 		});
@@ -100,5 +109,12 @@
 		<pre><code>$("#slider").rangeSlider({
   wheelMode: "zoom"
 });</code></pre>
+
+<h3>Zoom slider that updates once value is selected</h3>
+	<form action="#">
+		<p>min:<input name="min" /> max:<input name="max" /></p>
+	
+		<div id="zoomSliderStop" class="slider"></div>
+  </form>
 	</body>  
 </html>  
