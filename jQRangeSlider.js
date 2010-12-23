@@ -22,12 +22,11 @@
 		options: {
 			bounds: {min:0, max:100},
 			defaultValues: {min:20, max:50},
-			theme: "dev",
-			wheelMode: "zoom",
-			wheelSpeed: 4
+			wheelMode: null,
+			wheelSpeed: 8
 		},
 		
-		values: {min:20, max:50},
+		_values: {min:20, max:50},
 		
 		// Created elements
 		bar: null,
@@ -59,12 +58,8 @@
 				.append(this.bar)
 				.append(this.leftHandle)
 				.append(this.rightHandle)
-				.addClass("ui-rangeSlider");
-			
-			if (this.options.theme != "")
-			{
-				this.element.addClass("ui-rangeSlider-"+this.options.theme);
-			}
+				.addClass("ui-rangeSlider")
+				.bind("mousewheel", $.proxy(this._wheelOnContainer, this));
 			
 			this.containment = $("<div class='ui-rangeSlider-containment'></div>")
 				.css("position", "absolute")
@@ -79,7 +74,7 @@
 			
 			this.bar.draggable("option", "containment", this.containment)
 			
-			this._position();
+			this.values(this.options.defaultValues.min, this.options.defaultValues.max);
 		},
 		
 		_setOption: function(key, value) {
@@ -90,7 +85,7 @@
 					&& parseFloat(value.min) === value.min 
 					&& parseFloat(value.max) === value.max)
 				{
-					this.setValues(value.min, value.max);
+					this.values(value.min, value.max);
 				}
 			}
 		},
@@ -104,8 +99,8 @@
 		},
 		
 		_position: function(){
-			var leftPosition = this._getPosition(this.values.min);
-			var rightPosition = this._getPosition(this.values.max);
+			var leftPosition = this._getPosition(this._values.min);
+			var rightPosition = this._getPosition(this._values.max);
 			
 			this._positionHandles();
 			this.bar
@@ -114,8 +109,8 @@
 		},
 		
 		_positionHandles: function(){
-			this.leftHandle.css("left", this._getPosition(this.values.min));
-			this.rightHandle.css("left", this._getPosition(this.values.max) - this.rightHandle.outerWidth(true) + 1);
+			this.leftHandle.css("left", this._getPosition(this._values.min));
+			this.rightHandle.css("left", this._getPosition(this._values.max) - this.rightHandle.outerWidth(true) + 1);
 		},
 		
 		_barMoved: function(event, ui){
@@ -140,8 +135,8 @@
 		},
 		
 		_handleMoved: function(event, ui){
-			var min = this.values.min;
-			var max = this.values.max;
+			var min = this._values.min;
+			var max = this._values.max;
 
 			if (ui.helper[0] == this.leftHandle[0]){
 					min = this._getValue(ui.position.left);
@@ -159,30 +154,32 @@
 				max = temp;
 			}
 				
-			this.setValues(min, max);
+			this.values(min, max);
 		},
 		
 		_wheelOnBar: function(event, delta, deltaX, deltaY){
 			if (this.options.wheelMode == "zoom"){
 				var left = this.bar.position().left;
-				var right = this.bar.innerWidth() + left;
+				var right = this.bar.outerWidth(true) + left - 1;
+				
+				left -= deltaY * this.options.wheelSpeed / 2;
+				right += deltaY * this.options.wheelSpeed / 2;
+				
+				this.values(this._getValue(left), this._getValue(right));
+				return false;
+			}
+		},
+		
+		_wheelOnContainer: function(event, delta, deltaX, deltaY){
+			if (this.options.wheelMode == "scroll"){
+				var left = this.bar.position().left;
+				var right = this.bar.outerWidth(true) + left - 1;
 				
 				left -= deltaY * this.options.wheelSpeed;
-				right += deltaY * this.options.wheelSpeed;
+				right -= deltaY * this.options.wheelSpeed;
 				
-				if (left < 0){
-					right -= left;
-					left = 0;
-				}
-				
-				if (right > this.element.innerWidth()){
-					var difference = right - this.element.innerWidth();
-					
-					left = Math.max(0, left - difference);
-					right = this.element.innerWidth();
-				}
-				
-				this.setValues(this._getValue(left), this._getValue(right));
+				this.values(this._getValue(left), this._getValue(right));
+				return false;
 			}
 		},
 		
@@ -192,17 +189,32 @@
 		},
 	
 		_setValues: function(min, max){	
-			var diff = min - this.options.bounds.min;
-			this.values.min = Math.max(this.options.bounds.min, min);
-			this.values.max = Math.min(this.options.bounds.max, Math.max(max, max - diff));
+			var diffMin = min - this.options.bounds.min;
+			var diffMax = this.options.bounds.max - max;
 			
-			this.element.trigger("valuesChanged", [this.values.min, this.values.max]);
+			this._values.min = Math.max(this.options.bounds.min, Math.min(min, min + diffMax));
+			this._values.max = Math.min(this.options.bounds.max, Math.max(max, max - diffMin));
+			
+			this.element.trigger("valuesChanged", {
+	  	helper: this.element,
+	  	values: {
+	  		min: this._values.min,
+	  		max: this._values.max
+	  	}
+	  });
 		},
 		
-		setValues: function(min, max){
-			this._setValues(min, max);
-			this._position();
+		values: function(min, max){
+			if (typeof min != "undefined" 
+				&& typeof max != "undefined")
+			{
+				this._setValues(min, max);
+				this._position();
+			}
+			
+			return this._values;
 		},
+
 		
 		destroy: function(){
 			this.bar.detach();
