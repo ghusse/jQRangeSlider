@@ -10,12 +10,29 @@
 	<script src="../lib/jquery.mousewheel.min.js"></script>
 	<script src="../jQRangeSlider.js"></script>
 	<script>//<!--
+		function updateValues(event, ui){
+			displayValues(ui.helper, ui.values)	
+		}
+		
+		function displayValues(slider, values){
+			slider.parents("form").find("input[name=min]").val(values.min);
+			slider.parents("form").find("input[name=max]").val(values.max);
+		}
+		
+		function makeSlider(selector, options){
+			var slider = $(selector)
+				.rangeSlider(options)
+				.bind("valuesChanged", updateValues)
+				.addClass("ui-rangeSlider-dev");
+			displayValues(slider, slider.rangeSlider("values"));
+		}
+		
 		$(document).ready(function(){
-			$("#defaultSlider").rangeSlider().bind("valuesChanged", function(event, min, max){
-				if (typeof console != "undefined") {
-					console.log(min, max)
-				}
-	  });
+			makeSlider("#defaultSlider", {})
+			makeSlider("#scrollSlider", {wheelMode: "scroll"})
+			makeSlider("#zoomSlider", {wheelMode: "zoom"})
+			
+			$("form").submit(function(){return false;});
 		});
 	// -->
 	</script>
@@ -31,6 +48,26 @@
 			height:20px;
 			text-align:right;
 		}
+		input{
+			text-align:right;
+			width:75px;
+			margin-left:5px;
+		}
+			margin-right:20px;
+		pre{
+			overflow:auto;
+		}
+		pre code{
+			tab-interval:  2pt;
+			display:block;
+			border-width:1px 1px 1px 15px;
+			border-style:solid;
+			border-color:#CCC;
+			color:#444;
+			padding:5px 10px;
+			margin:0 5px;
+			font-family:Consolas, Arial, Helvetica, sans-serif;
+		}
 	</style>
   </head>  
   <body>  
@@ -39,6 +76,29 @@
 	<p>No option for the moment</p>
 	<h2>Examples</h2>
 	<h3>Default slider</h3>
-	<div id="defaultSlider" class="slider"><div class="tick" style="left:200px">20</div><div class="tick" style="left:500px">50</div></div>
-  </body>  
+	<form action="#">
+		<p>min:<input name="min" /> max:<input name="max" /></p>
+	
+		<div id="defaultSlider" class="slider"><div class="tick" style="left:200px">20</div><div class="tick" style="left:500px">50</div></div>
+  </form>
+	<pre><code>$("#slider").rangeSlider();</code></pre>
+	<h3>Scroll slider</h3>
+	<form action="#">
+		<p>min:<input name="min" /> max:<input name="max" /></p>
+	
+		<div id="scrollSlider" class="slider"></div>
+  </form>
+	<pre><code>$("#slider").rangeSlider({
+  wheelMode: "scroll"
+});</code></pre>
+	<h3>Zoom slider</h3>
+	<form action="#">
+		<p>min:<input name="min" /> max:<input name="max" /></p>
+	
+		<div id="zoomSlider" class="slider"></div>
+  </form>
+		<pre><code>$("#slider").rangeSlider({
+  wheelMode: "zoom"
+});</code></pre>
+	</body>  
 </html>  
