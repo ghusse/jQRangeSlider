@@ -294,6 +294,7 @@
 			this.bar.detach();
 			this.leftHandle.detach();
 			this.rightHandle.detach();
+			this.innerBar.detach();
 			this.element.removeClass("ui-rangeSlider");
 			
 			if (this.options.theme != "")
