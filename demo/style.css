@@ -1,0 +1,77 @@
+.slider{
+	width:100%;
+	margin:20px auto;
+}
+.tick{
+	border-left:1px solid black;
+	position:absolute;
+	top:0;
+	height:20px;
+	text-align:right;
+}
+.sliderZone input{
+	text-align:right;
+	width:75px;
+	margin-left:5px;
+}
+	margin-right:20px;
+pre{
+	overflow:auto;
+}
+pre code{
+	tab-interval:  2pt;
+	display:block;
+	border-width:1px 1px 1px 15px;
+	border-style:solid;
+	border-color:#CCC;
+	color:#444;
+	padding:5px 10px;
+	margin:0 5px;
+	font-family:Consolas, Arial, Helvetica, sans-serif;
+}
+
+dt{
+	font-weight:bold;
+}
+
+dd{
+	padding-left:15px;
+	margin-left:0;
+}
+
+dd dt{
+	font-weight:normal;
+	font-style:italic;
+	width:50px;
+	text-align:right;
+	float:left;
+	clear:left;
+}
+
+dd dd{
+	margin-left:55px;
+}
+
+.wrapper{
+	width:100%;
+	float:left;
+}
+
+.sliderZone{
+	margin-right:400px;
+}
+
+.options{
+	width:400px;
+	float:left;
+	margin-left:-400px;
+}
+
+input[type=number]{
+	width:3em;
+}
+
+.options form{
+	margin:0 10px;
+}
+

@@ -5,13 +5,22 @@
 	<title>jQRangeSlider demo page</title>  
 	<link rel="stylesheet" href="../css/common.css">  
 	<link rel="stylesheet" href="../css/dev.css">  
+	<link rel="stylesheet" href="style.css">  
 	<script src="../lib/jquery-1.4.4.min.js"></script>
 	<script src="../lib/jquery-ui-1.8.7.custom.min.js"></script>
 	<script src="../lib/jquery.mousewheel.min.js"></script>
 	<script src="../jQRangeSlider.js"></script>
 	<script>//<!--
-		function updateValues(event, ui){
-			displayValues(ui.helper, ui.values)	
+		var changing = true;
+		
+		function updateValuesChanged(event, ui){
+			if (!changing)
+				displayValues(ui.helper, ui.values)	
+		}
+		
+		function updateValuesChanging(event, ui){
+			if (changing)
+				displayValues(ui.helper, ui.values)
 		}
 		
 		function displayValues(slider, values){
@@ -22,99 +31,76 @@
 		function makeSlider(selector, options){
 			var slider = $(selector)
 				.rangeSlider(options)
-				.bind("valuesChanging", updateValues)
+				.bind("valuesChanging", updateValuesChanging)
+				.bind("valuesChanged", updateValuesChanged)
 				.addClass("ui-rangeSlider-dev");
 			displayValues(slider, slider.rangeSlider("values"));
 		}
 		
-		function makeSliderStop(selector, options){
-			var slider = $(selector)
-				.rangeSlider(options)
-				.bind("valuesChanged", updateValues)
-				.addClass("ui-rangeSlider-dev");
-			displayValues(slider, slider.rangeSlider("values"));
+		function setOption(element, option, value){
+			$(element).parents(".example").find(".slider").rangeSlider("option", option, value);
+		}
+		
+		function getOption(element, option){
+			return $(element).parents(".example").find(".slider").rangeSlider("options")[option];
 		}
 		
 		$(document).ready(function(){
 			makeSlider("#defaultSlider", {});
-			makeSlider("#scrollSlider", {wheelMode: "scroll"});
-			makeSlider("#zoomSlider", {wheelMode: "zoom"});
-			makeSliderStop("#zoomSliderStop", {wheelMode: "zoom"});
 			
 			$("form").submit(function(){return false;});
+			$("input[type=reset]").click();
 		});
 	// -->
 	</script>
-	<style>
-		.slider{
-			width:1001px;
-			margin:20px auto;
-		}
-		.tick{
-			border-left:1px solid black;
-			position:absolute;
-			top:0;
-			height:20px;
-			text-align:right;
-		}
-		input{
-			text-align:right;
-			width:75px;
-			margin-left:5px;
-		}
-			margin-right:20px;
-		pre{
-			overflow:auto;
-		}
-		pre code{
-			tab-interval:  2pt;
-			display:block;
-			border-width:1px 1px 1px 15px;
-			border-style:solid;
-			border-color:#CCC;
-			color:#444;
-			padding:5px 10px;
-			margin:0 5px;
-			font-family:Consolas, Arial, Helvetica, sans-serif;
-		}
-	</style>
   </head>  
   <body>  
 	<h1>jQRangeSlider usage</h1>
 	<h2>Options</h2>
-	<p>No option for the moment</p>
-	<h2>Examples</h2>
-	<h3>Default slider</h3>
+	<div class="example">
+	<dl>
+		<dt>wheelMode</dt>
+		<dd>
+			<dl>
+				<dt>null</dt>
+				<dd>No action when the user actions his mousewheel on the component.</dd>
+				<dt>"scrool"</dt>
+				<dd>Range is scrolled</dd>
+				<dt>"zoom"</dt>
+				<dd>Range is zoomed</dd>
+			</dl>
+		</dd>
+		<dt>wheelSpeed</dt>
+		<dd>Speed for scrolling or zooming when using mouse wheel on the component.</dd>
+	</dl>
+	<h2>Demo</h2>
+	<div class="wrapper">
+	<div class="sliderZone">
 	<form action="#">
 		<p>min:<input name="min" /> max:<input name="max" /></p>
 	
 		<div id="defaultSlider" class="slider"></div>
   </form>
-	<pre><code>$("#slider").rangeSlider();</code></pre>
-	<h3>Scroll slider</h3>
-	<form action="#">
-		<p>min:<input name="min" /> max:<input name="max" /></p>
-	
-		<div id="scrollSlider" class="slider"></div>
-  </form>
-	<pre><code>$("#slider").rangeSlider({
-  wheelMode: "scroll"
-});</code></pre>
-	<h3>Zoom slider</h3>
-	<form action="#">
-		<p>min:<input name="min" /> max:<input name="max" /></p>
-	
-		<div id="zoomSlider" class="slider"></div>
-  </form>
-		<pre><code>$("#slider").rangeSlider({
-  wheelMode: "zoom"
-});</code></pre>
-
-<h3>Zoom slider that updates once value is selected</h3>
-	<form action="#">
-		<p>min:<input name="min" /> max:<input name="max" /></p>
-	
-		<div id="zoomSliderStop" class="slider"></div>
-  </form>
+</div>
+</div>
+<div class="options">
+	<form>
+		<dl>
+			<dt>Wheel mode</dt>
+			<dd><select name="wheelMode" onchange="setOption(this, 'wheelMode', $(this).val());">
+					<option value="null" selected="selected">null</option>
+					<option value="scroll">Scroll</option>
+					<option value="zoom">Zoom</option>
+			</select></dd>
+			<dt>Wheel speed</dt>
+			<dd><input type="number" name="wheelSpeed" value="8" onkeyup="setOption(this, 'wheelSpeed', $(this).val());"/></dd>
+			<dt>Binding</dt>
+			<dd><label><input type="radio" checked="checked" name="binding" value="changing" onclick="changing=$(this).parents('form').find('input[name=binding]:radio:checked').val()=='changing';" /> valuesChanging</label></dd>
+			<dd><label><input type="radio" name="binding" value="changed" onclick="changing=$(this).parents('form').find('input[name=binding]:radio:checked').val()=='changing';" /> valuesChanged</label></dd>
+		</dl>
+		<p style="display:none"><input type="reset" /></p>
+	</form>
+</div>
+</div>
 	</body>  
 </html>  

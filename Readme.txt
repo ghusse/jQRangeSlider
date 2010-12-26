@@ -26,7 +26,7 @@ jQuery
 jQuery UI core
 jQuery UI widget
 jQuery UI draggable
-jQuery Mousewheel plugin by Brandon Aaron
+jQuery Mousewheel plugin by Brandon Aaron (optional, needed for scrolling or zooming)
 
 # Options
   * bounds (default: 0 - 100)
@@ -40,8 +40,8 @@ jQuery Mousewheel plugin by Brandon Aaron
   * wheelMode: (default: null)
   	* Interaction mode when user uses the mouse wheel on the central bar
   	* Possible values : "zoom", "scroll" or null
-  * wheelSpeed: (default: 8)
-    * Numerical speed (in pixels) of mouse wheel interaction
+  * wheelSpeed: (default: 4)
+    * Numerical speed (in % of selected range) of mouse wheel interaction
 
 # Events
  * valuesChanging
@@ -50,4 +50,4 @@ jQuery Mousewheel plugin by Brandon Aaron
    * Triggered when the user has moved and element and changed internal values (limits the number of events).
  
 # Prerequisites 
-* Element on which .rangeSlider() is applied will be positionned as relative if no positionning is set.
+ * Element on which .rangeSlider() is applied will be positioned as relative if no positioning is set.

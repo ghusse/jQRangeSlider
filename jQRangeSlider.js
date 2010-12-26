@@ -23,7 +23,7 @@
 			bounds: {min:0, max:100},
 			defaultValues: {min:20, max:50},
 			wheelMode: null,
-			wheelSpeed: 8
+			wheelSpeed: 4
 		},
 		
 		_values: {min:20, max:50},
@@ -99,7 +99,14 @@
 				{
 					this.values(value.min, value.max);
 				}
+			}else if (key == "wheelMode" && (value == "zoom" || value == "scroll" || value===null)){
+				this.options.wheelMode = value;
+			}else if (key == "wheelSpeed" && parseFloat(value) !== NaN && Math.abs(parseFloat(value)) <= 100){
+				this.options.wheelSpeed = parseFloat(value);
+				console.log(value);
 			}
+			
+			console.log(value);
 		},
 		
 		_getPosition: function(value){
@@ -203,13 +210,12 @@
 		
 		_wheelOnBar: function(event, delta, deltaX, deltaY){
 			if (this.options.wheelMode == "zoom"){
-				var left = this.bar.position().left;
-				var right = this.bar.outerWidth(true) + left - 1;
+				var diff = this._values.max - this._values.min;
 				
-				left -= deltaY * this.options.wheelSpeed / 2;
-				right += deltaY * this.options.wheelSpeed / 2;
+				min = this._values.min + deltaY * this.options.wheelSpeed * diff / 200;
+				max = this._values.max - deltaY * this.options.wheelSpeed * diff / 200;
 				
-				this.values(this._getValue(left), this._getValue(right));
+				this.values(min, max);
 				
 				this._prepareFiringChanged();
 				
@@ -219,16 +225,12 @@
 		
 		_wheelOnContainer: function(event, delta, deltaX, deltaY){
 			if (this.options.wheelMode == "scroll"){
-				var left = this.bar.position().left;
-				var right = this.bar.outerWidth(true) + left - 1;
+				var diff = this._values.max - this._values.min;
 				
-				left -= deltaY * this.options.wheelSpeed;
-				right -= deltaY * this.options.wheelSpeed;
+				min = this._values.min - deltaY * this.options.wheelSpeed * diff / 100;
+				max = this._values.max - deltaY * this.options.wheelSpeed * diff / 100;
 				
-				this.values(this._getValue(left), this._getValue(right));
-				
-				var last = this.lastWheel;
-				setTimeout($.proxy(function(){this._fireChanged(last);}, this), 500);
+				this.values(min, max);
 				
 				this._prepareFiringChanged();
 				
@@ -242,11 +244,24 @@
 		},
 	
 		_setValues: function(min, max){	
-			var diffMin = min - this.options.bounds.min;
-			var diffMax = this.options.bounds.max - max;
+			var difference = Math.abs(max-min);
 			
-			this._values.min = Math.max(this.options.bounds.min, Math.min(min, min + diffMax));
-			this._values.max = Math.min(this.options.bounds.max, Math.max(max, max - diffMin));
+			if (difference >= this.options.bounds.max - this.options.bounds.min){
+				this._values.min = this.options.bounds.min;
+				this._values.max = this.options.bounds.max;
+			}else{
+				values = {min: Math.min(max, min), max:Math.max(min, max)};
+				
+				if (values.min < this.options.bounds.min){
+					values.min = this.options.bounds.min;
+					values.max = values.min + difference;
+				}else if (values.max > this.options.bounds.max){
+					values.max = this.options.bounds.max;
+					values.min = values.max - difference;
+				}
+				
+				this._values = values;
+			}
 			
 			this._trigger("valuesChanging");
 		},
