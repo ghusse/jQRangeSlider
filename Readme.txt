@@ -48,6 +48,12 @@ jQuery Mousewheel plugin by Brandon Aaron (optional, needed for scrolling or zoo
    * Triggered when the user is moving an element and changing internal values
  * valuesChanged
    * Triggered when the user has moved and element and changed internal values (limits the number of events).
+
+# Methods
+ * scrollLeft(quantity)
+ * scrollRight(quantity)
+ * zoom(quantity)
+ * unzoom(quantity)
  
 # Prerequisites 
  * Element on which .rangeSlider() is applied will be positioned as relative if no positioning is set.

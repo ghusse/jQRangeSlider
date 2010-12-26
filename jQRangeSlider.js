@@ -210,14 +210,7 @@
 		
 		_wheelOnBar: function(event, delta, deltaX, deltaY){
 			if (this.options.wheelMode == "zoom"){
-				var diff = this._values.max - this._values.min;
-				
-				min = this._values.min + deltaY * this.options.wheelSpeed * diff / 200;
-				max = this._values.max - deltaY * this.options.wheelSpeed * diff / 200;
-				
-				this.values(min, max);
-				
-				this._prepareFiringChanged();
+				this.zoom(deltaY);
 				
 				return false;
 			}
@@ -225,14 +218,7 @@
 		
 		_wheelOnContainer: function(event, delta, deltaX, deltaY){
 			if (this.options.wheelMode == "scroll"){
-				var diff = this._values.max - this._values.min;
-				
-				min = this._values.min - deltaY * this.options.wheelSpeed * diff / 100;
-				max = this._values.max - deltaY * this.options.wheelSpeed * diff / 100;
-				
-				this.values(min, max);
-				
-				this._prepareFiringChanged();
+				this.scrollRight(-deltaY);
 				
 				return false;
 			}
@@ -264,6 +250,7 @@
 			}
 			
 			this._trigger("valuesChanging");
+			this._prepareFiringChanged();
 		},
 		
 		values: function(min, max){
@@ -276,7 +263,32 @@
 			
 			return this._values;
 		},
-
+		
+		zoom: function(quantity){
+			var diff = this._values.max - this._values.min;
+					
+			min = this._values.min + quantity * this.options.wheelSpeed * diff / 200;
+			max = this._values.max - quantity * this.options.wheelSpeed * diff / 200;
+			
+			this.values(min, max);
+		},
+		
+		unzoom: function(quantity){
+			this.zoom(-quantity);
+		},
+		
+		scrollLeft: function(quantity){
+			this.scrollRight(-quantity);
+		},
+		
+		scrollRight: function(quantity){
+			var diff = this._values.max - this._values.min;
+		
+			min = this._values.min + quantity * this.options.wheelSpeed * diff / 100;
+			max = this._values.max + quantity * this.options.wheelSpeed * diff / 100;
+			
+			this.values(min, max);
+		},
 		
 		destroy: function(){
 			this.bar.detach();
