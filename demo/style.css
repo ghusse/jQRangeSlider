@@ -32,24 +32,20 @@ pre code{
 
 dt{
 	font-weight:bold;
+	float:left;
+	clear:left;
+	width:150px;
+	margin-bottom:2px;
+}
+
+dt+dd{
+	margin-top:2px;
 }
 
 dd{
 	padding-left:15px;
 	margin-left:0;
-}
-
-dd dt{
-	font-weight:normal;
-	font-style:italic;
-	width:50px;
-	text-align:right;
-	float:left;
-	clear:left;
-}
-
-dd dd{
-	margin-left:55px;
+	margin-left:150px;
 }
 
 .wrapper{
