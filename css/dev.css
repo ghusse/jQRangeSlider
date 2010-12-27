@@ -59,6 +59,13 @@
 }
 
 .ui-rangeSlider-container{
-	margin:0 11px;
 	height:22px;
+}
+
+.ui-rangeSlider-arrow .ui-rangeSlider-container{
+	margin:0 11px;
+}
+
+.ui-rangeSlider-noArrow .ui-rangeSlider-container{
+	margin:0;
 }

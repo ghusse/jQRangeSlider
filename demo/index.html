@@ -55,34 +55,17 @@
 	</script>
   </head>  
   <body>  
-	<h1>jQRangeSlider usage</h1>
-	<h2>Options</h2>
 	<div class="example">
-	<dl>
-		<dt>wheelMode</dt>
-		<dd>
-			<dl>
-				<dt>null</dt>
-				<dd>No action when the user actions his mousewheel on the component.</dd>
-				<dt>"scrool"</dt>
-				<dd>Range is scrolled</dd>
-				<dt>"zoom"</dt>
-				<dd>Range is zoomed</dd>
-			</dl>
-		</dd>
-		<dt>wheelSpeed</dt>
-		<dd>Speed for scrolling or zooming when using mouse wheel on the component.</dd>
-	</dl>
-	<h2>Demo</h2>
+	<h1>jQRangeSlider demo</h1>
 	<div class="wrapper">
-	<div class="sliderZone">
-	<form action="#">
-		<p>min:<input name="min" /> max:<input name="max" /></p>
-	
-		<div id="defaultSlider" class="slider"></div>
-  </form>
-</div>
-</div>
+		<div class="sliderZone">
+		<form action="#">
+			<p>min:<input name="min" /> max:<input name="max" /></p>
+		
+			<div id="defaultSlider" class="slider"></div>
+	  </form>
+		</div>
+	</div>
 <div class="options">
 	<form>
 		<dl>
@@ -97,6 +80,8 @@
 			<dt>Binding</dt>
 			<dd><label><input type="radio" checked="checked" name="binding" value="changing" onclick="changing=$(this).parents('form').find('input[name=binding]:radio:checked').val()=='changing';" /> valuesChanging</label></dd>
 			<dd><label><input type="radio" name="binding" value="changed" onclick="changing=$(this).parents('form').find('input[name=binding]:radio:checked').val()=='changing';" /> valuesChanged</label></dd>
+			<dt>Arrows</dt>
+			<dd><label><input type="checkbox" checked="checked" name="arrows" onclick="setOption(this, 'arrows', $(this).is(':checked'));"/>Activate arrows</label></dd>
 		</dl>
 		<p style="display:none"><input type="reset" /></p>
 	</form>

@@ -42,6 +42,8 @@ jQuery Mousewheel plugin by Brandon Aaron (optional, needed for scrolling or zoo
   	* Possible values : "zoom", "scroll" or null
   * wheelSpeed: (default: 4)
     * Numerical speed (in % of selected range) of mouse wheel interaction
+  * arrows: (default: true)
+  	* boolean value that activate or disactivate scrolling arrows
 
 # Events
  * valuesChanging

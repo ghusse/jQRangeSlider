@@ -23,7 +23,8 @@
 			bounds: {min:0, max:100},
 			defaultValues: {min:20, max:50},
 			wheelMode: null,
-			wheelSpeed: 4
+			wheelSpeed: 4,
+			arrows: true
 		},
 		
 		_values: {min:20, max:50},
@@ -72,17 +73,15 @@
 				.css("position", "absolute")
 				.bind("mousewheel", $.proxy(this._wheelOnBar, this));
 			
-			this.leftArrow = $("<a class='ui-rangeSlider-arrow ui-rangeSlider-leftArrow' />")
+			this.leftArrow = $("<div class='ui-rangeSlider-arrow ui-rangeSlider-leftArrow' />")
 				.css("position", "absolute")
 				.css("left", 0)
-				.css("display", "block")
 				.bind("mousedown", $.proxy(this._startScrollLeft, this))
 				.bind("mouseup", $.proxy(this._stopScroll, this));
 			
-			this.rightArrow = $("<a class='ui-rangeSlider-arrow ui-rangeSlider-rightArrow' />")
+			this.rightArrow = $("<div class='ui-rangeSlider-arrow ui-rangeSlider-rightArrow' />")
 				.css("position", "absolute")
 				.css("right", 0)
-				.css("display", "block")
 				.bind("mousedown", $.proxy(this._startScrollRight, this))
 				.bind("mouseup", $.proxy(this._stopScroll, this));
 			
@@ -101,6 +100,14 @@
 			
 			if (this.element.css("position") != "absolute"){
 				this.element.css("position", "relative");
+			}
+			
+			if (!this.options.arrows){
+				this.leftArrow.css("display", "none");
+				this.rightArrow.css("display", "none");
+				this.element.addClass("ui-rangeSlider-noArrow");
+			}else{
+				this.element.addClass("ui-rangeSlider-arrow");
 			}
 			
 			// Seems that all the elements are not ready, outerWidth does not return the good value
@@ -128,10 +135,25 @@
 				this.options.wheelMode = value;
 			}else if (key == "wheelSpeed" && parseFloat(value) !== NaN && Math.abs(parseFloat(value)) <= 100){
 				this.options.wheelSpeed = parseFloat(value);
-				console.log(value);
+			}else if (key == "arrows" && (value === true || value === false) && value != this.options.arrows){
+				if (value){
+					this.element
+						.removeClass("ui-rangeSlider-noArrow")
+						.addClass("ui-rangeSlider-arrow");
+					this.leftArrow.css("display", "block");
+					this.rightArrow.css("display", "block");
+				}else{
+					this.element
+						.addClass("ui-rangeSlider-noArrow")
+						.removeClass("ui-rangeSlider-arrow");
+					this.leftArrow.css("display", "none");
+					this.rightArrow.css("display", "none");
+				}
+				
+				this.options.arrows = value;
+				this._initWidth();
+				this._position();
 			}
-			
-			console.log(value);
 		},
 		
 		_getPosition: function(value){
@@ -330,7 +352,6 @@
 		},
 		
 		scrollLeft: function(quantity){
-			console.log("left");
 			if (typeof quantity == 'undefined')
 				quantity = 1;
 			this.scrollRight(-quantity);
