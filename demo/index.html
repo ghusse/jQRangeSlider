@@ -60,8 +60,8 @@
 	<div class="wrapper">
 		<div class="sliderZone">
 		<form action="#">
-			<p>min:<input name="min" /> max:<input name="max" /></p>
-		
+			<dl class="values"><dt>min</dt><dd><input name="min" /></dd>
+				<dt>max</dt><dd><input name="max" /></dd></dl>
 			<div id="defaultSlider" class="slider"></div>
 	  </form>
 		</div>
@@ -87,5 +87,18 @@
 	</form>
 </div>
 </div>
+
+<h2>Code</h2>
+<pre><code><span class="comment">// default constructor</span>
+$("#element").rangeSlider();
+
+<span class="comment">// Equivalent to</span>
+$("#element").rangeSlider({
+  defaultValues:{min:20, max:50},
+  bounds:{min:0, max:100},
+  wheelMode: null,
+  wheelSpeed: 8,
+  arrows: true
+});</code></pre>
 	</body>  
 </html>  
