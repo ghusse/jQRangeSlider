@@ -77,11 +77,11 @@
 			</select></dd>
 			<dt>Wheel speed</dt>
 			<dd><input type="number" name="wheelSpeed" value="8" onkeyup="setOption(this, 'wheelSpeed', $(this).val());"/></dd>
+			<dt>Arrows</dt>
+			<dd><label><input type="checkbox" checked="checked" name="arrows" onclick="setOption(this, 'arrows', $(this).is(':checked'));"/>Activate arrows</label></dd>
 			<dt>Binding</dt>
 			<dd><label><input type="radio" checked="checked" name="binding" value="changing" onclick="changing=$(this).parents('form').find('input[name=binding]:radio:checked').val()=='changing';" /> valuesChanging</label></dd>
 			<dd><label><input type="radio" name="binding" value="changed" onclick="changing=$(this).parents('form').find('input[name=binding]:radio:checked').val()=='changing';" /> valuesChanged</label></dd>
-			<dt>Arrows</dt>
-			<dd><label><input type="checkbox" checked="checked" name="arrows" onclick="setOption(this, 'arrows', $(this).is(':checked'));"/>Activate arrows</label></dd>
 		</dl>
 		<p style="display:none"><input type="reset" /></p>
 	</form>
