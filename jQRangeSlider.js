@@ -33,42 +33,69 @@
 		leftHandle: null,
 		rightHandle: null,
 		innerBar: null,
+		container: null,
+		leftArrow:null,
+		rightArrow:null,
 		
-		// Scroll managment
+		// Scroll management
 		lastWheel : 0,
+		lastScroll: 0,
+		scrollCount: 0,
 		
 		_create: function(){
-			this.leftHandle = $("<div class='ui-rangeSlider-handle  ui-rangeSlider-leftHandle'>&nbsp;</div>")
+			this.leftHandle = $("<div class='ui-rangeSlider-handle  ui-rangeSlider-leftHandle' />")
 				.draggable({axis:"x", containment: "parent",
 					drag: $.proxy(this._handleMoved, this), 
 					stop: $.proxy(this._handleStop, this),
 					containment: "parent"})
 				.css("position", "absolute");
-			this.rightHandle = $("<div class='ui-rangeSlider-handle ui-rangeSlider-rightHandle'>&nbsp;</div>")
+			this.rightHandle = $("<div class='ui-rangeSlider-handle ui-rangeSlider-rightHandle' />")
 				.draggable({axis:"x", containment: "parent",
 					drag: $.proxy(this._handleMoved, this), 
 					stop: $.proxy(this._handleStop, this),
 					containment: "parent"})
 				.css("position", "absolute");
 			
-			this.innerBar = $("<div class='ui-rangeSlider-innerBar'>&nbsp;</div>")
+			this.innerBar = $("<div class='ui-rangeSlider-innerBar' />")
 				.css("position", "absolute")
 				.css("top", 0)
 				.css("left", 0);
+		
+			this.container = $("<dic class='ui-rangeSlider-container' />")
+				.css("position", "absolute");
 			
-			this.bar = $("<div class='ui-rangeSlider-Bar'>&nbsp;</div>")
+			this.bar = $("<div class='ui-rangeSlider-Bar' />")
 				.draggable({axis:"x", containment: "parent",
 					drag: $.proxy(this._barMoved, this), 
 					stop: $.proxy(this._barStop, this),
-					containment: this.element})
+					containment: this.container})
 				.css("position", "absolute")
 				.bind("mousewheel", $.proxy(this._wheelOnBar, this));
 			
-			this.element
+			this.leftArrow = $("<a class='ui-rangeSlider-arrow ui-rangeSlider-leftArrow' />")
+				.css("position", "absolute")
+				.css("left", 0)
+				.css("display", "block")
+				.bind("mousedown", $.proxy(this._startScrollLeft, this))
+				.bind("mouseup", $.proxy(this._stopScroll, this));
+			
+			this.rightArrow = $("<a class='ui-rangeSlider-arrow ui-rangeSlider-rightArrow' />")
+				.css("position", "absolute")
+				.css("right", 0)
+				.css("display", "block")
+				.bind("mousedown", $.proxy(this._startScrollRight, this))
+				.bind("mouseup", $.proxy(this._stopScroll, this));
+			
+			this.container
 				.append(this.leftHandle)
 				.append(this.rightHandle)
 				.append(this.innerBar)
-				.append(this.bar)
+				.append(this.bar);
+			
+			this.element
+				.append(this.container)
+				.append(this.leftArrow)
+				.append(this.rightArrow)
 				.addClass("ui-rangeSlider")
 				.bind("mousewheel", $.proxy(this._wheelOnContainer, this));
 			
@@ -76,17 +103,15 @@
 				this.element.css("position", "relative");
 			}
 			
-			this.innerBar.outerWidth(this.element.width());
-			
-			this.values(this.options.defaultValues.min, this.options.defaultValues.max);
-			
 			// Seems that all the elements are not ready, outerWidth does not return the good value
 			setTimeout($.proxy(this._initWidth, this),
 			1);
 		},
 		
 		_initWidth: function(){
-			this.innerBar.css("width", this.element.width() - this.innerBar.outerWidth(true) + this.innerBar.width());
+			this.container.css("width", this.element.width() - this.container.outerWidth(true) + this.container.width());
+			this.innerBar.css("width", this.container.width() - this.innerBar.outerWidth(true) + this.innerBar.width());
+			this.values(this.options.defaultValues.min, this.options.defaultValues.max);
 		},
 		
 		_setOption: function(key, value) {
@@ -110,11 +135,11 @@
 		},
 		
 		_getPosition: function(value){
-			return (value - this.options.bounds.min) * (this.element.innerWidth() - 1) / (this.options.bounds.max - this.options.bounds.min);
+			return (value - this.options.bounds.min) * (this.container.innerWidth() - 1) / (this.options.bounds.max - this.options.bounds.min);
 		},
 		
 		_getValue: function(position){
-			return position * (this.options.bounds.max - this.options.bounds.min) / (this.element.innerWidth() - 1) + this.options.bounds.min;
+			return position * (this.options.bounds.max - this.options.bounds.min) / (this.container.innerWidth() - 1) + this.options.bounds.min;
 		},
 		
 		_trigger: function(eventName){
@@ -253,6 +278,33 @@
 			this._prepareFiringChanged();
 		},
 		
+		_startScrollLeft: function(event, ui){
+			this.lastScroll = Math.random();
+			this.scrollCount = 0;
+			this._continueScrollingRight(-1, this.lastScroll);
+		},
+		
+		_startScrollRight: function(event, ui){
+			this.lastScroll = Math.random();
+			this.scrollCount = 0;
+			this._continueScrollingRight(1, this.lastScroll);
+		},
+		
+		_continueScrollingRight: function(quantity, last){
+			if (last == this.lastScroll){
+				var factor = Math.min(Math.floor(this.scrollCount / 5) + 1, 4) / 4;
+				
+				this.scrollRight(quantity * factor);
+				this.scrollCount++;
+				setTimeout($.proxy(function(){this._continueScrollingRight(quantity, last);}, this), 50);
+			}
+		},
+		
+		_stopScroll: function(event, ui){
+			this.lastScroll = Math.random();
+		},
+		
+		
 		values: function(min, max){
 			if (typeof min != "undefined" 
 				&& typeof max != "undefined")
@@ -278,10 +330,15 @@
 		},
 		
 		scrollLeft: function(quantity){
+			console.log("left");
+			if (typeof quantity == 'undefined')
+				quantity = 1;
 			this.scrollRight(-quantity);
 		},
 		
 		scrollRight: function(quantity){
+			if (typeof quantity == "undefined")
+				quantity = 1;
 			var diff = this._values.max - this._values.min;
 		
 			min = this._values.min + quantity * this.options.wheelSpeed * diff / 100;
@@ -295,6 +352,9 @@
 			this.leftHandle.detach();
 			this.rightHandle.detach();
 			this.innerBar.detach();
+			this.container.detach();
+			this.leftArrow.detach();
+			this.rightArrow.detach();
 			this.element.removeClass("ui-rangeSlider");
 			
 			if (this.options.theme != "")

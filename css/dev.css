@@ -1,3 +1,8 @@
+/**
+ * default development theme for jQRangeSlider
+ * Using fam fam icon set from Mark James, http://www.famfamfam.com/lab/icons/silk/ (Creative Commons Attribution 2.5 License)
+ */
+
 .ui-rangeSlider.ui-rangeSlider-dev{
 	height:22px;
 	z-index:90;
@@ -33,4 +38,27 @@
 .ui-rangeSlider.ui-rangeSlider-dev .ui-rangeSlider-Bar.ui-draggable-dragging{
 	cursor:	-moz-grabbing;
 	cursor:grabbing;
+}
+
+.ui-rangeSlider-arrow{
+	height:16px;
+	margin:2px 0;
+	width:16px;
+	background-repeat:no-repeat;
+	cursor:pointer;
+}
+
+.ui-rangeSlider-arrow.ui-rangeSlider-leftArrow{
+	background-image: url('icons/resultset_previous.png');
+	background-position:center left;
+}
+
+.ui-rangeSlider-arrow.ui-rangeSlider-rightArrow{
+	background-image: url('icons/resultset_next.png');
+	background-position:center right;
+}
+
+.ui-rangeSlider-container{
+	margin:0 11px;
+	height:22px;
 }
