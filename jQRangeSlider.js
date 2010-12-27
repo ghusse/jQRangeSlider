@@ -240,7 +240,6 @@
 		
 		_handleStop: function(event, ui){
 			this._position();
-			this._trigger("valuesChanged");
 		},
 		
 		_prepareFiringChanged: function(){
