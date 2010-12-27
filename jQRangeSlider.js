@@ -18,7 +18,7 @@
  */
  
  (function ($, undefined) {
-	$.widget("ui.rangeSlider", $.ui.draggable, {
+	$.widget("ui.rangeSlider", {
 		options: {
 			bounds: {min:0, max:100},
 			defaultValues: {min:20, max:50},
