@@ -111,13 +111,16 @@
 			}
 			
 			// Seems that all the elements are not ready, outerWidth does not return the good value
-			setTimeout($.proxy(this._initWidth, this),
-			1);
+			setTimeout($.proxy(this._initWidth, this), 1);
+			setTimeout($.proxy(this._initValues, this), 1);
 		},
 		
 		_initWidth: function(){
 			this.container.css("width", this.element.width() - this.container.outerWidth(true) + this.container.width());
 			this.innerBar.css("width", this.container.width() - this.innerBar.outerWidth(true) + this.innerBar.width());
+		},
+		
+		_initValues: function(){
 			this.values(this.options.defaultValues.min, this.options.defaultValues.max);
 		},
 		
@@ -167,10 +170,7 @@
 		_trigger: function(eventName){
 			this.element.trigger(eventName, {
 			  	helper: this.element,
-			  	values: {
-			  		min: this._values.min,
-			  		max: this._values.max
-			  	}
+			  	values: this.values()
 			  });
 		},
 		
@@ -256,7 +256,7 @@
 		
 		_wheelOnBar: function(event, delta, deltaX, deltaY){
 			if (this.options.wheelMode == "zoom"){
-				this.zoom(deltaY);
+				this.zoomIn(-deltaY);
 				
 				return false;
 			}
@@ -337,7 +337,7 @@
 			return this._values;
 		},
 		
-		zoom: function(quantity){
+		zoomIn: function(quantity){
 			var diff = this._values.max - this._values.min;
 					
 			min = this._values.min + quantity * this.options.wheelSpeed * diff / 200;
@@ -346,7 +346,7 @@
 			this.values(min, max);
 		},
 		
-		unzoom: function(quantity){
+		zoomOut: function(quantity){
 			this.zoom(-quantity);
 		},
 		

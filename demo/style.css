@@ -24,8 +24,12 @@ h1{
 	text-align:right;
 	width:75px;
 	margin-left:5px;
-}
 	margin-right:20px;
+}
+.sliderZone input{
+	width:200px;
+	
+}
 pre{
 	overflow:auto;
 }

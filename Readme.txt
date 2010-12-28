@@ -1,4 +1,4 @@
-jQRangeSlider
+jQRangeSlider & jQDateRangeSlider
 A javascript slider selector that supports dates
 
 # License
@@ -28,6 +28,15 @@ jQuery UI widget
 jQuery UI draggable
 jQuery Mousewheel plugin by Brandon Aaron (optional, needed for scrolling or zooming)
 
+# Usage
+ * For a rangeSlider widget with float values : 
+ 	 * <script type="text/javascript" src="jQRangeSlider.js"></script>
+   * $("#element").rangeSlider({/*options*/});
+ * For a dateRangeSlider widget : 
+ 	 * <script type="text/javascript" src="jQRangeSlider.js"></script>
+ 	 * <script type="text/javascript" src="jQDateRangeSlider.js"></script>
+   * $("#element").dateRangeSlider({/*options*/});
+
 # Options
   * bounds (default: 0 - 100)
     * Inclusive bounds of the selection range
@@ -54,8 +63,10 @@ jQuery Mousewheel plugin by Brandon Aaron (optional, needed for scrolling or zoo
 # Methods
  * scrollLeft(quantity)
  * scrollRight(quantity)
- * zoom(quantity)
- * unzoom(quantity)
+ * zoomIn(quantity)
+ * zoomOut(quantity)
  
 # Prerequisites 
  * Element on which .rangeSlider() is applied will be positioned as relative if no positioning is set.
+ * jQDateRangeSlider.js is only needed by the dateRangeSlider widget.
+ * jQRangeSlider.js is needed by both widgets
