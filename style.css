@@ -19,3 +19,13 @@ a { color: #000000; }
 pre { background: #000; color: #fff; padding: 15px;}
 hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
 .footer { text-align:center; padding-top:30px; font-style: italic; }
+
+ul.features{
+	list-style-type:none;
+	padding:0;
+}
+
+ul.features img{
+	margin-right:10px;
+	vertical-align:middle;
+}
