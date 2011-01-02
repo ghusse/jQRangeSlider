@@ -376,11 +376,6 @@
 			this.leftArrow.detach();
 			this.rightArrow.detach();
 			this.element.removeClass("ui-rangeSlider");
-			
-			if (this.options.theme != "")
-			{
-				this.element.removeClass("ui-rangeSlider-"+this.options.theme);
-			}
 		}
 	});
 })(jQuery);
