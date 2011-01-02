@@ -1,0 +1,167 @@
+<!DOCTYPE html>  
+<html lang="en">  
+  <head>  
+	<meta charset="utf-8">  
+	<title>jQRangeSlider demo page</title>  
+	<link rel="stylesheet" href="../css/common.css">  
+	<link rel="stylesheet" href="../css/dev.css">  
+	<link rel="stylesheet" href="style.css">  
+	<script src="../lib/jquery-1.4.4.min.js"></script>
+	<script src="../lib/jquery-ui-1.8.7.custom.min.js"></script>
+	<script src="../lib/jquery.mousewheel.min.js"></script>
+	<script src="../jQRangeSlider.js"></script>
+	<script src="../jQDateRangeSlider.js"></script>
+	<script>//<!--
+		var changing = true;
+		
+		function updateValuesChanged(event, ui){
+			if (!changing)
+				displayValues(ui.helper, ui.values)	
+		}
+		
+		function updateValuesChanging(event, ui){
+			if (changing)
+				displayValues(ui.helper, ui.values)
+		}
+		
+		function displayValues(slider, values){
+			if (values.min instanceof Date) {
+	  		slider.parents("form").find("input[name=min]").val(values.min.toLocaleString());
+		  	slider.parents("form").find("input[name=max]").val(values.max.toLocaleString());
+		  }
+		  else {
+		  	slider.parents("form").find("input[name=min]").val(values.min);
+		  	slider.parents("form").find("input[name=max]").val(values.max);
+		  }
+		}
+		
+		function makeSlider(selector, options){
+			var slider = $(selector)
+				.rangeSlider(options)
+				.bind("valuesChanging", updateValuesChanging)
+				.bind("valuesChanged", updateValuesChanged)
+				.addClass("ui-rangeSlider-dev");
+			displayValues(slider, slider.rangeSlider("values"));
+		}
+		
+		function makeDateSlider(selector, options){
+			var slider = $(selector)
+				.dateRangeSlider(options)
+				.bind("valuesChanging", updateValuesChanging)
+				.bind("valuesChanged", updateValuesChanged)
+				.addClass("ui-rangeSlider-dev");
+			displayValues(slider, slider.rangeSlider("values"));
+		}
+		
+		function setOption(element, option, value){
+			$(element).parents(".example").find(".slider").rangeSlider("option", option, value);
+		}
+		
+		function getOption(element, option){
+			return $(element).parents(".example").find(".slider").rangeSlider("options")[option];
+		}
+		
+		$(document).ready(function(){
+			makeSlider("#defaultSlider", {});
+			makeDateSlider("#defaultDateSlider", {});
+			
+			$("form").submit(function(){return false;});
+			$("input[type=reset]").click();
+		});
+	// -->
+	</script>
+  </head>  
+  <body>  
+	<h1>jQRangeSlider demo</h1>
+	<div class="example">
+		<h2>Float values</h2>
+	<div class="wrapper">
+		<div class="sliderZone">
+		<form action="#">
+			<dl class="values"><dt>min</dt><dd><input name="min" /></dd>
+				<dt>max</dt><dd><input name="max" /></dd></dl>
+			<div id="defaultSlider" class="slider"></div>
+	  </form>
+		</div>
+	</div>
+<div class="options">
+	<form>
+		<dl>
+			<dt>Wheel mode</dt>
+			<dd><select name="wheelMode" onchange="setOption(this, 'wheelMode', $(this).val());">
+					<option value="null" selected="selected">null</option>
+					<option value="scroll">Scroll</option>
+					<option value="zoom">Zoom</option>
+			</select></dd>
+			<dt>Wheel speed</dt>
+			<dd><input type="number" name="wheelSpeed" value="8" onkeyup="setOption(this, 'wheelSpeed', $(this).val());"/></dd>
+			<dt>Arrows</dt>
+			<dd><label><input type="checkbox" checked="checked" name="arrows" onclick="setOption(this, 'arrows', $(this).is(':checked'));"/>Activate arrows</label></dd>
+			<dt>Binding</dt>
+			<dd><label><input type="radio" checked="checked" name="binding" value="changing" onclick="changing=$(this).parents('form').find('input[name=binding]:radio:checked').val()=='changing';" /> valuesChanging</label></dd>
+			<dd><label><input type="radio" name="binding" value="changed" onclick="changing=$(this).parents('form').find('input[name=binding]:radio:checked').val()=='changing';" /> valuesChanged</label></dd>
+		</dl>
+		<p style="display:none"><input type="reset" /></p>
+	</form>
+</div>
+</div>
+
+<h3>Code</h3>
+<pre><code><span class="comment">// default constructor</span>
+$("#element").rangeSlider();
+
+<span class="comment">// Equivalent to</span>
+$("#element").rangeSlider({
+  defaultValues:{min:20, max:50},
+  bounds:{min:0, max:100},
+  wheelMode: null,
+  wheelSpeed: 8,
+  arrows: true
+});</code></pre>
+<div class="example">
+	<h2>Dates</h2>
+	<div class="wrapper">
+		<div class="sliderZone">
+		<form action="#">
+			<dl class="dateValues"><dt>min</dt><dd><input name="min" /></dd>
+				<dt>max</dt><dd><input name="max" /></dd></dl>
+			<div id="defaultDateSlider" class="slider"></div>
+	  </form>
+		</div>
+	</div>
+<div class="options">
+	<form>
+		<dl>
+			<dt>Wheel mode</dt>
+			<dd><select name="wheelMode" onchange="setOption(this, 'wheelMode', $(this).val());">
+					<option value="null" selected="selected">null</option>
+					<option value="scroll">Scroll</option>
+					<option value="zoom">Zoom</option>
+			</select></dd>
+			<dt>Wheel speed</dt>
+			<dd><input type="number" name="wheelSpeed" value="8" onkeyup="setOption(this, 'wheelSpeed', $(this).val());"/></dd>
+			<dt>Arrows</dt>
+			<dd><label><input type="checkbox" checked="checked" name="arrows" onclick="setOption(this, 'arrows', $(this).is(':checked'));"/>Activate arrows</label></dd>
+			<dt>Binding</dt>
+			<dd><label><input type="radio" checked="checked" name="binding" value="changing" onclick="changing=$(this).parents('form').find('input[name=binding]:radio:checked').val()=='changing';" /> valuesChanging</label></dd>
+			<dd><label><input type="radio" name="binding" value="changed" onclick="changing=$(this).parents('form').find('input[name=binding]:radio:checked').val()=='changing';" /> valuesChanged</label></dd>
+		</dl>
+		<p style="display:none"><input type="reset" /></p>
+	</form>
+</div>
+</div>
+
+<h3>Code</h3>
+<pre><code><span class="comment">// default constructor</span>
+$("#element").rangeSlider();
+
+<span class="comment">// Equivalent to</span>
+$("#element").dateRangeSlider({
+  defaultValues:{min:new Date(2010,1,111), max:new Date(2011,1,11)},
+  bounds:{min:new Date(2010,0,1), max:new Date(2012,0,1)},
+  wheelMode: null,
+  wheelSpeed: 8,
+  arrows: true
+});</code></pre>
+	</body>  
+</html>  

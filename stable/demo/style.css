@@ -1,0 +1,101 @@
+body{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:14px;
+}
+
+h1{
+	text-align:center;
+	font-weight:normal;
+	font-size:25px;
+}
+
+.slider{
+	width:100%;
+	margin:20px auto;
+}
+.tick{
+	border-left:1px solid black;
+	position:absolute;
+	top:0;
+	height:20px;
+	text-align:right;
+}
+.sliderZone input{
+	text-align:right;
+	width:75px;
+	margin-left:5px;
+	margin-right:20px;
+}
+.sliderZone input{
+	width:200px;
+	
+}
+pre{
+	overflow:auto;
+}
+pre code{
+	tab-interval:  2pt;
+	display:block;
+	border-width:1px 1px 1px 15px;
+	border-style:solid;
+	border-color:#CCC;
+	color:#444;
+	padding:5px 10px;
+	margin:0 5px;
+	font-family:Consolas, Monaco, Arial, Helvetica, sans-serif;
+	font-size:12px;
+}
+
+pre code .comment{
+	color:#5e7f5f;
+}
+
+dt{
+	font-weight:bold;
+	float:left;
+	clear:left;
+	width:150px;
+	margin-bottom:2px;
+}
+
+dl.values dt{
+	width:75px;
+}
+
+dl.values dd{
+	margin-left:75px;
+}
+
+dt+dd{
+	margin-top:2px;
+}
+
+dd{
+	padding-left:15px;
+	margin-left:0;
+	margin-left:150px;
+}
+
+.wrapper{
+	width:100%;
+	float:left;
+}
+
+.sliderZone{
+	margin-right:400px;
+}
+
+.options{
+	width:400px;
+	float:left;
+	margin-left:-400px;
+}
+
+input[type=number]{
+	width:3em;
+}
+
+.options form{
+	margin:0 10px;
+}
+
