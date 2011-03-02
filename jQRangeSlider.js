@@ -62,7 +62,7 @@
 				.css("top", 0)
 				.css("left", 0);
 		
-			this.container = $("<dic class='ui-rangeSlider-container' />")
+			this.container = $("<div class='ui-rangeSlider-container' />")
 				.css("position", "absolute");
 			
 			this.bar = $("<div class='ui-rangeSlider-Bar' />")
