@@ -62,7 +62,7 @@
 				.css("top", 0)
 				.css("left", 0);
 		
-			this.container = $("<dic class='ui-rangeSlider-container' />")
+			this.container = $("<div class='ui-rangeSlider-container' />")
 				.css("position", "absolute");
 			
 			this.bar = $("<div class='ui-rangeSlider-Bar' />")
@@ -376,11 +376,6 @@
 			this.leftArrow.detach();
 			this.rightArrow.detach();
 			this.element.removeClass("ui-rangeSlider");
-			
-			if (this.options.theme != "")
-			{
-				this.element.removeClass("ui-rangeSlider-"+this.options.theme);
-			}
 		}
 	});
 })(jQuery);
