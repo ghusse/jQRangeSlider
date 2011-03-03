@@ -50,7 +50,7 @@
 		values: function(min, max){
 			if (typeof min != "undefined" && typeof max != "undefined" && min instanceof Date && max instanceof Date)
 			{
-				$.ui.rangeSlider.prototype.values.apply(this, min.valueOf(), max.valueOf());
+				$.ui.rangeSlider.prototype.values.apply(this, [min.valueOf(), max.valueOf()]);
 			}
 			
 			values = $.ui.rangeSlider.prototype.values.apply(this, arguments);
