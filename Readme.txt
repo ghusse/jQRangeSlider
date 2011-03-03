@@ -65,6 +65,9 @@ jQuery Mousewheel plugin by Brandon Aaron (optional, needed for scrolling or zoo
  * scrollRight(quantity)
  * zoomIn(quantity)
  * zoomOut(quantity)
+ * values(min, max) : get or set the values
+ * min(value): get or set the minimum value
+ * max(value): get or set the maximum value
  
 # Prerequisites 
  * Element on which .rangeSlider() is applied will be positioned as relative if no positioning is set.
