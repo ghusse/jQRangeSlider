@@ -65,8 +65,17 @@ jQuery Mousewheel plugin by Brandon Aaron (optional, needed for scrolling or zoo
  * scrollRight(quantity)
  * zoomIn(quantity)
  * zoomOut(quantity)
+ * values(min, max) : get or set the values
+ * min(value): get or set the minimum value
+ * max(value): get or set the maximum value
  
 # Prerequisites 
  * Element on which .rangeSlider() is applied will be positioned as relative if no positioning is set.
  * jQDateRangeSlider.js is only needed by the dateRangeSlider widget.
  * jQRangeSlider.js is needed by both widgets
+
+# Changelog
+ * 1.1  : 2011-03-03 Added methods for setting and getting only one value
+ * 1.0.2: 2011-03-03 Set values fix
+ * 1.0.1: 2011-03-02 Fix for IE8
+ * 1.0  : 2010-12-28 Initial release

@@ -5,14 +5,14 @@
 
 .ui-rangeSlider.ui-rangeSlider-dev{
 	height:22px;
-	z-index:90;
+	z-index:1;
 }
 
 .ui-rangeSlider.ui-rangeSlider-dev .ui-rangeSlider-innerBar{
 	height:16px;
 	margin:3px 6px;
 	background:#DDD;
-	z-index:100;
+	z-index:2;
 }
 
 .ui-rangeSlider.ui-rangeSlider-dev .ui-rangeSlider-handle{
@@ -21,7 +21,7 @@
 	background:#AAA;
 	background:rgba(100,100,100, 0.3);
 	cursor:col-resize;
-	z-index:120;
+	z-index:4;
 }
 
 .ui-rangeSlider.ui-rangeSlider-dev .ui-rangeSlider-Bar{
@@ -32,7 +32,7 @@
 	cursor:move;
 	cursor:grab;
 	cursor: -moz-grab;
-	z-index:110;
+	z-index:3;
 }
 
 .ui-rangeSlider.ui-rangeSlider-dev .ui-rangeSlider-Bar.ui-draggable-dragging{

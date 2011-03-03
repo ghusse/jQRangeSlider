@@ -30,7 +30,6 @@
 				this.options.defaultValues = {min: this.options.defaultValues.min.valueOf(), max: this.options.defaultValues.max.valueOf()};
 			}else{
 				this.options.defaultValues = {min: new Date(2010,1,11).valueOf(), max: new Date(2011,1,11).valueOf()};
-				console.log(this.options.defaultValues, new Date(this.options.defaultValues.min));
 			}
 			
 			
@@ -50,12 +49,29 @@
 		values: function(min, max){
 			if (typeof min != "undefined" && typeof max != "undefined" && min instanceof Date && max instanceof Date)
 			{
-				$.ui.rangeSlider.prototype.values.apply(this, min.valueOf(), max.valueOf());
+				values = $.ui.rangeSlider.prototype.values.apply(this, [min.valueOf(), max.valueOf()]);
+			}else{
+				values = $.ui.rangeSlider.prototype.values.apply(this, arguments);
 			}
 			
-			values = $.ui.rangeSlider.prototype.values.apply(this, arguments);
-			
 			return {min: new Date(values.min), max: new Date(values.max)};
+		},
+		
+		min: function(min){
+			if (typeof min != "undefined" && min instanceof Date){
+				return new Date($.ui.rangeSlider.prototype.min.apply(this, [min.valueOf()]));
+			}
+			
+			return new Date($.ui.rangeSlider.prototype.min.apply(this));
+		},
+		
+		max: function(max){
+			if (typeof max != "undefined" && max instanceof Date){
+				return new Date($.ui.rangeSlider.prototype.max.apply(this, [max.valueOf()]));
+			}
+			
+			return new Date($.ui.rangeSlider.prototype.max.apply(this));
 		}
+		
 	}));
 })(jQuery);
