@@ -1,0 +1,3 @@
+[submodule "stable"]
+	path = stable
+	url = ./latest
