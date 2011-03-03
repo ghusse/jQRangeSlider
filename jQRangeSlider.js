@@ -27,7 +27,7 @@
 			arrows: true
 		},
 		
-		_values: {min:20, max:50},
+		_values: null,
 		
 		// Created elements
 		bar: null,
@@ -44,6 +44,8 @@
 		scrollCount: 0,
 		
 		_create: function(){
+			this._values = this.options.defaultValues;
+
 			this.leftHandle = $("<div class='ui-rangeSlider-handle  ui-rangeSlider-leftHandle' />")
 				.draggable({axis:"x", containment: "parent",
 					drag: $.proxy(this._handleMoved, this), 
@@ -109,7 +111,7 @@
 			}else{
 				this.element.addClass("ui-rangeSlider-arrow");
 			}
-			
+						
 			// Seems that all the elements are not ready, outerWidth does not return the good value
 			setTimeout($.proxy(this._initWidth, this), 1);
 			setTimeout($.proxy(this._initValues, this), 1);
@@ -335,6 +337,24 @@
 			}
 			
 			return this._values;
+		},
+		
+		min: function(min){
+			if (typeof min != "undefined"){
+				this._setValues(min, this._values.max);
+				this._position();
+			}
+			
+			return this._values.min;
+		},
+		
+		max: function(max){
+			if (typeof max != "undefined"){
+				this._setValues(this._values.min, max);
+				this._position();
+			}
+			
+			return this._values.max;
 		},
 		
 		zoomIn: function(quantity){

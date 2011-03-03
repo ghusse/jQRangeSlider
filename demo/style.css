@@ -22,14 +22,14 @@ h1{
 }
 .sliderZone input{
 	text-align:right;
-	width:75px;
 	margin-left:5px;
-	margin-right:20px;
+	margin-right:0;
+	width:200px;	
 }
-.sliderZone input{
-	width:200px;
-	
+.sliderZone img{
+	vertical-align:middle;
 }
+
 pre{
 	overflow:auto;
 }

@@ -6,28 +6,30 @@
 	<link rel="stylesheet" href="../css/common.css">  
 	<link rel="stylesheet" href="../css/dev.css">  
 	<link rel="stylesheet" href="style.css">  
+	<link rel="stylesheet" href="lib/jquery-ui/css/smoothness/jquery-ui-1.8.10.custom.css">  
 	<script src="../lib/jquery-1.4.4.min.js"></script>
-	<script src="../lib/jquery-ui-1.8.7.custom.min.js"></script>
+	<script src="lib/jquery-ui/js/jquery-ui-1.8.10.custom.min.js"></script>
 	<script src="../lib/jquery.mousewheel.min.js"></script>
 	<script src="../jQRangeSlider.js"></script>
 	<script src="../jQDateRangeSlider.js"></script>
 	<script>//<!--
 		var changing = true;
+		var dateChanging = true;
 		
-		function updateValuesChanged(event, ui){
+		function updateValuesChanged(event, ui, changing){
 			if (!changing)
 				displayValues(ui.helper, ui.values)	
 		}
 		
-		function updateValuesChanging(event, ui){
+		function updateValuesChanging(event, ui, changing){
 			if (changing)
 				displayValues(ui.helper, ui.values)
 		}
 		
 		function displayValues(slider, values){
 			if (values.min instanceof Date) {
-	  		slider.parents("form").find("input[name=min]").val(values.min.toLocaleString());
-		  	slider.parents("form").find("input[name=max]").val(values.max.toLocaleString());
+	  		slider.parents("form").find("input[name=min]").val($.datepicker.formatDate("yy-mm-dd", values.min));
+		  	slider.parents("form").find("input[name=max]").val($.datepicker.formatDate("yy-mm-dd", values.max));
 		  }
 		  else {
 		  	slider.parents("form").find("input[name=min]").val(values.min);
@@ -38,8 +40,8 @@
 		function makeSlider(selector, options){
 			var slider = $(selector)
 				.rangeSlider(options)
-				.bind("valuesChanging", updateValuesChanging)
-				.bind("valuesChanged", updateValuesChanged)
+				.bind("valuesChanging", function(event, ui){updateValuesChanging(event, ui, changing);})
+				.bind("valuesChanged", function(event, ui){updateValuesChanged(event, ui, changing);})
 				.addClass("ui-rangeSlider-dev");
 			displayValues(slider, slider.rangeSlider("values"));
 		}
@@ -47,13 +49,16 @@
 		function makeDateSlider(selector, options){
 			var slider = $(selector)
 				.dateRangeSlider(options)
-				.bind("valuesChanging", updateValuesChanging)
-				.bind("valuesChanged", updateValuesChanged)
+				.bind("valuesChanging", function(event, ui){updateValuesChanging(event, ui, dateChanging);})
+				.bind("valuesChanged", function(event, ui){updateValuesChanged(event, ui, dateChanging);})
 				.addClass("ui-rangeSlider-dev");
 			displayValues(slider, slider.rangeSlider("values"));
 		}
 		
 		function setOption(element, option, value){
+			if (value == "null") {
+				value = null
+			}
 			$(element).parents(".example").find(".slider").rangeSlider("option", option, value);
 		}
 		
@@ -64,6 +69,24 @@
 		$(document).ready(function(){
 			makeSlider("#defaultSlider", {});
 			makeDateSlider("#defaultDateSlider", {});
+			
+			$(".dateValues input").datepicker({
+				maxDate: new Date(2012,0,1),
+				minDate: new Date(2010,0,1),
+				dateFormat: "yy-mm-dd",
+				buttonImage: "img/calendar.png",
+				buttonImageOnly: true,
+				buttonText: "Choose a date",
+				showOn: "both"
+				})
+			
+			$(".dateValues input[name=min]").change(function(event, ui){
+				$("#defaultDateSlider").dateRangeSlider("min", $(this).datepicker("getDate"));
+			});
+			
+			$(".dateValues input[name=max]").change(function(event, ui){
+				$("#defaultDateSlider").dateRangeSlider("max", $(this).datepicker("getDate"));
+			});
 			
 			$("form").submit(function(){return false;});
 			$("input[type=reset]").click();
@@ -143,8 +166,8 @@ $("#element").rangeSlider({
 			<dt>Arrows</dt>
 			<dd><label><input type="checkbox" checked="checked" name="arrows" onclick="setOption(this, 'arrows', $(this).is(':checked'));"/>Activate arrows</label></dd>
 			<dt>Binding</dt>
-			<dd><label><input type="radio" checked="checked" name="binding" value="changing" onclick="changing=$(this).parents('form').find('input[name=binding]:radio:checked').val()=='changing';" /> valuesChanging</label></dd>
-			<dd><label><input type="radio" name="binding" value="changed" onclick="changing=$(this).parents('form').find('input[name=binding]:radio:checked').val()=='changing';" /> valuesChanged</label></dd>
+			<dd><label><input type="radio" checked="checked" name="binding" value="changing" onclick="dateChanging=$(this).parents('form').find('input[name=binding]:radio:checked').val()=='changing';" /> valuesChanging</label></dd>
+			<dd><label><input type="radio" name="binding" value="changed" onclick="dateChanging=$(this).parents('form').find('input[name=binding]:radio:checked').val()=='changing';" /> valuesChanged</label></dd>
 		</dl>
 		<p style="display:none"><input type="reset" /></p>
 	</form>
