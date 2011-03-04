@@ -53,12 +53,30 @@ jQuery Mousewheel plugin by Brandon Aaron (optional, needed for scrolling or zoo
     * Numerical speed (in % of selected range) of mouse wheel interaction
   * arrows: (default: true)
   	* boolean value that activate or disactivate scrolling arrows
+  * valueHelpers: ("show", "hide", default:"change")
+  	* string indicating if value helpers have to be displayed
+  		* "show" indicates that helpers must be visible
+  		* "hide" indicates that helpers must be hidden
+  		* "change" indicates that helpers only have to be shown when the user changes a value
+  * formatter: function(value) returning a string, default: null
+  	* a formatter function for displayed helpers. When set to null, default formatter is used.
+  * durationIn: default:0
+  	* fadeIn duration in ms for showing helpers on a value change
+  * durationOut: default:400 
+  	* fadeOut duration in ms for hiding helpers after a change
+  * delayOut: default:200
+  	* delay before hiding helpers after a change
 
 # Events
  * valuesChanging
    * Triggered when the user is moving an element and changing internal values
+   * Triggered a lot of times during the move
  * valuesChanged
    * Triggered when the user has moved and element and changed internal values (limits the number of events).
+  * minValueChanging/maxValueChanging
+  	* Triggered when the minimum/maximum selected value is starting to change (only fired once during a move)
+  * minValueChanged/maxValueChanged
+  	* Triggered has the minimum/maximum selected value have been changed, at the end of the move.
 
 # Methods
  * scrollLeft(quantity)
