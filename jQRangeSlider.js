@@ -116,7 +116,7 @@
 				this.arrows.right.css("display", "none");
 				this.element.addClass("ui-rangeSlider-noArrow");
 			}else{
-				this.element.addClass("ui-rangeSlider-arrow");
+				this.element.addClass("ui-rangeSlider-withArrows");
 			}
 			
 			if (this.options.valueHelpers != "hide"){
@@ -503,7 +503,7 @@
 		},
 		
 		_hideHelpers: function(){
-			if (this.options.valueHelpers == "change"){
+			if (this.options.valueHelpers == "change" && this.helpers.left != null && this.helpers.right != null){
 				this.helpers.leftDisplayed = false;
 				this.helpers.rightDisplayed = false;
 				this.helpers.left.stop(true, true).delay(this.options.delayOut).fadeOut(this.options.durationOut);
@@ -567,6 +567,8 @@
 		},
 		
 		destroy: function(){
+			this.element.removeClass("ui-rangeSlider-withArrows")
+			.removeClass("ui-rangeSlider-noArrow");
 			this.bar.detach();
 			this.leftHandle.detach();
 			this.rightHandle.detach();
