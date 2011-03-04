@@ -39,7 +39,7 @@
 		_setOption: function(key, value){
 			if ((key == "defaultValues" || key== "bounds") && typeof value != "undefined" && value != null && typeof value.min != "undefined" && typeof value.max != undefined){
 				if (value.min instanceof Date && value.max instanceof Date){
-					$.ui.rangeSlider.prototype._setOption.apply(this, key, {min:value.min.valueOf(), max:value.max.valueOf()});
+					$.ui.rangeSlider.prototype._setOption.apply(this, [key, {min:value.min.valueOf(), max:value.max.valueOf()}]);
 				}
 			}else{
 				$.ui.rangeSlider.prototype._setOption.apply(this, arguments);
