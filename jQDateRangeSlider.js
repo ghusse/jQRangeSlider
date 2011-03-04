@@ -39,11 +39,19 @@
 		_setOption: function(key, value){
 			if ((key == "defaultValues" || key== "bounds") && typeof value != "undefined" && value != null && typeof value.min != "undefined" && typeof value.max != undefined){
 				if (value.min instanceof Date && value.max instanceof Date){
-					$.ui.rangeSlider.prototype._setOption.apply(this, key, {min:value.min.valueOf(), max:value.max.valueOf()});
+					$.ui.rangeSlider.prototype._setOption.apply(this, [key, {min:value.min.valueOf(), max:value.max.valueOf()}]);
 				}
 			}else{
 				$.ui.rangeSlider.prototype._setOption.apply(this, arguments);
 			}
+		},
+		
+		_defaultFormat: function(value){
+			value = new Date(value);
+			var month = value.getMonth() + 1;
+			var day = value.getDay() + 1;
+			return "" + value.getFullYear() + "-" + (month < 10 ? "0" + month : month) 
+				+ "-" + (day < 10 ? "0" + day : day);
 		},
 		
 		values: function(min, max){
