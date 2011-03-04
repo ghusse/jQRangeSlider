@@ -75,6 +75,7 @@ jQuery Mousewheel plugin by Brandon Aaron (optional, needed for scrolling or zoo
  * jQRangeSlider.js is needed by both widgets
 
 # Changelog
+ * 1.1.1: 2011-03-04 bugfixes on public methods
  * 1.1  : 2011-03-03 Added methods for setting and getting only one value
  * 1.0.2: 2011-03-03 Set values fix
  * 1.0.1: 2011-03-02 Fix for IE8
