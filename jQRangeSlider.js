@@ -367,7 +367,7 @@
 		},
 		
 		zoomOut: function(quantity){
-			this.zoom(-quantity);
+			this.zoomIn(-quantity);
 		},
 		
 		scrollLeft: function(quantity){
