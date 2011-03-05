@@ -181,6 +181,15 @@
 				}
 			}else if (key == "formatter" && value != null && typeof value == "function"){
 				this.options.formatter = value;
+			}else if (key == "bounds" 
+					&& (typeof value.min != "undefined") 
+					&& (typeof value.max != "undefined") 
+					&& parseFloat(value.min) === value.min 
+					&& parseFloat(value.max) === value.max
+					&& value.min < value.max)
+			{
+				this.options.bounds = value;
+				this.values(this._values.min, value.max, this._values.max);
 			}
 		},
 		
@@ -429,8 +438,8 @@
 		},
 		
 		_createHelpers: function(){
-			this.helpers.left = this._createHelper(this.helpers.left, "ui-rangeSlider-helpers.left");
-			this.helpers.right = this._createHelper(this.helpers.right, "ui-rangeSlider-helpers.right");
+			this.helpers.left = this._createHelper(this.helpers.left, "ui-rangeSlider-leftHelper");
+			this.helpers.right = this._createHelper(this.helpers.right, "ui-rangeSlider-rightHelper");
 			
 			if (this.options.valueHelpers == "change"){
 				this.helpers.left.css("display", "none");
