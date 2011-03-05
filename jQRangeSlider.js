@@ -125,8 +125,9 @@
 				this._destroyHelpers();
 			}
 						
-			// Seems that all the elements are not ready, outerWidth does not return the good value
+			// Seems that when all the elements are not ready, outerWidth does not return the good value
 			setTimeout($.proxy(this._initWidth, this), 1);
+			//this._initWidth();
 			setTimeout($.proxy(this._initValues, this), 1);
 		},
 		
