@@ -24,7 +24,7 @@
 	z-index:4;
 }
 
-.ui-rangeSlider.ui-rangeSlider-dev .ui-rangeSlider-Bar{
+.ui-rangeSlider.ui-rangeSlider-dev .ui-rangeSlider-bar{
 	margin: 1px 0;
 	background:#CCC;
 	background:rgba(100,100,150, 0.2);
@@ -35,7 +35,7 @@
 	z-index:3;
 }
 
-.ui-rangeSlider.ui-rangeSlider-dev .ui-rangeSlider-Bar.ui-draggable-dragging{
+.ui-rangeSlider.ui-rangeSlider-dev .ui-rangeSlider-bar.ui-draggable-dragging{
 	cursor:	-moz-grabbing;
 	cursor:grabbing;
 }

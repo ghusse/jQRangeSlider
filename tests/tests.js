@@ -53,27 +53,43 @@ $(document).ready(function(){
 		equal(el.rangeSlider("option", "durationIn"), 0, "Default duration for showing helpers is 0ms");
 		equal(el.rangeSlider("option", "durationOut"), 400, "Default duration for hiding helpers is 400ms");
 		equal(el.rangeSlider("option", "delayOut"), 200, "Default delay before hiding helpers is 200ms");
+		
+		// Created elements
+		equal($(".ui-rangeSlider-handle.ui-rangeSlider-leftHandle").length, 1, "Left handle should have been created");
+		equal($(".ui-rangeSlider-handle.ui-rangeSlider-rightHandle").length, 1, "Right handle should have been created");
+		equal($(".ui-rangeSlider-helper.ui-rangeSlider-leftHelper").length, 1, "Left helper should have been created");
+		equal($(".ui-rangeSlider-helper.ui-rangeSlider-rightHelper").length, 1, "Right helper should have been created");
+		equal($(".ui-rangeSlider-arrow.ui-rangeSlider-leftArrow").length, 1, "Left arrow should have been created");
+		equal($(".ui-rangeSlider-arrow.ui-rangeSlider-rightArrow").length, 1, "Right arrow should have been created");
+		equal($(".ui-rangeSlider-innerBar").length, 1, "The inner bar should have been created");
+		equal($(".ui-rangeSlider-bar").length, 1, "The bar should have been created");
 	});
 	
 	test("Value helpers", function(){
+		// Due to a problem with the detach method, we have to test the helpers after a ctor
+		el.rangeSlider("destroy");
+		el.rangeSlider({ valueHelpers: "hide" });
+	
+		equal($(".ui-rangeSlider-helper").length, 0, "Value helpers should have been detached");
+		equal(el.rangeSlider("option", "valueHelpers"), "hide", "Option value should be 'hidden'");
+		
 		// Verify that elements are created
+		destroyTest();
+		el.rangeSlider({ valueHelpers: "change" });
 		equal($(".ui-rangeSlider-helper").length, 2, "Value helpers should have been created for the 'change' value");
 		equal($(".ui-rangeSlider-helper.ui-rangeSlider-leftHelper").length, 1, "Value helpers should have been created for the 'change' value");
 		equal($(".ui-rangeSlider-helper.ui-rangeSlider-rightHelper").length, 1, "Value helpers should have been created for the 'change' value");
-		
-		// hide helpers
-		el.rangeSlider("valueHelpers", "hide");
-		equal($(".ui-rangeSlider-helper").length, 0, "Value helpers should have been detached");
+		equal(el.rangeSlider("option", "valueHelpers"), "change", "Option value should be 'change'");
 		
 		// Force the value helpers to be shown
-		el.rangeSlider("valueHelpers", "show");
+		destroyTest();
+		el.rangeSlider({ valueHelpers: "show" });
 		equal($(".ui-rangeSlider-helper").length, 2, "Value helpers should have been created");
-		
+		equal(el.rangeSlider("option", "valueHelpers"), "show", "Option value should be 'show'");
 	});
 	
 	test("Verify bounds setter", function(){
 		// force helpers to he shown
-		
 		var bounds = { min:30, max:40 };
 		el.rangeSlider("option", "bounds", bounds);
 		
@@ -81,7 +97,10 @@ $(document).ready(function(){
 		equal(el.rangeSlider("option", "bounds").max, bounds.max, "Bounds setter should have worked");
 		equal(el.rangeSlider("values").min, bounds.min, "As the old values were outside the new bounds, values should have been updated");
 		equal(el.rangeSlider("values").max, bounds.max, "As the old values were outside the new bounds, values should have been updated");
-				
+		
+		equal($(".ui-rangeSlider-handle.ui-rangeSlider-leftHandle").length, 1, "Left handle should have been created");
+		equal($(".ui-rangeSlider-handle.ui-rangeSlider-rightHandle").length, 1, "Right handle should have been created");
+		
 		// Handle positions must have changed
 		var left = $(".ui-rangeSlider-leftHandle").offset().left;
 		var right = $(".ui-rangeSlider-rightHandle").offset().left;

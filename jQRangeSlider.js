@@ -74,7 +74,7 @@
 			this.container = $("<div class='ui-rangeSlider-container' />")
 				.css("position", "absolute");
 			
-			this.bar = $("<div class='ui-rangeSlider-Bar' />")
+			this.bar = $("<div class='ui-rangeSlider-bar' />")
 				.draggable({axis:"x", containment: "parent",
 					drag: $.proxy(this._barMoved, this), 
 					stop: $.proxy(this._barStop, this),
@@ -587,6 +587,8 @@
 			this.arrows.right.detach();
 			this.element.removeClass("ui-rangeSlider");
 			this._destroyHelpers();
+			
+			$.Widget.prototype.destroy.apply(this, arguments);
 		}
 	});
 })(jQuery);
