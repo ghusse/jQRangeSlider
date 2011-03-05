@@ -430,7 +430,7 @@
 		
 		_destroyHelper: function(helper){
 			if (helper != null){
-				helper.detach();
+				helper.remove();
 				helper = null;
 			}
 			
