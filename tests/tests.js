@@ -132,6 +132,21 @@ var wheelModeSetterTest = new TestCase(
 		equal(el.rangeSlider("option", "wheelMode"), null, "Wheelmode setter with a bad value should not have worked");
 	}
 );
+
+var wheelSpeedSetterTest = new TestCase(
+	"Wheel speed setter test",
+	function(){},
+	function(){
+		el.rangeSlider("option", "wheelSpeed", 2);
+		equal(el.rangeSlider("option", "wheelSpeed"), 2, "Wheelspeed setter should have worked");	
+		
+		el.rangeSlider("option", "wheelSpeed", null);
+		equal(el.rangeSlider("option", "wheelSpeed"), 2, "Wheelspeed setter should not have worked");	
+
+		el.rangeSlider("option", "wheelSpeed", "badValue");
+		equal(el.rangeSlider("option", "wheelSpeed"), 2, "Wheelspeed setter should not have worked");	
+	}
+);
 	
 
 $(document).ready(
@@ -140,7 +155,7 @@ $(document).ready(
 	
 		el = $("#test");
 		
-		var jQRangeSliderTester = new TestRunner("jQRangeSliderTester",[defaultCtorTest, hideHelpersTest, showHelpersTest, changeBoundsTest, wheelModeSetterTest, destroyTest]);
+		var jQRangeSliderTester = new TestRunner("jQRangeSliderTester",[defaultCtorTest, hideHelpersTest, showHelpersTest, changeBoundsTest, wheelModeSetterTest, wheelSpeedSetterTest, destroyTest]);
 		jQRangeSliderTester.launch();
 	}
 );
