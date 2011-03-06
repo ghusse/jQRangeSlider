@@ -21,27 +21,14 @@
  * jQRangeSlider
  */
  
- var el = null;
- 	
- function destroyTest(){
- 	test("destroying", function(){
-		el.rangeSlider("destroy");
-		
-		equal(el.children().length, 0, "Parent element should be empty");
-		equal(el.attr("class"), "", "Class attribute on parent element should be empty");
-	});
- }
- 
-$(document).ready(function(){
- 
-	module("jQRangeSlider");
-	
-	el = $("#test");
-		
-	// Default ctor test
-	test("Default ctor", function(){
-		el.rangeSlider();
+var el = null;
 
+var defaultCtorTest = new TestCase(
+	"Default ctor",
+	function(){
+		el.rangeSlider();
+	},
+	function() {
 		// Default values tests
 		deepEqual(el.rangeSlider("option", "bounds"), { min:0, max:100 }, "Default bounds should be 0-100");
 		deepEqual(el.rangeSlider("option", "defaultValues"), {min:20, max:50}, "Default values should be 20-50");
@@ -63,15 +50,64 @@ $(document).ready(function(){
 		equal($(".ui-rangeSlider-arrow.ui-rangeSlider-rightArrow").length, 1, "Right arrow should have been created");
 		equal($(".ui-rangeSlider-innerBar").length, 1, "The inner bar should have been created");
 		equal($(".ui-rangeSlider-bar").length, 1, "The bar should have been created");
-	});
+		
+		equal($(".ui-rangeSlider-container").outerWidth(true), el.innerWidth(), "Container");
+	}
+);
+
+var destroyTest = new TestCase(
+	"Destroy",
+	function(){
+	},
+	function(){
+		el.rangeSlider("destroy");
+		
+		equal(el.children().length, 0, "Parent element should be empty");
+		equal(el.attr("class"), "", "Class attribute on parent element should be empty");
+	}
+);
+
+var hideHelpersTest = new TestCase(
+	"Hide helpers",
+	function(){
+		el.rangeSlider("option", "valueHelpers", "hide");
+	},
+	function(){
+		equal($(".ui-rangeSlider-helper").length, 0, "Value helpers should have been detached");
+		equal(el.rangeSlider("option", "valueHelpers"), "hide", "Option value should be 'hidden'");
+	}
+);
+
+var showHelpersTest = new TestCase(
+	"Show helpers",
+	function(){
+		el.rangeSlider("option", "valueHelpers", "show");
+	},
+	function(){
+		equal($(".ui-rangeSlider-helper").length, 2, "Value helpers should have been detached");
+		equal(el.rangeSlider("option", "valueHelpers"), "show", "Option value should be 'hidden'");
+	}
+);
 	
+
+$(document).ready(
+	function(){
+		module("jQRangeSlider");
+	
+		el = $("#test");
+		
+		var jQRangeSliderTester = new TestRunner("jQRangeSliderTester",[defaultCtorTest, hideHelpersTest, showHelpersTest, destroyTest]);
+		jQRangeSliderTester.launch();
+	}
+);
+ 
+ 
+function tests(){	
 	test("Value helpers", function(){
 		// Due to a problem with the detach method, we have to test the helpers after a ctor
 		el.rangeSlider("destroy");
 		el.rangeSlider({ valueHelpers: "hide" });
-	
-		equal($(".ui-rangeSlider-helper").length, 0, "Value helpers should have been detached");
-		equal(el.rangeSlider("option", "valueHelpers"), "hide", "Option value should be 'hidden'");
+
 		
 		// Verify that elements are created
 		destroyTest();
@@ -119,4 +155,4 @@ $(document).ready(function(){
 	
 	
 	destroyTest();
-});
+};
