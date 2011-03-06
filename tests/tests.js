@@ -114,6 +114,24 @@ var changeBoundsTest = new TestCase(
 		notEqual($(".ui-rangeSlider-rightHelper").offset().left, this.maxHelperPos, "Right helper should have been moved");
 	}
 );
+
+var wheelModeSetterTest = new TestCase(
+	"Wheel mode setter",
+	function(){},
+	function(){
+		el.rangeSlider("option", "wheelMode", "zoom");
+		equal(el.rangeSlider("option", "wheelMode"), "zoom", "Wheelmode setter should have worked");	
+		
+		el.rangeSlider("option", "wheelMode", "scroll");
+		equal(el.rangeSlider("option", "wheelMode"), "scroll", "Wheelmode setter should have worked");
+		
+		el.rangeSlider("option", "wheelMode", "badValue");
+		equal(el.rangeSlider("option", "wheelMode"), "scroll", "Wheelmode setter with a bad value should not have worked");
+		
+		el.rangeSlider("option", "wheelMode", null);
+		equal(el.rangeSlider("option", "wheelMode"), null, "Wheelmode setter with a bad value should not have worked");
+	}
+);
 	
 
 $(document).ready(
@@ -122,7 +140,7 @@ $(document).ready(
 	
 		el = $("#test");
 		
-		var jQRangeSliderTester = new TestRunner("jQRangeSliderTester",[defaultCtorTest, hideHelpersTest, showHelpersTest, changeBoundsTest, destroyTest]);
+		var jQRangeSliderTester = new TestRunner("jQRangeSliderTester",[defaultCtorTest, hideHelpersTest, showHelpersTest, changeBoundsTest, wheelModeSetterTest, destroyTest]);
 		jQRangeSliderTester.launch();
 	}
 );
