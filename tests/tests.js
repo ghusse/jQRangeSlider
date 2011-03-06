@@ -88,6 +88,32 @@ var showHelpersTest = new TestCase(
 		equal(el.rangeSlider("option", "valueHelpers"), "show", "Option value should be 'hidden'");
 	}
 );
+
+var changeBoundsTest = new TestCase(
+	"Change bounds",
+	function(){
+		var bounds = { min:30, max:40 };
+		this.minHandlerPos = $(".ui-rangeSlider-leftHandle").offset().left;
+		this.maxHandlerPos = $(".ui-rangeSlider-rightHandle").offset().left;
+		this.minHelperPos = $(".ui-rangeSlider-leftHelper").offset().left;
+		this.maxHelperPos = $(".ui-rangeSlider-rightHelper").offset().left;
+		
+		el.rangeSlider("option", "bounds", bounds);
+	},
+	function(){
+		var bounds = { min:30, max:40 };
+		
+		equal(el.rangeSlider("option", "bounds").min, bounds.min, "Bounds setter should have worked");
+		equal(el.rangeSlider("option", "bounds").max, bounds.max, "Bounds setter should have worked");
+		equal(el.rangeSlider("values").min, bounds.min, "As the old values were outside the new bounds, values should have been updated");
+		equal(el.rangeSlider("values").max, bounds.max, "As the old values were outside the new bounds, values should have been updated");
+		
+		notEqual($(".ui-rangeSlider-leftHandle").offset().left, this.minHandlerPos, "Left handle should have been moved");
+		notEqual($(".ui-rangeSlider-rightHandle").offset().left, this.maxHandlerPos, "Right handle should have been moved");
+		notEqual($(".ui-rangeSlider-leftHelper").offset().left, this.minHelperPos, "Left helper should have been moved");
+		notEqual($(".ui-rangeSlider-rightHelper").offset().left, this.maxHelperPos, "Right helper should have been moved");
+	}
+);
 	
 
 $(document).ready(
@@ -96,63 +122,7 @@ $(document).ready(
 	
 		el = $("#test");
 		
-		var jQRangeSliderTester = new TestRunner("jQRangeSliderTester",[defaultCtorTest, hideHelpersTest, showHelpersTest, destroyTest]);
+		var jQRangeSliderTester = new TestRunner("jQRangeSliderTester",[defaultCtorTest, hideHelpersTest, showHelpersTest, changeBoundsTest, destroyTest]);
 		jQRangeSliderTester.launch();
 	}
 );
- 
- 
-function tests(){	
-	test("Value helpers", function(){
-		// Due to a problem with the detach method, we have to test the helpers after a ctor
-		el.rangeSlider("destroy");
-		el.rangeSlider({ valueHelpers: "hide" });
-
-		
-		// Verify that elements are created
-		destroyTest();
-		el.rangeSlider({ valueHelpers: "change" });
-		equal($(".ui-rangeSlider-helper").length, 2, "Value helpers should have been created for the 'change' value");
-		equal($(".ui-rangeSlider-helper.ui-rangeSlider-leftHelper").length, 1, "Value helpers should have been created for the 'change' value");
-		equal($(".ui-rangeSlider-helper.ui-rangeSlider-rightHelper").length, 1, "Value helpers should have been created for the 'change' value");
-		equal(el.rangeSlider("option", "valueHelpers"), "change", "Option value should be 'change'");
-		
-		// Force the value helpers to be shown
-		destroyTest();
-		el.rangeSlider({ valueHelpers: "show" });
-		equal($(".ui-rangeSlider-helper").length, 2, "Value helpers should have been created");
-		equal(el.rangeSlider("option", "valueHelpers"), "show", "Option value should be 'show'");
-	});
-	
-	test("Verify bounds setter", function(){
-		// force helpers to he shown
-		var bounds = { min:30, max:40 };
-		el.rangeSlider("option", "bounds", bounds);
-		
-		equal(el.rangeSlider("option", "bounds").min, bounds.min, "Bounds setter should have worked");
-		equal(el.rangeSlider("option", "bounds").max, bounds.max, "Bounds setter should have worked");
-		equal(el.rangeSlider("values").min, bounds.min, "As the old values were outside the new bounds, values should have been updated");
-		equal(el.rangeSlider("values").max, bounds.max, "As the old values were outside the new bounds, values should have been updated");
-		
-		equal($(".ui-rangeSlider-handle.ui-rangeSlider-leftHandle").length, 1, "Left handle should have been created");
-		equal($(".ui-rangeSlider-handle.ui-rangeSlider-rightHandle").length, 1, "Right handle should have been created");
-		
-		// Handle positions must have changed
-		var left = $(".ui-rangeSlider-leftHandle").offset().left;
-		var right = $(".ui-rangeSlider-rightHandle").offset().left;
-		var leftH = $(".ui-rangeSlider-leftHelper").offset().left;
-		var rightH = $(".ui-rangeSlider-rightHelper").offset().left;
-		
-		bounds = {min:0, max:200};
-		el.rangeSlider("option", "bounds", bounds);
-		
-		notEqual($(".ui-rangeSlider-leftHandle").offset().left, left, "Left handle should have been moved");
-		notEqual($(".ui-rangeSlider-rightHandle").offset().left, left, "Right handle should have been moved");
-
-		notEqual($(".ui-rangeSlider-leftHelper").offset().left, leftH, "Left helper should have been moved");
-		notEqual($(".ui-rangeSlider-rightHelper").offset().left, rightH, "Right helper should have been moved");
-	});
-	
-	
-	destroyTest();
-};
