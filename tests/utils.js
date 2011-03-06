@@ -21,6 +21,20 @@ function TestCase(_name, _setup, _check){
 	this.name = _name;
 	this.setup = _setup;
 	this.check = _check;
+	
+	this.getPositions = function(){
+		this.minHandlerPos = $(".ui-rangeSlider-leftHandle").offset().left;
+		this.maxHandlerPos = $(".ui-rangeSlider-rightHandle").offset().left;
+		this.minHelperPos = $(".ui-rangeSlider-leftHelper").offset().left;
+		this.maxHelperPos = $(".ui-rangeSlider-rightHelper").offset().left;
+	}
+	
+	this.assertDifferentPositions = function(){
+		notEqual($(".ui-rangeSlider-leftHandle").offset().left, this.minHandlerPos, "Left handle should have been moved");
+		notEqual($(".ui-rangeSlider-rightHandle").offset().left, this.maxHandlerPos, "Right handle should have been moved");
+		notEqual($(".ui-rangeSlider-leftHelper").offset().left, this.minHelperPos, "Left helper should have been moved");
+		notEqual($(".ui-rangeSlider-rightHelper").offset().left, this.maxHelperPos, "Right helper should have been moved");
+	}
 }
 
 TestRunner = function(_module, _tests){

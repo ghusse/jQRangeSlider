@@ -93,10 +93,7 @@ var changeBoundsTest = new TestCase(
 	"Change bounds",
 	function(){
 		var bounds = { min:30, max:40 };
-		this.minHandlerPos = $(".ui-rangeSlider-leftHandle").offset().left;
-		this.maxHandlerPos = $(".ui-rangeSlider-rightHandle").offset().left;
-		this.minHelperPos = $(".ui-rangeSlider-leftHelper").offset().left;
-		this.maxHelperPos = $(".ui-rangeSlider-rightHelper").offset().left;
+		this.getPositions();
 		
 		el.rangeSlider("option", "bounds", bounds);
 	},
@@ -108,20 +105,30 @@ var changeBoundsTest = new TestCase(
 		equal(el.rangeSlider("values").min, bounds.min, "As the old values were outside the new bounds, values should have been updated");
 		equal(el.rangeSlider("values").max, bounds.max, "As the old values were outside the new bounds, values should have been updated");
 		
-		notEqual($(".ui-rangeSlider-leftHandle").offset().left, this.minHandlerPos, "Left handle should have been moved");
-		notEqual($(".ui-rangeSlider-rightHandle").offset().left, this.maxHandlerPos, "Right handle should have been moved");
-		notEqual($(".ui-rangeSlider-leftHelper").offset().left, this.minHelperPos, "Left helper should have been moved");
-		notEqual($(".ui-rangeSlider-rightHelper").offset().left, this.maxHelperPos, "Right helper should have been moved");
+		this.assertDifferentPositions();
+	}
+);
+
+var wheelModeZoomTest = new TestCase(
+	"Wheel mode setter",
+	function(){
+		el.rangeSlider("option", "wheelMode", "zoom");
+		this.getPositions();
+		$(".ui-rangeSlider-bar").trigger("mousewheel", [2, 2, 2]);
+	},
+	function(){
+		equal(el.rangeSlider("option", "wheelMode"), "zoom", "Wheelmode setter should have worked");
+		ok($(".ui-rangeSlider-leftHandle").offset().left > this.minHandlerPos, "Left handle should have been moved");
+		ok($(".ui-rangeSlider-rightHandle").offset().left < this.maxHandlerPos, "Right handle should have been moved");
+		ok($(".ui-rangeSlider-leftHelper").offset().left > this.minHelperPos, "Left helper should have been moved");
+		ok($(".ui-rangeSlider-rightHelper").offset().left < this.maxHelperPos, "Right helper should have been moved");
 	}
 );
 
 var wheelModeSetterTest = new TestCase(
-	"Wheel mode setter",
+	"Wheel mode setter test",
 	function(){},
 	function(){
-		el.rangeSlider("option", "wheelMode", "zoom");
-		equal(el.rangeSlider("option", "wheelMode"), "zoom", "Wheelmode setter should have worked");	
-		
 		el.rangeSlider("option", "wheelMode", "scroll");
 		equal(el.rangeSlider("option", "wheelMode"), "scroll", "Wheelmode setter should have worked");
 		
@@ -130,11 +137,12 @@ var wheelModeSetterTest = new TestCase(
 		
 		el.rangeSlider("option", "wheelMode", null);
 		equal(el.rangeSlider("option", "wheelMode"), null, "Wheelmode setter with a bad value should not have worked");
+
 	}
 );
 
 var wheelSpeedSetterTest = new TestCase(
-	"Wheel speed setter test",
+	"Wheel speed setter",
 	function(){},
 	function(){
 		el.rangeSlider("option", "wheelSpeed", 2);
@@ -155,7 +163,7 @@ $(document).ready(
 	
 		el = $("#test");
 		
-		var jQRangeSliderTester = new TestRunner("jQRangeSliderTester",[defaultCtorTest, hideHelpersTest, showHelpersTest, changeBoundsTest, wheelModeSetterTest, wheelSpeedSetterTest, destroyTest]);
+		var jQRangeSliderTester = new TestRunner("jQRangeSliderTester",[defaultCtorTest, hideHelpersTest, showHelpersTest, changeBoundsTest, wheelModeZoomTest, wheelModeSetterTest, wheelSpeedSetterTest, destroyTest]);
 		jQRangeSliderTester.launch();
 	}
 );
