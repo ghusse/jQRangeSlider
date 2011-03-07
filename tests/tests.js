@@ -67,6 +67,15 @@ var defaultCtorTest = new TestCase(
 	}
 );
 
+var defaultSetup = new TestCase(
+	"Default setup without assertions",
+	function(){
+		el.rangeSlider("destroy");
+		el.rangeSlider();
+	},
+	null
+);
+
 var destroyTest = new TestCase(
 	"Destroy",
 	function(){
@@ -223,6 +232,24 @@ var arrowsScrollingMouseUpTest = new TestCase(
 	}
 );
 
+/*
+ * Public methods
+ */
+var valuesSetter = new TestCase(
+	"Values setter",
+	function(){
+		this.previousResult = el.rangeSlider("values", 21, 22);
+	},
+	function(){
+		equal(this.previousResult.min, 21, "Method should have returned the good min value");
+		equal(this.previousResult.max, 22, "Method should have returned the good max value");
+		
+		var values = el.rangeSlider("values");
+		equal(values.min, 21, "Min value should have been set");
+		equal(values.max, 22, "Max value should have been set");
+	}
+);
+
 $(document).ready(
 	function(){
 		module("jQRangeSlider");
@@ -232,6 +259,8 @@ $(document).ready(
 		var jQRangeSliderTester = new TestRunner("jQRangeSliderTester",[defaultCtorTest, hideHelpersTest, showHelpersTest, changeBoundsTest,
 			wheelModeZoomTest, wheelModeScrollTest, wheelModeSetterTest, wheelSpeedSetterTest,
 			noArrowsSetterTest, arrowsScrollingMouseUpTest,
+			defaultSetup,
+			valuesSetter,
 			destroyTest]);
 		jQRangeSliderTester.launch();
 	}

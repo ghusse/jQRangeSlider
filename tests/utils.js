@@ -50,7 +50,6 @@ TestRunner = function(_module, _tests){
 	this.launch = function(){
 		module(this.module);
 		this.next();
-		
 	}
 	
 	this.next = function(){
@@ -63,9 +62,11 @@ TestRunner = function(_module, _tests){
 	
 	this.check = function(){
 		var testCase = this.tests[this.index];
-		test(testCase.name, function(){
-			testCase.check();
-		});
+		if (testCase.check){
+			test(testCase.name, function(){
+				testCase.check();
+			});
+		}
 		
 		this.index++;
 		this.next();
