@@ -274,6 +274,32 @@ var zoomOutTest = new TestCase(
 	}
 );
 
+var scrollLeftTest = new TestCase(
+	"Scroll left",
+	function(){
+		this.getValues();
+		el.rangeSlider("scrollLeft", 2);
+	},
+	function(){
+		ok(this.min() < this.values.min, "Min value should have been decreased");
+		ok(this.max() < this.values.max, "Min value should have been decreased");
+
+	}
+);
+
+var scrollRightTest = new TestCase(
+	"Scroll right",
+	function(){
+		this.getValues();
+		el.rangeSlider("scrollRight", 2);
+	},
+	function(){
+		ok(this.min() > this.values.min, "Min value should have been increased");
+		ok(this.max() > this.values.max, "Min value should have been increased");
+
+	}
+);
+
 $(document).ready(
 	function(){
 		module("jQRangeSlider");
@@ -284,7 +310,7 @@ $(document).ready(
 			wheelModeZoomTest, wheelModeScrollTest, wheelModeSetterTest, wheelSpeedSetterTest,
 			noArrowsSetterTest, arrowsScrollingMouseUpTest,
 			defaultSetup,
-			valuesSetter, zoomInTest, zoomOutTest,
+			valuesSetter, zoomInTest, zoomOutTest, scrollLeftTest, scrollRightTest,
 			destroyTest]);
 		jQRangeSliderTester.launch();
 	}
