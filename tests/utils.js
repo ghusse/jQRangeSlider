@@ -21,12 +21,17 @@ function TestCase(_name, _setup, _check){
 	this.name = _name;
 	this.setup = _setup;
 	this.check = _check;
+	this.delay = 100;
 	
 	this.getPositions = function(){
 		this.minHandlerPos = $(".ui-rangeSlider-leftHandle").offset().left;
 		this.maxHandlerPos = $(".ui-rangeSlider-rightHandle").offset().left;
 		this.minHelperPos = $(".ui-rangeSlider-leftHelper").offset().left;
 		this.maxHelperPos = $(".ui-rangeSlider-rightHelper").offset().left;
+	}
+	
+	this.getValues = function(){
+		this.values = $("#test").rangeSlider("values");
 	}
 	
 	this.assertDifferentPositions = function(){
@@ -52,7 +57,7 @@ TestRunner = function(_module, _tests){
 		if (this.tests.length > this.index){
 			var test = this.tests[this.index];
 			test.setup();
-			setTimeout($.proxy(this.check, this), 100);
+			setTimeout($.proxy(this.check, this), test.delay);
 		}
 	}
 	

@@ -85,14 +85,14 @@
 			this.arrows.left = $("<div class='ui-rangeSlider-arrow ui-rangeSlider-leftArrow' />")
 				.css("position", "absolute")
 				.css("left", 0)
-				.bind("mousedown", $.proxy(this._startScrollLeft, this))
-				.bind("mouseup", $.proxy(this._stopScroll, this));
+				.bind("mousedown", $.proxy(this._startScrollLeft, this));
 			
 			this.arrows.right = $("<div class='ui-rangeSlider-arrow ui-rangeSlider-rightArrow' />")
 				.css("position", "absolute")
 				.css("right", 0)
-				.bind("mousedown", $.proxy(this._startScrollRight, this))
-				.bind("mouseup", $.proxy(this._stopScroll, this));
+				.bind("mousedown", $.proxy(this._startScrollRight, this));
+			
+			$(document).bind("mouseup", $.proxy(this._stopScroll, this));
 			
 			this.container
 				.append(this.leftHandle)
@@ -190,7 +190,7 @@
 					&& value.min < value.max)
 			{
 				this.options.bounds = value;
-				this.values(this._values.min, value.max, this._values.max);
+				this.values(this._values.min, this._values.max);
 			}
 		},
 		

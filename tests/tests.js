@@ -52,6 +52,11 @@ var defaultCtorTest = new TestCase(
 		equal($(".ui-rangeSlider-bar").length, 1, "The bar should have been created");
 		
 		equal($(".ui-rangeSlider-container").outerWidth(true), el.innerWidth(), "Container");
+		
+		// Values
+		equal(el.rangeSlider("values").min, 20, "Values should be equal to the default values");
+		equal(el.rangeSlider("values").max, 50, "Values should be equal to the default values");
+		
 	}
 );
 
@@ -110,11 +115,12 @@ var changeBoundsTest = new TestCase(
 );
 
 var wheelModeZoomTest = new TestCase(
-	"Wheel mode setter",
+	"Zoom wheel mode",
 	function(){
 		el.rangeSlider("option", "wheelMode", "zoom");
 		this.getPositions();
-		$(".ui-rangeSlider-bar").trigger("mousewheel", [2, 2, 2]);
+		this.getValues();
+		$(".ui-rangeSlider-bar").trigger("mousewheel", [-10, 0, -10]);
 	},
 	function(){
 		equal(el.rangeSlider("option", "wheelMode"), "zoom", "Wheelmode setter should have worked");
@@ -122,6 +128,31 @@ var wheelModeZoomTest = new TestCase(
 		ok($(".ui-rangeSlider-rightHandle").offset().left < this.maxHandlerPos, "Right handle should have been moved");
 		ok($(".ui-rangeSlider-leftHelper").offset().left > this.minHelperPos, "Left helper should have been moved");
 		ok($(".ui-rangeSlider-rightHelper").offset().left < this.maxHelperPos, "Right helper should have been moved");
+		
+		ok(el.rangeSlider("values").min > this.values.min, "Zoom should have worked");
+		ok(el.rangeSlider("values").max < this.values.max, "Zoom should have worked");
+	}
+);
+
+var wheelModeScrollTest = new TestCase(
+	"Scroll wheel mode",
+	function(){
+		el.rangeSlider("option", "wheelMode", "scroll");
+		this.getValues();
+		this.getPositions();
+		el.find(".ui-rangeSlider-container").trigger("mousewheel", [-10, 0, -10]);
+	},
+	function(){
+		equal(el.rangeSlider("option", "wheelMode"), "scroll", "Wheelmode setter should have worked");
+		
+		ok($(".ui-rangeSlider-leftHandle").offset().left > this.minHandlerPos, "Left handle should have been moved");
+		ok($(".ui-rangeSlider-rightHandle").offset().left > this.maxHandlerPos, "Right handle should have been moved");
+		ok($(".ui-rangeSlider-leftHelper").offset().left > this.minHelperPos, "Left helper should have been moved");
+		ok($(".ui-rangeSlider-rightHelper").offset().left > this.maxHelperPos, "Right helper should have been moved");
+		
+		ok(el.rangeSlider("values").min > this.values.min, "Scroll should have worked");
+		ok(el.rangeSlider("values").max > this.values.max, "Scroll should have worked");
+		equal(el.rangeSlider("values").min - this.values.min, el.rangeSlider("values").max - this.values.max, "Scrolling must add or remove the same value on both ends");
 	}
 );
 
@@ -129,15 +160,11 @@ var wheelModeSetterTest = new TestCase(
 	"Wheel mode setter test",
 	function(){},
 	function(){
-		el.rangeSlider("option", "wheelMode", "scroll");
-		equal(el.rangeSlider("option", "wheelMode"), "scroll", "Wheelmode setter should have worked");
-		
 		el.rangeSlider("option", "wheelMode", "badValue");
 		equal(el.rangeSlider("option", "wheelMode"), "scroll", "Wheelmode setter with a bad value should not have worked");
 		
 		el.rangeSlider("option", "wheelMode", null);
 		equal(el.rangeSlider("option", "wheelMode"), null, "Wheelmode setter with a bad value should not have worked");
-
 	}
 );
 
@@ -155,7 +182,23 @@ var wheelSpeedSetterTest = new TestCase(
 		equal(el.rangeSlider("option", "wheelSpeed"), 2, "Wheelspeed setter should not have worked");	
 	}
 );
-	
+
+/**
+ *  Click on arrows
+ */
+var arrowsScrollingMouseUpTest = new TestCase(
+	"Mouseup on another element than arrows",
+	function(){
+		el.rangeSlider("max", el.rangeSlider("option", "bounds").max - 0.2);
+		el.find(".ui-rangeSlider-rightArrow").trigger("mousedown");
+		$(document).trigger("mouseup");
+		this.delay = 500;
+	},
+	function(){
+		// mouseup on another element than the clicked arrow should stop scrolling
+		ok(el.rangeSlider("values").max != el.rangeSlider("option", "bounds").max, "mouseup on another element than the clicked arrow should stop scrolling");
+	}
+);
 
 $(document).ready(
 	function(){
@@ -163,7 +206,10 @@ $(document).ready(
 	
 		el = $("#test");
 		
-		var jQRangeSliderTester = new TestRunner("jQRangeSliderTester",[defaultCtorTest, hideHelpersTest, showHelpersTest, changeBoundsTest, wheelModeZoomTest, wheelModeSetterTest, wheelSpeedSetterTest, destroyTest]);
+		var jQRangeSliderTester = new TestRunner("jQRangeSliderTester",[defaultCtorTest, hideHelpersTest, showHelpersTest, changeBoundsTest,
+			wheelModeZoomTest, wheelModeScrollTest, wheelModeSetterTest, wheelSpeedSetterTest,
+			arrowsScrollingMouseUpTest,
+			destroyTest]);
 		jQRangeSliderTester.launch();
 	}
 );
