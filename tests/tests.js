@@ -46,8 +46,15 @@ var defaultCtorTest = new TestCase(
 		equal($(".ui-rangeSlider-handle.ui-rangeSlider-rightHandle").length, 1, "Right handle should have been created");
 		equal($(".ui-rangeSlider-helper.ui-rangeSlider-leftHelper").length, 1, "Left helper should have been created");
 		equal($(".ui-rangeSlider-helper.ui-rangeSlider-rightHelper").length, 1, "Right helper should have been created");
+		
+		// Arrows
 		equal($(".ui-rangeSlider-arrow.ui-rangeSlider-leftArrow").length, 1, "Left arrow should have been created");
 		equal($(".ui-rangeSlider-arrow.ui-rangeSlider-rightArrow").length, 1, "Right arrow should have been created");
+		equal($(".ui-rangeSlider-arrow.ui-rangeSlider-leftArrow").css("display"), "block", "Left arrow should have been created");
+		equal($(".ui-rangeSlider-arrow.ui-rangeSlider-rightArrow").css("display"), "block", "Arrows should be visible");
+		ok(el.hasClass("ui-rangeSlider-withArrows"), "ui-rangeSlider-withArrows should be applied to the parent element");
+		
+		// Bars
 		equal($(".ui-rangeSlider-innerBar").length, 1, "The inner bar should have been created");
 		equal($(".ui-rangeSlider-bar").length, 1, "The bar should have been created");
 		
@@ -186,7 +193,7 @@ var wheelSpeedSetterTest = new TestCase(
 /**
  *  Arrows
  */
-var arrowsSetterTest = new TestCase(
+var noArrowsSetterTest = new TestCase(
 	"Arrows property setter",
 	function(){
 		el.rangeSlider("option", "arrows", false);
@@ -224,7 +231,7 @@ $(document).ready(
 		
 		var jQRangeSliderTester = new TestRunner("jQRangeSliderTester",[defaultCtorTest, hideHelpersTest, showHelpersTest, changeBoundsTest,
 			wheelModeZoomTest, wheelModeScrollTest, wheelModeSetterTest, wheelSpeedSetterTest,
-			arrowsSetterTest, arrowsScrollingMouseUpTest,
+			noArrowsSetterTest, arrowsScrollingMouseUpTest,
 			destroyTest]);
 		jQRangeSliderTester.launch();
 	}
