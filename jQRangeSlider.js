@@ -396,6 +396,8 @@
 			this.leftArrow.detach();
 			this.rightArrow.detach();
 			this.element.removeClass("ui-rangeSlider");
+			
+			$.Widget.prototype.destroy.apply(this, arguments);
 		}
 	});
 })(jQuery);
