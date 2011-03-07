@@ -250,6 +250,30 @@ var valuesSetter = new TestCase(
 	}
 );
 
+var zoomInTest = new TestCase(
+	"Zoom In",
+	function(){
+		this.getValues();
+		el.rangeSlider("zoomIn", 2);
+	},
+	function(){
+		ok(this.min() > this.values.min, "Min value should have been increased");
+		ok(this.max() < this.values.max, "Min value should have been decreased");
+	}
+);
+
+var zoomOutTest = new TestCase(
+	"Zoom Out",
+	function(){
+		this.getValues();
+		el.rangeSlider("zoomOut", 2);
+	},
+	function(){
+		ok(this.min() < this.values.min, "Min value should have been decreased");
+		ok(this.max() > this.values.max, "Min value should have been increased");
+	}
+);
+
 $(document).ready(
 	function(){
 		module("jQRangeSlider");
@@ -260,7 +284,7 @@ $(document).ready(
 			wheelModeZoomTest, wheelModeScrollTest, wheelModeSetterTest, wheelSpeedSetterTest,
 			noArrowsSetterTest, arrowsScrollingMouseUpTest,
 			defaultSetup,
-			valuesSetter,
+			valuesSetter, zoomInTest, zoomOutTest,
 			destroyTest]);
 		jQRangeSliderTester.launch();
 	}

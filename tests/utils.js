@@ -40,6 +40,14 @@ function TestCase(_name, _setup, _check){
 		notEqual($(".ui-rangeSlider-leftHelper").offset().left, this.minHelperPos, "Left helper should have been moved");
 		notEqual($(".ui-rangeSlider-rightHelper").offset().left, this.maxHelperPos, "Right helper should have been moved");
 	}
+	
+	this.min = function(){
+		return el.rangeSlider("values").min;
+	}
+	
+	this.max = function(){
+		return el.rangeSlider("values").max;
+	}
 }
 
 TestRunner = function(_module, _tests){
