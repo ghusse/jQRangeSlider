@@ -61,8 +61,8 @@ var defaultCtorTest = new TestCase(
 		equal($(".ui-rangeSlider-container").outerWidth(true), el.innerWidth(), "Container");
 		
 		// Values
-		equal(el.rangeSlider("values").min, 20, "Values should be equal to the default values");
-		equal(el.rangeSlider("values").max, 50, "Values should be equal to the default values");
+		equal(this.min(), 20, "Values should be equal to the default values");
+		equal(this.max(), 50, "Values should be equal to the default values");
 		
 	}
 );
@@ -123,8 +123,8 @@ var changeBoundsTest = new TestCase(
 		
 		equal(el.rangeSlider("option", "bounds").min, bounds.min, "Bounds setter should have worked");
 		equal(el.rangeSlider("option", "bounds").max, bounds.max, "Bounds setter should have worked");
-		equal(el.rangeSlider("values").min, bounds.min, "As the old values were outside the new bounds, values should have been updated");
-		equal(el.rangeSlider("values").max, bounds.max, "As the old values were outside the new bounds, values should have been updated");
+		equal(this.min(), bounds.min, "As the old values were outside the new bounds, values should have been updated");
+		equal(this.max(), bounds.max, "As the old values were outside the new bounds, values should have been updated");
 		
 		this.assertDifferentPositions();
 	}
@@ -145,8 +145,8 @@ var wheelModeZoomTest = new TestCase(
 		ok($(".ui-rangeSlider-leftHelper").offset().left > this.minHelperPos, "Left helper should have been moved");
 		ok($(".ui-rangeSlider-rightHelper").offset().left < this.maxHelperPos, "Right helper should have been moved");
 		
-		ok(el.rangeSlider("values").min > this.values.min, "Zoom should have worked");
-		ok(el.rangeSlider("values").max < this.values.max, "Zoom should have worked");
+		ok(this.min() > this.values.min, "Zoom should have worked");
+		ok(this.max() < this.values.max, "Zoom should have worked");
 	}
 );
 
@@ -166,9 +166,9 @@ var wheelModeScrollTest = new TestCase(
 		ok($(".ui-rangeSlider-leftHelper").offset().left > this.minHelperPos, "Left helper should have been moved");
 		ok($(".ui-rangeSlider-rightHelper").offset().left > this.maxHelperPos, "Right helper should have been moved");
 		
-		ok(el.rangeSlider("values").min > this.values.min, "Scroll should have worked");
-		ok(el.rangeSlider("values").max > this.values.max, "Scroll should have worked");
-		equal(el.rangeSlider("values").min - this.values.min, el.rangeSlider("values").max - this.values.max, "Scrolling must add or remove the same value on both ends");
+		ok(this.min() > this.values.min, "Scroll should have worked");
+		ok(this.max() > this.values.max, "Scroll should have worked");
+		equal(this.min() - this.values.min, this.max() - this.values.max, "Scrolling must add or remove the same value on both ends");
 	}
 );
 
@@ -228,7 +228,7 @@ var arrowsScrollingMouseUpTest = new TestCase(
 	},
 	function(){
 		// mouseup on another element than the clicked arrow should stop scrolling
-		ok(el.rangeSlider("values").max != el.rangeSlider("option", "bounds").max, "mouseup on another element than the clicked arrow should stop scrolling");
+		ok(this.max() != el.rangeSlider("option", "bounds").max, "mouseup on another element than the clicked arrow should stop scrolling");
 	}
 );
 
