@@ -56,7 +56,7 @@ TestRunner = function(_module, _tests){
 	this.next = function(){
 		if (this.tests.length > this.index){
 			var test = this.tests[this.index];
-			test.setup();
+			if (test.setup)	test.setup();
 			setTimeout($.proxy(this.check, this), test.delay);
 		}
 	}

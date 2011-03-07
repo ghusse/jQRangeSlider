@@ -158,13 +158,13 @@
 				if (value){
 					this.element
 						.removeClass("ui-rangeSlider-noArrow")
-						.addClass("ui-rangeSlider-arrow");
+						.addClass("ui-rangeSlider-withArrows");
 					this.arrows.left.css("display", "block");
 					this.arrows.right.css("display", "block");
 				}else{
 					this.element
 						.addClass("ui-rangeSlider-noArrow")
-						.removeClass("ui-rangeSlider-arrow");
+						.removeClass("ui-rangeSlider-withArrows");
 					this.arrows.left.css("display", "none");
 					this.arrows.right.css("display", "none");
 				}

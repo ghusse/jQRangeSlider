@@ -184,8 +184,24 @@ var wheelSpeedSetterTest = new TestCase(
 );
 
 /**
- *  Click on arrows
+ *  Arrows
  */
+var arrowsSetterTest = new TestCase(
+	"Arrows property setter",
+	function(){
+		el.rangeSlider("option", "arrows", false);
+	},
+	function(){
+		ok(!el.hasClass("ui-rangeSlider-withArrows"), "The parent element should not have the class withArrows");
+		ok(el.hasClass("ui-rangeSlider-noArrow"), "The parent element should have the class noArrows");
+		
+		var arrows = el.find(".ui-rangeSlider-arrow");
+		ok(arrows.length, 2, "2 arrows should be present");
+		equal($(arrows[0]).css("display"), "none", "Arrows should not be displayed");
+		equal($(arrows[1]).css("display"), "none", "Arrows should not be displayed");
+	}
+);
+
 var arrowsScrollingMouseUpTest = new TestCase(
 	"Mouseup on another element than arrows",
 	function(){
@@ -208,7 +224,7 @@ $(document).ready(
 		
 		var jQRangeSliderTester = new TestRunner("jQRangeSliderTester",[defaultCtorTest, hideHelpersTest, showHelpersTest, changeBoundsTest,
 			wheelModeZoomTest, wheelModeScrollTest, wheelModeSetterTest, wheelSpeedSetterTest,
-			arrowsScrollingMouseUpTest,
+			arrowsSetterTest, arrowsScrollingMouseUpTest,
 			destroyTest]);
 		jQRangeSliderTester.launch();
 	}
