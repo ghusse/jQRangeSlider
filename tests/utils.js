@@ -50,9 +50,9 @@ function TestCase(_name, _setup, _check){
 	}
 }
 
-TestRunner = function(_module, _tests){
-	this.module = _module;
-	this.tests = _tests;
+TestRunner = function(){
+	this.module = "";
+	this.tests = new Array();
 	this.index = 0;
 	
 	this.launch = function(){
@@ -71,6 +71,11 @@ TestRunner = function(_module, _tests){
 	this.check = function(){
 		var testCase = this.tests[this.index];
 		if (testCase.check){
+			if (this.module != testCase.module){
+				module(testCase.module);
+				this.module = testCase.module;
+			}
+			
 			test(testCase.name, function(){
 				testCase.check();
 			});
@@ -78,5 +83,23 @@ TestRunner = function(_module, _tests){
 		
 		this.index++;
 		this.next();
+	},
+	
+	this.add = function(module, tests){
+		if (tests instanceof Array){
+			for (var i=0; i<tests.length; i++) tests[i].module = module;
+			
+			this.tests = this.tests.concat(tests);
+		}else if (tests instanceof TestCase){
+			tests.module = module;
+			this.tests.append(tests);
+		}
 	}
 }
+
+var testRunner = new TestRunner();
+$(document).ready(
+	function(){
+		testRunner.launch();
+	}
+);

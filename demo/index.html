@@ -120,10 +120,18 @@
 			<dd><input type="number" name="wheelSpeed" value="8" onkeyup="setOption(this, 'wheelSpeed', $(this).val());"/></dd>
 			<dt>Arrows</dt>
 			<dd><label><input type="checkbox" checked="checked" name="arrows" onclick="setOption(this, 'arrows', $(this).is(':checked'));"/>Activate arrows</label></dd>
+			<dt>Value helpers</dt>
+			<dd>
+				<select name="valueHelpers" onchange="setOption(this, 'valueHelpers', $(this).val());">
+					<option value="hide">hide</option>
+					<option value="show" selected="selected">show</option>
+					<option value="change">on change</option>
+				</select>
+			</dd>
 			<dt>Binding</dt>
 			<dd><label><input type="radio" checked="checked" name="binding" value="changing" onclick="changing=$(this).parents('form').find('input[name=binding]:radio:checked').val()=='changing';" /> valuesChanging</label></dd>
 			<dd><label><input type="radio" name="binding" value="changed" onclick="changing=$(this).parents('form').find('input[name=binding]:radio:checked').val()=='changing';" /> valuesChanged</label></dd>
-		</dl>
+			</dl>
 		<p style="display:none"><input type="reset" /></p>
 	</form>
 </div>
@@ -139,7 +147,12 @@ $("#element").rangeSlider({
   bounds:{min:0, max:100},
   wheelMode: null,
   wheelSpeed: 8,
-  arrows: true
+  arrows: true,
+  valueHelpers: "show",
+  formatter: function(value){return Math.round(value)},
+  durationIn: 0,
+  durationOut: 400,
+  delayOut: 200
 });</code></pre>
 <div class="example">
 	<h2>Dates</h2>
@@ -165,6 +178,14 @@ $("#element").rangeSlider({
 			<dd><input type="number" name="wheelSpeed" value="8" onkeyup="setOption(this, 'wheelSpeed', $(this).val());"/></dd>
 			<dt>Arrows</dt>
 			<dd><label><input type="checkbox" checked="checked" name="arrows" onclick="setOption(this, 'arrows', $(this).is(':checked'));"/>Activate arrows</label></dd>
+			<dt>Value helpers</dt>
+			<dd>
+				<select name="valueHelpers" onchange="setOption(this, 'valueHelpers', $(this).val());">
+					<option value="hide">hide</option>
+					<option value="show" selected="selected">show</option>
+					<option value="change">on change</option>
+				</select>
+			</dd>
 			<dt>Binding</dt>
 			<dd><label><input type="radio" checked="checked" name="binding" value="changing" onclick="dateChanging=$(this).parents('form').find('input[name=binding]:radio:checked').val()=='changing';" /> valuesChanging</label></dd>
 			<dd><label><input type="radio" name="binding" value="changed" onclick="dateChanging=$(this).parents('form').find('input[name=binding]:radio:checked').val()=='changing';" /> valuesChanged</label></dd>
@@ -184,7 +205,16 @@ $("#element").dateRangeSlider({
   bounds:{min:new Date(2010,0,1), max:new Date(2012,0,1)},
   wheelMode: null,
   wheelSpeed: 8,
-  arrows: true
+  arrows: true,
+  valueHelpers: "show",
+  formatter: function(value){
+    var month = value.getMonth() + 1;
+    var day = value.getDate();
+    return "" + value.getFullYear() + "-" + (month < 10 ? "0" + month : month) + "-" + (day < 10 ? "0" + day : day);
+  },
+  durationIn: 0,
+  durationOut: 400,
+  delayOut: 200
 });</code></pre>
 	</body>  
 </html>  
