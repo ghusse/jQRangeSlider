@@ -40,8 +40,8 @@
 		rightHandle: null,
 		innerBar: null,
 		container: null,
-		arrows: {left:null, right:null},
-		helpers: {left: null, right:null, leftDisplayed:true, rightDisplayed:true},
+		arrows: null,
+		helpers: null,
 		changing: {min:false, max:false},
 		changed: {min:false, max:false},
 		
@@ -52,7 +52,11 @@
 		
 		_create: function(){
 			this._values = this.options.defaultValues;
-
+			this.helpers = {left: null, right:null, leftDisplayed:true, rightDisplayed:true};
+              this.arrows = {left:null, right:null};
+              this.changing = {min:false, max:false};
+      		this.changed = {min:false, max:false};
+      		
 			this.leftHandle = $("<div class='ui-rangeSlider-handle  ui-rangeSlider-leftHandle' />")
 				.draggable({axis:"x", containment: "parent",
 					drag: $.proxy(this._handleMoved, this), 
