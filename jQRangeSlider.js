@@ -1,7 +1,7 @@
 /* jQRangeSlider
  * A javascript slider selector that supports dates
  * 
- * Copyright (C) Guillaume Gautreau 2010
+ * Copyright (C) Guillaume Gautreau 2010, 2011
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,12 @@
 			defaultValues: {min:20, max:50},
 			wheelMode: null,
 			wheelSpeed: 4,
-			arrows: true
+			arrows: true,
+			valueHelpers: "show",
+			formatter: null,
+			durationIn: 0,
+			durationOut: 400,
+			delayOut: 200
 		},
 		
 		_values: null,
@@ -35,8 +40,10 @@
 		rightHandle: null,
 		innerBar: null,
 		container: null,
-		leftArrow:null,
-		rightArrow:null,
+		arrows: null,
+		helpers: null,
+		changing: {min:false, max:false},
+		changed: {min:false, max:false},
 		
 		// Scroll management
 		lastWheel : 0,
@@ -45,7 +52,11 @@
 		
 		_create: function(){
 			this._values = this.options.defaultValues;
-
+			this.helpers = {left: null, right:null, leftDisplayed:true, rightDisplayed:true};
+			this.arrows = {left:null, right:null};
+			this.changing = {min:false, max:false};
+			this.changed = {min:false, max:false};
+      		
 			this.leftHandle = $("<div class='ui-rangeSlider-handle  ui-rangeSlider-leftHandle' />")
 				.draggable({axis:"x", containment: "parent",
 					drag: $.proxy(this._handleMoved, this), 
@@ -67,7 +78,7 @@
 			this.container = $("<div class='ui-rangeSlider-container' />")
 				.css("position", "absolute");
 			
-			this.bar = $("<div class='ui-rangeSlider-Bar' />")
+			this.bar = $("<div class='ui-rangeSlider-bar' />")
 				.draggable({axis:"x", containment: "parent",
 					drag: $.proxy(this._barMoved, this), 
 					stop: $.proxy(this._barStop, this),
@@ -75,12 +86,12 @@
 				.css("position", "absolute")
 				.bind("mousewheel", $.proxy(this._wheelOnBar, this));
 			
-			this.leftArrow = $("<div class='ui-rangeSlider-arrow ui-rangeSlider-leftArrow' />")
+			this.arrows.left = $("<div class='ui-rangeSlider-arrow ui-rangeSlider-leftArrow' />")
 				.css("position", "absolute")
 				.css("left", 0)
 				.bind("mousedown", $.proxy(this._startScrollLeft, this));
 			
-			this.rightArrow = $("<div class='ui-rangeSlider-arrow ui-rangeSlider-rightArrow' />")
+			this.arrows.right = $("<div class='ui-rangeSlider-arrow ui-rangeSlider-rightArrow' />")
 				.css("position", "absolute")
 				.css("right", 0)
 				.bind("mousedown", $.proxy(this._startScrollRight, this));
@@ -95,8 +106,8 @@
 			
 			this.element
 				.append(this.container)
-				.append(this.leftArrow)
-				.append(this.rightArrow)
+				.append(this.arrows.left)
+				.append(this.arrows.right)
 				.addClass("ui-rangeSlider")
 				.bind("mousewheel", $.proxy(this._wheelOnContainer, this));
 			
@@ -105,15 +116,22 @@
 			}
 			
 			if (!this.options.arrows){
-				this.leftArrow.css("display", "none");
-				this.rightArrow.css("display", "none");
+				this.arrows.left.css("display", "none");
+				this.arrows.right.css("display", "none");
 				this.element.addClass("ui-rangeSlider-noArrow");
 			}else{
-				this.element.addClass("ui-rangeSlider-arrow");
+				this.element.addClass("ui-rangeSlider-withArrows");
+			}
+			
+			if (this.options.valueHelpers != "hide"){
+				this._createHelpers();
+			}else{
+				this._destroyHelpers();
 			}
 						
-			// Seems that all the elements are not ready, outerWidth does not return the good value
+			// Seems that when all the elements are not ready, outerWidth does not return the good value
 			setTimeout($.proxy(this._initWidth, this), 1);
+			//this._initWidth();
 			setTimeout($.proxy(this._initValues, this), 1);
 		},
 		
@@ -134,6 +152,7 @@
 					&& parseFloat(value.min) === value.min 
 					&& parseFloat(value.max) === value.max)
 				{
+					this.options.defaultValues = value;
 					this.values(value.min, value.max);
 				}
 			}else if (key == "wheelMode" && (value == "zoom" || value == "scroll" || value===null)){
@@ -144,20 +163,40 @@
 				if (value){
 					this.element
 						.removeClass("ui-rangeSlider-noArrow")
-						.addClass("ui-rangeSlider-arrow");
-					this.leftArrow.css("display", "block");
-					this.rightArrow.css("display", "block");
+						.addClass("ui-rangeSlider-withArrows");
+					this.arrows.left.css("display", "block");
+					this.arrows.right.css("display", "block");
 				}else{
 					this.element
 						.addClass("ui-rangeSlider-noArrow")
-						.removeClass("ui-rangeSlider-arrow");
-					this.leftArrow.css("display", "none");
-					this.rightArrow.css("display", "none");
+						.removeClass("ui-rangeSlider-withArrows");
+					this.arrows.left.css("display", "none");
+					this.arrows.right.css("display", "none");
 				}
 				
 				this.options.arrows = value;
 				this._initWidth();
 				this._position();
+			}else if (key == "valueHelpers" && (value == "hide" || value == "show" || value == "change")){
+				this.options.valueHelpers = value;
+				
+				if (value != "hide"){
+					this._createHelpers();
+				}else{
+					this._destroyHelpers();
+				}
+			}else if (key == "formatter" && value != null && typeof value == "function"){
+				this.options.formatter = value;
+				this._position();
+			}else if (key == "bounds" 
+					&& (typeof value.min != "undefined") 
+					&& (typeof value.max != "undefined") 
+					&& parseFloat(value.min) === value.min 
+					&& parseFloat(value.max) === value.max
+					&& value.min < value.max)
+			{
+				this.options.bounds = value;
+				this.values(this._values.min, this._values.max);
 			}
 		},
 		
@@ -167,6 +206,13 @@
 		
 		_getValue: function(position){
 			return position * (this.options.bounds.max - this.options.bounds.min) / (this.container.innerWidth() - 1) + this.options.bounds.min;
+		},
+		
+		_privateValues: function(min, max){
+			this._setValues(min, max);
+			this._position();
+			
+			return this._values;
 		},
 		
 		_trigger: function(eventName){
@@ -187,8 +233,12 @@
 		},
 		
 		_positionHandles: function(){
-			this.leftHandle.css("left", this._getPosition(this._values.min));
-			this.rightHandle.css("left", this._getPosition(this._values.max) - this.rightHandle.outerWidth(true) + 1);
+			var left = this._getPosition(this._values.min);
+			var right = this._getPosition(this._values.max) - this.rightHandle.outerWidth(true) + 1;
+			this.leftHandle.css("left", left);
+			this.rightHandle.css("left", right);
+			
+			this._positionHelpers(left, right);
 		},
 		
 		_barMoved: function(event, ui){
@@ -201,7 +251,7 @@
 		
 		_barStop: function(event, ui){
 			this._position();
-			this._trigger("valuesChanged");
+			this._prepareFiringChanged();
 		},
 		
 		_switchHandles: function(){
@@ -237,11 +287,33 @@
 				max = temp;
 			}
 				
-			this.values(min, max);
+			this._privateValues(min, max);
 		},
 		
 		_handleStop: function(event, ui){
 			this._position();
+			this._prepareFiringChanged();
+		},
+		
+		_changing: function(min, max){
+			this._trigger("valuesChanging");
+			
+			var show = false;
+			if (min && !this.changing.min){
+				this._trigger("minValueChanging");
+				this.changing.min = true;
+				show = true;
+			}
+			
+			if (max && !this.changing.max){
+				this._trigger("maxValueChanging");
+				this.changing.max = true;
+				show = true;
+			}
+			
+			if (show){
+				this._showHelpers();
+			}
 		},
 		
 		_prepareFiringChanged: function(){
@@ -251,24 +323,25 @@
 		},
 		
 		_fireChanged: function(last){
-			if (this.lastWheel == last){
-				this._trigger("valuesChanged");
-			}
-		},
-		
-		_wheelOnBar: function(event, delta, deltaX, deltaY){
-			if (this.options.wheelMode == "zoom"){
-				this.zoomIn(-deltaY);
+			if (this.lastWheel == last && !this.bar.hasClass("ui-draggable-dragging") && !this.leftHandle.hasClass("ui-draggable-dragging") && !this.rightHandle.hasClass("ui-draggable-dragging")){
+				var changed = false;
+				if (this.changing.min){
+					this.changing.min = false;
+					this._trigger("minValueChanged");
+					changed = true;
+				}
 				
-				return false;
-			}
-		},
-		
-		_wheelOnContainer: function(event, delta, deltaX, deltaY){
-			if (this.options.wheelMode == "scroll"){
-				this.scrollRight(-deltaY);
+				if (this.changing.max){
+					this.changing.max = false;
+					this._trigger("maxValueChanged");
+					changed = true;
+				}
 				
-				return false;
+				if (changed){
+					this._trigger("valuesChanged");
+				}
+				
+				this._hideHelpers();
 			}
 		},
 		
@@ -277,7 +350,8 @@
 			this._positionHandles();
 		},
 	
-		_setValues: function(min, max){	
+		_setValues: function(min, max){
+			var oldValues = this._values;
 			var difference = Math.abs(max-min);
 			
 			if (difference >= this.options.bounds.max - this.options.bounds.min){
@@ -297,9 +371,13 @@
 				this._values = values;
 			}
 			
-			this._trigger("valuesChanging");
+			this._changing(oldValues.min != this._values.min, oldValues.max != this._values.max);
 			this._prepareFiringChanged();
 		},
+		
+		/*
+		 * Scrolling
+		 */
 		
 		_startScrollLeft: function(event, ui){
 			this.lastScroll = Math.random();
@@ -327,34 +405,162 @@
 			this.lastScroll = Math.random();
 		},
 		
+		/*
+		 * Mouse wheel
+		 */
+		
+		_wheelOnBar: function(event, delta, deltaX, deltaY){
+			if (this.options.wheelMode == "zoom"){
+				this.zoomIn(-deltaY);
+				
+				return false;
+			}
+		},
+		
+		_wheelOnContainer: function(event, delta, deltaX, deltaY){
+			if (this.options.wheelMode == "scroll"){
+				this.scrollRight(-deltaY);
+				
+				return false;
+			}
+		},
+		
+		/*
+		 * Value helpers
+		 */
+		_createHelper: function(helper, classes){
+			if (helper == null){
+				helper = $("<div class='ui-rangeSlider-helper'/>")
+					.addClass(classes)
+					.css("position", "absolute");
+				$("body").append(helper);
+				
+				this._positionHelpers(0, 0);
+			}
+			
+			return helper;
+		},
+		
+		_destroyHelper: function(helper){
+			if (helper != null){
+				helper.remove();
+				helper = null;
+			}
+			
+			return helper;
+		},
+		
+		_createHelpers: function(){
+			this.helpers.left = this._createHelper(this.helpers.left, "ui-rangeSlider-leftHelper");
+			this.helpers.right = this._createHelper(this.helpers.right, "ui-rangeSlider-rightHelper");
+			
+			if (this.options.valueHelpers == "change"){
+				this.helpers.left.css("display", "none");
+				this.helpers.right.css("display", "none");
+				this.helpers.leftDisplayed = false;
+				this.helpers.rightDisplayed = false;
+			}else{
+				this.helpers.leftDisplayed = true;
+				this.helpers.rightDisplayed = true;
+				this.helpers.left.css("display", "block");
+				this.helpers.right.css("display", "block");
+				
+				this._position();
+			}
+		},
+		
+		_destroyHelpers: function(){
+			this.helpers.left = this._destroyHelper(this.helpers.left);
+			this.helpers.right = this._destroyHelper(this.helpers.right);
+		},
+		
+		_positionHelper: function(helper, position, value){
+				helper.css("left", position)
+					.css("top", this.leftHandle.offset().top - helper.outerHeight(true));
+		},
+		
+		_positionHelpers: function(){
+			if (this.helpers.left != null && this.helpers.right != null){
+				this.helpers.left.text(this._format(this._values.min));
+				this.helpers.right.text(this._format(this._values.max));
+				
+				var minSize = this.helpers.leftDisplayed ? this.helpers.left.outerWidth(true) : 0;
+				var maxSize = this.helpers.rightDisplayed ? this.helpers.right.outerWidth(true) : 0;
+				var leftBound = 0;
+				var rightBound = $(window).width() - maxSize;
+				var minLeft = Math.max(leftBound, this.leftHandle.offset().left + this.leftHandle.outerWidth(true) / 2 - minSize / 2);
+				var maxLeft = Math.min(rightBound, this.rightHandle.offset().left + this.rightHandle.outerWidth(true) / 2 - maxSize / 2);
+				
+				// Need to find a better position
+				if (minLeft + minSize >= maxLeft){
+					var diff =  minLeft + minSize - maxLeft;
+					minLeft = Math.max(leftBound, minLeft - diff / 2);
+					maxLeft = Math.min(rightBound, minLeft + minSize);
+					minLeft = Math.max(leftBound, maxLeft - minSize);
+				}
+				
+				if (this.helpers.leftDisplayed) this._positionHelper(this.helpers.left, minLeft, this._values.min);
+				if (this.helpers.rightDisplayed) this._positionHelper(this.helpers.right, maxLeft, this._values.max);
+			}
+		},
+		
+		_format: function(value){
+			if (typeof this.options.formatter != "undefined" && this.options.formatter != null){
+				return this.options.formatter(value);
+			}else{
+				return this._defaultFormat(value);
+			}
+		},
+		
+		_defaultFormat: function(value){
+			return Math.round(value);
+		},
+		
+		_showHelpers: function(){
+			if (this.options.valueHelpers == "change" && !this.privateChange){
+				if (this.changing.min && !this.helpers.leftDisplayed){
+					this.helpers.left.stop(true, true).fadeIn(this.options.durationIn);
+					this.helpers.leftDisplayed = true;
+				}
+				
+				if (this.changing.max && !this.helpers.rightDisplayed){
+					this.helpers.rightDisplayed = true;
+					this.helpers.right.stop(true, true).fadeIn(this.options.durationIn);
+				}
+			}
+		},
+		
+		_hideHelpers: function(){
+			if (this.options.valueHelpers == "change" && this.helpers.left != null && this.helpers.right != null){
+				this.helpers.leftDisplayed = false;
+				this.helpers.rightDisplayed = false;
+				this.helpers.left.stop(true, true).delay(this.options.delayOut).fadeOut(this.options.durationOut);
+				this.helpers.right.stop(true, true).delay(this.options.delayOut).fadeOut(this.options.durationOut);
+			}
+		},
+		
+		/*
+		 * Public methods
+		 */
 		
 		values: function(min, max){
 			if (typeof min != "undefined" 
 				&& typeof max != "undefined")
 			{
-				this._setValues(min, max);
-				this._position();
+				this.internalChange = false;
+				this._privateValues(min,max);
+				this.internalChange = true;
 			}
 			
 			return this._values;
 		},
 		
 		min: function(min){
-			if (typeof min != "undefined"){
-				this._setValues(min, this._values.max);
-				this._position();
-			}
-			
-			return this._values.min;
+			return this.values(min, this._values.max).min;
 		},
 		
 		max: function(max){
-			if (typeof max != "undefined"){
-				this._setValues(this._values.min, max);
-				this._position();
-			}
-			
-			return this._values.max;
+			return this.values(this._values.min, max).max;
 		},
 		
 		zoomIn: function(quantity){
@@ -363,7 +569,7 @@
 			min = this._values.min + quantity * this.options.wheelSpeed * diff / 200;
 			max = this._values.max - quantity * this.options.wheelSpeed * diff / 200;
 			
-			this.values(min, max);
+			this._privateValues(min, max);
 		},
 		
 		zoomOut: function(quantity){
@@ -384,18 +590,22 @@
 			min = this._values.min + quantity * this.options.wheelSpeed * diff / 100;
 			max = this._values.max + quantity * this.options.wheelSpeed * diff / 100;
 			
-			this.values(min, max);
+			this._privateValues(min, max);
 		},
 		
 		destroy: function(){
+			this.element.removeClass("ui-rangeSlider-withArrows")
+			.removeClass("ui-rangeSlider-noArrow");
 			this.bar.detach();
 			this.leftHandle.detach();
 			this.rightHandle.detach();
 			this.innerBar.detach();
 			this.container.detach();
-			this.leftArrow.detach();
-			this.rightArrow.detach();
+			this.arrows.left.detach();
+			this.arrows.right.detach();
 			this.element.removeClass("ui-rangeSlider");
+			this._destroyHelpers();
+			delete this.options;
 			
 			$.Widget.prototype.destroy.apply(this, arguments);
 		}
