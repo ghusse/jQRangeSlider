@@ -486,8 +486,8 @@
 				
 				var minSize = this.helpers.leftDisplayed ? this.helpers.left.outerWidth(true) : 0;
 				var maxSize = this.helpers.rightDisplayed ? this.helpers.right.outerWidth(true) : 0;
-				var leftBound = this.container.offset().left;
-				var rightBound = this.container.offset().left + this.container.innerWidth() - maxSize;
+				var leftBound = 0;
+				var rightBound = $(window).width() - maxSize;
 				var minLeft = Math.max(leftBound, this.leftHandle.offset().left + this.leftHandle.outerWidth(true) / 2 - minSize / 2);
 				var maxLeft = Math.min(rightBound, this.rightHandle.offset().left + this.rightHandle.outerWidth(true) / 2 - maxSize / 2);
 				
