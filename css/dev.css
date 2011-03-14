@@ -69,3 +69,11 @@
 .ui-rangeSlider-noArrow .ui-rangeSlider-container{
 	margin:0;
 }
+
+.ui-rangeSlider-helper{
+	padding:2px 4px 5px;
+	margin-bottom:2px;
+	background-image:url('icons/helper.png');
+	background-position:bottom center;
+	background-repeat:no-repeat;
+}
