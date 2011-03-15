@@ -18,40 +18,39 @@
  */
 
 (function ($, undefined) {
-	$.widget("ui.dateRangeSlider", $.extend({}, $.ui.rangeSlider.prototype, {
-		_create: function(){
-			if (this.options.bounds != null && this.options.bounds.min instanceof Date && this.options.bounds.max instanceof Date){
-				this.options.bounds = {min: this.options.bounds.min.valueOf(), max: this.options.bounds.max.valueOf()};
-			}else{
-				this.options.bounds = {min: new Date(2010,0,1).valueOf(), max: new Date(2012,0,1).valueOf()};
-			}
-			
-			if (this.options.defaultValues != null && this.options.defaultValues.min instanceof Date && this.options.defaultValues.max instanceof Date){
-				this.options.defaultValues = {min: this.options.defaultValues.min.valueOf(), max: this.options.defaultValues.max.valueOf()};
-			}else{
-				this.options.defaultValues = {min: new Date(2010,1,11).valueOf(), max: new Date(2011,1,11).valueOf()};
-			}
-			
-			
-			$.ui.rangeSlider.prototype._create.apply(this, arguments);
+	$.widget("ui.dateRangeSlider", $.ui.rangeSlider, {
+		options: {
+			bounds: {min: new Date(2010,0,1).valueOf(), max: new Date(2012,0,1).valueOf()},
+			defaultValues: {min: new Date(2010,1,11).valueOf(), max: new Date(2011,1,11).valueOf()}
 		},
 	
 		_setOption: function(key, value){
-			if ((key == "defaultValues" || key== "bounds") && typeof value != "undefined" && value != null && typeof value.min != "undefined" && typeof value.max != undefined){
-				if (value.min instanceof Date && value.max instanceof Date){
-					$.ui.rangeSlider.prototype._setOption.apply(this, [key, {min:value.min.valueOf(), max:value.max.valueOf()}]);
-				}
+			if ((key == "defaultValues" || key== "bounds") && typeof value != "undefined" && value != null && typeof value.min != "undefined" && typeof value.max != "undefined" && value.min instanceof Date && value.max instanceof Date){
+				$.ui.rangeSlider.prototype._setOption.apply(this, [key, {min:value.min.valueOf(), max:value.max.valueOf()}]);
 			}else{
 				$.ui.rangeSlider.prototype._setOption.apply(this, arguments);
 			}
 		},
 		
+		option: function(key, value){
+			if (key == "bounds" || key == "defaultValues"){
+				var result = $.ui.rangeSlider.prototype.option.apply(this, arguments);
+				
+				return {min:new Date(result.min), max:new Date(result.max)};
+			}
+			
+			return $.ui.rangeSlider.prototype.option.apply(this, arguments);
+		},
+		
 		_defaultFormat: function(value){
-			value = new Date(value);
 			var month = value.getMonth() + 1;
-			var day = value.getDay() + 1;
+			var day = value.getDate();
 			return "" + value.getFullYear() + "-" + (month < 10 ? "0" + month : month) 
 				+ "-" + (day < 10 ? "0" + day : day);
+		},
+		
+		_format: function(value){
+			return $.ui.rangeSlider.prototype._format.apply(this, [new Date(value)]);
 		},
 		
 		values: function(min, max){
@@ -79,7 +78,6 @@
 			}
 			
 			return new Date($.ui.rangeSlider.prototype.max.apply(this));
-		}
-		
-	}));
+		}		
+	});
 })(jQuery);

@@ -106,10 +106,10 @@ Prerequisites
 
 Changelog
 ---------
-* Next release : 
-	* value helpers,
-	* min/maxValueChanging and min/maxValueChanged events
-	* bugfix on the destroy method
+* 2.0-pre: 
+	* Value helpers
+	* New events: min/maxValueChanging and min/maxValueChanged
+	* Bugfixes
 	* Unit tests
 * 1.1.1: 2011-03-04 bugfixes on public methods
 * 1.1  : 2011-03-03 Added methods for setting and getting only one value

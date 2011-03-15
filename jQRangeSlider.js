@@ -25,7 +25,7 @@
 			wheelMode: null,
 			wheelSpeed: 4,
 			arrows: true,
-			valueHelpers: "change",
+			valueHelpers: "show",
 			formatter: null,
 			durationIn: 0,
 			durationOut: 400,
@@ -148,6 +148,7 @@
 					&& parseFloat(value.min) === value.min 
 					&& parseFloat(value.max) === value.max)
 				{
+					this.options.defaultValues = value;
 					this.values(value.min, value.max);
 				}
 			}else if (key == "wheelMode" && (value == "zoom" || value == "scroll" || value===null)){
@@ -182,6 +183,7 @@
 				}
 			}else if (key == "formatter" && value != null && typeof value == "function"){
 				this.options.formatter = value;
+				this._position();
 			}else if (key == "bounds" 
 					&& (typeof value.min != "undefined") 
 					&& (typeof value.max != "undefined") 
@@ -245,7 +247,7 @@
 		
 		_barStop: function(event, ui){
 			this._position();
-			this._trigger("valuesChanged");
+			this._prepareFiringChanged();
 		},
 		
 		_switchHandles: function(){
@@ -286,6 +288,7 @@
 		
 		_handleStop: function(event, ui){
 			this._position();
+			this._prepareFiringChanged();
 		},
 		
 		_changing: function(min, max){
@@ -316,17 +319,22 @@
 		},
 		
 		_fireChanged: function(last){
-			if (this.lastWheel == last){
-				this._trigger("valuesChanged");
-				
+			if (this.lastWheel == last && !this.bar.hasClass("ui-draggable-dragging") && !this.leftHandle.hasClass("ui-draggable-dragging") && !this.rightHandle.hasClass("ui-draggable-dragging")){
+				var changed = false;
 				if (this.changing.min){
 					this.changing.min = false;
 					this._trigger("minValueChanged");
+					changed = true;
 				}
 				
 				if (this.changing.max){
 					this.changing.max = false;
 					this._trigger("maxValueChanged");
+					changed = true;
+				}
+				
+				if (changed){
+					this._trigger("valuesChanged");
 				}
 				
 				this._hideHelpers();
@@ -444,10 +452,16 @@
 			
 			if (this.options.valueHelpers == "change"){
 				this.helpers.left.css("display", "none");
-				this.helpers.right.css("display", "none")
+				this.helpers.right.css("display", "none");
+				this.helpers.leftDisplayed = false;
+				this.helpers.rightDisplayed = false;
 			}else{
 				this.helpers.leftDisplayed = true;
 				this.helpers.rightDisplayed = true;
+				this.helpers.left.css("display", "block");
+				this.helpers.right.css("display", "block");
+				
+				this._position();
 			}
 		},
 		
@@ -487,7 +501,7 @@
 		},
 		
 		_format: function(value){
-			if (this.options.formatter != null){
+			if (typeof this.options.formatter != "undefined" && this.options.formatter != null){
 				return this.options.formatter(value);
 			}else{
 				return this._defaultFormat(value);
@@ -499,7 +513,7 @@
 		},
 		
 		_showHelpers: function(){
-			if (this.options.valueHelpers == "change"){
+			if (this.options.valueHelpers == "change" && !this.privateChange){
 				if (this.changing.min && !this.helpers.leftDisplayed){
 					this.helpers.left.stop(true, true).fadeIn(this.options.durationIn);
 					this.helpers.leftDisplayed = true;
@@ -529,10 +543,9 @@
 			if (typeof min != "undefined" 
 				&& typeof max != "undefined")
 			{
-				var mode = this.options.valueHelpers;
-				this.options.valueHelpers = "hide";
+				this.internalChange = false;
 				this._privateValues(min,max);
-				this.options.valueHelpers = mode;
+				this.internalChange = true;
 			}
 			
 			return this._values;
@@ -588,6 +601,7 @@
 			this.arrows.right.detach();
 			this.element.removeClass("ui-rangeSlider");
 			this._destroyHelpers();
+			delete this.options;
 			
 			$.Widget.prototype.destroy.apply(this, arguments);
 		}

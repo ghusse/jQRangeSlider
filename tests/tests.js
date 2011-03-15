@@ -23,6 +23,14 @@
  
 var el = null;
 
+var setUp = new TestCase(
+	"Setup",
+	function(){
+		el = $("#test");
+	},
+	null
+);
+
 var defaultCtorTest = new TestCase(
 	"Default ctor",
 	function(){
@@ -32,37 +40,37 @@ var defaultCtorTest = new TestCase(
 		// Default values tests
 		deepEqual(el.rangeSlider("option", "bounds"), { min:0, max:100 }, "Default bounds should be 0-100");
 		deepEqual(el.rangeSlider("option", "defaultValues"), {min:20, max:50}, "Default values should be 20-50");
-		equal(el.rangeSlider("option", "wheelMode"), null, "Default wheel mode should be empty");
-		equal(el.rangeSlider("option", "wheelSpeed"), 4, "Default wheel mode should be empty");
+		same(el.rangeSlider("option", "wheelMode"), null, "Default wheel mode should be empty");
+		same(el.rangeSlider("option", "wheelSpeed"), 4, "Default wheel mode should be empty");
 		ok(el.rangeSlider("option", "arrows"), "Arrows should be activated by default");
-		equal(el.rangeSlider("option", "valueHelpers"), "change", "Value helpers should be activated on value changes by default");
-		equal(el.rangeSlider("option", "formatter"), null, "Default formatter should be used (null value)");
-		equal(el.rangeSlider("option", "durationIn"), 0, "Default duration for showing helpers is 0ms");
-		equal(el.rangeSlider("option", "durationOut"), 400, "Default duration for hiding helpers is 400ms");
-		equal(el.rangeSlider("option", "delayOut"), 200, "Default delay before hiding helpers is 200ms");
+		same(el.rangeSlider("option", "valueHelpers"), "show", "Value helpers should be activated on value 'show' by default");
+		same(el.rangeSlider("option", "formatter"), null, "Default formatter should be used (null value)");
+		same(el.rangeSlider("option", "durationIn"), 0, "Default duration for showing helpers is 0ms");
+		same(el.rangeSlider("option", "durationOut"), 400, "Default duration for hiding helpers is 400ms");
+		same(el.rangeSlider("option", "delayOut"), 200, "Default delay before hiding helpers is 200ms");
 		
 		// Created elements
-		equal($(".ui-rangeSlider-handle.ui-rangeSlider-leftHandle").length, 1, "Left handle should have been created");
-		equal($(".ui-rangeSlider-handle.ui-rangeSlider-rightHandle").length, 1, "Right handle should have been created");
-		equal($(".ui-rangeSlider-helper.ui-rangeSlider-leftHelper").length, 1, "Left helper should have been created");
-		equal($(".ui-rangeSlider-helper.ui-rangeSlider-rightHelper").length, 1, "Right helper should have been created");
+		same($(".ui-rangeSlider-handle.ui-rangeSlider-leftHandle").length, 1, "Left handle should have been created");
+		same($(".ui-rangeSlider-handle.ui-rangeSlider-rightHandle").length, 1, "Right handle should have been created");
+		same($(".ui-rangeSlider-helper.ui-rangeSlider-leftHelper").length, 1, "Left helper should have been created");
+		same($(".ui-rangeSlider-helper.ui-rangeSlider-rightHelper").length, 1, "Right helper should have been created");
 		
 		// Arrows
-		equal($(".ui-rangeSlider-arrow.ui-rangeSlider-leftArrow").length, 1, "Left arrow should have been created");
-		equal($(".ui-rangeSlider-arrow.ui-rangeSlider-rightArrow").length, 1, "Right arrow should have been created");
-		equal($(".ui-rangeSlider-arrow.ui-rangeSlider-leftArrow").css("display"), "block", "Left arrow should have been created");
-		equal($(".ui-rangeSlider-arrow.ui-rangeSlider-rightArrow").css("display"), "block", "Arrows should be visible");
+		same($(".ui-rangeSlider-arrow.ui-rangeSlider-leftArrow").length, 1, "Left arrow should have been created");
+		same($(".ui-rangeSlider-arrow.ui-rangeSlider-rightArrow").length, 1, "Right arrow should have been created");
+		same($(".ui-rangeSlider-arrow.ui-rangeSlider-leftArrow").css("display"), "block", "Left arrow should have been created");
+		same($(".ui-rangeSlider-arrow.ui-rangeSlider-rightArrow").css("display"), "block", "Arrows should be visible");
 		ok(el.hasClass("ui-rangeSlider-withArrows"), "ui-rangeSlider-withArrows should be applied to the parent element");
 		
 		// Bars
-		equal($(".ui-rangeSlider-innerBar").length, 1, "The inner bar should have been created");
-		equal($(".ui-rangeSlider-bar").length, 1, "The bar should have been created");
+		same($(".ui-rangeSlider-innerBar").length, 1, "The inner bar should have been created");
+		same($(".ui-rangeSlider-bar").length, 1, "The bar should have been created");
 		
-		equal($(".ui-rangeSlider-container").outerWidth(true), el.innerWidth(), "Container");
+		same($(".ui-rangeSlider-container").outerWidth(true), el.innerWidth(), "Container");
 		
 		// Values
-		equal(this.min(), 20, "Values should be equal to the default values");
-		equal(this.max(), 50, "Values should be equal to the default values");
+		same(this.min(), 20, "Values should be equal to the default values");
+		same(this.max(), 50, "Values should be equal to the default values");
 		
 	}
 );
@@ -79,12 +87,47 @@ var defaultSetup = new TestCase(
 var destroyTest = new TestCase(
 	"Destroy",
 	function(){
+		el.rangeSlider("destroy");
 	},
+	function(){	
+		same(el.children().length, 0, "Parent element should be empty");
+		same(el.attr("class"), "", "Class attribute on parent element should be empty");
+	}
+);
+
+var destroy = new TestCase(
+	"Destroy",
 	function(){
 		el.rangeSlider("destroy");
+	},
+	null
+);
+
+var customCtorTest = new TestCase(
+	"Custom ctor",
+	function(){
+		el.rangeSlider("destroy");
+		this.defaultValues = {min:150, max:500};
+		this.bounds = {min:-10, max:1000};
 		
-		equal(el.children().length, 0, "Parent element should be empty");
-		equal(el.attr("class"), "", "Class attribute on parent element should be empty");
+		el.rangeSlider(
+			{
+				defaultValues : this.defaultValues,
+				bounds: this.bounds,
+			}
+		);
+	},
+	function(){
+		var bounds = el.rangeSlider("option", "bounds");
+		var defaultValues = el.rangeSlider("option", "defaultValues");
+		var values = el.rangeSlider("values");
+		
+		same(bounds.min, this.bounds.min, "Bounds min value should have been correctly set");
+		same(bounds.max, this.bounds.max, "Bounds max value should have been correctly set");
+		same(defaultValues.min, this.defaultValues.min, "Default min value should have been correctly set");
+		same(defaultValues.max, this.defaultValues.max, "Default max value should have been correctly set");
+		same(values.min, this.defaultValues.min, "Min value should have been correctly set");
+		same(values.max, this.defaultValues.max, "Max value should have been correctly set");
 	}
 );
 
@@ -94,8 +137,8 @@ var hideHelpersTest = new TestCase(
 		el.rangeSlider("option", "valueHelpers", "hide");
 	},
 	function(){
-		equal($(".ui-rangeSlider-helper").length, 0, "Value helpers should have been detached");
-		equal(el.rangeSlider("option", "valueHelpers"), "hide", "Option value should be 'hidden'");
+		same($(".ui-rangeSlider-helper").length, 0, "Value helpers should have been detached");
+		same(el.rangeSlider("option", "valueHelpers"), "hide", "Option value should be 'hidden'");
 	}
 );
 
@@ -105,8 +148,8 @@ var showHelpersTest = new TestCase(
 		el.rangeSlider("option", "valueHelpers", "show");
 	},
 	function(){
-		equal($(".ui-rangeSlider-helper").length, 2, "Value helpers should have been detached");
-		equal(el.rangeSlider("option", "valueHelpers"), "show", "Option value should be 'hidden'");
+		same($(".ui-rangeSlider-helper").length, 2, "Value helpers should have been detached");
+		same(el.rangeSlider("option", "valueHelpers"), "show", "Option value should be 'hidden'");
 	}
 );
 
@@ -121,10 +164,10 @@ var changeBoundsTest = new TestCase(
 	function(){
 		var bounds = { min:30, max:40 };
 		
-		equal(el.rangeSlider("option", "bounds").min, bounds.min, "Bounds setter should have worked");
-		equal(el.rangeSlider("option", "bounds").max, bounds.max, "Bounds setter should have worked");
-		equal(this.min(), bounds.min, "As the old values were outside the new bounds, values should have been updated");
-		equal(this.max(), bounds.max, "As the old values were outside the new bounds, values should have been updated");
+		same(el.rangeSlider("option", "bounds").min, bounds.min, "Bounds setter should have worked");
+		same(el.rangeSlider("option", "bounds").max, bounds.max, "Bounds setter should have worked");
+		same(this.min(), bounds.min, "As the old values were outside the new bounds, values should have been updated");
+		same(this.max(), bounds.max, "As the old values were outside the new bounds, values should have been updated");
 		
 		this.assertDifferentPositions();
 	}
@@ -139,7 +182,7 @@ var wheelModeZoomTest = new TestCase(
 		$(".ui-rangeSlider-bar").trigger("mousewheel", [-10, 0, -10]);
 	},
 	function(){
-		equal(el.rangeSlider("option", "wheelMode"), "zoom", "Wheelmode setter should have worked");
+		same(el.rangeSlider("option", "wheelMode"), "zoom", "Wheelmode setter should have worked");
 		ok($(".ui-rangeSlider-leftHandle").offset().left > this.minHandlerPos, "Left handle should have been moved");
 		ok($(".ui-rangeSlider-rightHandle").offset().left < this.maxHandlerPos, "Right handle should have been moved");
 		ok($(".ui-rangeSlider-leftHelper").offset().left > this.minHelperPos, "Left helper should have been moved");
@@ -159,7 +202,7 @@ var wheelModeScrollTest = new TestCase(
 		el.find(".ui-rangeSlider-container").trigger("mousewheel", [-10, 0, -10]);
 	},
 	function(){
-		equal(el.rangeSlider("option", "wheelMode"), "scroll", "Wheelmode setter should have worked");
+		same(el.rangeSlider("option", "wheelMode"), "scroll", "Wheelmode setter should have worked");
 		
 		ok($(".ui-rangeSlider-leftHandle").offset().left > this.minHandlerPos, "Left handle should have been moved");
 		ok($(".ui-rangeSlider-rightHandle").offset().left > this.maxHandlerPos, "Right handle should have been moved");
@@ -168,7 +211,7 @@ var wheelModeScrollTest = new TestCase(
 		
 		ok(this.min() > this.values.min, "Scroll should have worked");
 		ok(this.max() > this.values.max, "Scroll should have worked");
-		equal(this.min() - this.values.min, this.max() - this.values.max, "Scrolling must add or remove the same value on both ends");
+		same(this.min() - this.values.min, this.max() - this.values.max, "Scrolling must add or remove the same value on both ends");
 	}
 );
 
@@ -177,10 +220,10 @@ var wheelModeSetterTest = new TestCase(
 	function(){},
 	function(){
 		el.rangeSlider("option", "wheelMode", "badValue");
-		equal(el.rangeSlider("option", "wheelMode"), "scroll", "Wheelmode setter with a bad value should not have worked");
+		same(el.rangeSlider("option", "wheelMode"), "scroll", "Wheelmode setter with a bad value should not have worked");
 		
 		el.rangeSlider("option", "wheelMode", null);
-		equal(el.rangeSlider("option", "wheelMode"), null, "Wheelmode setter with a bad value should not have worked");
+		same(el.rangeSlider("option", "wheelMode"), null, "Wheelmode setter with a bad value should not have worked");
 	}
 );
 
@@ -189,13 +232,13 @@ var wheelSpeedSetterTest = new TestCase(
 	function(){},
 	function(){
 		el.rangeSlider("option", "wheelSpeed", 2);
-		equal(el.rangeSlider("option", "wheelSpeed"), 2, "Wheelspeed setter should have worked");	
+		same(el.rangeSlider("option", "wheelSpeed"), 2, "Wheelspeed setter should have worked");	
 		
 		el.rangeSlider("option", "wheelSpeed", null);
-		equal(el.rangeSlider("option", "wheelSpeed"), 2, "Wheelspeed setter should not have worked");	
+		same(el.rangeSlider("option", "wheelSpeed"), 2, "Wheelspeed setter should not have worked");	
 
 		el.rangeSlider("option", "wheelSpeed", "badValue");
-		equal(el.rangeSlider("option", "wheelSpeed"), 2, "Wheelspeed setter should not have worked");	
+		same(el.rangeSlider("option", "wheelSpeed"), 2, "Wheelspeed setter should not have worked");	
 	}
 );
 
@@ -213,8 +256,8 @@ var noArrowsSetterTest = new TestCase(
 		
 		var arrows = el.find(".ui-rangeSlider-arrow");
 		ok(arrows.length, 2, "2 arrows should be present");
-		equal($(arrows[0]).css("display"), "none", "Arrows should not be displayed");
-		equal($(arrows[1]).css("display"), "none", "Arrows should not be displayed");
+		same($(arrows[0]).css("display"), "none", "Arrows should not be displayed");
+		same($(arrows[1]).css("display"), "none", "Arrows should not be displayed");
 	}
 );
 
@@ -241,12 +284,30 @@ var valuesSetter = new TestCase(
 		this.previousResult = el.rangeSlider("values", 21, 22);
 	},
 	function(){
-		equal(this.previousResult.min, 21, "Method should have returned the good min value");
-		equal(this.previousResult.max, 22, "Method should have returned the good max value");
+		same(this.previousResult.min, 21, "Method should have returned the good min value");
+		same(this.previousResult.max, 22, "Method should have returned the good max value");
 		
 		var values = el.rangeSlider("values");
-		equal(values.min, 21, "Min value should have been set");
-		equal(values.max, 22, "Max value should have been set");
+		same(values.min, 21, "Min value should have been set");
+		same(values.max, 22, "Max value should have been set");
+	}
+);
+
+var minMaxSetter = new TestCase(
+	"Min & max setters",
+	function(){
+		this.min = 5;
+		this.max = 42;
+		
+		this.minResult = el.rangeSlider("min", this.min);
+		this.maxResult = el.rangeSlider("max", this.max);
+	},
+	function(){
+		same(this.minResult, this.min, "Min setter should return the new value");
+		same(this.maxResult, this.max, "Max setter should return the new value");
+		
+		same(el.rangeSlider("min"), this.min, "Min getter should return the new value");
+		same(el.rangeSlider("max"), this.max, "Max getter should return the new value");
 	}
 );
 
@@ -296,22 +357,18 @@ var scrollRightTest = new TestCase(
 	function(){
 		ok(this.min() > this.values.min, "Min value should have been increased");
 		ok(this.max() > this.values.max, "Min value should have been increased");
-
 	}
 );
 
-$(document).ready(
-	function(){
-		module("jQRangeSlider");
-	
-		el = $("#test");
-		
-		var jQRangeSliderTester = new TestRunner("jQRangeSliderTester",[defaultCtorTest, hideHelpersTest, showHelpersTest, changeBoundsTest,
+testRunner.add("jQRangeSlider", [setUp,
+			defaultCtorTest, hideHelpersTest, showHelpersTest, changeBoundsTest,
 			wheelModeZoomTest, wheelModeScrollTest, wheelModeSetterTest, wheelSpeedSetterTest,
 			noArrowsSetterTest, arrowsScrollingMouseUpTest,
 			defaultSetup,
-			valuesSetter, zoomInTest, zoomOutTest, scrollLeftTest, scrollRightTest,
+			customCtorTest,
+			destroy,
+			defaultCtorTest,
+			valuesSetter, minMaxSetter,
+			zoomInTest, zoomOutTest, scrollLeftTest, scrollRightTest,
 			destroyTest]);
-		jQRangeSliderTester.launch();
-	}
-);
+
