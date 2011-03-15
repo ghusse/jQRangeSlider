@@ -3,19 +3,19 @@
  * Using fam fam icon set from Mark James, http://www.famfamfam.com/lab/icons/silk/ (Creative Commons Attribution 2.5 License)
  */
 
-.ui-rangeSlider.ui-rangeSlider-dev{
+.ui-rangeSlider{
 	height:22px;
 	z-index:1;
 }
 
-.ui-rangeSlider.ui-rangeSlider-dev .ui-rangeSlider-innerBar{
+.ui-rangeSlider .ui-rangeSlider-innerBar{
 	height:16px;
 	margin:3px 6px;
 	background:#DDD;
 	z-index:2;
 }
 
-.ui-rangeSlider.ui-rangeSlider-dev .ui-rangeSlider-handle{
+.ui-rangeSlider .ui-rangeSlider-handle{
 	width:6px;
 	height:22px;
 	background:#AAA;
@@ -24,7 +24,7 @@
 	z-index:4;
 }
 
-.ui-rangeSlider.ui-rangeSlider-dev .ui-rangeSlider-bar{
+.ui-rangeSlider .ui-rangeSlider-bar{
 	margin: 1px 0;
 	background:#CCC;
 	background:rgba(100,100,150, 0.2);
@@ -35,7 +35,7 @@
 	z-index:3;
 }
 
-.ui-rangeSlider.ui-rangeSlider-dev .ui-rangeSlider-bar.ui-draggable-dragging{
+.ui-rangeSlider .ui-rangeSlider-bar.ui-draggable-dragging{
 	cursor:	-moz-grabbing;
 	cursor:grabbing;
 }
@@ -68,4 +68,12 @@
 
 .ui-rangeSlider-noArrow .ui-rangeSlider-container{
 	margin:0;
+}
+
+.ui-rangeSlider-helper{
+	padding:2px 5px 6px;
+	margin:0 2px 2px;
+	background-image:url('icons/helper.png');
+	background-position:bottom center;
+	background-repeat:no-repeat;
 }

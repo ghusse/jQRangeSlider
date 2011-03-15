@@ -40,8 +40,8 @@
 		rightHandle: null,
 		innerBar: null,
 		container: null,
-		arrows: {left:null, right:null},
-		helpers: {left: null, right:null, leftDisplayed:true, rightDisplayed:true},
+		arrows: null,
+		helpers: null,
 		changing: {min:false, max:false},
 		changed: {min:false, max:false},
 		
@@ -52,7 +52,11 @@
 		
 		_create: function(){
 			this._values = this.options.defaultValues;
-
+			this.helpers = {left: null, right:null, leftDisplayed:true, rightDisplayed:true};
+			this.arrows = {left:null, right:null};
+			this.changing = {min:false, max:false};
+			this.changed = {min:false, max:false};
+      		
 			this.leftHandle = $("<div class='ui-rangeSlider-handle  ui-rangeSlider-leftHandle' />")
 				.draggable({axis:"x", containment: "parent",
 					drag: $.proxy(this._handleMoved, this), 
@@ -482,8 +486,8 @@
 				
 				var minSize = this.helpers.leftDisplayed ? this.helpers.left.outerWidth(true) : 0;
 				var maxSize = this.helpers.rightDisplayed ? this.helpers.right.outerWidth(true) : 0;
-				var leftBound = this.container.offset().left;
-				var rightBound = this.container.offset().left + this.container.innerWidth() - maxSize;
+				var leftBound = 0;
+				var rightBound = $(window).width() - maxSize;
 				var minLeft = Math.max(leftBound, this.leftHandle.offset().left + this.leftHandle.outerWidth(true) / 2 - minSize / 2);
 				var maxLeft = Math.min(rightBound, this.rightHandle.offset().left + this.rightHandle.outerWidth(true) / 2 - maxSize / 2);
 				

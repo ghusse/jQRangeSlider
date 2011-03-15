@@ -106,7 +106,7 @@ Prerequisites
 
 Changelog
 ---------
-* 2.0-pre: 
+* 2.0: 2011-03-14 
 	* Value helpers
 	* New events: min/maxValueChanging and min/maxValueChanged
 	* Bugfixes
