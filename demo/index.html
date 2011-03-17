@@ -60,6 +60,7 @@
 				value = null
 			}
 			$(element).parents(".example").find(".slider").rangeSlider("option", option, value);
+			$(element).parents(".example").find(".dateSlider").dateRangeSlider("option", option, value);
 		}
 		
 		function getOption(element, option){
@@ -161,7 +162,7 @@ $("#element").rangeSlider({
 		<form action="#">
 			<dl class="dateValues"><dt>min</dt><dd><input name="min" /></dd>
 				<dt>max</dt><dd><input name="max" /></dd></dl>
-			<div id="defaultDateSlider" class="slider"></div>
+			<div id="defaultDateSlider" class="dateSlider"></div>
 	  </form>
 		</div>
 	</div>
