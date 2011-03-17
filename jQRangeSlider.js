@@ -128,6 +128,8 @@
 			}else{
 				this._destroyHelpers();
 			}
+			
+			this.option(this.options);
 						
 			// Seems that when all the elements are not ready, outerWidth does not return the good value
 			setTimeout($.proxy(this._initWidth, this), 1);
@@ -153,7 +155,6 @@
 					&& parseFloat(value.max) === value.max)
 				{
 					this.options.defaultValues = value;
-					this.values(value.min, value.max);
 				}
 			}else if (key == "wheelMode" && (value == "zoom" || value == "scroll" || value===null)){
 				this.options.wheelMode = value;

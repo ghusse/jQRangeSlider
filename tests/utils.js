@@ -17,10 +17,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
  
-function TestCase(_name, _setup, _check){
+function TestCase(_name, _setup, _check, _tearDown){
 	this.name = _name;
 	this.setup = _setup;
 	this.check = _check;
+	this.tearDown = _tearDown;
 	this.delay = 100;
 	
 	this.getPositions = function(){
@@ -79,6 +80,10 @@ TestRunner = function(){
 			test(testCase.name, function(){
 				testCase.check();
 			});
+		}
+		
+		if (testCase.tearDown){
+			testCase.tearDown();
 		}
 		
 		this.index++;
