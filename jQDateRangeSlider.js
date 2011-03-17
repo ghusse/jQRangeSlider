@@ -20,8 +20,8 @@
 (function ($, undefined) {
 	$.widget("ui.dateRangeSlider", $.ui.rangeSlider, {
 		options: {
-			bounds: {min: new Date(2010,0,1).valueOf(), max: new Date(2012,0,1).valueOf()},
-			defaultValues: {min: new Date(2010,1,11).valueOf(), max: new Date(2011,1,11).valueOf()}
+			bounds: {min: new Date(2010,0,1), max: new Date(2012,0,1)},
+			defaultValues: {min: new Date(2010,1,11), max: new Date(2011,1,11)}
 		},
 	
 		_setOption: function(key, value){

@@ -69,7 +69,7 @@
 		
 		$(document).ready(function(){
 			makeSlider("#defaultSlider", {});
-			makeDateSlider("#defaultDateSlider", {});
+			makeDateSlider("#defaultDateSlider", {bounds:{min:new Date(2010,0,1), max:new Date(2012,0,1)}});
 			
 			$(".dateValues input").datepicker({
 				maxDate: new Date(2012,0,1),
