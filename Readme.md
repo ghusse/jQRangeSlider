@@ -106,6 +106,7 @@ Prerequisites
 
 Changelog
 ---------
+* 2.0.2: 2011-03-23 bugfix
 * 2.0.1: 2011-03-17 bugfix
 * 2.0: 2011-03-14 
 	* Value helpers
