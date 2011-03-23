@@ -129,6 +129,8 @@
 				this._destroyHelpers();
 			}
 			
+			$(window).resize($.proxy(this._resize, this));
+			
 			this.option(this.options);
 						
 			// Seems that when all the elements are not ready, outerWidth does not return the good value
@@ -374,6 +376,11 @@
 			
 			this._changing(oldValues.min != this._values.min, oldValues.max != this._values.max);
 			this._prepareFiringChanged();
+		},
+		
+		_resize: function(){
+			this._initWidth();
+			this._position();
 		},
 		
 		/*
