@@ -18,12 +18,12 @@
 		
 		function updateValuesChanged(event, ui, changing){
 			if (!changing)
-				displayValues(ui.helper, ui.values)	
+				displayValues(ui.label, ui.values)	
 		}
 		
 		function updateValuesChanging(event, ui, changing){
 			if (changing)
-				displayValues(ui.helper, ui.values)
+				displayValues(ui.label, ui.values)
 		}
 		
 		function displayValues(slider, values){
@@ -121,9 +121,9 @@
 			<dd><input type="number" name="wheelSpeed" value="8" onkeyup="setOption(this, 'wheelSpeed', $(this).val());"/></dd>
 			<dt>Arrows</dt>
 			<dd><label><input type="checkbox" checked="checked" name="arrows" onclick="setOption(this, 'arrows', $(this).is(':checked'));"/>Activate arrows</label></dd>
-			<dt>Value helpers</dt>
+			<dt>Value labels</dt>
 			<dd>
-				<select name="valueHelpers" onchange="setOption(this, 'valueHelpers', $(this).val());">
+				<select name="valueLabels" onchange="setOption(this, 'valueLabels', $(this).val());">
 					<option value="hide">hide</option>
 					<option value="show" selected="selected">show</option>
 					<option value="change">on change</option>
@@ -149,7 +149,7 @@ $("#element").rangeSlider({
   wheelMode: null,
   wheelSpeed: 8,
   arrows: true,
-  valueHelpers: "show",
+  valueLabels: "show",
   formatter: function(value){return Math.round(value)},
   durationIn: 0,
   durationOut: 400,
@@ -179,9 +179,9 @@ $("#element").rangeSlider({
 			<dd><input type="number" name="wheelSpeed" value="8" onkeyup="setOption(this, 'wheelSpeed', $(this).val());"/></dd>
 			<dt>Arrows</dt>
 			<dd><label><input type="checkbox" checked="checked" name="arrows" onclick="setOption(this, 'arrows', $(this).is(':checked'));"/>Activate arrows</label></dd>
-			<dt>Value helpers</dt>
+			<dt>Value labels</dt>
 			<dd>
-				<select name="valueHelpers" onchange="setOption(this, 'valueHelpers', $(this).val());">
+				<select name="valueLabels" onchange="setOption(this, 'valueLabels', $(this).val());">
 					<option value="hide">hide</option>
 					<option value="show" selected="selected">show</option>
 					<option value="change">on change</option>
@@ -207,7 +207,7 @@ $("#element").dateRangeSlider({
   wheelMode: null,
   wheelSpeed: 8,
   arrows: true,
-  valueHelpers: "show",
+  valueLabels: "show",
   formatter: function(value){
     var month = value.getMonth() + 1;
     var day = value.getDate();

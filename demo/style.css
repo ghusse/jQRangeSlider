@@ -9,9 +9,11 @@ h1{
 	font-size:25px;
 }
 
-.slider{
+.slider,
+.dateSlider{
 	width:100%;
 	margin:20px auto;
+	padding-top:20px;
 }
 .tick{
 	border-left:1px solid black;
