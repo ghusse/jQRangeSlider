@@ -2,10 +2,10 @@ jQRangeSlider & jQDateRangeSlider
 =================================
 A javascript slider selector that supports dates
 
-Project page: http://ghusse.github.com/jQRangeSlider/
-Github project:https://github.com/ghusse/jQRangeSlider/
-Online demo: http://ghusse.github.com/jQRangeSlider/stable/demo/
-Unit tests: http://ghusse.github.com/jQRangeSlider/stable/tests/
+* [Project page](http://ghusse.github.com/jQRangeSlider/)
+* [Github project](https://github.com/ghusse/jQRangeSlider/)
+* [Online demo](http://ghusse.github.com/jQRangeSlider/stable/demo/)
+* [Unit tests](http://ghusse.github.com/jQRangeSlider/stable/tests/)
 
 License
 -------
