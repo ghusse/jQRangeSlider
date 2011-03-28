@@ -111,7 +111,7 @@ Prerequisites
 
 Changelog
 ---------
-* 2.1-pre: 
+* 2.1: 2011-03-28 
   * Changed helpers name to labels (API change)
   * Labels replaced inside the top level parent element
 * 2.0.2: 2011-03-23 bugfix
