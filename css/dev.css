@@ -70,10 +70,10 @@
 	margin:0;
 }
 
-.ui-rangeSlider-helper{
+.ui-rangeSlider-label{
 	padding:2px 5px 6px;
 	margin:0 2px 2px;
-	background-image:url('icons/helper.png');
+	background-image:url('icons/label.png');
 	background-position:bottom center;
 	background-repeat:no-repeat;
 }

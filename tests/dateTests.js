@@ -103,7 +103,7 @@ var customCtorTest = new TestCase(
 			defaultValues: this.defaultValues,
 			bounds: this.bounds,
 			formatter: $.proxy(this.formatter, this),
-			valueHelpers: "show"
+			valueLabels: "show"
 		});
 	},
 	function(){

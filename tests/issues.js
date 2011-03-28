@@ -22,7 +22,6 @@ var issue1 = new TestCase(
 	function(){
 		this.format = function(value){
 			this.value = value;
-			console.log("ok"+value);
 		};
 		
 		this.bounds = {min:new Date(2010,0,1), max:new Date(2011, 0, 1)};

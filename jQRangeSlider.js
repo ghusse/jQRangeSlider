@@ -25,7 +25,7 @@
 			wheelMode: null,
 			wheelSpeed: 4,
 			arrows: true,
-			valueHelpers: "show",
+			valueLabels: "show",
 			formatter: null,
 			durationIn: 0,
 			durationOut: 400,
@@ -41,7 +41,7 @@
 		innerBar: null,
 		container: null,
 		arrows: null,
-		helpers: null,
+		labels: null,
 		changing: {min:false, max:false},
 		changed: {min:false, max:false},
 		
@@ -52,7 +52,7 @@
 		
 		_create: function(){
 			this._values = this.options.defaultValues;
-			this.helpers = {left: null, right:null, leftDisplayed:true, rightDisplayed:true};
+			this.labels = {left: null, right:null, leftDisplayed:true, rightDisplayed:true};
 			this.arrows = {left:null, right:null};
 			this.changing = {min:false, max:false};
 			this.changed = {min:false, max:false};
@@ -123,10 +123,10 @@
 				this.element.addClass("ui-rangeSlider-withArrows");
 			}
 			
-			if (this.options.valueHelpers != "hide"){
-				this._createHelpers();
+			if (this.options.valueLabels != "hide"){
+				this._createLabels();
 			}else{
-				this._destroyHelpers();
+				this._destroyLabels();
 			}
 			
 			$(window).resize($.proxy(this._resize, this));
@@ -180,13 +180,13 @@
 				this.options.arrows = value;
 				this._initWidth();
 				this._position();
-			}else if (key == "valueHelpers" && (value == "hide" || value == "show" || value == "change")){
-				this.options.valueHelpers = value;
+			}else if (key == "valueLabels" && (value == "hide" || value == "show" || value == "change")){
+				this.options.valueLabels = value;
 				
 				if (value != "hide"){
-					this._createHelpers();
+					this._createLabels();
 				}else{
-					this._destroyHelpers();
+					this._destroyLabels();
 				}
 			}else if (key == "formatter" && value != null && typeof value == "function"){
 				this.options.formatter = value;
@@ -220,7 +220,7 @@
 		
 		_trigger: function(eventName){
 			this.element.trigger(eventName, {
-			  	helper: this.element,
+			  	label: this.element,
 			  	values: this.values()
 			  });
 		},
@@ -241,7 +241,7 @@
 			this.leftHandle.css("left", left);
 			this.rightHandle.css("left", right);
 			
-			this._positionHelpers(left, right);
+			this._positionLabels();
 		},
 		
 		_barMoved: function(event, ui){
@@ -315,7 +315,7 @@
 			}
 			
 			if (show){
-				this._showHelpers();
+				this._showLabels();
 			}
 		},
 		
@@ -344,7 +344,7 @@
 					this._trigger("valuesChanged");
 				}
 				
-				this._hideHelpers();
+				this._hideLabels();
 			}
 		},
 		
@@ -434,69 +434,76 @@
 		},
 		
 		/*
-		 * Value helpers
+		 * Value labels
 		 */
-		_createHelper: function(helper, classes){
-			if (helper == null){
-				helper = $("<div class='ui-rangeSlider-helper'/>")
+		_createLabel: function(label, classes){
+			if (label == null){
+				label = $("<div class='ui-rangeSlider-label'/>")
 					.addClass(classes)
 					.css("position", "absolute");
-				$("body").append(helper);
+				this.element.append(label);
 				
-				this._positionHelpers(0, 0);
+				this._positionLabels();
 			}
 			
-			return helper;
+			return label;
 		},
 		
-		_destroyHelper: function(helper){
-			if (helper != null){
-				helper.remove();
-				helper = null;
+		_destroyLabel: function(label){
+			if (label != null){
+				label.remove();
+				label = null;
 			}
 			
-			return helper;
+			return label;
 		},
 		
-		_createHelpers: function(){
-			this.helpers.left = this._createHelper(this.helpers.left, "ui-rangeSlider-leftHelper");
-			this.helpers.right = this._createHelper(this.helpers.right, "ui-rangeSlider-rightHelper");
+		_createLabels: function(){
+			this.labels.left = this._createLabel(this.labels.left, "ui-rangeSlider-leftLabel");
+			this.labels.right = this._createLabel(this.labels.right, "ui-rangeSlider-rightLabel");
 			
-			if (this.options.valueHelpers == "change"){
-				this.helpers.left.css("display", "none");
-				this.helpers.right.css("display", "none");
-				this.helpers.leftDisplayed = false;
-				this.helpers.rightDisplayed = false;
+			if (this.options.valueLabels == "change"){
+				this.labels.left.css("display", "none");
+				this.labels.right.css("display", "none");
+				this.labels.leftDisplayed = false;
+				this.labels.rightDisplayed = false;
 			}else{
-				this.helpers.leftDisplayed = true;
-				this.helpers.rightDisplayed = true;
-				this.helpers.left.css("display", "block");
-				this.helpers.right.css("display", "block");
+				this.labels.leftDisplayed = true;
+				this.labels.rightDisplayed = true;
+				this.labels.left.css("display", "block");
+				this.labels.right.css("display", "block");
 				
 				this._position();
 			}
 		},
 		
-		_destroyHelpers: function(){
-			this.helpers.left = this._destroyHelper(this.helpers.left);
-			this.helpers.right = this._destroyHelper(this.helpers.right);
+		_destroyLabels: function(){
+			this.labels.left = this._destroyLabel(this.labels.left);
+			this.labels.right = this._destroyLabel(this.labels.right);
 		},
 		
-		_positionHelper: function(helper, position, value){
-				helper.css("left", position)
-					.css("top", this.leftHandle.offset().top - helper.outerHeight(true));
+		_positionLabel: function(label, position){
+			var topPos = this.leftHandle.offset().top - label.outerHeight(true);
+			var parent = label.offsetParent();
+			
+			var leftPos = position - parent.offset().left;
+			var topPos = topPos - parent.offset().top;
+			
+			label
+				.css("left", leftPos)
+				.css("top", topPos);
 		},
 		
-		_positionHelpers: function(){
-			if (this.helpers.left != null && this.helpers.right != null){
-				this.helpers.left.text(this._format(this._values.min));
-				this.helpers.right.text(this._format(this._values.max));
+		_positionLabels: function(){
+			if (this.labels.left != null && this.labels.right != null){
+				this.labels.left.text(this._format(this._values.min));
+				this.labels.right.text(this._format(this._values.max));
 				
-				var minSize = this.helpers.leftDisplayed ? this.helpers.left.outerWidth(true) : 0;
-				var maxSize = this.helpers.rightDisplayed ? this.helpers.right.outerWidth(true) : 0;
+				var minSize = this.labels.leftDisplayed ? this.labels.left.outerWidth(true) : 0;
+				var maxSize = this.labels.rightDisplayed ? this.labels.right.outerWidth(true) : 0;
 				var leftBound = 0;
 				var rightBound = $(window).width() - maxSize;
-				var minLeft = Math.max(leftBound, this.leftHandle.offset().left + this.leftHandle.outerWidth(true) / 2 - minSize / 2);
+				var minLeft = Math.max(leftBound, this.leftHandle.offset().left + this.leftHandle.outerWidth(true) / 2 - minSize / 2); 
 				var maxLeft = Math.min(rightBound, this.rightHandle.offset().left + this.rightHandle.outerWidth(true) / 2 - maxSize / 2);
 				
 				// Need to find a better position
@@ -507,8 +514,8 @@
 					minLeft = Math.max(leftBound, maxLeft - minSize);
 				}
 				
-				if (this.helpers.leftDisplayed) this._positionHelper(this.helpers.left, minLeft, this._values.min);
-				if (this.helpers.rightDisplayed) this._positionHelper(this.helpers.right, maxLeft, this._values.max);
+				if (this.labels.leftDisplayed) this._positionLabel(this.labels.left, minLeft);
+				if (this.labels.rightDisplayed) this._positionLabel(this.labels.right, maxLeft);
 			}
 		},
 		
@@ -524,26 +531,26 @@
 			return Math.round(value);
 		},
 		
-		_showHelpers: function(){
-			if (this.options.valueHelpers == "change" && !this.privateChange){
-				if (this.changing.min && !this.helpers.leftDisplayed){
-					this.helpers.left.stop(true, true).fadeIn(this.options.durationIn);
-					this.helpers.leftDisplayed = true;
+		_showLabels: function(){
+			if (this.options.valueLabels == "change" && !this.privateChange){
+				if (this.changing.min && !this.labels.leftDisplayed){
+					this.labels.left.stop(true, true).fadeIn(this.options.durationIn);
+					this.labels.leftDisplayed = true;
 				}
 				
-				if (this.changing.max && !this.helpers.rightDisplayed){
-					this.helpers.rightDisplayed = true;
-					this.helpers.right.stop(true, true).fadeIn(this.options.durationIn);
+				if (this.changing.max && !this.labels.rightDisplayed){
+					this.labels.rightDisplayed = true;
+					this.labels.right.stop(true, true).fadeIn(this.options.durationIn);
 				}
 			}
 		},
 		
-		_hideHelpers: function(){
-			if (this.options.valueHelpers == "change" && this.helpers.left != null && this.helpers.right != null){
-				this.helpers.leftDisplayed = false;
-				this.helpers.rightDisplayed = false;
-				this.helpers.left.stop(true, true).delay(this.options.delayOut).fadeOut(this.options.durationOut);
-				this.helpers.right.stop(true, true).delay(this.options.delayOut).fadeOut(this.options.durationOut);
+		_hideLabels: function(){
+			if (this.options.valueLabels == "change" && this.labels.left != null && this.labels.right != null){
+				this.labels.leftDisplayed = false;
+				this.labels.rightDisplayed = false;
+				this.labels.left.stop(true, true).delay(this.options.delayOut).fadeOut(this.options.durationOut);
+				this.labels.right.stop(true, true).delay(this.options.delayOut).fadeOut(this.options.durationOut);
 			}
 		},
 		
@@ -612,7 +619,7 @@
 			this.arrows.left.detach();
 			this.arrows.right.detach();
 			this.element.removeClass("ui-rangeSlider");
-			this._destroyHelpers();
+			this._destroyLabels();
 			delete this.options;
 			
 			$.Widget.prototype.destroy.apply(this, arguments);

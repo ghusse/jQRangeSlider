@@ -2,6 +2,11 @@ jQRangeSlider & jQDateRangeSlider
 =================================
 A javascript slider selector that supports dates
 
+* [Project page](http://ghusse.github.com/jQRangeSlider/)
+* [Github project](https://github.com/ghusse/jQRangeSlider/)
+* [Online demo](http://ghusse.github.com/jQRangeSlider/stable/demo/)
+* [Unit tests](http://ghusse.github.com/jQRangeSlider/stable/tests/)
+
 License
 -------
 Copyright : Guillaume Gautreau 2010
@@ -62,19 +67,19 @@ Options
 	* Numerical speed (in % of selected range) of mouse wheel interaction
 * arrows: (default: true)
 	* boolean value that activate or disactivate scrolling arrows
-* valueHelpers: ("show", "hide", default:"change")
-	* string indicating if value helpers have to be displayed
-		* "show" indicates that helpers must be visible
-		* "hide" indicates that helpers must be hidden
-		* "change" indicates that helpers only have to be shown when the user changes a value
+* valueLabels: ("show", "hide", default:"change")
+	* string indicating if value labels have to be displayed
+		* "show" indicates that labels must be visible
+		* "hide" indicates that labels must be hidden
+		* "change" indicates that labels only have to be shown when the user changes a value
 * formatter: function(value) returning a string, default: null
-	* a formatter function for displayed helpers. When set to null, default formatter is used.
+	* a formatter function for displayed labels. When set to null, default formatter is used.
 * durationIn: default:0
-	* fadeIn duration in ms for showing helpers on a value change
+	* fadeIn duration in ms for showing labels on a value change
 * durationOut: default:400 
-	* fadeOut duration in ms for hiding helpers after a change
+	* fadeOut duration in ms for hiding labels after a change
 * delayOut: default:200
-	* delay before hiding helpers after a change
+	* delay before hiding labels after a change
 
 Events
 -----
@@ -106,6 +111,9 @@ Prerequisites
 
 Changelog
 ---------
+* 2.1: 2011-03-28 
+  * Changed helpers name to labels (API change)
+  * Labels replaced inside the top level parent element
 * 2.0.2: 2011-03-23 bugfix
 * 2.0.1: 2011-03-17 bugfix
 * 2.0: 2011-03-14 

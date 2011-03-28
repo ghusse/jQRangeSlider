@@ -27,8 +27,8 @@ function TestCase(_name, _setup, _check, _tearDown){
 	this.getPositions = function(){
 		this.minHandlerPos = $(".ui-rangeSlider-leftHandle").offset().left;
 		this.maxHandlerPos = $(".ui-rangeSlider-rightHandle").offset().left;
-		this.minHelperPos = $(".ui-rangeSlider-leftHelper").offset().left;
-		this.maxHelperPos = $(".ui-rangeSlider-rightHelper").offset().left;
+		this.minLabelPos = $(".ui-rangeSlider-leftLabel").offset().left;
+		this.maxLabelPos = $(".ui-rangeSlider-rightLabel").offset().left;
 	}
 	
 	this.getValues = function(){
@@ -38,8 +38,8 @@ function TestCase(_name, _setup, _check, _tearDown){
 	this.assertDifferentPositions = function(){
 		notEqual($(".ui-rangeSlider-leftHandle").offset().left, this.minHandlerPos, "Left handle should have been moved");
 		notEqual($(".ui-rangeSlider-rightHandle").offset().left, this.maxHandlerPos, "Right handle should have been moved");
-		notEqual($(".ui-rangeSlider-leftHelper").offset().left, this.minHelperPos, "Left helper should have been moved");
-		notEqual($(".ui-rangeSlider-rightHelper").offset().left, this.maxHelperPos, "Right helper should have been moved");
+		notEqual($(".ui-rangeSlider-leftLabel").offset().left, this.minLabelPos, "Left label should have been moved");
+		notEqual($(".ui-rangeSlider-rightLabel").offset().left, this.maxLabelPos, "Right label should have been moved");
 	}
 	
 	this.min = function(){

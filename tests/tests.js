@@ -43,17 +43,17 @@ var defaultCtorTest = new TestCase(
 		same(el.rangeSlider("option", "wheelMode"), null, "Default wheel mode should be empty");
 		same(el.rangeSlider("option", "wheelSpeed"), 4, "Default wheel mode should be empty");
 		ok(el.rangeSlider("option", "arrows"), "Arrows should be activated by default");
-		same(el.rangeSlider("option", "valueHelpers"), "show", "Value helpers should be activated on value 'show' by default");
+		same(el.rangeSlider("option", "valueLabels"), "show", "Value labels should be activated on value 'show' by default");
 		same(el.rangeSlider("option", "formatter"), null, "Default formatter should be used (null value)");
-		same(el.rangeSlider("option", "durationIn"), 0, "Default duration for showing helpers is 0ms");
-		same(el.rangeSlider("option", "durationOut"), 400, "Default duration for hiding helpers is 400ms");
-		same(el.rangeSlider("option", "delayOut"), 200, "Default delay before hiding helpers is 200ms");
+		same(el.rangeSlider("option", "durationIn"), 0, "Default duration for showing labels is 0ms");
+		same(el.rangeSlider("option", "durationOut"), 400, "Default duration for hiding labels is 400ms");
+		same(el.rangeSlider("option", "delayOut"), 200, "Default delay before hiding labels is 200ms");
 		
 		// Created elements
 		same($(".ui-rangeSlider-handle.ui-rangeSlider-leftHandle").length, 1, "Left handle should have been created");
 		same($(".ui-rangeSlider-handle.ui-rangeSlider-rightHandle").length, 1, "Right handle should have been created");
-		same($(".ui-rangeSlider-helper.ui-rangeSlider-leftHelper").length, 1, "Left helper should have been created");
-		same($(".ui-rangeSlider-helper.ui-rangeSlider-rightHelper").length, 1, "Right helper should have been created");
+		same($(".ui-rangeSlider-label.ui-rangeSlider-leftLabel").length, 1, "Left label should have been created");
+		same($(".ui-rangeSlider-label.ui-rangeSlider-rightLabel").length, 1, "Right label should have been created");
 		
 		// Arrows
 		same($(".ui-rangeSlider-arrow.ui-rangeSlider-leftArrow").length, 1, "Left arrow should have been created");
@@ -131,25 +131,25 @@ var customCtorTest = new TestCase(
 	}
 );
 
-var hideHelpersTest = new TestCase(
-	"Hide helpers",
+var hideLabelsTest = new TestCase(
+	"Hide labels",
 	function(){
-		el.rangeSlider("option", "valueHelpers", "hide");
+		el.rangeSlider("option", "valueLabels", "hide");
 	},
 	function(){
-		same($(".ui-rangeSlider-helper").length, 0, "Value helpers should have been detached");
-		same(el.rangeSlider("option", "valueHelpers"), "hide", "Option value should be 'hidden'");
+		same($(".ui-rangeSlider-label").length, 0, "Value labels should have been detached");
+		same(el.rangeSlider("option", "valueLabels"), "hide", "Option value should be 'hidden'");
 	}
 );
 
-var showHelpersTest = new TestCase(
-	"Show helpers",
+var showLabelsTest = new TestCase(
+	"Show labels",
 	function(){
-		el.rangeSlider("option", "valueHelpers", "show");
+		el.rangeSlider("option", "valueLabels", "show");
 	},
 	function(){
-		same($(".ui-rangeSlider-helper").length, 2, "Value helpers should have been detached");
-		same(el.rangeSlider("option", "valueHelpers"), "show", "Option value should be 'hidden'");
+		same($(".ui-rangeSlider-label").length, 2, "Value labels should have been detached");
+		same(el.rangeSlider("option", "valueLabels"), "show", "Option value should be 'hidden'");
 	}
 );
 
@@ -185,8 +185,8 @@ var wheelModeZoomTest = new TestCase(
 		same(el.rangeSlider("option", "wheelMode"), "zoom", "Wheelmode setter should have worked");
 		ok($(".ui-rangeSlider-leftHandle").offset().left > this.minHandlerPos, "Left handle should have been moved");
 		ok($(".ui-rangeSlider-rightHandle").offset().left < this.maxHandlerPos, "Right handle should have been moved");
-		ok($(".ui-rangeSlider-leftHelper").offset().left > this.minHelperPos, "Left helper should have been moved");
-		ok($(".ui-rangeSlider-rightHelper").offset().left < this.maxHelperPos, "Right helper should have been moved");
+		ok($(".ui-rangeSlider-leftLabel").offset().left > this.minLabelPos, "Left label should have been moved");
+		ok($(".ui-rangeSlider-rightLabel").offset().left < this.maxLabelPos, "Right label should have been moved");
 		
 		ok(this.min() > this.values.min, "Zoom should have worked");
 		ok(this.max() < this.values.max, "Zoom should have worked");
@@ -206,8 +206,8 @@ var wheelModeScrollTest = new TestCase(
 		
 		ok($(".ui-rangeSlider-leftHandle").offset().left > this.minHandlerPos, "Left handle should have been moved");
 		ok($(".ui-rangeSlider-rightHandle").offset().left > this.maxHandlerPos, "Right handle should have been moved");
-		ok($(".ui-rangeSlider-leftHelper").offset().left > this.minHelperPos, "Left helper should have been moved");
-		ok($(".ui-rangeSlider-rightHelper").offset().left > this.maxHelperPos, "Right helper should have been moved");
+		ok($(".ui-rangeSlider-leftLabel").offset().left > this.minLabelPos, "Left label should have been moved");
+		ok($(".ui-rangeSlider-rightLabel").offset().left > this.maxLabelPos, "Right label should have been moved");
 		
 		ok(this.min() > this.values.min, "Scroll should have worked");
 		ok(this.max() > this.values.max, "Scroll should have worked");
@@ -361,7 +361,7 @@ var scrollRightTest = new TestCase(
 );
 
 testRunner.add("jQRangeSlider", [setUp,
-			defaultCtorTest, hideHelpersTest, showHelpersTest, changeBoundsTest,
+			defaultCtorTest, hideLabelsTest, showLabelsTest, changeBoundsTest,
 			wheelModeZoomTest, wheelModeScrollTest, wheelModeSetterTest, wheelSpeedSetterTest,
 			noArrowsSetterTest, arrowsScrollingMouseUpTest,
 			defaultSetup,
