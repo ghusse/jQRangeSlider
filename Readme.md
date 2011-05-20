@@ -37,15 +37,19 @@ Dependencies
 Usage
 -----
 # A rangeSlider widget with float values
-Javascript reference:
+Javascript reference for development:
 	<script type="text/javascript" src="jQRangeSlider.js"></script>
+Javascript reference for production:
+    	<script type="text/javascript" src="jQRangeSlider-min.js"></script>
 Range slider creation:
 	$("#element").rangeSlider({/*options*/});
 
 # A rangeSlider with dates 
-Javascript reference:
+Javascript reference for development:
 	<script type="text/javascript" src="jQRangeSlider.js"></script>
 	<script type="text/javascript" src="jQDateRangeSlider.js"></script>
+Javascript reference for production:
+    	<script type="text/javascript" src="jQAllRangeSliders.js"></script>
 Range slider creation:
 	$("#element").dateRangeSlider({/*options*/});
 
@@ -109,8 +113,14 @@ Prerequisites
 * jQDateRangeSlider.js is only needed by the dateRangeSlider widget.
 * jQRangeSlider.js is needed by both widgets
 
+Generating minified jQRangeSlider files
+---------------------------------------
+Launch min/compile.sh (on Linux or Mac) or min/compile.bat (on Windows).
+
 Changelog
 ---------
+* 2.1.1: 2011-05-20
+  * Integrated Google Closure compiler and script for generating minified version of jQRangeSlider
 * 2.1: 2011-03-28 
   * Changed helpers name to labels (API change)
   * Labels replaced inside the top level parent element
