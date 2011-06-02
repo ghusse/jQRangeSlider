@@ -119,6 +119,8 @@ Launch min/compile.sh (on Linux or Mac) or min/compile.bat (on Windows).
 
 Changelog
 ---------
+* 2.1.2: 2011-06-02
+	* Issue #6: CSS fix
 * 2.1.1: 2011-05-20
   * Integrated Google Closure compiler and script for generating minified version of jQRangeSlider
 * 2.1: 2011-03-28 
