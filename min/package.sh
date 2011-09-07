@@ -1,22 +1,42 @@
 #!/bin/bash
-MINDIR=../
-OUTDIR=../jQRangeSlider-min
-SRCDIR=../
+SRCDIR=..
+LIBS=${SRCDIR}/lib
+OUTPUT=..
 
-echo "Package version:"
-read VERSION
+DIR=${OUTPUT}/jQRangeSlider-min
+
+# Compile
 ./compile.sh
 
-if [ ! -d "${OUTDIR}" ]; then
-	mkdir "${OUTDIR}"
-fi
+# Remove the directory if present
+rm -rf ${DIR}
 
-mv "${MINDIR}jQRangeSlider-min.js" "${OUTDIR}"
-mv "${MINDIR}jQAllRangeSliders-min.js" "${OUTDIR}"
-cp -R "${SRCDIR}css" "${OUTDIR}"
-cp "${SRCDIR}Readme.md" "${OUTDIR}"
-cp "${SRCDIR}License.txt" "${OUTDIR}"
-cp -R "${SRCDIR}demo" "${OUTDIR}"
+# Create directory and copy stuff
+mkdir ${DIR}
+mv ${SRCDIR}/jQRangeSlider-min.js ${DIR}
+mv ${SRCDIR}/jQAllRangeSliders-min.js ${DIR}
+cp -R ${SRCDIR}/css ${DIR}
+cp -R ${SRCDIR}/demo ${DIR}
+cp ${SRCDIR}/License.txt ${DIR}
+cp ${SRCDIR}/Readme.md ${DIR}
 
-zip -r "${MINDIR}jQRangeSlider-${VERSION}-min.zip" "${OUTDIR}"
-rm -R "${OUTDIR}"
+# Copy libs
+DIRLIB=${DIR}/lib
+mkdir ${DIRLIB}
+cp ${LIBS}/jquery-1.4.4.min.js ${DIRLIB}
+cp ${LIBS}/jquery.mousewheel.min.js ${DIRLIB}
+
+# Replace jQRangeSlider by the minified version in demo
+sed -i \.tmp 's/<!-- Debug -->/<!-- Debug --><!--/g' ${DIR}/demo/index.html
+sed -i \.tmp 's/<!-- \/Debug -->/--><!-- Debug -->/g' ${DIR}/demo/index.html
+
+sed -i \.tmp 's/<!-- Minified --><!--/ /g' ${DIR}/demo/index.html
+sed -i \.tmp 's/--><!-- \/Minified -->/ /g' ${DIR}/demo/index.html
+
+rm ${DIR}/demo/*.tmp
+
+# Compress
+zip -r -q -9 ${DIR} ${DIR}
+
+# flush
+rm -Rf ${DIR}
