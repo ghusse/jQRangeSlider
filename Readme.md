@@ -119,6 +119,9 @@ Launch min/compile.sh (on Linux or Mac) or min/compile.bat (on Windows).
 
 Changelog
 ---------
+* 2.1.3: 2011-09-07
+  * Issue #8 fix: Problem with minified version
+  * Script for creating minified package
 * 2.1.2: 2011-06-02
 	* Issue #6: CSS fix
 * 2.1.1: 2011-05-20
