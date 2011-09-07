@@ -2,7 +2,7 @@
 MINDIR=../
 COMPILER=../lib/compiler/compiler.jar
 SRCDIR=../
-OPTIONS="--compilation_level ADVANCED_OPTIMIZATIONS"
+OPTIONS=""
 
 BASE=${SRCDIR}jQRangeSlider.js
 BASEMIN=${MINDIR}jQRangeSlider-min.js
