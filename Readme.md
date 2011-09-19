@@ -119,6 +119,8 @@ Launch min/compile.sh (on Linux or Mac) or min/compile.bat (on Windows).
 
 Changelog
 ---------
+* 2.1.4: 2011-09-19
+  * Issue #10: remove z-ordering
 * 2.1.3: 2011-09-07
   * Issue #8 fix: Problem with minified version
   * Script for creating minified package
