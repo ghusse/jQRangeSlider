@@ -96,10 +96,10 @@
 			$(document).bind("mouseup", $.proxy(this._stopScroll, this));
 
 			this.container
-				.append(this.leftHandle)
-				.append(this.rightHandle)
 				.append(this.innerBar)
-				.append(this.bar);
+				.append(this.bar)
+				.append(this.leftHandle)
+			    .append(this.rightHandle);
 
 			this.element
 				.append(this.container)
