@@ -126,13 +126,11 @@
 				this._destroyLabels();
 			}
 
-			$(window).resize($.proxy(this._resize, this));
+			$(window).resize($.proxy(this.resize, this));
 
 			this.option(this.options);
 
-			// Seems that when all the elements are not ready, outerWidth does not return the good value
-			setTimeout($.proxy(this._initWidth, this), 1);
-			//this._initWidth();
+			setTimeout($.proxy(this.resize, this), 1);
 			setTimeout($.proxy(this._initValues, this), 1);
 		},
 
@@ -367,11 +365,6 @@
 			this._prepareFiringChanged();
 		},
 
-		_resize: function(){
-			this._initWidth();
-			this._position();
-		},
-
 		/*
 		 * Scrolling
 		 */
@@ -594,6 +587,14 @@
 			var max = this._values.max + quantity * this.options.wheelSpeed * diff / 100;
 
 			this._privateValues(min, max);
+		},
+		
+		/**
+		 * Resize
+		 */
+		resize: function(){
+			this._initWidth();
+			this._position();
 		},
 
 		destroy: function(){
