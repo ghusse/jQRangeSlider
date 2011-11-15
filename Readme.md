@@ -120,7 +120,9 @@ Launch min/compile.sh (on Linux or Mac) or min/compile.bat (on Windows).
 
 Changelog
 ---------
-* 2.2 : 2011-09-27
+* 2.2.1: 2011-11-15
+	* Issue #12: impossible to drag the left handle to the max value
+* 2.2: 2011-09-27
 	* Issue #11: resize public method added
 * 2.1.4: 2011-09-19
   * Issue #10: remove z-ordering
