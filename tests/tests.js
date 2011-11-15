@@ -344,7 +344,6 @@ var scrollLeftTest = new TestCase(
 	function(){
 		ok(this.min() < this.values.min, "Min value should have been decreased");
 		ok(this.max() < this.values.max, "Min value should have been decreased");
-
 	}
 );
 
@@ -360,6 +359,25 @@ var scrollRightTest = new TestCase(
 	}
 );
 
+var issue12 = new TestCase(
+	"Issue 12",
+	function(){
+		el.rangeSlider("options", "bounds", {min:0, max:100});
+		el.rangeSlider("values", 0, 100);
+		var leftHandle = el.find(".ui-rangeSlider-leftHandle");
+		
+		leftHandle.simulate("drag", {
+			dx: el.find(".ui-rangeSlider-container").innerWidth() - leftHandle.position().left - leftHandle.outerWidth(true),
+			dy: 0
+		});
+				
+		this.delay = 100;
+	},
+	function(){
+		equal(this.min(), 100, "Both values should be 100");
+	}
+)
+
 testRunner.add("jQRangeSlider", [setUp,
 			defaultCtorTest, hideLabelsTest, showLabelsTest, changeBoundsTest,
 			wheelModeZoomTest, wheelModeScrollTest, wheelModeSetterTest, wheelSpeedSetterTest,
@@ -370,5 +388,6 @@ testRunner.add("jQRangeSlider", [setUp,
 			defaultCtorTest,
 			valuesSetter, minMaxSetter,
 			zoomInTest, zoomOutTest, scrollLeftTest, scrollRightTest,
+			issue12,
 			destroyTest]);
 
