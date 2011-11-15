@@ -190,12 +190,16 @@
 			}
 		},
 
-		_getPosition: function(value){
-			return (value - this.options.bounds.min) * (this.container.innerWidth() - 1) / (this.options.bounds.max - this.options.bounds.min);
+		_getPosition: function(value, handle){
+			return (value - this.options.bounds.min) * (this.container.innerWidth() - handle.outerWidth(true)) / (this.options.bounds.max - this.options.bounds.min) + (handle == this.rightHandle ? handle.outerWidth(true) : 0);
 		},
 
-		_getValue: function(position){
-			return position * (this.options.bounds.max - this.options.bounds.min) / (this.container.innerWidth() - 1) + this.options.bounds.min;
+		_getValue: function(position, handle){
+			if (handle == this.rightHandle){	
+				position = position - handle.outerWidth();
+			}
+			
+			return position * (this.options.bounds.max - this.options.bounds.min) / (this.container.innerWidth() - handle.outerWidth(true)) + this.options.bounds.min;
 		},
 
 		_privateValues: function(min, max){
@@ -213,18 +217,18 @@
 		},
 
 		_position: function(){
-			var leftPosition = this._getPosition(this._values.min);
-			var rightPosition = this._getPosition(this._values.max);
+			var leftPosition = this._getPosition(this._values.min, this.leftHandle);
+			var rightPosition = this._getPosition(this._values.max, this.rightHandle);
 
 			this._positionHandles();
 			this.bar
 				.css("left", leftPosition)
-				.css("width", rightPosition- leftPosition + this.bar.width() - this.bar.outerWidth(true) + 1);
+				.css("width", rightPosition- leftPosition + this.bar.width() - this.bar.outerWidth(true));
 		},
 
 		_positionHandles: function(){
-			var left = this._getPosition(this._values.min);
-			var right = this._getPosition(this._values.max) - this.rightHandle.outerWidth(true) + 1;
+			var left = this._getPosition(this._values.min, this.leftHandle);
+			var right = this._getPosition(this._values.max, this.rightHandle) - this.rightHandle.outerWidth(true);
 			this.leftHandle.css("left", left);
 			this.rightHandle.css("left", right);
 
@@ -233,9 +237,9 @@
 
 		_barMoved: function(event, ui){
 			var left = ui.position.left;
-			var right = left + this.bar.outerWidth(true) - 1;
+			var right = left + this.bar.outerWidth(true);
 
-			this._setValues(this._getValue(left), this._getValue(right));
+			this._setValues(this._getValue(left, this.leftHandle), this._getValue(right, this.rightHandle));
 			this._positionHandles();
 		},
 
@@ -262,10 +266,10 @@
 			var max = this._values.max;
 
 			if (ui.helper[0] == this.leftHandle[0]){
-					min = this._getValue(ui.position.left);
+					min = this._getValue(ui.position.left, this.leftHandle);
 			}else if (ui.helper[0] == this.rightHandle[0])
 			{
-				max = this._getValue(ui.position.left - 1 + ui.helper.outerWidth(true));
+				max = this._getValue(ui.position.left + ui.helper.outerWidth(true), this.rightHandle);
 			}else{
 				return;
 			}
@@ -368,7 +372,6 @@
 		/*
 		 * Scrolling
 		 */
-
 		_startScrollLeft: function(event, ui){
 			this.lastScroll = Math.random();
 			this.scrollCount = 0;
