@@ -7,7 +7,7 @@
 	<link rel="stylesheet" href="style.css">  
 	<link rel="stylesheet" href="lib/jquery-ui/css/smoothness/jquery-ui-1.8.10.custom.css">  
 	<script src="../lib/jquery-1.4.4.min.js"></script>
-	<script src="lib/jquery-ui/js/jquery-ui-1.8.10.custom.min.js"></script>
+	<script src="lib/jquery-ui/js/jquery-ui-1.8.16.custom.min.js"></script>
 	<script src="../lib/jquery.mousewheel.min.js"></script>
 	
 	<!-- Debug -->
@@ -118,6 +118,22 @@
 <div class="options">
 	<form>
 		<dl>
+			<dt>Range limit</dt>
+			<dd>min: <select name="rangeMin" onchange="setOption(this, 'range', {min: $(this).val() == ''? false : parseInt($(this).val())})">
+					<option selected="selected" value="">Deactivated</selected>
+					<option>10</option>
+					<option>20</option>
+					<option>30</option>
+					<option>40</option>
+				</select></dd>
+			<dd>max: <select name="rangeMax" onchange="setOption(this, 'range', {max: $(this).val() == ''? false : parseInt($(this).val())})">
+					<option selected="selected" value="">Deactivated</selected>
+					<option>50</option>
+					<option>60</option>
+					<option>70</option>
+					<option>80</option>
+				</select>
+			</dd>
 			<dt>Wheel mode</dt>
 			<dd><select name="wheelMode" onchange="setOption(this, 'wheelMode', $(this).val());">
 					<option value="null" selected="selected">null</option>
@@ -160,7 +176,8 @@ $("#element").rangeSlider({
   formatter: function(value){return Math.round(value)},
   durationIn: 0,
   durationOut: 400,
-  delayOut: 200
+  delayOut: 200,
+  range: {min: false, max: false}
 });</code></pre>
 <div class="example">
 	<h2>Dates</h2>
@@ -176,6 +193,20 @@ $("#element").rangeSlider({
 <div class="options">
 	<form>
 		<dl>
+			<dt>Range limit</dt>
+			<dd>min: <select name="dateRangeMin" onchange="setOption(this, 'range', {min: $(this).val() == ''? false : parseInt($(this).val()) * 3.6e6 * 24})">
+				<option value="">Deactivated</option>
+				<option value="28">4 weeks</option>
+				<option value="56">8 weeks</option>
+				<option value="112">16 weeks</option>
+			</select></dd>
+			<dd>max: <select name="dateRangeMax" onchange="setOption(this, 'range', {max: $(this).val() == ''? false : parseInt($(this).val()) * 3.6e6 * 24})">
+				<option value="">Deactivated</option>
+				<option value="365">365 days</option>
+				<option value="400">400 days</option>
+				<option value="500">500 days</option>
+			</select>
+			</dd>
 			<dt>Wheel mode</dt>
 			<dd><select name="wheelMode" onchange="setOption(this, 'wheelMode', $(this).val());">
 					<option value="null" selected="selected">null</option>
@@ -222,7 +253,8 @@ $("#element").dateRangeSlider({
   },
   durationIn: 0,
   durationOut: 400,
-  delayOut: 200
+  delayOut: 200,
+  range: {min: false, max: false}
 });</code></pre>
 	</body>  
 </html>  

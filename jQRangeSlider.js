@@ -28,7 +28,8 @@
 			formatter: null,
 			durationIn: 0,
 			durationOut: 400,
-			delayOut: 200
+			delayOut: 200,
+			range: {min: false, max: false}
 		},
 
 		_values: null,
@@ -55,18 +56,29 @@
 			this.arrows = {left:null, right:null};
 			this.changing = {min:false, max:false};
 			this.changed = {min:false, max:false};
+			
+			this.leftContainment = $("<div class='ui-rangeSlider-handleContainment ui-rangeSlider-leftContainment' />")
+				.css("position", "absolute")
+				.css("top", 0)
+				.css("left", 0);
+			
+			this.rightContainment = $("<div class='ui-rangeSlider-handleContainment ui-rangeSlider-rightContainment' />")
+				.css("top", 0)
+				.css("left", 0);
 
 			this.leftHandle = $("<div class='ui-rangeSlider-handle  ui-rangeSlider-leftHandle' />")
-				.draggable({axis:"x", containment: "parent",
+				.draggable({axis:"x", containment: this.leftContainment,
 					drag: $.proxy(this._handleMoved, this),
 					stop: $.proxy(this._handleStop, this)})
-				.css("position", "absolute");
+				.css("position", "absolute")
+				.css("top", 0);
 			this.rightHandle = $("<div class='ui-rangeSlider-handle ui-rangeSlider-rightHandle' />")
-				.draggable({axis:"x", containment: "parent",
+				.draggable({axis:"x", containment: this.rightContainment,
 					drag: $.proxy(this._handleMoved, this),
 					stop: $.proxy(this._handleStop, this)})
-				.css("position", "absolute");
-
+				.css("position", "absolute")
+				.css("top", 0);
+			
 			this.innerBar = $("<div class='ui-rangeSlider-innerBar' />")
 				.css("position", "absolute")
 				.css("top", 0)
@@ -81,6 +93,7 @@
 					stop: $.proxy(this._barStop, this),
 					containment: this.container})
 				.css("position", "absolute")
+				.css("top", 0)
 				.bind("mousewheel", $.proxy(this._wheelOnBar, this));
 
 			this.arrows.left = $("<div class='ui-rangeSlider-arrow ui-rangeSlider-leftArrow' />")
@@ -96,10 +109,12 @@
 			$(document).bind("mouseup", $.proxy(this._stopScroll, this));
 
 			this.container
+				.append(this.leftContainment)
+				.append(this.rightContainment)
 				.append(this.innerBar)
 				.append(this.bar)
 				.append(this.leftHandle)
-			    .append(this.rightHandle);
+			  .append(this.rightHandle);
 
 			this.element
 				.append(this.container)
@@ -137,6 +152,11 @@
 		_initWidth: function(){
 			this.container.css("width", this.element.width() - this.container.outerWidth(true) + this.container.width());
 			this.innerBar.css("width", this.container.width() - this.innerBar.outerWidth(true) + this.innerBar.width());
+			this.leftContainment.css("width", this.container.innerWidth())
+				.css("height", this.container.innerHeight());
+			this.rightContainment.css("width", this.container.innerWidth())
+				.css("height", this.container.innerHeight());
+			
 		},
 
 		_initValues: function(){
@@ -144,6 +164,8 @@
 		},
 
 		_setOption: function(key, value) {
+			var option = this.options;
+			
 			if (key == "defaultValues")
 			{
 				if ((typeof value.min != "undefined") && (typeof value.max != "undefined") && parseFloat(value.min) === value.min && parseFloat(value.max) === value.max)
@@ -187,11 +209,28 @@
 			{
 				this.options.bounds = value;
 				this.values(this._values.min, this._values.max);
+			}else if (key == "range"){
+				if (value === false){
+					option.range = {min: false, max: false};
+					return;
+				}
+				
+				var newVal = value || {};
+				newVal.min = (parseFloat(newVal.min) === newVal.min || newVal.min === false ? newVal.min : option.range.min);
+				newVal.max = (parseFloat(newVal.max) === newVal.max || newVal.max === false ? newVal.max : option.range.max);
+				
+				option.range = newVal;
+				this._initWidth();
+				this._position();
 			}
 		},
 
 		_getPosition: function(value, handle){
-			return (value - this.options.bounds.min) * (this.container.innerWidth() - handle.outerWidth(true)) / (this.options.bounds.max - this.options.bounds.min) + (handle == this.rightHandle ? handle.outerWidth(true) : 0);
+			return this._getLeftPosition(value, handle) + (handle == this.rightHandle ? handle.outerWidth(true) : 0);
+		},
+		
+		_getLeftPosition: function(value, handle){
+			return (value - this.options.bounds.min) * (this.container.innerWidth() - handle.outerWidth(true)) / (this.options.bounds.max - this.options.bounds.min);
 		},
 
 		_getValue: function(position, handle){
@@ -231,7 +270,27 @@
 			var right = this._getPosition(this._values.max, this.rightHandle) - this.rightHandle.outerWidth(true);
 			this.leftHandle.css("left", left);
 			this.rightHandle.css("left", right);
+			
+			// Set min and max position according to range constraints
+			var leftBounds = {min : this.options.bounds.min, max: this.options.bounds.max},
+				rightBounds = {min : this.options.bounds.min, max: this.options.bounds.max};
+			if (this.options.range.min !== false){
+				leftBounds.max = Math.max(this._values.max - this.options.range.min, this.options.bounds.min);
+				rightBounds.min = Math.min(this._values.min + this.options.range.min, this.options.bounds.max);
+			}
+			
+			if(this.options.range.max !== false){
+				leftBounds.min = Math.max(this._values.max - this.options.range.max, this.options.bounds.min);
+				rightBounds.max = Math.min(this._values.min + this.options.range.max, this.options.bounds.max);
+			}
 
+			left = this._getLeftPosition(leftBounds.min, this.leftHandle);
+			this.leftContainment.css("margin-left", left)
+				.css("width", this._getLeftPosition(leftBounds.max, this.leftHandle) + this.leftHandle.outerWidth(true) + 1 - left);
+
+			left = this._getLeftPosition(rightBounds.min, this.rightHandle);
+			this.rightContainment.css("margin-left", left)
+				.css("width", this._getLeftPosition(rightBounds.max, this.rightHandle) + this.rightHandle.outerWidth(true) + 1 - left);
 			this._positionLabels();
 		},
 

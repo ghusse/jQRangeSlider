@@ -48,6 +48,7 @@ var defaultCtorTest = new TestCase(
 		same(el.rangeSlider("option", "durationIn"), 0, "Default duration for showing labels is 0ms");
 		same(el.rangeSlider("option", "durationOut"), 400, "Default duration for hiding labels is 400ms");
 		same(el.rangeSlider("option", "delayOut"), 200, "Default delay before hiding labels is 200ms");
+		deepEqual(el.rangeSlider("option", "range"), {min:false, max:false}, "Default constraints on range");
 		
 		// Created elements
 		same($(".ui-rangeSlider-handle.ui-rangeSlider-leftHandle").length, 1, "Left handle should have been created");
@@ -242,6 +243,34 @@ var wheelSpeedSetterTest = new TestCase(
 	}
 );
 
+var rangeSetterTest = new TestCase(
+	"Range constraints",
+	function(){},
+	function(){
+		var def = {min: false, max: false};
+		el.rangeSlider("option", "range", null);
+		deepEqual(el.rangeSlider("option", "range"), def, "Default value should be an object");
+		
+		el.rangeSlider("option", "range", false);
+		deepEqual(el.rangeSlider("option", "range"), def, "Default value should be an object");
+		
+		el.rangeSlider("option", "range", {min: 3});
+		deepEqual(el.rangeSlider("option", "range"), {min: 3, max:false}, "Default value for max value should be false");
+		
+		el.rangeSlider("option", "range", {min: "error", max:"error"});
+		deepEqual(el.rangeSlider("option", "range"), {min:3, max:false}, "Default value should be an object");
+		
+		el.rangeSlider("option", "range", {min: 3, max: 4});
+		deepEqual(el.rangeSlider("option", "range"), {min: 3, max: 4}, "Setter should work");
+		
+		el.rangeSlider("option", "range", {min: false});
+		deepEqual(el.rangeSlider("option", "range"), {min: false, max: 4}, "Setter should only change sent values");
+		
+		el.rangeSlider("option", "range", false);
+		deepEqual(el.rangeSlider("option", "range"), def, "Default value should be an object");
+	}
+);
+
 /**
  *  Arrows
  */
@@ -380,7 +409,7 @@ var issue12 = new TestCase(
 
 testRunner.add("jQRangeSlider", [setUp,
 			defaultCtorTest, hideLabelsTest, showLabelsTest, changeBoundsTest,
-			wheelModeZoomTest, wheelModeScrollTest, wheelModeSetterTest, wheelSpeedSetterTest,
+			wheelModeZoomTest, wheelModeScrollTest, wheelModeSetterTest, wheelSpeedSetterTest, rangeSetterTest,
 			noArrowsSetterTest, arrowsScrollingMouseUpTest,
 			defaultSetup,
 			customCtorTest,

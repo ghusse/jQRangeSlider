@@ -58,19 +58,26 @@ Options
 
 * bounds (default: 0 - 100)
 	* Inclusive bounds of the selection range
-	* object with two [numerical] fields : min and max
+	* object with two [numerical] fields: min and max
 	* example: bounds: {min: 0, max:100}
 * defaultValues (default: 20 - 50)
 	* Default selected range inside defined bounds
-	* object with two [numerical] fields : min and max
+	* object with two [numerical] fields: min and max
 	* example: defaultValues: {min: 20, max:50}
+* range (default: false - false)
+	* Range bounds, to constraint the range size
+	* for date ranges, values are expressed in **milliseconds**
+	* Possible values:
+		* false or null to deactivate
+		* object with to fields: min and max. Set a value to false to deactivate one constraint
+	* examples: range: {min: 10, max: 50} or {min: 20} or {min: 20, max: false} or {max: false} or false
 * wheelMode: (default: null)
 	* Interaction mode when user uses the mouse wheel on the central bar
 	* Possible values : "zoom", "scroll" or null
 * wheelSpeed: (default: 4)
 	* Numerical speed (in % of selected range) of mouse wheel interaction
 * arrows: (default: true)
-	* boolean value that activate or disactivate scrolling arrows
+	* boolean value that activate or deactivate scrolling arrows
 * valueLabels: ("show", "hide", default:"change")
 	* string indicating if value labels have to be displayed
 		* "show" indicates that labels must be visible
@@ -120,6 +127,9 @@ Launch min/compile.sh (on Linux or Mac) or min/compile.bat (on Windows).
 
 Changelog
 ---------
+* 2.3: ?
+	* Issue #14: limit the range with a minimum or maximum range length.
+	* Added the range option
 * 2.2.1: 2011-11-15
 	* Issue #12: impossible to drag the left handle to the max value
 * 2.2: 2011-09-27
