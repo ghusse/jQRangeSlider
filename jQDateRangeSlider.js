@@ -78,6 +78,19 @@
 			}
 
 			return new Date($.ui.rangeSlider.prototype.max.apply(this));
+		},
+		
+		bounds: function(min, max){
+			var result;
+			
+			if (typeof min != "undefined" && min instanceof Date
+						&& typeof max != "undefined" && max instanceof Date) {
+				result = $.ui.rangeSlider.prototype.bounds.apply(this, [min.valueOf(), max.valueOf()]);
+			} else {
+				result = $.ui.rangeSlider.prototype.bounds.apply(this, arguments);
+			}
+			
+			return {min: new Date(result.min), max: new Date(result.max)};
 		}
 	});
 })(jQuery);

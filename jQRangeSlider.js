@@ -204,10 +204,9 @@
 			}else if (key == "formatter" && value !== null && typeof value == "function"){
 				this.options.formatter = value;
 				this._position();
-			}else if (key == "bounds" && (typeof value.min != "undefined") && (typeof value.max != "undefined") && parseFloat(value.min) === value.min && parseFloat(value.max) === value.max && value.min < value.max)
+			}else if (key == "bounds" && typeof value.min != "undefined" && typeof value.max != "undefined")
 			{
-				this.options.bounds = value;
-				this.values(this._values.min, this._values.max);
+				this.bounds(value.min, value.max);
 			}else if (key == "range"){
 				if (value === false){
 					option.range = {min: false, max: false};
@@ -600,7 +599,6 @@
 		/*
 		 * Public methods
 		 */
-
 		values: function(min, max){
 			if (typeof min != "undefined" && typeof max != "undefined")
 			{
@@ -618,6 +616,16 @@
 
 		max: function(max){
 			return this.values(this._values.min, max).max;
+		},
+		
+		bounds: function(min, max){
+			if ((typeof min != "undefined") && (typeof max != "undefined") 
+				&& parseFloat(min) === min && parseFloat(max) === max && min < max){
+				this.options.bounds = {min: min, max: max};
+				this.values(this._values.min, this._values.max);
+			}
+			
+			return this.options.bounds;
 		},
 
 		zoomIn: function(quantity){

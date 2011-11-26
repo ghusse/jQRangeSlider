@@ -110,10 +110,11 @@ Methods
 * scrollRight(quantity)
 * zoomIn(quantity)
 * zoomOut(quantity)
-* values(min, max) : get or set the values
-* min(value): get or set the minimum value
-* max(value): get or set the maximum value
+* values(min, max): gets or sets the values
+* min(value): gets or sets the minimum value
+* max(value): gets or sets the maximum value
 * resize
+* bounds(min, max): gets or sets the bounds
  
 Prerequisites 
 -------------
@@ -130,6 +131,7 @@ Changelog
 * 2.3: ?
 	* Issue #14: limit the range with a minimum or maximum range length.
 	* Added the range option
+	* New public method for getting / setting bounds
 * 2.2.1: 2011-11-15
 	* Issue #12: impossible to drag the left handle to the max value
 * 2.2: 2011-09-27

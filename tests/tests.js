@@ -340,6 +340,20 @@ var minMaxSetter = new TestCase(
 	}
 );
 
+var boundsSetter = new TestCase(
+	"Bounds setter",
+	function(){},
+	function(){
+		var b = {min: 10, max: 20}
+		
+		deepEqual(el.rangeSlider("bounds", b.min, b.max), b, "Should return the new value");
+		deepEqual(el.rangeSlider("bounds"), b, "Should return the value");
+		
+		same(el.rangeSlider("min"), b.min, "Min value should have been changed");
+		same(el.rangeSlider("max"), b.max, "Max value should have been changed");
+	}
+);
+
 var zoomInTest = new TestCase(
 	"Zoom In",
 	function(){
@@ -487,7 +501,7 @@ testRunner.add("jQRangeSlider", [setUp,
 			customCtorTest,
 			destroy,
 			defaultCtorTest,
-			valuesSetter, minMaxSetter,
+			valuesSetter, minMaxSetter, boundsSetter,
 			zoomInTest, zoomOutTest, scrollLeftTest, scrollRightTest,
 			issue12,
 			rangeLimitMax, rangeLimitMaxWithMinAndMax, rangeLimitMin, rangeLimitMinWithMinAndMax,
