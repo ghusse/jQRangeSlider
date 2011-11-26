@@ -156,7 +156,6 @@
 				.css("height", this.container.innerHeight());
 			this.rightContainment.css("width", this.container.innerWidth())
 				.css("height", this.container.innerHeight());
-			
 		},
 
 		_initValues: function(){
@@ -284,13 +283,13 @@
 				rightBounds.max = Math.min(this._values.min + this.options.range.max, this.options.bounds.max);
 			}
 
-			left = this._getLeftPosition(leftBounds.min, this.leftHandle);
+			left = Math.round(this._getLeftPosition(leftBounds.min, this.leftHandle));
 			this.leftContainment.css("margin-left", left)
-				.css("width", this._getLeftPosition(leftBounds.max, this.leftHandle) + this.leftHandle.outerWidth(true) + 1 - left);
+				.css("width", Math.round(this._getLeftPosition(leftBounds.max, this.leftHandle) + this.leftHandle.outerWidth(true)) - left);
 
-			left = this._getLeftPosition(rightBounds.min, this.rightHandle);
+			left = Math.round(this._getLeftPosition(rightBounds.min, this.rightHandle));
 			this.rightContainment.css("margin-left", left)
-				.css("width", this._getLeftPosition(rightBounds.max, this.rightHandle) + this.rightHandle.outerWidth(true) + 1 - left);
+				.css("width", Math.round(this._getLeftPosition(rightBounds.max, this.rightHandle) + this.rightHandle.outerWidth(true)) - left);
 			this._positionLabels();
 		},
 

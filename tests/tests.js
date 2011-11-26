@@ -5,7 +5,7 @@
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
+ * the Free Software Foundation, either version 2 of the License, or
  * (at your option) any later version.
 
  * This program is distributed in the hope that it will be useful,
@@ -391,7 +391,7 @@ var scrollRightTest = new TestCase(
 var issue12 = new TestCase(
 	"Issue 12",
 	function(){
-		el.rangeSlider("options", "bounds", {min:0, max:100});
+		el.rangeSlider("option", "bounds", {min:0, max:100});
 		el.rangeSlider("values", 0, 100);
 		var leftHandle = el.find(".ui-rangeSlider-leftHandle");
 		
@@ -407,6 +407,78 @@ var issue12 = new TestCase(
 	}
 )
 
+var rangeLimitMax = new TestCase(
+	"Range limit (max)",
+	function(){
+		el.rangeSlider("option", "range", {max:50});
+		el.rangeSlider("values", 0, 20);
+	},
+	function(){
+		var rightHandle = el.find(".ui-rangeSlider-rightHandle");
+		
+		rightHandle.simulate("drag", {
+			dx: el.find(".ui-rangeSlider-container").innerWidth() - rightHandle.position().left - rightHandle.outerWidth(true),
+			dy: 0
+		});
+		
+		equal(this.max(), 50);
+	}
+);
+
+var rangeLimitMaxWithMinAndMax = new TestCase(
+	"Range limit (max with min and max)",
+	function(){
+		el.rangeSlider("option", "range", {min: 10, max:50});
+		el.rangeSlider("values", 0, 20);
+	},
+	function(){
+		var rightHandle = el.find(".ui-rangeSlider-rightHandle");
+		
+		rightHandle.simulate("drag", {
+			dx: el.find(".ui-rangeSlider-container").innerWidth() - rightHandle.position().left - rightHandle.outerWidth(true),
+			dy: 0
+		});
+		
+		equal(this.max(), 50);
+	}
+);
+
+var rangeLimitMin = new TestCase(
+	"Range limit (min)",
+	function(){
+		el.rangeSlider("option", "range", {min:50});
+		el.rangeSlider("values", 0, 70);
+	},
+	function(){
+		var rightHandle = el.find(".ui-rangeSlider-rightHandle");
+		
+		rightHandle.simulate("drag", {
+			dx: - rightHandle.position().left,
+			dy: 0
+		});
+		
+		equal(this.max(), 50);
+	}
+);
+
+var rangeLimitMinWithMinAndMax = new TestCase(
+	"Range limit (min with min and max)",
+	function(){
+		el.rangeSlider("option", "range", {min:50, max:90});
+		el.rangeSlider("values", 0, 70);
+	},
+	function(){
+		var rightHandle = el.find(".ui-rangeSlider-rightHandle");
+		
+		rightHandle.simulate("drag", {
+			dx: - rightHandle.position().left,
+			dy: 0
+		});
+		
+		equal(this.max(), 50);
+	}
+);
+
 testRunner.add("jQRangeSlider", [setUp,
 			defaultCtorTest, hideLabelsTest, showLabelsTest, changeBoundsTest,
 			wheelModeZoomTest, wheelModeScrollTest, wheelModeSetterTest, wheelSpeedSetterTest, rangeSetterTest,
@@ -418,5 +490,6 @@ testRunner.add("jQRangeSlider", [setUp,
 			valuesSetter, minMaxSetter,
 			zoomInTest, zoomOutTest, scrollLeftTest, scrollRightTest,
 			issue12,
+			rangeLimitMax, rangeLimitMaxWithMinAndMax, rangeLimitMin, rangeLimitMinWithMinAndMax,
 			destroyTest]);
 
