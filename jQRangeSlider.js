@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
- (function ($, undefined) {
+(function ($, undefined) {
+	"use strict";
+
 	$.widget("ui.rangeSlider", {
 		options: {
 			bounds: {min:0, max:100},
@@ -123,7 +125,7 @@
 				.addClass("ui-rangeSlider")
 				.bind("mousewheel", $.proxy(this._wheelOnContainer, this));
 
-			if (this.element.css("position") != "absolute"){
+			if (this.element.css("position") !== "absolute"){
 				this.element.css("position", "relative");
 			}
 
@@ -135,7 +137,7 @@
 				this.element.addClass("ui-rangeSlider-withArrows");
 			}
 
-			if (this.options.valueLabels != "hide"){
+			if (this.options.valueLabels !== "hide"){
 				this._createLabels();
 			}else{
 				this._destroyLabels();
@@ -165,17 +167,17 @@
 		_setOption: function(key, value) {
 			var option = this.options;
 			
-			if (key == "defaultValues")
+			if (key === "defaultValues")
 			{
-				if ((typeof value.min != "undefined") && (typeof value.max != "undefined") && parseFloat(value.min) === value.min && parseFloat(value.max) === value.max)
+				if ((typeof value.min !== "undefined") && (typeof value.max !== "undefined") && parseFloat(value.min) === value.min && parseFloat(value.max) === value.max)
 				{
 					this.options.defaultValues = value;
 				}
-			}else if (key == "wheelMode" && (value == "zoom" || value == "scroll" || value===null)){
+			}else if (key === "wheelMode" && (value === "zoom" || value === "scroll" || value===null)){
 				this.options.wheelMode = value;
-			}else if (key == "wheelSpeed" && !isNaN(parseFloat(value)) && Math.abs(parseFloat(value)) <= 100){
+			}else if (key === "wheelSpeed" && !isNaN(parseFloat(value)) && Math.abs(parseFloat(value)) <= 100){
 				this.options.wheelSpeed = parseFloat(value);
-			}else if (key == "arrows" && (value === true || value === false) && value != this.options.arrows){
+			}else if (key === "arrows" && (value === true || value === false) && value !== this.options.arrows){
 				if (value){
 					this.element
 						.removeClass("ui-rangeSlider-noArrow")
@@ -193,21 +195,21 @@
 				this.options.arrows = value;
 				this._initWidth();
 				this._position();
-			}else if (key == "valueLabels" && (value == "hide" || value == "show" || value == "change")){
+			}else if (key === "valueLabels" && (value === "hide" || value === "show" || value === "change")){
 				this.options.valueLabels = value;
 
-				if (value != "hide"){
+				if (value !== "hide"){
 					this._createLabels();
 				}else{
 					this._destroyLabels();
 				}
-			}else if (key == "formatter" && value !== null && typeof value == "function"){
+			}else if (key === "formatter" && value !== null && typeof value === "function"){
 				this.options.formatter = value;
 				this._position();
-			}else if (key == "bounds" && typeof value.min != "undefined" && typeof value.max != "undefined")
+			}else if (key === "bounds" && typeof value.min !== "undefined" && typeof value.max !== "undefined")
 			{
 				this.bounds(value.min, value.max);
-			}else if (key == "range"){
+			}else if (key === "range"){
 				if (value === false){
 					option.range = {min: false, max: false};
 					return;
@@ -224,7 +226,7 @@
 		},
 
 		_getPosition: function(value, handle){
-			return this._getLeftPosition(value, handle) + (handle == this.rightHandle ? handle.outerWidth(true) : 0);
+			return this._getLeftPosition(value, handle) + (handle === this.rightHandle ? handle.outerWidth(true) : 0);
 		},
 		
 		_getLeftPosition: function(value, handle){
@@ -232,7 +234,7 @@
 		},
 
 		_getValue: function(position, handle){
-			if (handle == this.rightHandle){	
+			if (handle === this.rightHandle){	
 				position = position - handle.outerWidth();
 			}
 			
@@ -322,9 +324,9 @@
 			var min = this._values.min;
 			var max = this._values.max;
 
-			if (ui.helper[0] == this.leftHandle[0]){
+			if (ui.helper[0] === this.leftHandle[0]){
 					min = this._getValue(ui.position.left, this.leftHandle);
-			}else if (ui.helper[0] == this.rightHandle[0])
+			}else if (ui.helper[0] === this.rightHandle[0])
 			{
 				max = this._getValue(ui.position.left + ui.helper.outerWidth(true), this.rightHandle);
 			}else{
@@ -374,7 +376,7 @@
 		},
 
 		_fireChanged: function(last){
-			if (this.lastWheel == last && !this.bar.hasClass("ui-draggable-dragging") && !this.leftHandle.hasClass("ui-draggable-dragging") && !this.rightHandle.hasClass("ui-draggable-dragging")){
+			if (this.lastWheel === last && !this.bar.hasClass("ui-draggable-dragging") && !this.leftHandle.hasClass("ui-draggable-dragging") && !this.rightHandle.hasClass("ui-draggable-dragging")){
 				var changed = false;
 				if (this.changing.min){
 					this.changing.min = false;
@@ -422,7 +424,7 @@
 				this._values = values;
 			}
 
-			this._changing(oldValues.min != this._values.min, oldValues.max != this._values.max);
+			this._changing(oldValues.min !== this._values.min, oldValues.max !== this._values.max);
 			this._prepareFiringChanged();
 		},
 
@@ -442,7 +444,7 @@
 		},
 
 		_continueScrollingRight: function(quantity, last){
-			if (last == this.lastScroll){
+			if (last === this.lastScroll){
 				var factor = Math.min(Math.floor(this.scrollCount / 5) + 1, 4) / 4;
 
 				this.scrollRight(quantity * factor);
@@ -460,7 +462,7 @@
 		 */
 
 		_wheelOnBar: function(event, delta, deltaX, deltaY){
-			if (this.options.wheelMode == "zoom"){
+			if (this.options.wheelMode === "zoom"){
 				this.zoomIn(-deltaY);
 
 				return false;
@@ -468,7 +470,7 @@
 		},
 
 		_wheelOnContainer: function(event, delta, deltaX, deltaY){
-			if (this.options.wheelMode == "scroll"){
+			if (this.options.wheelMode === "scroll"){
 				this.scrollRight(-deltaY);
 
 				return false;
@@ -504,7 +506,7 @@
 			this.labels.left = this._createLabel(this.labels.left, "ui-rangeSlider-leftLabel");
 			this.labels.right = this._createLabel(this.labels.right, "ui-rangeSlider-rightLabel");
 
-			if (this.options.valueLabels == "change"){
+			if (this.options.valueLabels === "change"){
 				this.labels.left.css("display", "none");
 				this.labels.right.css("display", "none");
 				this.labels.leftDisplayed = false;
@@ -562,7 +564,7 @@
 		},
 
 		_format: function(value){
-			if (typeof this.options.formatter != "undefined" && this.options.formatter !== null){
+			if (typeof this.options.formatter !== "undefined" && this.options.formatter !== null){
 				return this.options.formatter(value);
 			}else{
 				return this._defaultFormat(value);
@@ -574,7 +576,7 @@
 		},
 
 		_showLabels: function(){
-			if (this.options.valueLabels == "change" && !this.privateChange){
+			if (this.options.valueLabels === "change" && !this.privateChange){
 				if (this.changing.min && !this.labels.leftDisplayed){
 					this.labels.left.stop(true, true).fadeIn(this.options.durationIn);
 					this.labels.leftDisplayed = true;
@@ -588,7 +590,7 @@
 		},
 
 		_hideLabels: function(){
-			if (this.options.valueLabels == "change" && this.labels.left !== null && this.labels.right !== null){
+			if (this.options.valueLabels === "change" && this.labels.left !== null && this.labels.right !== null){
 				this.labels.leftDisplayed = false;
 				this.labels.rightDisplayed = false;
 				this.labels.left.stop(true, true).delay(this.options.delayOut).fadeOut(this.options.durationOut);
@@ -600,7 +602,7 @@
 		 * Public methods
 		 */
 		values: function(min, max){
-			if (typeof min != "undefined" && typeof max != "undefined")
+			if (typeof min !== "undefined" && typeof max !== "undefined")
 			{
 				this.internalChange = false;
 				this._privateValues(min,max);
@@ -619,7 +621,7 @@
 		},
 		
 		bounds: function(min, max){
-			if ((typeof min != "undefined") && (typeof max != "undefined") 
+			if ((typeof min !== "undefined") && (typeof max !== "undefined") 
 				&& parseFloat(min) === min && parseFloat(max) === max && min < max){
 				this.options.bounds = {min: min, max: max};
 				this.values(this._values.min, this._values.max);
@@ -642,13 +644,13 @@
 		},
 
 		scrollLeft: function(quantity){
-			if (typeof quantity == 'undefined')
+			if (typeof quantity === 'undefined')
 				quantity = 1;
 			this.scrollRight(-quantity);
 		},
 
 		scrollRight: function(quantity){
-			if (typeof quantity == "undefined")
+			if (typeof quantity === "undefined")
 				quantity = 1;
 			var diff = this._values.max - this._values.min;
 

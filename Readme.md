@@ -128,10 +128,11 @@ Launch min/compile.sh (on Linux or Mac) or min/compile.bat (on Windows).
 
 Changelog
 ---------
-* 2.3: ?
+* 2.3: 2011-11-27
 	* Issue #14: limit the range with a minimum or maximum range length.
 	* Added the range option
 	* New public method for getting / setting bounds
+	* use strict
 * 2.2.1: 2011-11-15
 	* Issue #12: impossible to drag the left handle to the max value
 * 2.2: 2011-09-27
