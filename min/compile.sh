@@ -2,7 +2,7 @@
 MINDIR=../
 COMPILER=../lib/compiler/compiler.jar
 SRCDIR=../
-OPTIONS=""
+OPTIONS="--language_in ECMASCRIPT5_STRICT"
 
 BASE=${SRCDIR}jQRangeSlider.js
 BASEMIN=${MINDIR}jQRangeSlider-min.js

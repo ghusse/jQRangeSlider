@@ -3,7 +3,7 @@
 set MINDIR=../
 set COMPILER=../lib/compiler/compiler.jar
 set SRCDIR=../
-set OPTIONS=--compilation_level ADVANCED_OPTIMIZATIONS
+set OPTIONS=--warning_level VERBOSE
 
 set BASE=%SRCDIR%jQRangeSlider.js
 set DATE=%SRCDIR%jQDateRangeSlider.js
