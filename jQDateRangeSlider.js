@@ -44,8 +44,8 @@
 		},
 
 		_defaultFormat: function(value){
-			var month = value.getMonth() + 1;
-			var day = value.getDate();
+			var month = value.getMonth() + 1,
+				day = value.getDate();
 			return "" + value.getFullYear() + "-" + (month < 10 ? "0" + month : month) + "-" + (day < 10 ? "0" + day : day);
 		},
 

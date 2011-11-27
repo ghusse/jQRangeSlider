@@ -256,8 +256,8 @@
 		},
 
 		_position: function(){
-			var leftPosition = this._getPosition(this._values.min, this.leftHandle);
-			var rightPosition = this._getPosition(this._values.max, this.rightHandle);
+			var leftPosition = this._getPosition(this._values.min, this.leftHandle),
+				rightPosition = this._getPosition(this._values.max, this.rightHandle);
 
 			this._positionHandles();
 			this.bar
@@ -266,14 +266,15 @@
 		},
 
 		_positionHandles: function(){
-			var left = this._getPosition(this._values.min, this.leftHandle);
-			var right = this._getPosition(this._values.max, this.rightHandle) - this.rightHandle.outerWidth(true);
+			var left = this._getPosition(this._values.min, this.leftHandle),
+				right = this._getPosition(this._values.max, this.rightHandle) - this.rightHandle.outerWidth(true),
+				leftBounds = {min : this.options.bounds.min, max: this.options.bounds.max},
+				rightBounds = {min : this.options.bounds.min, max: this.options.bounds.max};
+				
 			this.leftHandle.css("left", left);
 			this.rightHandle.css("left", right);
 			
 			// Set min and max position according to range constraints
-			var leftBounds = {min : this.options.bounds.min, max: this.options.bounds.max},
-				rightBounds = {min : this.options.bounds.min, max: this.options.bounds.max};
 			if (this.options.range.min !== false){
 				leftBounds.max = Math.max(this._values.max - this.options.range.min, this.options.bounds.min);
 				rightBounds.min = Math.min(this._values.min + this.options.range.min, this.options.bounds.max);
@@ -295,8 +296,8 @@
 		},
 
 		_barMoved: function(event, ui){
-			var left = ui.position.left;
-			var right = left + this.bar.outerWidth(true);
+			var left = ui.position.left,
+				right = left + this.bar.outerWidth(true);
 
 			this._setValues(this._getValue(left, this.leftHandle), this._getValue(right, this.rightHandle));
 			this._positionHandles();
@@ -321,8 +322,8 @@
 		},
 
 		_handleMoved: function(event, ui){
-			var min = this._values.min;
-			var max = this._values.max;
+			var min = this._values.min,
+				max = this._values.max;
 
 			if (ui.helper[0] === this.leftHandle[0]){
 					min = this._getValue(ui.position.left, this.leftHandle);
@@ -404,8 +405,8 @@
 		},
 
 		_setValues: function(min, max){
-			var oldValues = this._values;
-			var difference = Math.abs(max-min);
+			var oldValues = this._values,
+				difference = Math.abs(max-min);
 
 			if (difference >= this.options.bounds.max - this.options.bounds.min){
 				this._values.min = this.options.bounds.min;
@@ -527,10 +528,10 @@
 		},
 
 		_positionLabel: function(label, position){
-			var topPos = this.leftHandle.offset().top - label.outerHeight(true);
-			var parent = label.offsetParent();
+			var topPos = this.leftHandle.offset().top - label.outerHeight(true),
+				parent = label.offsetParent(),
+				leftPos = position - parent.offset().left;
 
-			var leftPos = position - parent.offset().left;
 			topPos = topPos - parent.offset().top;
 
 			label
@@ -543,12 +544,12 @@
 				this.labels.left.text(this._format(this._values.min));
 				this.labels.right.text(this._format(this._values.max));
 
-				var minSize = this.labels.leftDisplayed ? this.labels.left.outerWidth(true) : 0;
-				var maxSize = this.labels.rightDisplayed ? this.labels.right.outerWidth(true) : 0;
-				var leftBound = 0;
-				var rightBound = $(window).width() - maxSize;
-				var minLeft = Math.max(leftBound, this.leftHandle.offset().left + this.leftHandle.outerWidth(true) / 2 - minSize / 2);
-				var maxLeft = Math.min(rightBound, this.rightHandle.offset().left + this.rightHandle.outerWidth(true) / 2 - maxSize / 2);
+				var minSize = this.labels.leftDisplayed ? this.labels.left.outerWidth(true) : 0,
+					maxSize = this.labels.rightDisplayed ? this.labels.right.outerWidth(true) : 0,
+					leftBound = 0,
+					rightBound = $(window).width() - maxSize,
+					minLeft = Math.max(leftBound, this.leftHandle.offset().left + this.leftHandle.outerWidth(true) / 2 - minSize / 2),
+					maxLeft = Math.min(rightBound, this.rightHandle.offset().left + this.rightHandle.outerWidth(true) / 2 - maxSize / 2);
 
 				// Need to find a better position
 				if (minLeft + minSize >= maxLeft){
@@ -631,10 +632,9 @@
 		},
 
 		zoomIn: function(quantity){
-			var diff = this._values.max - this._values.min;
-
-			var min = this._values.min + quantity * this.options.wheelSpeed * diff / 200;
-			var max = this._values.max - quantity * this.options.wheelSpeed * diff / 200;
+			var diff = this._values.max - this._values.min,
+				min = this._values.min + quantity * this.options.wheelSpeed * diff / 200,
+				max = this._values.max - quantity * this.options.wheelSpeed * diff / 200;
 
 			this._privateValues(min, max);
 		},
@@ -652,10 +652,10 @@
 		scrollRight: function(quantity){
 			if (typeof quantity === "undefined")
 				quantity = 1;
-			var diff = this._values.max - this._values.min;
 
-			var min = this._values.min + quantity * this.options.wheelSpeed * diff / 100;
-			var max = this._values.max + quantity * this.options.wheelSpeed * diff / 100;
+			var diff = this._values.max - this._values.min,
+				min = this._values.min + quantity * this.options.wheelSpeed * diff / 100,
+				max = this._values.max + quantity * this.options.wheelSpeed * diff / 100;
 
 			this._privateValues(min, max);
 		},
