@@ -10,21 +10,7 @@ A javascript slider selector that supports dates
 License
 -------
 Copyright : Guillaume Gautreau 2010
-License : GPL v3. Contact me for using this library in another context
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
+License : Dual license GPL v3 and MIT
 
 Dependencies
 ------------
@@ -128,6 +114,9 @@ Launch min/compile.sh (on Linux or Mac) or min/compile.bat (on Windows).
 
 Changelog
 ---------
+* 2.4: 2012-02-23
+	* Dual license GPL and MIT
+	* Small refactoring, allowing to create a modifiable range slider
 * 2.3: 2011-11-27
 	* Issue #14: limit the range with a minimum or maximum range length.
 	* Added the range option

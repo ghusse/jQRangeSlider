@@ -17,7 +17,8 @@ mv ${SRCDIR}/jQRangeSlider-min.js ${DIR}
 mv ${SRCDIR}/jQAllRangeSliders-min.js ${DIR}
 cp -R ${SRCDIR}/css ${DIR}
 cp -R ${SRCDIR}/demo ${DIR}
-cp ${SRCDIR}/License.txt ${DIR}
+cp ${SRCDIR}/GPL-License.txt ${DIR}
+cp ${SRCDIR}/MIT-License.txt ${DIR}
 cp ${SRCDIR}/Readme.md ${DIR}
 
 # Copy libs
