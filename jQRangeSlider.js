@@ -481,14 +481,12 @@
 		/*
 		 * Value labels
 		 */
-		_createLabel: function(label, classes){
+		_createLabel: function(label, whichOne){
 			if (label === null){
 				label = $("<div class='ui-rangeSlider-label'/>")
-					.addClass(classes)
+					.addClass("ui-rangeSlider-" + whichOne + "Label")
 					.css("position", "absolute");
 				this.element.append(label);
-
-				this._positionLabels();
 			}
 
 			return label;
@@ -504,8 +502,8 @@
 		},
 
 		_createLabels: function(){
-			this.labels.left = this._createLabel(this.labels.left, "ui-rangeSlider-leftLabel");
-			this.labels.right = this._createLabel(this.labels.right, "ui-rangeSlider-rightLabel");
+			this.labels.left = this._createLabel(this.labels.left, "left");
+			this.labels.right = this._createLabel(this.labels.right, "right");
 
 			if (this.options.valueLabels === "change"){
 				this.labels.left.css("display", "none");
@@ -520,6 +518,8 @@
 
 				this._position();
 			}
+
+			this._positionLabels();
 		},
 
 		_destroyLabels: function(){
@@ -539,11 +539,18 @@
 				.css("top", topPos);
 		},
 
+		_fillInLabel: function(label, value){
+			label.text(this._format(value));
+		},
+
+		_fillInLabels: function(){
+			this._fillInLabel(this.labels.left, this._values.min);
+			this._fillInLabel(this.labels.right, this._values.max);
+		},
+
 		_positionLabels: function(){
 			if (this.labels.left !== null && this.labels.right !== null){
-				this.labels.left.text(this._format(this._values.min));
-				this.labels.right.text(this._format(this._values.max));
-
+				this._fillInLabels();
 				var minSize = this.labels.leftDisplayed ? this.labels.left.outerWidth(true) : 0,
 					maxSize = this.labels.rightDisplayed ? this.labels.right.outerWidth(true) : 0,
 					leftBound = 0,
