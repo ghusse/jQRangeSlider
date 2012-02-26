@@ -112,6 +112,24 @@ Generating minified jQRangeSlider files
 ---------------------------------------
 Launch min/compile.sh (on Linux or Mac) or min/compile.bat (on Windows).
 
+FAQ
+---
+### Is it possible to set steps?
+
+You can set value steps simply by providing a custom formatter function that rounds values according to your needs. This way, **displayed values** will be rounded, but not actual values (you'll have to round again before using them).
+
+For instance:
+
+	$("#slider").rangeSlider({
+		formatter: function(value){
+			var step = 10;
+
+			return Math.round(value / step) * step;
+		}
+	});
+
+On the other hand, it's not possible to set graphical steps when moving the range or its ends.
+
 Changelog
 ---------
 * 2.4: 2012-02-23
