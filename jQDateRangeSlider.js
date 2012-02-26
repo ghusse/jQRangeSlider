@@ -20,7 +20,7 @@
 			if ((key === "defaultValues" || key === "bounds") && typeof value !== "undefined" && value !== null && typeof value.min !== "undefined" && typeof value.max !== "undefined" && value.min instanceof Date && value.max instanceof Date){
 				$.ui.rangeSlider.prototype._setOption.apply(this, [key, {min:value.min.valueOf(), max:value.max.valueOf()}]);
 			}else{
-				$.ui.rangeSlider.prototype._setOption.apply(this, arguments);
+				$.ui.rangeSlider.prototype._setOption.apply(this, this._toArray(arguments));
 			}
 		},
 
@@ -31,7 +31,7 @@
 				return {min:new Date(result.min), max:new Date(result.max)};
 			}
 
-			return $.ui.rangeSlider.prototype.option.apply(this, arguments);
+			return $.ui.rangeSlider.prototype.option.apply(this, this._toArray(arguments));
 		},
 
 		_defaultFormat: function(value){
@@ -51,7 +51,7 @@
 			{
 				values = $.ui.rangeSlider.prototype.values.apply(this, [min.valueOf(), max.valueOf()]);
 			}else{
-				values = $.ui.rangeSlider.prototype.values.apply(this, arguments);
+				values = $.ui.rangeSlider.prototype.values.apply(this, this._toArray(arguments));
 			}
 
 			return {min: new Date(values.min), max: new Date(values.max)};
@@ -80,10 +80,14 @@
 						&& typeof max !== "undefined" && max instanceof Date) {
 				result = $.ui.rangeSlider.prototype.bounds.apply(this, [min.valueOf(), max.valueOf()]);
 			} else {
-				result = $.ui.rangeSlider.prototype.bounds.apply(this, arguments);
+				result = $.ui.rangeSlider.prototype.bounds.apply(this, this._toArray(arguments));
 			}
 			
 			return {min: new Date(result.min), max: new Date(result.max)};
+		},
+
+		_toArray: function(argsObject){
+			return Array.prototype.slice.call(argsObject);
 		}
 	});
 })(jQuery);

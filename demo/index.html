@@ -6,255 +6,28 @@
 	<link rel="stylesheet" href="../css/dev.css">  
 	<link rel="stylesheet" href="style.css">  
 	<link rel="stylesheet" href="lib/jquery-ui/css/smoothness/jquery-ui-1.8.10.custom.css">  
-	<script src="../lib/jquery-1.4.4.min.js"></script>
+	<script src="../lib/jquery-1.7.1.min.js"></script>
 	<script src="lib/jquery-ui/js/jquery-ui-1.8.16.custom.min.js"></script>
 	<script src="../lib/jquery.mousewheel.min.js"></script>
 	
 	<!-- Debug -->
 	<script src="../jQRangeSlider.js"></script>
 	<script src="../jQDateRangeSlider.js"></script>
+	<script src="../jQModifiableRangeSlider.js"></script>
 	<!-- /Debug -->
 	
 	<!-- Minified --><!--
 	<script src="../jQAllRangeSliders-min.js"></script>
 	--><!-- /Minified -->
+
+
+	<script src="sliderdemo.js"></script>
+	<script src="dateSliderdemo.js"></script>
+	<script src="demo2.js"></script>
 	
-	<script>//<!--
-		var changing = true;
-		var dateChanging = true;
-		
-		function updateValuesChanged(event, ui, changing){
-			if (!changing)
-				displayValues(ui.label, ui.values)	
-		}
-		
-		function updateValuesChanging(event, ui, changing){
-			if (changing)
-				displayValues(ui.label, ui.values)
-		}
-		
-		function displayValues(slider, values){
-			if (values.min instanceof Date) {
-	  		slider.parents("form").find("input[name=min]").val($.datepicker.formatDate("yy-mm-dd", values.min));
-		  	slider.parents("form").find("input[name=max]").val($.datepicker.formatDate("yy-mm-dd", values.max));
-		  }
-		  else {
-		  	slider.parents("form").find("input[name=min]").val(values.min);
-		  	slider.parents("form").find("input[name=max]").val(values.max);
-		  }
-		}
-		
-		function makeSlider(selector, options){
-			var slider = $(selector)
-				.rangeSlider(options)
-				.bind("valuesChanging", function(event, ui){updateValuesChanging(event, ui, changing);})
-				.bind("valuesChanged", function(event, ui){updateValuesChanged(event, ui, changing);})
-				.addClass("ui-rangeSlider-dev");
-			displayValues(slider, slider.rangeSlider("values"));
-		}
-		
-		function makeDateSlider(selector, options){
-			var slider = $(selector)
-				.dateRangeSlider(options)
-				.bind("valuesChanging", function(event, ui){updateValuesChanging(event, ui, dateChanging);})
-				.bind("valuesChanged", function(event, ui){updateValuesChanged(event, ui, dateChanging);})
-				.addClass("ui-rangeSlider-dev");
-			displayValues(slider, slider.rangeSlider("values"));
-		}
-		
-		function setOption(element, option, value){
-			if (value == "null") {
-				value = null
-			}
-			$(element).parents(".example").find(".slider").rangeSlider("option", option, value);
-			$(element).parents(".example").find(".dateSlider").dateRangeSlider("option", option, value);
-		}
-		
-		function getOption(element, option){
-			return $(element).parents(".example").find(".slider").rangeSlider("options")[option];
-		}
-		
-		$(document).ready(function(){
-			makeSlider("#defaultSlider", {});
-			makeDateSlider("#defaultDateSlider", {bounds:{min:new Date(2010,0,1), max:new Date(2012,0,1)}});
-			
-			$(".dateValues input").datepicker({
-				maxDate: new Date(2012,0,1),
-				minDate: new Date(2010,0,1),
-				dateFormat: "yy-mm-dd",
-				buttonImage: "img/calendar.png",
-				buttonImageOnly: true,
-				buttonText: "Choose a date",
-				showOn: "both"
-				})
-			
-			$(".dateValues input[name=min]").change(function(event, ui){
-				$("#defaultDateSlider").dateRangeSlider("min", $(this).datepicker("getDate"));
-			});
-			
-			$(".dateValues input[name=max]").change(function(event, ui){
-				$("#defaultDateSlider").dateRangeSlider("max", $(this).datepicker("getDate"));
-			});
-			
-			$("form").submit(function(){return false;});
-			$("input[type=reset]").click();
-		});
-	// -->
-	</script>
   </head>  
-  <body>  
-	<h1>jQRangeSlider demo</h1>
-	<div class="example">
-		<h2>Float values</h2>
-	<div class="wrapper">
-		<div class="sliderZone">
-		<form action="#">
-			<dl class="values"><dt>min</dt><dd><input name="min" /></dd>
-				<dt>max</dt><dd><input name="max" /></dd></dl>
-			<div id="defaultSlider" class="slider"></div>
-	  </form>
-		</div>
-	</div>
-<div class="options">
-	<form>
-		<dl>
-			<dt>Range limit</dt>
-			<dd>min: <select name="rangeMin" onchange="setOption(this, 'range', {min: $(this).val() == ''? false : parseInt($(this).val())})">
-					<option selected="selected" value="">Deactivated</selected>
-					<option>10</option>
-					<option>20</option>
-					<option>30</option>
-					<option>40</option>
-				</select></dd>
-			<dd>max: <select name="rangeMax" onchange="setOption(this, 'range', {max: $(this).val() == ''? false : parseInt($(this).val())})">
-					<option selected="selected" value="">Deactivated</selected>
-					<option>50</option>
-					<option>60</option>
-					<option>70</option>
-					<option>80</option>
-				</select>
-			</dd>
-			<dt>Wheel mode</dt>
-			<dd><select name="wheelMode" onchange="setOption(this, 'wheelMode', $(this).val());">
-					<option value="null" selected="selected">null</option>
-					<option value="scroll">Scroll</option>
-					<option value="zoom">Zoom</option>
-			</select></dd>
-			<dt>Wheel speed</dt>
-			<dd><input type="number" name="wheelSpeed" value="8" onkeyup="setOption(this, 'wheelSpeed', $(this).val());"/></dd>
-			<dt>Arrows</dt>
-			<dd><label><input type="checkbox" checked="checked" name="arrows" onclick="setOption(this, 'arrows', $(this).is(':checked'));"/>Activate arrows</label></dd>
-			<dt>Value labels</dt>
-			<dd>
-				<select name="valueLabels" onchange="setOption(this, 'valueLabels', $(this).val());">
-					<option value="hide">hide</option>
-					<option value="show" selected="selected">show</option>
-					<option value="change">on change</option>
-				</select>
-			</dd>
-			<dt>Binding</dt>
-			<dd><label><input type="radio" checked="checked" name="binding" value="changing" onclick="changing=$(this).parents('form').find('input[name=binding]:radio:checked').val()=='changing';" /> valuesChanging</label></dd>
-			<dd><label><input type="radio" name="binding" value="changed" onclick="changing=$(this).parents('form').find('input[name=binding]:radio:checked').val()=='changing';" /> valuesChanged</label></dd>
-			</dl>
-		<p style="display:none"><input type="reset" /></p>
-	</form>
-</div>
-</div>
+  <body>
+  	<h1>jQRangeSlider demos</h1>
 
-<h3>Code</h3>
-<pre><code><span class="comment">// default constructor</span>
-$("#element").rangeSlider();
-
-<span class="comment">// Equivalent to</span>
-$("#element").rangeSlider({
-  defaultValues:{min:20, max:50},
-  bounds:{min:0, max:100},
-  wheelMode: null,
-  wheelSpeed: 8,
-  arrows: true,
-  valueLabels: "show",
-  formatter: function(value){return Math.round(value)},
-  durationIn: 0,
-  durationOut: 400,
-  delayOut: 200,
-  range: {min: false, max: false}
-});</code></pre>
-<div class="example">
-	<h2>Dates</h2>
-	<div class="wrapper">
-		<div class="sliderZone">
-		<form action="#">
-			<dl class="dateValues"><dt>min</dt><dd><input name="min" /></dd>
-				<dt>max</dt><dd><input name="max" /></dd></dl>
-			<div id="defaultDateSlider" class="dateSlider"></div>
-	  </form>
-		</div>
-	</div>
-<div class="options">
-	<form>
-		<dl>
-			<dt>Range limit</dt>
-			<dd>min: <select name="dateRangeMin" onchange="setOption(this, 'range', {min: $(this).val() == ''? false : parseInt($(this).val()) * 3.6e6 * 24})">
-				<option value="">Deactivated</option>
-				<option value="28">4 weeks</option>
-				<option value="56">8 weeks</option>
-				<option value="112">16 weeks</option>
-			</select></dd>
-			<dd>max: <select name="dateRangeMax" onchange="setOption(this, 'range', {max: $(this).val() == ''? false : parseInt($(this).val()) * 3.6e6 * 24})">
-				<option value="">Deactivated</option>
-				<option value="365">365 days</option>
-				<option value="400">400 days</option>
-				<option value="500">500 days</option>
-			</select>
-			</dd>
-			<dt>Wheel mode</dt>
-			<dd><select name="wheelMode" onchange="setOption(this, 'wheelMode', $(this).val());">
-					<option value="null" selected="selected">null</option>
-					<option value="scroll">Scroll</option>
-					<option value="zoom">Zoom</option>
-			</select></dd>
-			<dt>Wheel speed</dt>
-			<dd><input type="number" name="wheelSpeed" value="8" onkeyup="setOption(this, 'wheelSpeed', $(this).val());"/></dd>
-			<dt>Arrows</dt>
-			<dd><label><input type="checkbox" checked="checked" name="arrows" onclick="setOption(this, 'arrows', $(this).is(':checked'));"/>Activate arrows</label></dd>
-			<dt>Value labels</dt>
-			<dd>
-				<select name="valueLabels" onchange="setOption(this, 'valueLabels', $(this).val());">
-					<option value="hide">hide</option>
-					<option value="show" selected="selected">show</option>
-					<option value="change">on change</option>
-				</select>
-			</dd>
-			<dt>Binding</dt>
-			<dd><label><input type="radio" checked="checked" name="binding" value="changing" onclick="dateChanging=$(this).parents('form').find('input[name=binding]:radio:checked').val()=='changing';" /> valuesChanging</label></dd>
-			<dd><label><input type="radio" name="binding" value="changed" onclick="dateChanging=$(this).parents('form').find('input[name=binding]:radio:checked').val()=='changing';" /> valuesChanged</label></dd>
-		</dl>
-		<p style="display:none"><input type="reset" /></p>
-	</form>
-</div>
-</div>
-
-<h3>Code</h3>
-<pre><code><span class="comment">// default constructor</span>
-$("#element").dateRangeSlider();
-
-<span class="comment">// Equivalent to</span>
-$("#element").dateRangeSlider({
-  defaultValues:{min:new Date(2010,1,111), max:new Date(2011,1,11)},
-  bounds:{min:new Date(2010,0,1), max:new Date(2012,0,1)},
-  wheelMode: null,
-  wheelSpeed: 8,
-  arrows: true,
-  valueLabels: "show",
-  formatter: function(value){
-    var month = value.getMonth() + 1;
-    var day = value.getDate();
-    return "" + value.getFullYear() + "-" + (month < 10 ? "0" + month : month) + "-" + (day < 10 ? "0" + day : day);
-  },
-  durationIn: 0,
-  durationOut: 400,
-  delayOut: 200,
-  range: {min: false, max: false}
-});</code></pre>
 	</body>  
 </html>  
