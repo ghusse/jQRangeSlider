@@ -9,6 +9,10 @@ h1{
 	font-size:25px;
 }
 
+.ui-sliderDemo{
+	margin-bottom:50px;
+}
+
 .slider,
 .dateSlider{
 	width:100%;
@@ -22,7 +26,7 @@ h1{
 	height:20px;
 	text-align:right;
 }
-.sliderZone input{
+.sliderZone dl input{
 	text-align:right;
 	margin-left:5px;
 	margin-right:0;
@@ -30,6 +34,10 @@ h1{
 }
 .sliderZone img{
 	vertical-align:middle;
+}
+
+.sliderZone dl{
+	margin-bottom:50px;
 }
 
 pre{

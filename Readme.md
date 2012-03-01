@@ -1,5 +1,5 @@
-jQRangeSlider & jQDateRangeSlider
-=================================
+jQRangeSlider, jQDateRangeSlider & jQEditRangeSlider
+====================================================
 A javascript slider selector that supports dates
 
 * [Project page](http://ghusse.github.com/jQRangeSlider/)
@@ -10,21 +10,7 @@ A javascript slider selector that supports dates
 License
 -------
 Copyright : Guillaume Gautreau 2010
-License : GPL v3. Contact me for using this library in another context
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
+License : Dual license GPL v3 and MIT
 
 Dependencies
 ------------
@@ -40,7 +26,7 @@ Usage
 Javascript reference for development:
 	<script type="text/javascript" src="jQRangeSlider.js"></script>
 Javascript reference for production:
-    	<script type="text/javascript" src="jQRangeSlider-min.js"></script>
+  <script type="text/javascript" src="jQRangeSlider-min.js"></script>
 Range slider creation:
 	$("#element").rangeSlider({/*options*/});
 
@@ -49,28 +35,47 @@ Javascript reference for development:
 	<script type="text/javascript" src="jQRangeSlider.js"></script>
 	<script type="text/javascript" src="jQDateRangeSlider.js"></script>
 Javascript reference for production:
-    	<script type="text/javascript" src="jQAllRangeSliders.js"></script>
+  <script type="text/javascript" src="jQAllRangeSliders-min.js"></script>
 Range slider creation:
 	$("#element").dateRangeSlider({/*options*/});
+
+# A editable range slider
+Javascript reference for development:
+	<script type="text/javascript" src="jQRangeSlider.js"></script>
+	<script type="text/javascript" src="jQEditRangeSlider.js"></script>
+Javascript reference for production:
+  <script type="text/javascript" src="jQAllRangeSliders-min.js"></script>
+Range slider creation:
+	$("#element").editRangeSlider({/*options*/});
+
 
 Options
 -------
 
+### All sliders
+
 * bounds (default: 0 - 100)
 	* Inclusive bounds of the selection range
-	* object with two [numerical] fields : min and max
+	* object with two [numerical] fields: min and max
 	* example: bounds: {min: 0, max:100}
 * defaultValues (default: 20 - 50)
 	* Default selected range inside defined bounds
-	* object with two [numerical] fields : min and max
+	* object with two [numerical] fields: min and max
 	* example: defaultValues: {min: 20, max:50}
+* range (default: false - false)
+	* Range bounds, to constraint the range size
+	* for date ranges, values are expressed in **milliseconds**
+	* Possible values:
+		* false or null to deactivate
+		* object with to fields: min and max. Set a value to false to deactivate one constraint
+	* examples: range: {min: 10, max: 50} or {min: 20} or {min: 20, max: false} or {max: false} or false
 * wheelMode: (default: null)
 	* Interaction mode when user uses the mouse wheel on the central bar
 	* Possible values : "zoom", "scroll" or null
 * wheelSpeed: (default: 4)
 	* Numerical speed (in % of selected range) of mouse wheel interaction
 * arrows: (default: true)
-	* boolean value that activate or disactivate scrolling arrows
+	* boolean value that activate or deactivate scrolling arrows
 * valueLabels: ("show", "hide", default:"change")
 	* string indicating if value labels have to be displayed
 		* "show" indicates that labels must be visible
@@ -84,6 +89,15 @@ Options
 	* fadeOut duration in ms for hiding labels after a change
 * delayOut: default:200
 	* delay before hiding labels after a change
+
+### Edit slider only
+
+* type (default:'text', 'number')
+  * input type used for creating labels
+* round: (false or a number used for rounding)
+	* false to deactivate
+	* a number used for formatting the displayed values in inputs
+	* if a custom formatter function is provided, this parameter is ignored
 
 Events
 -----
@@ -103,23 +117,54 @@ Methods
 * scrollRight(quantity)
 * zoomIn(quantity)
 * zoomOut(quantity)
-* values(min, max) : get or set the values
-* min(value): get or set the minimum value
-* max(value): get or set the maximum value
+* values(min, max): gets or sets the values
+* min(value): gets or sets the minimum value
+* max(value): gets or sets the maximum value
 * resize
+* bounds(min, max): gets or sets the bounds
  
 Prerequisites 
 -------------
 * Element on which .rangeSlider() is applied will be positioned as relative if no positioning is set.
-* jQDateRangeSlider.js is only needed by the dateRangeSlider widget.
-* jQRangeSlider.js is needed by both widgets
+* jQDateRangeSlider.js is only required by the dateRangeSlider widget.
+* jQEditRangeSlider.js is only required for using the editRangeSlider widget
+* jQRangeSlider.js is needed by all widgets
 
 Generating minified jQRangeSlider files
 ---------------------------------------
 Launch min/compile.sh (on Linux or Mac) or min/compile.bat (on Windows).
 
+FAQ
+---
+### Is it possible to set steps?
+
+You can set value steps simply by providing a custom formatter function that rounds values according to your needs. This way, **displayed values** will be rounded, but not actual values (you'll have to round again before using them).
+
+For instance:
+
+	$("#slider").rangeSlider({
+		formatter: function(value){
+			var step = 10;
+
+			return Math.round(value / step) * step;
+		}
+	});
+
+On the other hand, it's not possible to set graphical steps when moving the range or its ends.
+
 Changelog
 ---------
+* 3.0: 2012-03-01
+  * **New type of slider**: edit range slider!
+  * Packaging minified version of individual files
+* 2.4: 2012-02-23
+	* Dual license GPL and MIT
+	* Small refactoring, allowing to create a modifiable range slider
+* 2.3: 2011-11-27
+	* Issue #14: limit the range with a minimum or maximum range length.
+	* Added the range option
+	* New public method for getting / setting bounds
+	* use strict
 * 2.2.1: 2011-11-15
 	* Issue #12: impossible to drag the left handle to the max value
 * 2.2: 2011-09-27

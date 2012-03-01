@@ -5,7 +5,7 @@
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
+ * the Free Software Foundation, either version 2 of the License, or
  * (at your option) any later version.
 
  * This program is distributed in the hope that it will be useful,
@@ -48,6 +48,7 @@ var defaultCtorTest = new TestCase(
 		same(el.rangeSlider("option", "durationIn"), 0, "Default duration for showing labels is 0ms");
 		same(el.rangeSlider("option", "durationOut"), 400, "Default duration for hiding labels is 400ms");
 		same(el.rangeSlider("option", "delayOut"), 200, "Default delay before hiding labels is 200ms");
+		deepEqual(el.rangeSlider("option", "range"), {min:false, max:false}, "Default constraints on range");
 		
 		// Created elements
 		same($(".ui-rangeSlider-handle.ui-rangeSlider-leftHandle").length, 1, "Left handle should have been created");
@@ -242,6 +243,34 @@ var wheelSpeedSetterTest = new TestCase(
 	}
 );
 
+var rangeSetterTest = new TestCase(
+	"Range constraints",
+	function(){},
+	function(){
+		var def = {min: false, max: false};
+		el.rangeSlider("option", "range", null);
+		deepEqual(el.rangeSlider("option", "range"), def, "Default value should be an object");
+		
+		el.rangeSlider("option", "range", false);
+		deepEqual(el.rangeSlider("option", "range"), def, "Default value should be an object");
+		
+		el.rangeSlider("option", "range", {min: 3});
+		deepEqual(el.rangeSlider("option", "range"), {min: 3, max:false}, "Default value for max value should be false");
+		
+		el.rangeSlider("option", "range", {min: "error", max:"error"});
+		deepEqual(el.rangeSlider("option", "range"), {min:3, max:false}, "Default value should be an object");
+		
+		el.rangeSlider("option", "range", {min: 3, max: 4});
+		deepEqual(el.rangeSlider("option", "range"), {min: 3, max: 4}, "Setter should work");
+		
+		el.rangeSlider("option", "range", {min: false});
+		deepEqual(el.rangeSlider("option", "range"), {min: false, max: 4}, "Setter should only change sent values");
+		
+		el.rangeSlider("option", "range", false);
+		deepEqual(el.rangeSlider("option", "range"), def, "Default value should be an object");
+	}
+);
+
 /**
  *  Arrows
  */
@@ -311,6 +340,20 @@ var minMaxSetter = new TestCase(
 	}
 );
 
+var boundsSetter = new TestCase(
+	"Bounds setter",
+	function(){},
+	function(){
+		var b = {min: 10, max: 20}
+		
+		deepEqual(el.rangeSlider("bounds", b.min, b.max), b, "Should return the new value");
+		deepEqual(el.rangeSlider("bounds"), b, "Should return the value");
+		
+		same(el.rangeSlider("min"), b.min, "Min value should have been changed");
+		same(el.rangeSlider("max"), b.max, "Max value should have been changed");
+	}
+);
+
 var zoomInTest = new TestCase(
 	"Zoom In",
 	function(){
@@ -362,7 +405,7 @@ var scrollRightTest = new TestCase(
 var issue12 = new TestCase(
 	"Issue 12",
 	function(){
-		el.rangeSlider("options", "bounds", {min:0, max:100});
+		el.rangeSlider("option", "bounds", {min:0, max:100});
 		el.rangeSlider("values", 0, 100);
 		var leftHandle = el.find(".ui-rangeSlider-leftHandle");
 		
@@ -378,16 +421,89 @@ var issue12 = new TestCase(
 	}
 )
 
+var rangeLimitMax = new TestCase(
+	"Range limit (max)",
+	function(){
+		el.rangeSlider("option", "range", {max:50});
+		el.rangeSlider("values", 0, 20);
+	},
+	function(){
+		var rightHandle = el.find(".ui-rangeSlider-rightHandle");
+		
+		rightHandle.simulate("drag", {
+			dx: el.find(".ui-rangeSlider-container").innerWidth() - rightHandle.position().left - rightHandle.outerWidth(true),
+			dy: 0
+		});
+		
+		equal(this.max(), 50);
+	}
+);
+
+var rangeLimitMaxWithMinAndMax = new TestCase(
+	"Range limit (max with min and max)",
+	function(){
+		el.rangeSlider("option", "range", {min: 10, max:50});
+		el.rangeSlider("values", 0, 20);
+	},
+	function(){
+		var rightHandle = el.find(".ui-rangeSlider-rightHandle");
+		
+		rightHandle.simulate("drag", {
+			dx: el.find(".ui-rangeSlider-container").innerWidth() - rightHandle.position().left - rightHandle.outerWidth(true),
+			dy: 0
+		});
+		
+		equal(this.max(), 50);
+	}
+);
+
+var rangeLimitMin = new TestCase(
+	"Range limit (min)",
+	function(){
+		el.rangeSlider("option", "range", {min:50});
+		el.rangeSlider("values", 0, 70);
+	},
+	function(){
+		var rightHandle = el.find(".ui-rangeSlider-rightHandle");
+		
+		rightHandle.simulate("drag", {
+			dx: - rightHandle.position().left,
+			dy: 0
+		});
+		
+		equal(this.max(), 50);
+	}
+);
+
+var rangeLimitMinWithMinAndMax = new TestCase(
+	"Range limit (min with min and max)",
+	function(){
+		el.rangeSlider("option", "range", {min:50, max:90});
+		el.rangeSlider("values", 0, 70);
+	},
+	function(){
+		var rightHandle = el.find(".ui-rangeSlider-rightHandle");
+		
+		rightHandle.simulate("drag", {
+			dx: - rightHandle.position().left,
+			dy: 0
+		});
+		
+		equal(this.max(), 50);
+	}
+);
+
 testRunner.add("jQRangeSlider", [setUp,
 			defaultCtorTest, hideLabelsTest, showLabelsTest, changeBoundsTest,
-			wheelModeZoomTest, wheelModeScrollTest, wheelModeSetterTest, wheelSpeedSetterTest,
+			wheelModeZoomTest, wheelModeScrollTest, wheelModeSetterTest, wheelSpeedSetterTest, rangeSetterTest,
 			noArrowsSetterTest, arrowsScrollingMouseUpTest,
 			defaultSetup,
 			customCtorTest,
 			destroy,
 			defaultCtorTest,
-			valuesSetter, minMaxSetter,
+			valuesSetter, minMaxSetter, boundsSetter,
 			zoomInTest, zoomOutTest, scrollLeftTest, scrollRightTest,
 			issue12,
+			rangeLimitMax, rangeLimitMaxWithMinAndMax, rangeLimitMin, rangeLimitMinWithMinAndMax,
 			destroyTest]);
 

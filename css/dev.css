@@ -74,3 +74,16 @@
 	background-repeat:no-repeat;
         white-space: nowrap;
 }
+
+/*
+ * Edit slider
+ */
+.ui-editRangeSlider .ui-rangeSlider-label{
+
+}
+
+input.ui-editRangeSlider-inputValue{
+	width:3em;
+	vertical-align: middle;
+	text-align:center;
+}

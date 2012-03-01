@@ -170,6 +170,20 @@ var minMaxSetterTest = new TestCase(
 		same(el.dateRangeSlider("max").toLocaleString(), this.max.toLocaleString(), "Max getter should return the new value");
 	}
 );
+
+var boundsSetter = new TestCase(
+	"Bounds setter",
+	function(){},
+	function(){
+		var b = {min: new Date(2010, 5, 1), max: new Date(2010, 6, 1)};
+		
+		deepEqual(el.dateRangeSlider("bounds", b.min, b.max), b, "Should return the new value");
+		deepEqual(el.dateRangeSlider("bounds"), b, "Should return the new value");
+		
+		same(el.dateRangeSlider("min"), b.min);
+		same(el.dateRangeSlider("max"), b.max);
+	}
+);
 	
 testRunner.add("jQDateRangeSlider", 
 	[dateSetup,
@@ -179,5 +193,5 @@ testRunner.add("jQDateRangeSlider",
 	customCtorTest,
 	dateDestroy,
 	dateDefaultCtor,
-	dateValuesSetterTest,	minMaxSetterTest,
+	dateValuesSetterTest,	minMaxSetterTest, boundsSetter,
 	dateDestroyTest]);
