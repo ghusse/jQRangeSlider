@@ -39,8 +39,19 @@ Javascript reference for production:
 Range slider creation:
 	$("#element").dateRangeSlider({/*options*/});
 
+# A editable range slider
+Javascript reference for development:
+	<script type="text/javascript" src="jQRangeSlider.js"></script>
+	<script type="text/javascript" src="jQEditRangeSlider.js"></script>
+Javascript reference for production:
+  <script type="text/javascript" src="jQAllRangeSliders.js"></script>
+Range slider creation:
+	$("#element").editRangeSlider({/*options*/});
+
+
 Options
 -------
+
 ### All sliders
 
 * bounds (default: 0 - 100)
@@ -79,9 +90,14 @@ Options
 * delayOut: default:200
 	* delay before hiding labels after a change
 
-### Modifiable slider only
-* type ('text', default: 'number')
+### Edit slider only
+
+* type (default:'text', 'number')
   * input type used for creating labels
+* round: (false or a number used for rounding)
+	* false to deactivate
+	* a number used for formatting the displayed values in inputs
+	* if a custom formatter function is provided, this parameter is ignored
 
 Events
 -----
@@ -110,8 +126,9 @@ Methods
 Prerequisites 
 -------------
 * Element on which .rangeSlider() is applied will be positioned as relative if no positioning is set.
-* jQDateRangeSlider.js is only needed by the dateRangeSlider widget.
-* jQRangeSlider.js is needed by both widgets
+* jQDateRangeSlider.js is only required by the dateRangeSlider widget.
+* jQEditRangeSlider.js is only required for using the editRangeSlider widget
+* jQRangeSlider.js is needed by all widgets
 
 Generating minified jQRangeSlider files
 ---------------------------------------
@@ -137,6 +154,8 @@ On the other hand, it's not possible to set graphical steps when moving the rang
 
 Changelog
 ---------
+* 3.0: 2012-03-01
+  * **New type of slider**: edit range slider!
 * 2.4: 2012-02-23
 	* Dual license GPL and MIT
 	* Small refactoring, allowing to create a modifiable range slider
