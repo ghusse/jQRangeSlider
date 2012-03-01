@@ -24,28 +24,43 @@ Usage
 -----
 # A rangeSlider widget with float values
 Javascript reference for development:
+
 	<script type="text/javascript" src="jQRangeSlider.js"></script>
+
 Javascript reference for production:
+
   <script type="text/javascript" src="jQRangeSlider-min.js"></script>
+
 Range slider creation:
+
 	$("#element").rangeSlider({/*options*/});
 
 # A rangeSlider with dates 
 Javascript reference for development:
+
 	<script type="text/javascript" src="jQRangeSlider.js"></script>
 	<script type="text/javascript" src="jQDateRangeSlider.js"></script>
+
 Javascript reference for production:
+
   <script type="text/javascript" src="jQAllRangeSliders-min.js"></script>
+
 Range slider creation:
+
 	$("#element").dateRangeSlider({/*options*/});
 
 # A editable range slider
 Javascript reference for development:
+
 	<script type="text/javascript" src="jQRangeSlider.js"></script>
 	<script type="text/javascript" src="jQEditRangeSlider.js"></script>
+
 Javascript reference for production:
+
   <script type="text/javascript" src="jQAllRangeSliders-min.js"></script>
+
 Range slider creation:
+
 	$("#element").editRangeSlider({/*options*/});
 
 
