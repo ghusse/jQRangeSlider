@@ -1,21 +1,12 @@
 
 
 (function($, undefined){
+	"use strict";
 
 	$.widget("ui.dateSliderDemo", $.ui.sliderDemo, {
 		options: {},
-
-		_create: function(){
-			this._title = "Date values";
-
-			$.ui.sliderDemo.prototype._create.apply(this, []);
-		},
-
-		_createSlider: function(){
-			this._name = "dateRangeSlider";
-
-			$.ui.sliderDemo.prototype._createSlider.apply(this, []);
-		},
+		_title: "Date values",
+		_name: "dateRangeSlider",
 
 		_createInputs: function(){
 			$.ui.sliderDemo.prototype._createInputs.apply(this, []);
@@ -54,6 +45,28 @@
 
 		_format: function(value){
 			return $.datepicker.formatDate("yy-mm-dd", value);
+		},
+
+		_fillMinSelect: function(select){
+			this._addOption(select, "Deactivated", "");
+			this._addOption(select, "4 weeks", this._weeksToTime(4));
+			this._addOption(select, "8 weeks", this._weeksToTime(8));
+			this._addOption(select, "16 weeks", this._weeksToTime(16));
+		},
+
+		_daysToTime: function(days){
+			return days  * 3.6e6 * 24;
+		},
+
+		_weeksToTime: function(weeks){
+			return this._daysToTime(weeks * 7);
+		},
+
+		_fillMaxSelect: function(select){
+			this._addOption(select, "Deactivated", "");
+			this._addOption(select, "365 days", this._daysToTime(365));
+			this._addOption(select, "400 days", this._daysToTime(400));
+			this._addOption(select, "500 days", this._daysToTime(500));
 		}
 
 	});

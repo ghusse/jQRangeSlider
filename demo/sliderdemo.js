@@ -1,14 +1,17 @@
 
 (function($, undefined){
+	"use strict";
 
 	$.widget("ui.sliderDemo", {
 		options:{
 		},
 
 		_title: "Float values",
+		_name: "rangeSlider",
 
 		_create: function(){
-			this._name = "rangeSlider";
+			this.element.addClass("ui-sliderDemo");
+
 			this._elements = {};
 			this._createTitle();
 			this._createZones();
@@ -24,6 +27,22 @@
 
 		_setOption: function(name, value){
 			this._elements.slider[this._name]("option", name, value);
+		},
+
+		_easyOptionChange: function(e){
+			var target = $(e.target),
+				value = target.val(),
+				name = target.attr("name");
+
+			if (value === "false"){
+				value = false
+			} else if (value === "null"){
+				value = null
+			} else if (!isNaN(parseFloat(value)) && parseFloat(value).toString() == value){
+				value = parseFloat(value)
+			}
+
+			this._setOption(name, value);
 		},
 
 		_createZones: function(){
@@ -162,7 +181,7 @@
 				option[optionName] = parseFloat(value);
 			}
 
-			this._setOption("option", "range", option);
+			this._setOption("range", option);
 		},
 
 		_createWheelModeOption: function(){
@@ -176,22 +195,11 @@
 			this._addOption(select, "scroll", "scroll");
 			this._addOption(select, "zoom", "zoom");
 
-			select.change($.proxy(this._wheelModeChange, this));	
+			select.change($.proxy(this._easyOptionChange, this));	
 		},
 
 		_createDD: function(element){
 			$("<dd />").append(element).appendTo(this._elements.options);
-		},
-
-		_wheelModeChange: function(e){
-			var value = $(e.target).val(),
-				mode = null;
-
-			if (value !== "null"){
-				mode = value;
-			}
-
-			this._setOption("wheelMode", mode);
 		},
 
 		_createWheelSpeedOption: function(){
@@ -200,13 +208,7 @@
 			var input = $("<input type='number' name='wheelSpeed' value='4' />");
 			this._createDD(input);
 
-			input.on("click keyup", $.proxy(this._wheelSpeedChanged, this));
-		},
-
-		_wheelSpeedChanged: function(e){
-			var value = $(e.target).val();
-
-			this._setOption("wheelSpeed", parseFloat(value));
+			input.on("click keyup", $.proxy(this._easyOptionChange, this));
 		},
 
 		_createArrowsOption: function(){
@@ -237,13 +239,7 @@
 
 			this._createDD(select);
 
-			select.change($.proxy(this._labels, this));
-		},
-
-		_labels: function(e){
-			var value = $(e.target).val();
-
-			this._setOption("valueLabels", value);
+			select.change($.proxy(this._easyOptionChange, this));
 		},
 
 		_createBindingOption: function(){
@@ -278,23 +274,7 @@
 
 		_fillCode: function(container){
 			this._addComment(container, "Default constructor");
-			this._addLine(container, '$("#element").rangeSlider();');
-			this._addBlankLine(container);
-			this._addComment(container, "Equivalent to");
-			this._addLine(container, 
-				'$("#element").rangeSlider({',
-				'  defaultValues:{min:20, max:50},',
-				'  bounds:{min:0, max:100},',
-  			'  wheelMode: null,',
-  			'  wheelSpeed: 8,',
-  			'  arrows: true,',
-  			'  valueLabels: "show",',
-  			'  formatter: function(value){return Math.round(value)},',
-  			'  durationIn: 0,',
-  			'  durationOut: 400,',
-  			'  delayOut: 200,',
-  			'  range: {min: false, max: false}',
-			');');
+			this._addLine(container, '$("#element").'+ this._name +'();');
 		},
 
 		_addComment: function(container, text){

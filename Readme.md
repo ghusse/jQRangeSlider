@@ -41,6 +41,7 @@ Range slider creation:
 
 Options
 -------
+### All sliders
 
 * bounds (default: 0 - 100)
 	* Inclusive bounds of the selection range
@@ -77,6 +78,10 @@ Options
 	* fadeOut duration in ms for hiding labels after a change
 * delayOut: default:200
 	* delay before hiding labels after a change
+
+### Modifiable slider only
+* type ('text', default: 'number')
+  * input type used for creating labels
 
 Events
 -----

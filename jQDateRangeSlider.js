@@ -16,6 +16,12 @@
 			defaultValues: {min: new Date(2010,1,11), max: new Date(2011,1,11)}
 		},
 
+		_create: function(){
+			$.ui.rangeSlider.prototype._create.apply(this);
+
+			this.element.addClass("ui-dateRangeSlider");
+		},
+
 		_setOption: function(key, value){
 			if ((key === "defaultValues" || key === "bounds") && typeof value !== "undefined" && value !== null && typeof value.min !== "undefined" && typeof value.max !== "undefined" && value.min instanceof Date && value.max instanceof Date){
 				$.ui.rangeSlider.prototype._setOption.apply(this, [key, {min:value.min.valueOf(), max:value.max.valueOf()}]);
