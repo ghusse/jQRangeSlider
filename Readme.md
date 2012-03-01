@@ -1,5 +1,5 @@
-jQRangeSlider & jQDateRangeSlider
-=================================
+jQRangeSlider, jQDateRangeSlider & jQEditRangeSlider
+====================================================
 A javascript slider selector that supports dates
 
 * [Project page](http://ghusse.github.com/jQRangeSlider/)
@@ -26,7 +26,7 @@ Usage
 Javascript reference for development:
 	<script type="text/javascript" src="jQRangeSlider.js"></script>
 Javascript reference for production:
-    	<script type="text/javascript" src="jQRangeSlider-min.js"></script>
+  <script type="text/javascript" src="jQRangeSlider-min.js"></script>
 Range slider creation:
 	$("#element").rangeSlider({/*options*/});
 
@@ -35,7 +35,7 @@ Javascript reference for development:
 	<script type="text/javascript" src="jQRangeSlider.js"></script>
 	<script type="text/javascript" src="jQDateRangeSlider.js"></script>
 Javascript reference for production:
-    	<script type="text/javascript" src="jQAllRangeSliders.js"></script>
+  <script type="text/javascript" src="jQAllRangeSliders-min.js"></script>
 Range slider creation:
 	$("#element").dateRangeSlider({/*options*/});
 
@@ -44,7 +44,7 @@ Javascript reference for development:
 	<script type="text/javascript" src="jQRangeSlider.js"></script>
 	<script type="text/javascript" src="jQEditRangeSlider.js"></script>
 Javascript reference for production:
-  <script type="text/javascript" src="jQAllRangeSliders.js"></script>
+  <script type="text/javascript" src="jQAllRangeSliders-min.js"></script>
 Range slider creation:
 	$("#element").editRangeSlider({/*options*/});
 
@@ -156,6 +156,7 @@ Changelog
 ---------
 * 3.0: 2012-03-01
   * **New type of slider**: edit range slider!
+  * Packaging minified version of individual files
 * 2.4: 2012-02-23
 	* Dual license GPL and MIT
 	* Small refactoring, allowing to create a modifiable range slider

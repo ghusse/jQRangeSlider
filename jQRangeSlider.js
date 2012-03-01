@@ -1,4 +1,4 @@
-/**
+/**!
  * @license jQRangeSlider
  * A javascript slider selector that supports dates
  *
