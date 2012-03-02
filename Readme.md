@@ -169,6 +169,8 @@ On the other hand, it's not possible to set graphical steps when moving the rang
 
 Changelog
 ---------
+* 3.0.1: 2012-03-02
+  * Errors in package construction
 * 3.0: 2012-03-01
   * **New type of slider**: edit range slider!
   * Packaging minified version of individual files
