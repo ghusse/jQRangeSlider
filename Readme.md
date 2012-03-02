@@ -24,28 +24,43 @@ Usage
 -----
 # A rangeSlider widget with float values
 Javascript reference for development:
+
 	<script type="text/javascript" src="jQRangeSlider.js"></script>
+
 Javascript reference for production:
+
   <script type="text/javascript" src="jQRangeSlider-min.js"></script>
+
 Range slider creation:
+
 	$("#element").rangeSlider({/*options*/});
 
 # A rangeSlider with dates 
 Javascript reference for development:
+
 	<script type="text/javascript" src="jQRangeSlider.js"></script>
 	<script type="text/javascript" src="jQDateRangeSlider.js"></script>
+
 Javascript reference for production:
+
   <script type="text/javascript" src="jQAllRangeSliders-min.js"></script>
+
 Range slider creation:
+
 	$("#element").dateRangeSlider({/*options*/});
 
 # A editable range slider
 Javascript reference for development:
+
 	<script type="text/javascript" src="jQRangeSlider.js"></script>
 	<script type="text/javascript" src="jQEditRangeSlider.js"></script>
+
 Javascript reference for production:
+
   <script type="text/javascript" src="jQAllRangeSliders-min.js"></script>
+
 Range slider creation:
+
 	$("#element").editRangeSlider({/*options*/});
 
 
@@ -154,6 +169,8 @@ On the other hand, it's not possible to set graphical steps when moving the rang
 
 Changelog
 ---------
+* 3.0.1: 2012-03-02
+  * Errors in package construction
 * 3.0: 2012-03-01
   * **New type of slider**: edit range slider!
   * Packaging minified version of individual files
