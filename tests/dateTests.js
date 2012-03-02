@@ -49,6 +49,8 @@ var dateDefaultCtor = new TestCase(
 		ok(values.max instanceof Date, "Min value should be a date");
 		deepEqual(values, defaultValues, "Default values should be equal to the defaultValues value");
 		ok(el.dateRangeSlider("min") instanceof Date, "Min should return a date");
+
+		ok(el.is(".ui-dateRangeSlider", "ui-dateRangeSlider class should have been added"));
 	}
 );
 
