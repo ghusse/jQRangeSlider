@@ -30,11 +30,11 @@ cp ${LIBS}/jquery-1.7.1.min.js ${DIRLIB}
 cp ${LIBS}/jquery.mousewheel.min.js ${DIRLIB}
 
 # Replace jQRangeSlider by the minified version in demo
-sed -i 's/<!-- Debug -->/<!-- Debug --><!--/g' ${DIR}/demo/index.html
-sed -i 's/<!-- \/Debug -->/--><!-- Debug -->/g' ${DIR}/demo/index.html
+sed -i "" 's/<!-- Debug -->/<!-- Debug --><!--/g' ${DIR}/demo/index.html
+sed -i "" 's/<!-- \/Debug -->/--><!-- Debug -->/g' ${DIR}/demo/index.html
 
-sed -i 's/<!-- Minified --><!--/ /g' ${DIR}/demo/index.html
-sed -i 's/--><!-- \/Minified -->/ /g' ${DIR}/demo/index.html
+sed -i "" 's/<!-- Minified --><!--/ /g' ${DIR}/demo/index.html
+sed -i "" 's/--><!-- \/Minified -->/ /g' ${DIR}/demo/index.html
 
 # Compress
 cp -r ${DIR} .
