@@ -24,6 +24,12 @@
 			this.element.addClass("ui-editRangeSlider");
 		},
 
+		destroy: function(){
+			this.element.removeClass("ui-editRangeSlider");
+
+			$.ui.rangeSlider.prototype.destroy.apply(this);
+		},
+
 		_setOption: function(key, value){
 			if (key === "type" && this._isValidInputType(value)){
 				this.options.type = value;
@@ -63,6 +69,7 @@
 				}
 
 				input.keyup($.proxy(this._onKeyUp, this));
+				input.blur($.proxy(this._onChange, this));
 
 				label.append(input);
 			}

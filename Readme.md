@@ -169,6 +169,9 @@ On the other hand, it's not possible to set graphical steps when moving the rang
 
 Changelog
 ---------
+* 3.0.2: 2012-03-03
+	* EditSlider: set values on focus lost
+	* editSlider unit tests
 * 3.0.1: 2012-03-02
   * Errors in package construction
 * 3.0: 2012-03-01

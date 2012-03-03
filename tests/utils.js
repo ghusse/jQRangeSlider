@@ -12,7 +12,8 @@ function TestCase(_name, _setup, _check, _tearDown){
 	this.check = _check;
 	this.tearDown = _tearDown;
 	this.delay = 100;
-	
+	this.type = "rangeSlider",
+
 	this.getPositions = function(){
 		this.minHandlerPos = $(".ui-rangeSlider-leftHandle").offset().left;
 		this.maxHandlerPos = $(".ui-rangeSlider-rightHandle").offset().left;
@@ -21,7 +22,7 @@ function TestCase(_name, _setup, _check, _tearDown){
 	}
 	
 	this.getValues = function(){
-		this.values = $("#test").rangeSlider("values");
+		this.values = $("#test")[this.type]("values");
 	}
 	
 	this.assertDifferentPositions = function(){
@@ -32,11 +33,11 @@ function TestCase(_name, _setup, _check, _tearDown){
 	}
 	
 	this.min = function(){
-		return el.rangeSlider("values").min;
+		return el[this.type]("values").min;
 	}
 	
 	this.max = function(){
-		return el.rangeSlider("values").max;
+		return el[this.type]("values").max;
 	}
 }
 
@@ -52,10 +53,35 @@ TestRunner = function(){
 	
 	this.next = function(){
 		if (this.tests.length > this.index){
-			var test = this.tests[this.index];
-			if (test.setup)	test.setup();
-			setTimeout($.proxy(this.check, this), test.delay);
+			var testCase = this.tests[this.index],
+				success = true;
+
+			if (testCase.setup){
+				success = this.launchSetup(testCase);
+			}
+
+			if (success){
+				setTimeout($.proxy(this.check, this), testCase.delay);
+			}else{
+				this.index++;
+				this.next();
+			}
 		}
+	}
+
+	this.launchSetup = function(testCase){
+		try{
+			testCase.setup();
+		}catch(e){
+			module(testCase.module);
+			test(testCase.name, function(){
+				ok(false, e.message);
+			});
+
+			return false;
+		}
+
+		return true;
 	}
 	
 	this.check = function(){
