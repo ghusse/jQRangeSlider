@@ -78,7 +78,9 @@
 
 		_createSlider: function(){
 			var slider = $("<div />").appendTo(this._elements.sliderZone);
-			slider[this._name]();
+			slider[this._name]({
+				step: 5
+			});
 
 			slider.bind("valuesChanging", $.proxy(this._displayValues, this));
 

@@ -61,13 +61,13 @@
 				.css("left", 0);
 
 			this.leftHandle = $("<div class='ui-rangeSlider-handle  ui-rangeSlider-leftHandle' />")
-				.draggable({axis:"x", containment: this.leftContainment,
+				.rangeSliderHandle({ containment: this.leftContainment,
 					drag: $.proxy(this._handleMoved, this),
 					stop: $.proxy(this._handleStop, this)})
 				.css("position", "absolute")
 				.css("top", 0);
 			this.rightHandle = $("<div class='ui-rangeSlider-handle ui-rangeSlider-rightHandle' />")
-				.draggable({axis:"x", containment: this.rightContainment,
+				.rangeSliderHandle({ containment: this.rightContainment,
 					drag: $.proxy(this._handleMoved, this),
 					stop: $.proxy(this._handleStop, this)})
 				.css("position", "absolute")
@@ -319,11 +319,11 @@
 			var min = this._values.min,
 				max = this._values.max;
 
-			if (ui.helper[0] === this.leftHandle[0]){
-					min = this._getValue(ui.position.left, this.leftHandle);
-			}else if (ui.helper[0] === this.rightHandle[0])
+			if (ui.element[0] === this.leftHandle[0]){
+					min = this._getValue(ui.element.position().left, this.leftHandle);
+			}else if (ui.element[0] === this.rightHandle[0])
 			{
-				max = this._getValue(ui.position.left + ui.helper.outerWidth(true), this.rightHandle);
+				max = this._getValue(ui.element.position().left + ui.element.outerWidth(true), this.rightHandle);
 			}else{
 				return;
 			}
