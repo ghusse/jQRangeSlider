@@ -22,7 +22,8 @@
 			durationIn: 0,
 			durationOut: 400,
 			delayOut: 200,
-			range: {min: false, max: false}
+			range: {min: false, max: false},
+			step: false
 		},
 
 		_values: null,
@@ -213,6 +214,8 @@
 				option.range = newVal;
 				this._initWidth();
 				this._position();
+			}else if (key === "step" && (value === false) || (value != 0 && parseFloat(value) === value)){
+				this.options.step = value;
 			}
 		},
 
