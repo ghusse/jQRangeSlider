@@ -61,17 +61,28 @@
 				.css("left", 0);
 
 			this.leftHandle = $("<div class='ui-rangeSlider-handle  ui-rangeSlider-leftHandle' />")
-				.rangeSliderHandle({ containment: this.leftContainment,
-					drag: $.proxy(this._handleMoved, this),
-					stop: $.proxy(this._handleStop, this)})
+				.rangeSliderHandle({
+					containment: this.leftContainment,
+					isLeft: true,
+					bounds: this.options.bounds,
+					value: this.options.defaultValues.min
+				})
 				.css("position", "absolute")
-				.css("top", 0);
+				.css("top", 0)
+				.bind("drag", $.proxy(this._handleMoved, this))
+				.bind("stop", $.proxy(this._handleStop, this));
+
 			this.rightHandle = $("<div class='ui-rangeSlider-handle ui-rangeSlider-rightHandle' />")
-				.rangeSliderHandle({ containment: this.rightContainment,
-					drag: $.proxy(this._handleMoved, this),
-					stop: $.proxy(this._handleStop, this)})
+				.rangeSliderHandle({
+					containment: this.rightContainment,
+					isLeft: false,
+					bounds: this.options.bounds,
+					value: this.options.defaultValues.max
+				})
 				.css("position", "absolute")
-				.css("top", 0);
+				.css("top", 0)
+				.bind("drag", $.proxy(this._handleMoved, this))
+				.bind("stop", $.proxy(this._handleStop, this));
 			
 			this.innerBar = $("<div class='ui-rangeSlider-innerBar' />")
 				.css("position", "absolute")
@@ -82,13 +93,17 @@
 				.css("position", "absolute");
 
 			this.bar = $("<div class='ui-rangeSlider-bar' />")
-				.draggable({axis:"x",
-					drag: $.proxy(this._barMoved, this),
-					stop: $.proxy(this._barStop, this),
-					containment: this.container})
+				.rangeSliderBar({
+					leftHandle: this.leftHandle,
+					rightHandle: this.rightHandle,
+					containment: this.container,
+					values: {min: this.options.defaultValues.min, max: this.options.defaultValues.max}
+				})
 				.css("position", "absolute")
 				.css("top", 0)
-				.bind("mousewheel", $.proxy(this._wheelOnBar, this));
+				.bind("mousewheel", $.proxy(this._wheelOnBar, this))
+				.bind("drag", $.proxy(this._barMoved, this))
+				.bind("stop", $.proxy(this._barStop, this));
 
 			this.arrows.left = $("<div class='ui-rangeSlider-arrow ui-rangeSlider-leftArrow' />")
 				.css("position", "absolute")
@@ -186,7 +201,6 @@
 
 				this.options.arrows = value;
 				this._initWidth();
-				this._position();
 			}else if (key === "valueLabels" && (value === "hide" || value === "show" || value === "change")){
 				this.options.valueLabels = value;
 
@@ -197,7 +211,6 @@
 				}
 			}else if (key === "formatter" && value !== null && typeof value === "function"){
 				this.options.formatter = value;
-				this._position();
 			}else if (key === "bounds" && typeof value.min !== "undefined" && typeof value.max !== "undefined")
 			{
 				this.bounds(value.min, value.max);
@@ -213,7 +226,6 @@
 				
 				option.range = newVal;
 				this._initWidth();
-				this._position();
 			}else if (key === "step" && (value === false) || (value != 0 && parseFloat(value) === value)){
 				this.options.step = value;
 			}
@@ -237,7 +249,6 @@
 
 		_privateValues: function(min, max){
 			this._setValues(min, max);
-			this._position();
 
 			return this._values;
 		},
@@ -249,56 +260,16 @@
 			  });
 		},
 
-		_position: function(){
-			var leftPosition = this._getPosition(this._values.min, this.leftHandle),
-				rightPosition = this._getPosition(this._values.max, this.rightHandle);
-
-			this._positionHandles();
-			this.bar
-				.css("left", leftPosition)
-				.css("width", rightPosition- leftPosition + this.bar.width() - this.bar.outerWidth(true));
-		},
-
 		_positionHandles: function(){
-			var left = this._getPosition(this._values.min, this.leftHandle),
-				right = this._getPosition(this._values.max, this.rightHandle) - this.rightHandle.outerWidth(true),
-				leftBounds = {min : this.options.bounds.min, max: this.options.bounds.max},
-				rightBounds = {min : this.options.bounds.min, max: this.options.bounds.max};
-				
-			this.leftHandle.css("left", left);
-			this.rightHandle.css("left", right);
-			
-			// Set min and max position according to range constraints
-			if (this.options.range.min !== false){
-				leftBounds.max = Math.max(this._values.max - this.options.range.min, this.options.bounds.min);
-				rightBounds.min = Math.min(this._values.min + this.options.range.min, this.options.bounds.max);
-			}
-			
-			if(this.options.range.max !== false){
-				leftBounds.min = Math.max(this._values.max - this.options.range.max, this.options.bounds.min);
-				rightBounds.max = Math.min(this._values.min + this.options.range.max, this.options.bounds.max);
-			}
-
-			left = Math.round(this._getLeftPosition(leftBounds.min, this.leftHandle));
-			this.leftContainment.css("margin-left", left)
-				.css("width", Math.round(this._getLeftPosition(leftBounds.max, this.leftHandle) + this.leftHandle.outerWidth(true)) - left);
-
-			left = Math.round(this._getLeftPosition(rightBounds.min, this.rightHandle));
-			this.rightContainment.css("margin-left", left)
-				.css("width", Math.round(this._getLeftPosition(rightBounds.max, this.rightHandle) + this.rightHandle.outerWidth(true)) - left);
 			this._positionLabels();
 		},
 
 		_barMoved: function(event, ui){
-			var left = ui.position.left,
-				right = left + this.bar.outerWidth(true);
-
-			this._setValues(this._getValue(left, this.leftHandle), this._getValue(right, this.rightHandle));
-			this._positionHandles();
+			this._privateValues(this.bar.rangeSliderBar("min"), this.bar.rangeSliderBar("max"));
 		},
 
 		_barStop: function(event, ui){
-			this._position();
+			this._privateValues(this.bar.rangeSliderBar("min"), this.bar.rangeSliderBar("max"));
 			this._prepareFiringChanged();
 		},
 
@@ -309,10 +280,12 @@
 
 				this.leftHandle
 					.removeClass("ui-rangeSlider-rightHandle")
-					.addClass("ui-rangeSlider-leftHandle");
+					.addClass("ui-rangeSlider-leftHandle")
+					.rangeSliderHandle("option", "isLeft", true);
 				this.rightHandle
 					.addClass("ui-rangeSlider-rightHandle")
-					.removeClass("ui-rangeSlider-leftHandle");
+					.removeClass("ui-rangeSlider-leftHandle")
+					.rangeSliderHandle("option", "isLeft", false);
 		},
 
 		_handleMoved: function(event, ui){
@@ -320,10 +293,10 @@
 				max = this._values.max;
 
 			if (ui.element[0] === this.leftHandle[0]){
-					min = this._getValue(ui.element.position().left, this.leftHandle);
+					min = ui.element.rangeSliderHandle("value");
 			}else if (ui.element[0] === this.rightHandle[0])
 			{
-				max = this._getValue(ui.element.position().left + ui.element.outerWidth(true), this.rightHandle);
+				max = ui.element.rangeSliderHandle("value");
 			}else{
 				return;
 			}
@@ -339,7 +312,6 @@
 		},
 
 		_handleStop: function(event, ui){
-			this._position();
 			this._prepareFiringChanged();
 		},
 
@@ -509,8 +481,6 @@
 				this.labels.rightDisplayed = true;
 				this.labels.left.css("display", "block");
 				this.labels.right.css("display", "block");
-
-				this._position();
 			}
 
 			this._positionLabels();
@@ -666,7 +636,6 @@
 		 */
 		resize: function(){
 			this._initWidth();
-			this._position();
 		},
 
 		destroy: function(){

@@ -9,70 +9,142 @@
 
 
  (function($, undefined){
-	
-	$.widget("ui.rangeSliderHandle", $.ui.mouse, {
+	"use strict";
+
+	$.widget("ui.rangeSliderHandle", $.ui.rangeSliderDraggable, {
 		currentMove: null,
 		margin: 0,
-		parent: null,
+		parentElement: null,
 
 		options: {
-			drag: function(){},
-			stop: function(){},
 			containment: null,
 			isLeft: true,
-			bounds: {min:0, max:100}
+			bounds: {min:0, max:100},
+			value: 0
 		},
+
+		_value: 0,
+		_left: 0,
 
 		_create: function(){
-			this._mouseInit();
-			this.parent = $(this.element[0].parent);
+			this._value = this.options.value;
 		},
 
-		_mouseStart: function(event){
-			this.margin = {
-				left: parseInt(this.element.css("marginLeft"), 10) || 0,
-				right: parseInt(this.element.css("marginRight"), 10) || 0
+		_setOption: function(key, value){
+			$.ui.draggable.prototype._setOption.apply(this, [key, value]);
+
+			if (key === "isLeft" && (value === true || value === false)){
+				this.options.isLeft = value;
+				this._position(this._value);
 			}
+		},
+
+		_initElement: function(){
+			$.ui.rangeSliderDraggable.prototype._initElement.apply(this);
 			
-			this.width = {
-				outer: this.element.outerWidth(true),
-				inner: this.element.width()
-			}
-			
-			this.containment = {
-				offset: this.options.containment.offset(),
-				width: this.options.containment.width()
-			}
-
-			this.offset = this.element.offset();
-			this.clickPosition = event.pageX - this.margin.left - this.offset.left;
-
-			return true;
+			this._position(this.options.value);
 		},
 
-		_mouseDrag: function(event){
-			var position = event.pageX - this.clickPosition,
-				offset = {top: this.offset.top};
+		/*
+		 * From draggable
+		 */
 
-			offset.left = position;
-			offset.left = Math.max(offset.left, this.containment.offset.left);
-			offset.left = Math.min(offset.left + this.width.outer,
-					this.containment.offset.left + this.containment.width)
-					- this.width.outer;
+		_cache: function(){
+			$.ui.rangeSliderDraggable.prototype._cache.apply(this);
 
-			this.element.offset(offset);
-
-			this.options.drag(event, {
-				element:this.element
-			});
-
-			return false;
+			this._cacheParent();
 		},
 
-		_mouseStop: function(event){
-			this.options.stop(event, {
-				element: this.element
-			});
+		_cacheParent: function(){
+			var parent = this.element.parent();
+
+			this.cache.parent = {
+				element: parent,
+				offset: parent.offset(),
+				padding: {
+					left: this._parsePixels(parent, "paddingLeft")
+				},
+				width: parent.width()
+			}
+		},
+
+		_position: function(value){
+			var left = this._getPositionForValue(value);
+
+			this._applyPosition(left);
+		},
+
+		_applyPosition: function(left){
+			if (!this.options.isLeft){
+				left += this.cache.width.outer;
+			}
+
+			$.ui.rangeSliderDraggable.prototype._applyPosition.apply(this, [left]);
+
+			this._left = left;
+		},
+
+		_triggerMouseEvent: function(event){
+			this._trigger(event, {
+ 				element: this.element,
+ 				offset: this.cache.offset || null,
+ 				value: this._value
+ 			});
+		},
+
+		/*
+		 * Value
+		 */
+
+		_constraintValue: function(value){
+			value = Math.min(value, this.options.bounds.max);
+			value = Math.max(value, this.options.bounds.min);
+
+			return value;
+		},
+
+		_getPositionForValue: function(value){
+			var ratio = value / (this.options.bounds.max - this.options.bounds.min);
+
+			return this.cache.parent.offset.left + ratio * this.cache.parent.width;
+		},
+
+		_getValueForPosition: function(position){
+			if (!this.isLeft){
+				position -= this.cache.width.outer;
+			}
+
+			var ratio = (this.cache.offset.left - this.cache.parent.offset.left) / this.cache.parent.width,
+				raw = ratio * (this.options.bounds.max - this.options.bounds.min) + this.options.bounds.min;
+
+			return this._constraintValue(raw);
+		},
+
+		/*
+		 * Public
+		 */
+
+		value: function(value){
+			if (typeof value != "undefined"){
+				this._cache();
+
+				value = this._constraintValue(value);
+
+				this._position(value);
+			}
+
+			return this._value;
+		},
+
+		position: function(position){
+			if (typeof position != "undefined"){
+				this._cache();
+				
+				position = this._constraintPosition(position);
+				this._applyPosition(position);
+			}
+
+			return this._left;
 		}
 	});
  })(jQuery);
