@@ -282,12 +282,13 @@
 		/*
 		 * Value labels
 		 */
-		_createLabel: function(label, whichOne){
+		_createLabel: function(label, handle){
 			if (label === null){
-				label = $("<div class='ui-rangeSlider-label'/>")
-					.addClass("ui-rangeSlider-" + whichOne + "Label")
-					.css("position", "absolute");
-				this.element.append(label);
+				label = $("<div />")
+					.appendTo(this.element)
+					.rangeSliderLabel({
+						handle: handle
+					});
 			}
 
 			return label;
@@ -303,8 +304,8 @@
 		},
 
 		_createLabels: function(){
-			this.labels.left = this._createLabel(this.labels.left, "left");
-			this.labels.right = this._createLabel(this.labels.right, "right");
+			this.labels.left = this._createLabel(this.labels.left, this.leftHandle);
+			this.labels.right = this._createLabel(this.labels.right, this.rightHandle);
 
 			if (this.options.valueLabels === "change"){
 				this.labels.left.css("display", "none");
