@@ -17,7 +17,6 @@
 		parentElement: null,
 
 		options: {
-			containment: null,
 			isLeft: true,
 			bounds: {min:0, max:100},
 			value: 0

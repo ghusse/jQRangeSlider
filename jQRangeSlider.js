@@ -7,6 +7,8 @@
  *
  */
 
+// TODO: minValueChanging / Changed
+
 (function ($, undefined) {
 	"use strict";
 
@@ -50,35 +52,24 @@
 			this.arrows = {left:null, right:null};
 			this.changing = {min:false, max:false};
 			this.changed = {min:false, max:false};
-			
-			this.leftContainment = $("<div class='ui-rangeSlider-handleContainment ui-rangeSlider-leftContainment' />")
-				.css("position", "absolute")
-				.css("top", 0)
-				.css("left", 0);
-			
-			this.rightContainment = $("<div class='ui-rangeSlider-handleContainment ui-rangeSlider-rightContainment' />")
-				.css("top", 0)
-				.css("left", 0);
 
 			this.leftHandle = $("<div />")
 				.rangeSliderHandle({
-					containment: this.leftContainment,
 					isLeft: true,
 					bounds: this.options.bounds,
 					value: this.options.defaultValues.min
 				})
-				.bind("drag", $.proxy(this._handleMoved, this))
-				.bind("stop", $.proxy(this._handleStop, this));
+				.bind("drag", $.proxy(this._changing, this))
+				.bind("stop", $.proxy(this._changed, this));
 
 			this.rightHandle = $("<div />")
 				.rangeSliderHandle({
-					containment: this.rightContainment,
 					isLeft: false,
 					bounds: this.options.bounds,
 					value: this.options.defaultValues.max
 				})
-				.bind("drag", $.proxy(this._handleMoved, this))
-				.bind("stop", $.proxy(this._handleStop, this));
+				.bind("drag", $.proxy(this._changing, this))
+				.bind("stop", $.proxy(this._changed, this));
 			
 			this.innerBar = $("<div class='ui-rangeSlider-innerBar' />")
 				.css("position", "absolute")
@@ -92,12 +83,11 @@
 				.rangeSliderBar({
 					leftHandle: this.leftHandle,
 					rightHandle: this.rightHandle,
-					containment: this.container,
 					values: {min: this.options.defaultValues.min, max: this.options.defaultValues.max}
 				})
 				.bind("mousewheel", $.proxy(this._wheelOnBar, this))
-				.bind("drag", $.proxy(this._barMoved, this))
-				.bind("stop", $.proxy(this._barStop, this));
+				.bind("drag", $.proxy(this._changing, this))
+				.bind("stop", $.proxy(this._changed, this));
 
 			this.arrows.left = $("<div class='ui-rangeSlider-arrow ui-rangeSlider-leftArrow' />")
 				.css("position", "absolute")
@@ -112,8 +102,6 @@
 			$(document).bind("mouseup", $.proxy(this._stopScroll, this));
 
 			this.container
-				.append(this.leftContainment)
-				.append(this.rightContainment)
 				.append(this.innerBar)
 				.append(this.bar)
 				.append(this.leftHandle)
@@ -155,10 +143,6 @@
 		_initWidth: function(){
 			this.container.css("width", this.element.width() - this.container.outerWidth(true) + this.container.width());
 			this.innerBar.css("width", this.container.width() - this.innerBar.outerWidth(true) + this.innerBar.width());
-			this.leftContainment.css("width", this.container.innerWidth())
-				.css("height", this.container.innerHeight());
-			this.rightContainment.css("width", this.container.innerWidth())
-				.css("height", this.container.innerHeight());
 		},
 
 		_initValues: function(){
@@ -225,26 +209,12 @@
 			}
 		},
 
-		_getPosition: function(value, handle){
-			return this._getLeftPosition(value, handle) + (handle === this.rightHandle ? handle.outerWidth(true) : 0);
-		},
-		
-		_getLeftPosition: function(value, handle){
-			return (value - this.options.bounds.min) * (this.container.innerWidth() - handle.outerWidth(true)) / (this.options.bounds.max - this.options.bounds.min);
-		},
-
 		_getValue: function(position, handle){
 			if (handle === this.rightHandle){	
 				position = position - handle.outerWidth();
 			}
 			
 			return position * (this.options.bounds.max - this.options.bounds.min) / (this.container.innerWidth() - handle.outerWidth(true)) + this.options.bounds.min;
-		},
-
-		_privateValues: function(min, max){
-			this._setValues(min, max);
-
-			return this._values;
 		},
 
 		_trigger: function(eventName){
@@ -254,139 +224,10 @@
 			  });
 		},
 
-		_positionHandles: function(){
-			this._positionLabels();
+		_changing: function(event, ui){
 		},
 
-		_barMoved: function(event, ui){
-			this._privateValues(this.bar.rangeSliderBar("min"), this.bar.rangeSliderBar("max"));
-		},
-
-		_barStop: function(event, ui){
-			this._privateValues(this.bar.rangeSliderBar("min"), this.bar.rangeSliderBar("max"));
-			this._prepareFiringChanged();
-		},
-
-		_switchHandles: function(){
-				var temp = this.leftHandle;
-				this.leftHandle = this.rightHandle;
-				this.rightHandle = temp;
-
-				this.leftHandle
-					.removeClass("ui-rangeSlider-rightHandle")
-					.addClass("ui-rangeSlider-leftHandle")
-					.rangeSliderHandle("option", "isLeft", true);
-				this.rightHandle
-					.addClass("ui-rangeSlider-rightHandle")
-					.removeClass("ui-rangeSlider-leftHandle")
-					.rangeSliderHandle("option", "isLeft", false);
-		},
-
-		_handleMoved: function(event, ui){
-			var min = this._values.min,
-				max = this._values.max;
-
-			if (ui.element[0] === this.leftHandle[0]){
-					min = ui.element.rangeSliderHandle("value");
-			}else if (ui.element[0] === this.rightHandle[0])
-			{
-				max = ui.element.rangeSliderHandle("value");
-			}else{
-				return;
-			}
-
-			if (min > max){
-				this._switchHandles();
-				var temp = min;
-				min = max;
-				max = temp;
-			}
-
-			this._privateValues(min, max);
-		},
-
-		_handleStop: function(event, ui){
-			this._prepareFiringChanged();
-		},
-
-		_changing: function(min, max){
-			this._trigger("valuesChanging");
-
-			var show = false;
-			if (min && !this.changing.min){
-				this._trigger("minValueChanging");
-				this.changing.min = true;
-				show = true;
-			}
-
-			if (max && !this.changing.max){
-				this._trigger("maxValueChanging");
-				this.changing.max = true;
-				show = true;
-			}
-
-			if (show){
-				this._showLabels();
-			}
-		},
-
-		_prepareFiringChanged: function(){
-			this.lastWheel = Math.random();
-			var last = this.lastWheel;
-			setTimeout($.proxy(function(){this._fireChanged(last);}, this), 200);
-		},
-
-		_fireChanged: function(last){
-			if (this.lastWheel === last && !this.bar.hasClass("ui-draggable-dragging") && !this.leftHandle.hasClass("ui-draggable-dragging") && !this.rightHandle.hasClass("ui-draggable-dragging")){
-				var changed = false;
-				if (this.changing.min){
-					this.changing.min = false;
-					this._trigger("minValueChanged");
-					changed = true;
-				}
-
-				if (this.changing.max){
-					this.changing.max = false;
-					this._trigger("maxValueChanged");
-					changed = true;
-				}
-
-				if (changed){
-					this._trigger("valuesChanged");
-				}
-
-				this._hideLabels();
-			}
-		},
-
-		_setValuesHandles: function(min, max){
-			this._setValues(min, max);
-			this._positionHandles();
-		},
-
-		_setValues: function(min, max){
-			var oldValues = this._values,
-				difference = Math.abs(max-min);
-
-			if (difference >= this.options.bounds.max - this.options.bounds.min){
-				this._values.min = this.options.bounds.min;
-				this._values.max = this.options.bounds.max;
-			}else{
-				var values = {min: Math.min(max, min), max:Math.max(min, max)};
-
-				if (values.min < this.options.bounds.min){
-					values.min = this.options.bounds.min;
-					values.max = values.min + difference;
-				}else if (values.max > this.options.bounds.max){
-					values.max = this.options.bounds.max;
-					values.min = values.max - difference;
-				}
-
-				this._values = values;
-			}
-
-			this._changing(oldValues.min !== this._values.min, oldValues.max !== this._values.max);
-			this._prepareFiringChanged();
+		_changed: function(event, ui){
 		},
 
 		/*
@@ -570,9 +411,7 @@
 		values: function(min, max){
 			if (typeof min !== "undefined" && typeof max !== "undefined")
 			{
-				this.internalChange = false;
-				this._privateValues(min,max);
-				this.internalChange = true;
+				
 			}
 
 			return this._values;
@@ -601,7 +440,7 @@
 				min = this._values.min + quantity * this.options.wheelSpeed * diff / 200,
 				max = this._values.max - quantity * this.options.wheelSpeed * diff / 200;
 
-			this._privateValues(min, max);
+			//this._privateValues(min, max);
 		},
 
 		zoomOut: function(quantity){
@@ -622,7 +461,7 @@
 				min = this._values.min + quantity * this.options.wheelSpeed * diff / 100,
 				max = this._values.max + quantity * this.options.wheelSpeed * diff / 100;
 
-			this._privateValues(min, max);
+			//this._privateValues(min, max);
 		},
 		
 		/**
