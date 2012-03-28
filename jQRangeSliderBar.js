@@ -122,7 +122,7 @@
  		},
 
  		_switchHandles: function(){
- 			var temp = this.leftHandle;
+ 			var temp = this.options.leftHandle;
 
  			this.options.leftHandle = this.options.rightHandle;
  			this.options.rightHandle = temp;
