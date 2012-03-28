@@ -92,6 +92,7 @@
 
 			this._left = left;
 			this._setValue(this._getValueForPosition(left));
+			this._triggerMouseEvent("moving");
 		},
 
 		_prepareEventData: function(){
@@ -108,7 +109,6 @@
 		_setValue: function(value){
 			if (value != this._value){
 				this._value = value;
-				this.element.trigger("changing", value);
 			}
 		},
 
