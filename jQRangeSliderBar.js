@@ -89,7 +89,7 @@
  			}
 
  			this.element.offset({left: ui.offset.left, top: this.cache.offset.top});
- 			this.element.css("width", this.options.rightHandle.offset().left - ui.offset.left + this.options.rightHandle.width());
+ 			this.element.css("width", this.options.rightHandle.offset().left - ui.offset.left + this.cache.rightHandle.width);
 
  			this.cache.offset.left = ui.offset.left;
  		},
@@ -103,7 +103,7 @@
  				return;
  			}
 
- 			var width = ui.offset.left + ui.element.width() - this.cache.offset.left;
+ 			var width = ui.offset.left + this.cache.rightHandle.width - this.cache.offset.left;
  			
  			this.element.css("width", width);
  			this.cache.width.inner = width;
@@ -147,8 +147,8 @@
  			position.left = $.ui.rangeSliderDraggable.prototype._constraintPosition.apply(this, [left]);
  			position.left = this.options.leftHandle.rangeSliderHandle("position", position.left);
 
- 			right = this.options.rightHandle.rangeSliderHandle("position", position.left + this.cache.width.outer - this.options.rightHandle.width());
- 			position.width = right - position.left;
+ 			right = this.options.rightHandle.rangeSliderHandle("position", position.left + this.cache.width.outer - this.cache.rightHandle.width);
+ 			position.width = right - position.left + this.cache.rightHandle.width;
 
  			return position;
  		},
