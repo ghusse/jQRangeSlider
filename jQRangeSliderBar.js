@@ -27,11 +27,11 @@
  			$.ui.rangeSliderDraggable.prototype._create.apply(this);
 
  			this.options.leftHandle
- 				.bind("drag", $.proxy(this._onDragLeftHandle, this))
+ 				.bind("drag.bar", $.proxy(this._onDragLeftHandle, this))
  				.bind("mousestart", $.proxy(this._cache, this));
 
  			this.options.rightHandle
- 				.bind("drag", $.proxy(this._onDragRightHandle, this))
+ 				.bind("drag.bar", $.proxy(this._onDragRightHandle, this))
  				.bind("mousestart", $.proxy(this._cache, this));
 
  			this._values = this.options.values;
@@ -103,8 +103,15 @@
  			this.options.leftHandle = this.options.rightHandle;
  			this.options.rightHandle = temp;
 
- 			this.options.leftHandle.rangeSliderHandle("isLeft", true);
- 			this.options.rightHandle.rangeSliderHandle("isLeft", false);
+ 			this.options.leftHandle
+ 				.rangeSliderHandle("isLeft", true)
+ 				.unbind(".bar")
+ 				.bind("drag.bar", $.proxy(this._onDragLeftHandle, this));
+ 	
+ 			this.options.rightHandle
+ 				.rangeSliderHandle("isLeft", false)
+ 				.unbind(".bar")
+ 				.bind("drag.bar", $.proxy(this._onDragRightHandle, this));
  		},
 
  		_constraintPosition: function(left){

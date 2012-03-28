@@ -77,10 +77,6 @@
 		},
 
 		_applyPosition: function(left){
-			if (!this.options.isLeft){
-				left += this.cache.width.outer;
-			}
-
 			$.ui.rangeSliderDraggable.prototype._applyPosition.apply(this, [left]);
 
 			this._left = left;
