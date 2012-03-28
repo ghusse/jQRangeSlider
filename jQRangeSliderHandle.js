@@ -120,17 +120,23 @@
 		},
 
 		_getPositionForValue: function(value){
-			var ratio = value / (this.options.bounds.max - this.options.bounds.min);
+			var ratio = value / (this.options.bounds.max - this.options.bounds.min),
+				position = this.cache.parent.offset.left;
 
-			return this.cache.parent.offset.left + ratio * this.cache.parent.width;
-		},
-
-		_getValueForPosition: function(position){
-			if (!this.isLeft){
+			if (!this.options.isLeft){
 				position -= this.cache.width.outer;
 			}
 
-			var ratio = (this.cache.offset.left - this.cache.parent.offset.left) / this.cache.parent.width,
+
+			return position + ratio * this.cache.parent.width;
+		},
+
+		_getValueForPosition: function(position){
+			if (!this.options.isLeft){
+				position += this.cache.width.outer;
+			}
+
+			var ratio = (position - this.cache.parent.offset.left) / this.cache.parent.width,
 				raw = ratio * (this.options.bounds.max - this.options.bounds.min) + this.options.bounds.min;
 
 			return this._constraintValue(raw);
