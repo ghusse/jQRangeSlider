@@ -46,6 +46,8 @@
  					top: event.pageY
  			};
 
+ 			this.cache.initialOffset = this.element.offset();
+
  			this._triggerMouseEvent("mousestart");
 
  			return true;
@@ -54,13 +56,7 @@
  		_mouseDrag: function(event){
  			var position = event.pageX - this.cache.click.left;
 
- 			if (position == 0){
- 				return false;
- 			}
-
- 			this.cache.click.left = event.pageX;
-
- 			position = this._constraintPosition(position + this.cache.offset.left);
+ 			position = this._constraintPosition(position + this.cache.initialOffset.left);
 
  			this._applyPosition(position);
 

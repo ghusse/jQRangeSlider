@@ -19,7 +19,8 @@
 		options: {
 			isLeft: true,
 			bounds: {min:0, max:100},
-			value: 0
+			value: 0,
+			step: 2
 		},
 
 		_value: 0,
@@ -87,6 +88,12 @@
 			this._applyPosition(left);
 		},
 
+		_constraintPosition: function(position){
+			var value = this._getValueForPosition(position);
+
+			return this._getPositionForValue(value);
+		},
+
 		_applyPosition: function(left){
 			$.ui.rangeSliderDraggable.prototype._applyPosition.apply(this, [left]);
 
@@ -116,10 +123,14 @@
 			value = Math.min(value, this.options.bounds.max);
 			value = Math.max(value, this.options.bounds.min);
 
+			value = Math.round(value / this.options.step) * this.options.step;
+
 			return value;
 		},
 
 		_getPositionForValue: function(value){
+			value = this._constraintValue(value);
+
 			var ratio = value / (this.options.bounds.max - this.options.bounds.min),
 				position = this.cache.parent.offset.left;
 
