@@ -48,14 +48,26 @@
 				width: this.options.handle.width()
 			};
 
-			this.cache.width = {
-				outer: this.element.outerWidth()
-			}
+			this._cacheWidth();
 
 			var parent = this.element.parent();
 			this.cache.parent = {
 				offset: parent.offset(),
 				width: parent.width()
+			}
+		},
+
+		_cacheWidth: function(){
+			this.cache.width = {
+				outer: this.element.outerWidth()
+			}
+		},
+
+		_updateWidthCache: function(){
+			if (this.cache === null){
+				this._cache();
+			}else{
+				this._cacheWidth();
 			}
 		},
 
@@ -65,10 +77,21 @@
 			}
 		},
 
+		_display: function(value){
+			if (this.options.formatter == false){
+				this.element.text(Math.round(value));
+			}else{
+				this.element.text(this.options.formatter(value));
+			}
+
+			this._updateWidthCache();
+		},
+
 		/*
 		 * Event binding
 		 */
 		_onMoving: function(event, ui){
+			this._display(ui.value);
 			this._position(ui.offset.left);
 		},
 
