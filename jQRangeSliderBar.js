@@ -26,6 +26,11 @@
  		_create: function(){
  			$.ui.rangeSliderDraggable.prototype._create.apply(this);
 
+ 			this.element
+ 				.css("position", "absolute")
+				.css("top", 0)
+ 				.addClass("ui-rangeSlider-bar");
+
  			this.options.leftHandle
  				.bind("drag.bar", $.proxy(this._onDragLeftHandle, this))
  				.bind("mousestart", $.proxy(this._cache, this));

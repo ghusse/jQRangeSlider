@@ -60,27 +60,23 @@
 				.css("top", 0)
 				.css("left", 0);
 
-			this.leftHandle = $("<div class='ui-rangeSlider-handle  ui-rangeSlider-leftHandle' />")
+			this.leftHandle = $("<div />")
 				.rangeSliderHandle({
 					containment: this.leftContainment,
 					isLeft: true,
 					bounds: this.options.bounds,
 					value: this.options.defaultValues.min
 				})
-				.css("position", "absolute")
-				.css("top", 0)
 				.bind("drag", $.proxy(this._handleMoved, this))
 				.bind("stop", $.proxy(this._handleStop, this));
 
-			this.rightHandle = $("<div class='ui-rangeSlider-handle ui-rangeSlider-rightHandle' />")
+			this.rightHandle = $("<div />")
 				.rangeSliderHandle({
 					containment: this.rightContainment,
 					isLeft: false,
 					bounds: this.options.bounds,
 					value: this.options.defaultValues.max
 				})
-				.css("position", "absolute")
-				.css("top", 0)
 				.bind("drag", $.proxy(this._handleMoved, this))
 				.bind("stop", $.proxy(this._handleStop, this));
 			
@@ -92,15 +88,13 @@
 			this.container = $("<div class='ui-rangeSlider-container' />")
 				.css("position", "absolute");
 
-			this.bar = $("<div class='ui-rangeSlider-bar' />")
+			this.bar = $("<div />")
 				.rangeSliderBar({
 					leftHandle: this.leftHandle,
 					rightHandle: this.rightHandle,
 					containment: this.container,
 					values: {min: this.options.defaultValues.min, max: this.options.defaultValues.max}
 				})
-				.css("position", "absolute")
-				.css("top", 0)
 				.bind("mousewheel", $.proxy(this._wheelOnBar, this))
 				.bind("drag", $.proxy(this._barMoved, this))
 				.bind("stop", $.proxy(this._barStop, this));

@@ -29,6 +29,13 @@
 		_create: function(){
 			$.ui.rangeSliderDraggable.prototype._create.apply(this);
 
+			this.element
+				.css("position", "absolute")
+				.css("top", 0)
+				.addClass("ui-rangeSlider-handle")
+				.toggleClass("ui-rangeSlider-leftHandle", this.options.isLeft)
+				.toggleClass("ui-rangeSlider-rightHandle", !this.options.isLeft);
+
 			this._value = this.options.value;
 		},
 
@@ -37,6 +44,11 @@
 
 			if (key === "isLeft" && (value === true || value === false)){
 				this.options.isLeft = value;
+
+				this.element
+					.toggleClass("ui-rangeSlider-leftHandle", this.options.isLeft)
+					.toggleClass("ui-rangeSlider-rightHandle", !this.options.isLeft);
+
 				this._position(this._value);
 			}
 		},
@@ -80,6 +92,7 @@
 			$.ui.rangeSliderDraggable.prototype._applyPosition.apply(this, [left]);
 
 			this._left = left;
+			this._setValue(this._getValueForPosition(left));
 		},
 
 		_prepareEventData: function(){
@@ -93,6 +106,12 @@
 		/*
 		 * Value
 		 */
+		_setValue: function(value){
+			if (value != this._value){
+				this._value = value;
+				this.element.trigger("changing", value);
+			}
+		},
 
 		_constraintValue: function(value){
 			value = Math.min(value, this.options.bounds.max);
