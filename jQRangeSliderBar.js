@@ -110,7 +110,7 @@
  		},
 
  		_switchedValues: function(){
- 			if (this._values.min > this._values.max){
+ 			if (this.min() > this.max()){
  				var temp = this._values.min;
  				this._values.min = this._values.max;
  				this._values.max = temp;

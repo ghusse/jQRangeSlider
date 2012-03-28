@@ -51,6 +51,12 @@
 			this.cache.width = {
 				outer: this.element.outerWidth()
 			}
+
+			var parent = this.element.parent();
+			this.cache.parent = {
+				offset: parent.offset(),
+				width: parent.width()
+			}
 		},
 
 		_cacheIfNot: function(){
@@ -71,10 +77,12 @@
 		 */
 		_position: function(left){
 			this._cacheIfNot();
-			
+
 			var offset = this.element.offset();
 
 			offset.left = left + this.cache.handle.width / 2 - this.cache.width.outer / 2;
+			offset.left = Math.max(offset.left, this.cache.parent.offset.left);
+			offset.left = Math.min(offset.left, this.cache.parent.offset.left + this.cache.parent.width - this.element.outerWidth())
 
 			this.element.offset(offset);
 		}
