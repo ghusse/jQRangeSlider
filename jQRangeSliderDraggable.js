@@ -78,10 +78,10 @@
  		 */
 
  		_constraintPosition: function(position){
- 			if (this.options.containment !== null){
+ 			if (this.element.parent().length !== 0){
  				position = Math.min(position, 
- 					this.cache.containment.offset.left + this.cache.containment.width - this.cache.width.outer);
- 				position = Math.max(position, this.cache.containment.offset.left);
+ 					this.cache.parent.offset.left + this.cache.parent.width - this.cache.width.outer);
+ 				position = Math.max(position, this.cache.parent.offset.left);
  			}
 
  			return position;
@@ -106,7 +106,7 @@
  			this.cache = {};
 
  			this._cacheMargins();
- 			this._cacheContainment();
+ 			this._cacheParent();
  			this._cacheDimensions();
 
  			this.cache.offset = this.element.offset();
@@ -121,16 +121,16 @@
  			};
  		},
 
- 		_cacheContainment: function(){
- 			if (this.options.containment !== null){
- 				var container = this.options.containment;
+ 		_cacheParent: function(){
+ 			if (this.options.parent !== null){
+ 				var container = this.element.parent();
 
-	 			this.cache.containment = {
-	 				offset: this.options.containment.offset(),
-	 				width: this.options.containment.width()
+	 			this.cache.parent = {
+	 				offset: container.offset(),
+	 				width: container.width()
 	 			}
  			}else{
- 				this.cache.containment = null;
+ 				this.cache.parent = null;
  			}
  		},
 
