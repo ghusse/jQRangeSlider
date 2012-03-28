@@ -55,6 +55,25 @@
  			this.element.css("width", right - left);
  		},
 
+ 		/*
+ 		 * Draggable
+ 		 */
+
+ 		_cache: function(){
+ 			$.ui.rangeSliderDraggable.prototype._cache.apply(this);
+
+ 			this._cacheHandles();
+ 		},
+
+ 		_cacheHandles: function(){
+ 			this.cache.rightHandle = {};
+ 			this.cache.rightHandle.width = this.options.rightHandle.width();
+ 		},
+
+ 		/*
+ 		 * Event binding
+ 		 */
+
  		_onDragLeftHandle: function(event, ui){
  			this._values.min = ui.value;
 
@@ -107,11 +126,13 @@
  				.rangeSliderHandle("isLeft", true)
  				.unbind(".bar")
  				.bind("drag.bar", $.proxy(this._onDragLeftHandle, this));
- 	
+
  			this.options.rightHandle
  				.rangeSliderHandle("isLeft", false)
  				.unbind(".bar")
  				.bind("drag.bar", $.proxy(this._onDragRightHandle, this));
+
+ 			this._cacheHandles();
  		},
 
  		_constraintPosition: function(left){
@@ -121,7 +142,7 @@
  			position.left = $.ui.rangeSliderDraggable.prototype._constraintPosition.apply(this, [left]);
  			position.left = this.options.leftHandle.rangeSliderHandle("position", position.left);
 
- 			right = this.options.rightHandle.rangeSliderHandle("position", position.left + this.cache.width.outer);
+ 			right = this.options.rightHandle.rangeSliderHandle("position", position.left + this.cache.width.outer - this.options.rightHandle.width());
  			position.width = right - position.left;
 
  			return position;
