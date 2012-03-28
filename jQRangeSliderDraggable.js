@@ -141,10 +141,16 @@
  		},
 
  		_triggerMouseEvent: function(event){
- 			this._trigger(event, {
+ 			var data = this._prepareEventData();
+
+ 			this.element.trigger(event, data);
+ 		},
+
+ 		_prepareEventData: function(){
+ 			return {
  				element: this.element,
  				offset: this.cache.offset || null
- 			});
+ 			};
  		}
  	});
 	

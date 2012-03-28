@@ -27,6 +27,8 @@
 		_left: 0,
 
 		_create: function(){
+			$.ui.rangeSliderDraggable.prototype._create.apply(this);
+
 			this._value = this.options.value;
 		},
 
@@ -84,12 +86,12 @@
 			this._left = left;
 		},
 
-		_triggerMouseEvent: function(event){
-			this._trigger(event, {
- 				element: this.element,
- 				offset: this.cache.offset || null,
- 				value: this._value
- 			});
+		_prepareEventData: function(){
+			var data = $.ui.rangeSliderDraggable.prototype._prepareEventData.apply(this);
+
+			data.value = this._value;
+
+			return data;
 		},
 
 		/*
