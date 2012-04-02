@@ -86,7 +86,7 @@
  		_applyPosition: function(position){
  			var offset = {
  				top: this.cache.offset.top,
- 				left: position
+ 				left: Math.floor(position)
  			}
 
  			this.element.offset(offset);

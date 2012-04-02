@@ -307,6 +307,8 @@
 			this.labels.left = this._createLabel(this.labels.left, this.leftHandle);
 			this.labels.right = this._createLabel(this.labels.right, this.rightHandle);
 
+			this.labels.left.rangeSliderLabel("pair", this.labels.right);
+
 			if (this.options.valueLabels === "change"){
 				this.labels.left.css("display", "none");
 				this.labels.right.css("display", "none");
