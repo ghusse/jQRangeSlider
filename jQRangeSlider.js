@@ -134,7 +134,7 @@
 
 			$(window).resize($.proxy(this.resize, this));
 
-			this.option(this.options);
+			//this.option(this.options);
 
 			setTimeout($.proxy(this.resize, this), 1);
 			setTimeout($.proxy(this._initValues, this), 1);
@@ -434,7 +434,10 @@
 			if ((typeof min !== "undefined") && (typeof max !== "undefined") 
 				&& parseFloat(min) === min && parseFloat(max) === max && min < max){
 				this.options.bounds = {min: min, max: max};
-				this.values(this._values.min, this._values.max);
+				
+				this.leftHandle.rangeSliderHandle("option", "bounds", this.options.bounds);
+				this.rightHandle.rangeSliderHandle("option", "bounds", this.options.bounds);
+				this.bar.rangeSliderBar("option", "bounds", this.options.bounds);
 			}
 			
 			return this.options.bounds;

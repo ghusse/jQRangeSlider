@@ -29,7 +29,8 @@
 				.toggleClass("ui-rangeSlider-rightLabel", !left)
 				.css("position", "absolute");
 
-			this.options.handle.bind("moving", $.proxy(this._onMoving, this));
+			this.options.handle
+				.bind("moving update", $.proxy(this._onMoving, this));
 		},
 
 		_initPosition: function(){

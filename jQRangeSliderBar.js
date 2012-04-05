@@ -22,6 +22,7 @@
 		},
 
 		_values: {min: 0, max: 20},
+		_waitingToInit: 2,
 
 		_create: function(){
 			$.ui.rangeSliderDraggable.prototype._create.apply(this);
@@ -32,11 +33,13 @@
 				.addClass("ui-rangeSlider-bar");
 
 			this.options.leftHandle
+				.bind("initialize", $.proxy(this._onInitialized, this))
 				.bind("drag.bar", $.proxy(this._onDragLeftHandle, this))
 				.bind("update.bar", $.proxy(this._onDragLeftHandle, this))
 				.bind("mousestart", $.proxy(this._cache, this));
 
 			this.options.rightHandle
+				.bind("initialize", $.proxy(this._onInitialized, this))
 				.bind("drag.bar", $.proxy(this._onDragRightHandle, this))
 				.bind("update.bar", $.proxy(this._onDragRightHandle, this))
 				.bind("mousestart", $.proxy(this._cache, this));
@@ -44,9 +47,16 @@
 			this._values = this.options.values;
 		},
 
-		_initElement: function(){
-			$.ui.rangeSliderDraggable.prototype._initElement.apply(this);
 
+		_onInitialized: function(){
+			this._waitingToInit--;
+
+			if (this._waitingToInit === 0){
+				this._initMe();
+			}
+		},
+
+		_initMe: function(){
 			this.min(this.options.values.min);
 			this.max(this.options.values.max);
 

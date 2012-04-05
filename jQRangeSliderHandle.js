@@ -53,13 +53,21 @@
 			} else if (key === "step" && (value === false || parseFloat(value) == value)){
 				this.options.step = value;
 				this.update();
+			} else if (key === "bounds"){
+				this.options.bounds = value;
+				this.update();
 			}
 		},
 
 		_initElement: function(){
 			$.ui.rangeSliderDraggable.prototype._initElement.apply(this);
 			
-			this._position(this.options.value);
+			if (this.cache.parent.width === 0){
+				setTimeout($.proxy(this._initElement, this), 100);
+			}else{
+				this._position(this.options.value);
+				this._triggerMouseEvent("initialize");
+			}
 		},
 
 		/*
@@ -123,10 +131,10 @@
 		},
 
 		_constraintValue: function(value){
+			value = Math.min(value, this.options.bounds.max);
+			value = Math.max(value, this.options.bounds.min);
+		
 			if (this.options.step !== false && this.options.step > 0){
-				value = Math.min(value, this.options.bounds.max);
-				value = Math.max(value, this.options.bounds.min);
-
 				value = Math.round(value / this.options.step) * this.options.step;
 			}
 
@@ -136,7 +144,7 @@
 		_getPositionForValue: function(value){
 			value = this._constraintValue(value);
 
-			var ratio = value / (this.options.bounds.max - this.options.bounds.min),
+			var ratio = (value - this.options.bounds.min) / (this.options.bounds.max - this.options.bounds.min),
 				position = this.cache.parent.offset.left;
 
 			if (!this.options.isLeft){
