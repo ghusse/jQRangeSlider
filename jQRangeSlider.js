@@ -204,8 +204,10 @@
 				
 				option.range = newVal;
 				this._initWidth();
-			}else if (key === "step" && (value === false) || (value != 0 && parseFloat(value) === value)){
+			}else if (key === "step" && (value === false || (value != 0 && parseFloat(value) === value))){
 				this.options.step = value;
+				this.leftHandle.rangeSliderHandle("option", "step", value);
+				this.rightHandle.rangeSliderHandle("option", "step", value);
 			}
 		},
 

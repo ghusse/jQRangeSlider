@@ -10,7 +10,7 @@
  	"use strict";
 
  	$.widget("ui.rangeSliderDraggable", $.ui.mouse, {
- 		cache: {},
+ 		cache: null,
 
  		options: {
  			containment: null
@@ -86,7 +86,7 @@
  		_applyPosition: function(position){
  			var offset = {
  				top: this.cache.offset.top,
- 				left: Math.floor(position)
+ 				left: position
  			}
 
  			this.element.offset(offset);
@@ -97,6 +97,12 @@
  		/*
  		 * Private utils
  		 */
+
+ 		_cacheIfNecessary: function(){
+ 			if (this.cache === null){
+ 				this._cache();
+ 			}
+ 		},
 
  		_cache: function(){
  			this.cache = {};

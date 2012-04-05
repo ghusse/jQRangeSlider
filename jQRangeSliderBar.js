@@ -33,10 +33,12 @@
 
 			this.options.leftHandle
 				.bind("drag.bar", $.proxy(this._onDragLeftHandle, this))
+				.bind("update.bar", $.proxy(this._onDragLeftHandle, this))
 				.bind("mousestart", $.proxy(this._cache, this));
 
 			this.options.rightHandle
 				.bind("drag.bar", $.proxy(this._onDragRightHandle, this))
+				.bind("update.bar", $.proxy(this._onDragRightHandle, this))
 				.bind("mousestart", $.proxy(this._cache, this));
 
 			this._values = this.options.values;
@@ -84,6 +86,7 @@
 		 */
 
 		_onDragLeftHandle: function(event, ui){
+			this._cacheIfNecessary();
 			this._values.min = ui.value;
 
 			if (this._switchedValues()){
@@ -96,9 +99,11 @@
 			this.element.css("width", this.cache.rightHandle.offset.left - ui.offset.left + this.cache.rightHandle.width);
 
 			this.cache.offset.left = ui.offset.left;
+			this.cache.leftHandle.offset = ui.offset;
 		},
 
 		_onDragRightHandle: function(event, ui){
+			this._cacheIfNecessary();
 			this._values.max = ui.value;
 
 			if (this._switchedValues()){

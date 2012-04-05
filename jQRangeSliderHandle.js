@@ -20,7 +20,7 @@
 			isLeft: true,
 			bounds: {min:0, max:100},
 			value: 0,
-			step: 2
+			step: false
 		},
 
 		_value: 0,
@@ -50,6 +50,9 @@
 					.toggleClass("ui-rangeSlider-rightHandle", !this.options.isLeft);
 
 				this._position(this._value);
+			} else if (key === "step" && (value === false || parseFloat(value) == value)){
+				this.options.step = value;
+				this.update();
 			}
 		},
 
@@ -120,10 +123,12 @@
 		},
 
 		_constraintValue: function(value){
-			value = Math.min(value, this.options.bounds.max);
-			value = Math.max(value, this.options.bounds.min);
+			if (this.options.step !== false && this.options.step > 0){
+				value = Math.min(value, this.options.bounds.max);
+				value = Math.max(value, this.options.bounds.min);
 
-			value = Math.round(value / this.options.step) * this.options.step;
+				value = Math.round(value / this.options.step) * this.options.step;
+			}
 
 			return value;
 		},
@@ -167,6 +172,14 @@
 			}
 
 			return this._value;
+		},
+
+		update: function(){
+			this._cache();
+			var value = this._constraintValue(this._value);
+			this._position(value);
+
+			this._triggerMouseEvent("update");
 		},
 
 		position: function(position){

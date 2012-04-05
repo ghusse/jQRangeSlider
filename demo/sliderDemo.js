@@ -78,9 +78,7 @@
 
 		_createSlider: function(){
 			var slider = $("<div />").appendTo(this._elements.sliderZone);
-			slider[this._name]({
-				step: 5
-			});
+			slider[this._name]();
 
 			slider.bind("valuesChanging", $.proxy(this._displayValues, this));
 
@@ -102,6 +100,7 @@
 			this._elements.options = $("<dl />").appendTo(this._elements.optionsZone);
 
 			this._createRangeOptions();
+			this._createStepOption();
 			this._createWheelModeOption();
 			this._createWheelSpeedOption();
 			this._createArrowsOption();
@@ -120,6 +119,21 @@
 
 			minSelect.bind("change", $.proxy(this._minSelectChange, this));
 			maxSelect.bind("change", $.proxy(this._maxSelectChange, this));
+		},
+
+		_createStepOption: function(){
+			this._createDT("Step");
+
+			var select = $("<select name='step' />");
+
+			this._createDD(select);
+
+			select.bind("change", $.proxy(this._easyOptionChange, this));
+
+			this._addOption(select, "false", "false");
+			this._addOption(select, "2", "2");
+			this._addOption(select, "5", "5");
+			this._addOption(select, "10", "10");
 		},
 
 		_createDT: function(text){
