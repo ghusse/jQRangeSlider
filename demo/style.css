@@ -42,6 +42,7 @@ h1{
 
 pre{
 	overflow:auto;
+	margin-right:400px;
 }
 pre code{
 	tab-interval:  2pt;
