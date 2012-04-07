@@ -27,15 +27,11 @@
 				.addClass("ui-rangeSlider-label")
 				.toggleClass("ui-rangeSlider-leftLabel", left)
 				.toggleClass("ui-rangeSlider-rightLabel", !left)
-				.css("position", "absolute");
+				.css("position", "absolute")
+				.css("display", "block");
 
 			this.options.handle
 				.bind("moving update", $.proxy(this._onMoving, this));
-		},
-
-		_initPosition: function(){
-			this._cache();
-			this._position();
 		},
 
 		_display: function(value){
@@ -52,7 +48,6 @@
 		_onMoving: function(event, ui){
 			this._display(ui.value);
 		},
-
 
 		/*
 		 * Label pair
@@ -106,6 +101,8 @@
 			}else{
 				this.CacheWidth(this.label1, this.cache.label1);
 				this.CacheWidth(this.label2, this.cache.label2);
+				this.CacheHeight(this.label1, this.cache.label1);
+				this.CacheHeight(this.label2, this.cache.label2);
 			}
 		}
 
@@ -129,6 +126,10 @@
 			cache.width = label.width();
 			cache.outerWidth = label.outerWidth();
 		}
+
+		this.CacheHeight = function(label, cache){
+			cache.outerHeightMargin = label.outerHeight(true);
+		},
 
 		this.ParsePixels = function(name, element){
 			return parseInt(element.css(name), 10) || 0;
@@ -200,12 +201,13 @@
 			var handleCenter = handleCache.offset.left + handleCache.outerWidth / 2,
 				labelLeft = handleCenter - labelCache.outerWidth / 2,
 				labelRight = labelLeft + labelCache.outerWidth - labelCache.border.left - labelCache.border.right,
-				outerLeft = labelLeft - labelCache.margin.left - labelCache.border.left;
+				outerLeft = labelLeft - labelCache.margin.left - labelCache.border.left,
+				top = handleCache.offset.top - labelCache.outerHeightMargin;
 
 			return {
 				left: labelLeft,
 				outerLeft: outerLeft,
-				top: labelCache.offset.top,
+				top: top,
 				right: labelRight,
 				outerRight: outerLeft + labelCache.outerWidth + labelCache.margin.left + labelCache.margin.right,
 				cache: labelCache,

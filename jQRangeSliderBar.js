@@ -112,6 +112,7 @@
 		},
 
 		_initMe: function(){
+			this._cache();
 			this.min(this.options.values.min);
 			this.max(this.options.values.max);
 

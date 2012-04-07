@@ -134,8 +134,6 @@
 
 			$(window).resize($.proxy(this.resize, this));
 
-			//this.option(this.options);
-
 			setTimeout($.proxy(this.resize, this), 1);
 			setTimeout($.proxy(this._initValues, this), 1);
 		},
@@ -323,104 +321,11 @@
 			this.labels.right = this._createLabel(this.labels.right, this.rightHandle);
 
 			this.labels.left.rangeSliderLabel("pair", this.labels.right);
-
-			if (this.options.valueLabels === "change"){
-				this.labels.left.css("display", "none");
-				this.labels.right.css("display", "none");
-				this.labels.leftDisplayed = false;
-				this.labels.rightDisplayed = false;
-			}else{
-				this.labels.leftDisplayed = true;
-				this.labels.rightDisplayed = true;
-				this.labels.left.css("display", "block");
-				this.labels.right.css("display", "block");
-			}
-
-			this._positionLabels();
 		},
 
 		_destroyLabels: function(){
 			this.labels.left = this._destroyLabel(this.labels.left);
 			this.labels.right = this._destroyLabel(this.labels.right);
-		},
-
-		_positionLabel: function(label, position){
-			var topPos = this.leftHandle.offset().top - label.outerHeight(true),
-				parent = label.offsetParent(),
-				leftPos = position - parent.offset().left;
-
-			topPos = topPos - parent.offset().top;
-
-			label
-				.css("left", leftPos)
-				.css("top", topPos);
-		},
-
-		_fillInLabel: function(label, value){
-			label.text(this._format(value));
-		},
-
-		_fillInLabels: function(){
-			this._fillInLabel(this.labels.left, this._values.min);
-			this._fillInLabel(this.labels.right, this._values.max);
-		},
-
-		_positionLabels: function(){
-			if (this.labels.left !== null && this.labels.right !== null){
-				this._fillInLabels();
-				var minSize = this.labels.leftDisplayed ? this.labels.left.outerWidth(true) : 0,
-					maxSize = this.labels.rightDisplayed ? this.labels.right.outerWidth(true) : 0,
-					leftBound = 0,
-					rightBound = $(window).width() - maxSize,
-					minLeft = Math.max(leftBound, this.leftHandle.offset().left + this.leftHandle.outerWidth(true) / 2 - minSize / 2),
-					maxLeft = Math.min(rightBound, this.rightHandle.offset().left + this.rightHandle.outerWidth(true) / 2 - maxSize / 2);
-
-				// Need to find a better position
-				if (minLeft + minSize >= maxLeft){
-					var diff =  minLeft + minSize - maxLeft;
-					minLeft = Math.max(leftBound, minLeft - diff / 2);
-					maxLeft = Math.min(rightBound, minLeft + minSize);
-					minLeft = Math.max(leftBound, maxLeft - minSize);
-				}
-
-				if (this.labels.leftDisplayed) this._positionLabel(this.labels.left, minLeft);
-				if (this.labels.rightDisplayed) this._positionLabel(this.labels.right, maxLeft);
-			}
-		},
-
-		_format: function(value){
-			if (typeof this.options.formatter !== "undefined" && this.options.formatter !== null){
-				return this.options.formatter(value);
-			}else{
-				return this._defaultFormat(value);
-			}
-		},
-
-		_defaultFormat: function(value){
-			return Math.round(value);
-		},
-
-		_showLabels: function(){
-			if (this.options.valueLabels === "change" && !this.privateChange){
-				if (this.changing.min && !this.labels.leftDisplayed){
-					this.labels.left.stop(true, true).fadeIn(this.options.durationIn);
-					this.labels.leftDisplayed = true;
-				}
-
-				if (this.changing.max && !this.labels.rightDisplayed){
-					this.labels.rightDisplayed = true;
-					this.labels.right.stop(true, true).fadeIn(this.options.durationIn);
-				}
-			}
-		},
-
-		_hideLabels: function(){
-			if (this.options.valueLabels === "change" && this.labels.left !== null && this.labels.right !== null){
-				this.labels.leftDisplayed = false;
-				this.labels.rightDisplayed = false;
-				this.labels.left.stop(true, true).delay(this.options.delayOut).fadeOut(this.options.durationOut);
-				this.labels.right.stop(true, true).delay(this.options.delayOut).fadeOut(this.options.durationOut);
-			}
 		},
 
 		/*
@@ -482,8 +387,6 @@
 			var diff = this._values.max - this._values.min,
 				min = this._values.min + quantity * this.options.wheelSpeed * diff / 100,
 				max = this._values.max + quantity * this.options.wheelSpeed * diff / 100;
-
-			//this._privateValues(min, max);
 		},
 		
 		/**
