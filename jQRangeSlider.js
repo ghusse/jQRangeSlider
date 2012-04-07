@@ -215,16 +215,34 @@
 		},
 
 		_trigger: function(eventName){
-			this.element.trigger(eventName, {
-					label: this.element,
-					values: this.values()
-			  });
+			(function(that, eventName){
+				setTimeout(function(){
+					that.element.trigger(eventName, {
+							label: that.element,
+							values: that._values
+					  });
+				}, 1);
+			})(this, eventName);
 		},
 
 		_changing: function(event, ui){
+			this._updateValues();
+
+			this._trigger("valuesChanging");
 		},
 
 		_changed: function(event, ui){
+			this._updateValues();
+
+			this._trigger("valuesChanged");
+		},
+
+		_updateValues: function(){
+			var left = this.leftHandle.rangeSliderHandle("value"),
+				right = this.rightHandle.rangeSliderHandle("value");
+
+			this._values.min = Math.min(left, right);
+			this._values.max = Math.max(left, right);
 		},
 
 		/*
@@ -411,7 +429,8 @@
 		values: function(min, max){
 			if (typeof min !== "undefined" && typeof max !== "undefined")
 			{
-				
+				this.leftHandle.rangeSliderHandle("value", min);
+				this.rightHandle.rangeSliderHandle("value", max);
 			}
 
 			return this._values;
