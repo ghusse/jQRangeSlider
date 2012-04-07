@@ -14,9 +14,9 @@ rm -rf ${DIR}
 # Create directory and copy stuff
 mkdir ${DIR}
 mv ${SRCDIR}/jQRangeSlider-min.js ${DIR}
-mv ${SRCDIR}/jQDateRangeSlider-min.js ${DIR}
-mv ${SRCDIR}/jQEditRangeSlider-min.js ${DIR}
-mv ${SRCDIR}/jQAllRangeSliders-min.js ${DIR}
+#mv ${SRCDIR}/jQDateRangeSlider-min.js ${DIR}
+#mv ${SRCDIR}/jQEditRangeSlider-min.js ${DIR}
+#mv ${SRCDIR}/jQAllRangeSliders-min.js ${DIR}
 cp -R ${SRCDIR}/css ${DIR}
 cp -R ${SRCDIR}/demo ${DIR}
 cp ${SRCDIR}/GPL-License.txt ${DIR}
