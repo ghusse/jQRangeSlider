@@ -19,6 +19,7 @@
 		options: {
 			isLeft: true,
 			bounds: {min:0, max:100},
+			range: false,
 			value: 0,
 			step: false
 		},
@@ -55,6 +56,9 @@
 				this.update();
 			} else if (key === "bounds"){
 				this.options.bounds = value;
+				this.update();
+			}else if (key === "range"){
+				this.options.range = value;
 				this.update();
 			}
 		},
@@ -138,6 +142,19 @@
 				value = Math.round(value / this.options.step) * this.options.step;
 			}
 
+			if (this.options.range !== false){
+				var min = this.options.range.min || false,
+					max = this.options.range.max || false;
+
+				if (min !== false){
+					value = Math.max(value, min);
+				}
+
+				if (max !== false){
+					value = Math.min(value, max);
+				}
+			}
+
 			return value;
 		},
 
@@ -185,9 +202,11 @@
 		update: function(){
 			this._cache();
 			var value = this._constraintValue(this._value);
-			this._position(value);
 
-			this._triggerMouseEvent("update");
+			if (value != this._value){
+				this._position(value);
+				this._triggerMouseEvent("update");
+			}
 		},
 
 		position: function(position){

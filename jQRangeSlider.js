@@ -193,17 +193,12 @@
 			{
 				this.bounds(value.min, value.max);
 			}else if (key === "range"){
-				if (value === false){
-					option.range = {min: false, max: false};
-					return;
+				if (value !== false){
+					this.options.range.min = value.min || this.options.range.min;
+					this.options.range.max = value.max || this.options.range.max;
 				}
-				
-				var newVal = value || {};
-				newVal.min = (parseFloat(newVal.min) === newVal.min || newVal.min === false ? newVal.min : option.range.min);
-				newVal.max = (parseFloat(newVal.max) === newVal.max || newVal.max === false ? newVal.max : option.range.max);
-				
-				option.range = newVal;
-				this._initWidth();
+
+				this.bar.rangeSliderBar("option", "range", this.options.range);
 			}else if (key === "step" && (value === false || (value != 0 && parseFloat(value) === value))){
 				this.options.step = value;
 				this.leftHandle.rangeSliderHandle("option", "step", value);

@@ -15,6 +15,7 @@
 			leftHandle: null,
 			rightHandle: null,
 			bounds: {min: 0, max: 100},
+			range: false,
 			containment: null,
 			drag: function() {},
 			stop: function() {},
@@ -34,19 +35,73 @@
 
 			this.options.leftHandle
 				.bind("initialize", $.proxy(this._onInitialized, this))
-				.bind("drag.bar", $.proxy(this._onDragLeftHandle, this))
-				.bind("update.bar", $.proxy(this._onDragLeftHandle, this))
-				.bind("mousestart", $.proxy(this._cache, this));
+				.bind("drag.bar update.bar", $.proxy(this._onDragLeftHandle, this))
+				.bind("mousestart", $.proxy(this._cache, this))
+				.bind("stop", $.proxy(this._onHandleStop, this));
 
 			this.options.rightHandle
 				.bind("initialize", $.proxy(this._onInitialized, this))
-				.bind("drag.bar", $.proxy(this._onDragRightHandle, this))
-				.bind("update.bar", $.proxy(this._onDragRightHandle, this))
-				.bind("mousestart", $.proxy(this._cache, this));
+				.bind("drag.bar update.bar", $.proxy(this._onDragRightHandle, this))
+				.bind("mousestart", $.proxy(this._cache, this))
+				.bind("stop", $.proxy(this._onHandleStop, this));
 
 			this._values = this.options.values;
 		},
 
+		_setOption: function(key, value){
+			if (key === "range"){
+				if (value === false || ((value.min || false) === false && (value.max || false) == false)){
+					value = false;
+				}
+
+				this._setRangeOption(value);
+				this.options.range = value;
+			}
+		},
+
+		_setRangeOption: function(value){
+			if (value === false && this.options.range === false){
+				return;
+			}
+
+			this.options.range = value;
+			this._setLeftRange();
+			this._setRightRange();
+		},
+
+		_setLeftRange: function(){
+			if (this.options.range == false){
+				return false;
+			}
+
+			var rightValue = this._values.max,
+				leftRange = {min: false, max: false};
+
+			if ((this.options.range.min || false) !== false){
+				leftRange.max = rightValue - this.options.range.min;
+			}
+
+			if ((this.options.range.max || false) !== false){
+				leftRange.min = rightValue - this.options.range.max;
+			}
+
+			this.options.leftHandle.rangeSliderHandle("option", "range", leftRange);
+		},
+
+		_setRightRange: function(){
+			var leftValue = this._values.min,
+				rightRange = {min: false, max:false};
+
+			if ((this.options.range.min || false) !== false){
+				rightRange.min = leftValue + this.options.range.min;
+			}
+
+			if ((this.options.range.max || false) !== false){
+				rightRange.max = leftValue + this.options.range.max;
+			}
+
+			this.options.rightHandle.rangeSliderHandle("option", "range", rightRange);
+		},
 
 		_onInitialized: function(){
 			this._waitingToInit--;
@@ -91,6 +146,23 @@
 			this.cache.leftHandle.offset = this.options.leftHandle.offset();
 		},
 
+		_mouseStart: function(event){
+			$.ui.rangeSliderDraggable.prototype._mouseStart.apply(this, [event]);
+
+			this.options.leftHandle.rangeSliderHandle("option", "range", false);
+			this.options.rightHandle.rangeSliderHandle("option", "range", false);
+		},
+
+		_mouseStop: function(event){
+			$.ui.rangeSliderDraggable.prototype._mouseStop.apply(this, [event]);
+
+			this._cacheHandles();
+
+			this._values.min = this.options.leftHandle.rangeSliderHandle("value");
+			this._values.max = this.options.rightHandle.rangeSliderHandle("value");
+			this._setRangeOption(this.options.range);
+		},
+
 		/*
 		 * Event binding
 		 */
@@ -132,6 +204,11 @@
 			this.cache.rightHandle.offset = ui.offset;
 		},
 
+		_onHandleStop: function(){
+			this._setLeftRange();
+			this._setRightRange();
+		},
+
 		_switchedValues: function(){
 			if (this.min() > this.max()){
 				var temp = this._values.min;
@@ -153,12 +230,12 @@
 			this.options.leftHandle
 				.rangeSliderHandle("option", "isLeft", true)
 				.unbind(".bar")
-				.bind("drag.bar", $.proxy(this._onDragLeftHandle, this));
+				.bind("drag.bar update.bar", $.proxy(this._onDragLeftHandle, this));
 
 			this.options.rightHandle
 				.rangeSliderHandle("option", "isLeft", false)
 				.unbind(".bar")
-				.bind("drag.bar", $.proxy(this._onDragRightHandle, this));
+				.bind("drag.bar update.bar", $.proxy(this._onDragRightHandle, this));
 
 			this._cacheHandles();
 		},
@@ -168,6 +245,7 @@
 				right;
 
 			position.left = $.ui.rangeSliderDraggable.prototype._constraintPosition.apply(this, [left]);
+
 			position.left = this.options.leftHandle.rangeSliderHandle("position", position.left);
 
 			right = this.options.rightHandle.rangeSliderHandle("position", position.left + this.cache.width.outer - this.cache.rightHandle.width);
