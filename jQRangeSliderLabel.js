@@ -1,5 +1,5 @@
-/**!
- * @license jQRangeSlider
+/**
+ * jQRangeSlider
  * A javascript slider selector that supports dates
  *
  * Copyright (C) Guillaume Gautreau 2012
