@@ -53,23 +53,17 @@
 			this.changing = {min:false, max:false};
 			this.changed = {min:false, max:false};
 
-			this.leftHandle = $("<div />")
-				.rangeSliderHandle({
+			this.leftHandle = this._createHandle({
 					isLeft: true,
 					bounds: this.options.bounds,
 					value: this.options.defaultValues.min
-				})
-				.bind("drag", $.proxy(this._changing, this))
-				.bind("stop", $.proxy(this._changed, this));
-
-			this.rightHandle = $("<div />")
-				.rangeSliderHandle({
-					isLeft: false,
-					bounds: this.options.bounds,
-					value: this.options.defaultValues.max
-				})
-				.bind("drag", $.proxy(this._changing, this))
-				.bind("stop", $.proxy(this._changed, this));
+			});
+	
+			this.rightHandle = this._createHandle({
+				isLeft: false,
+				bounds: this.options.bounds,
+				value: this.options.defaultValues.max
+			});
 			
 			this.innerBar = $("<div class='ui-rangeSlider-innerBar' />")
 				.css("position", "absolute")
@@ -83,7 +77,8 @@
 				.rangeSliderBar({
 					leftHandle: this.leftHandle,
 					rightHandle: this.rightHandle,
-					values: {min: this.options.defaultValues.min, max: this.options.defaultValues.max}
+					values: {min: this.options.defaultValues.min, max: this.options.defaultValues.max},
+					type: this._handle()
 				})
 				.bind("mousewheel", $.proxy(this._wheelOnBar, this))
 				.bind("drag", $.proxy(this._changing, this))
@@ -199,9 +194,20 @@
 				this.bar.rangeSliderBar("option", "range", this.options.range);
 			}else if (key === "step" && (value === false || (value != 0 && parseFloat(value) === value))){
 				this.options.step = value;
-				this.leftHandle.rangeSliderHandle("option", "step", value);
-				this.rightHandle.rangeSliderHandle("option", "step", value);
+				this.leftHandle[this._handle()]("option", "step", value);
+				this.rightHandle[this._handle()]("option", "step", value);
 			}
+		},
+
+		_createHandle: function(options){
+			return $("<div />")
+				[this._handle()](options)
+				.bind("drag", $.proxy(this._changing, this))
+				.bind("stop", $.proxy(this._changed, this));
+		},
+
+		_handle: function(){
+			return "rangeSliderHandle";
 		},
 
 		_getValue: function(position, handle){
@@ -236,8 +242,8 @@
 		},
 
 		_updateValues: function(){
-			var left = this.leftHandle.rangeSliderHandle("value"),
-				right = this.rightHandle.rangeSliderHandle("value");
+			var left = this.leftHandle[this._handle()]("value"),
+				right = this.rightHandle[this._handle()]("value");
 
 			this._values.min = Math.min(left, right);
 			this._values.max = Math.max(left, right);
@@ -300,7 +306,8 @@
 				label = $("<div />")
 					.appendTo(this.element)
 					.rangeSliderLabel({
-						handle: handle
+						handle: handle,
+						type: this._handle()
 					});
 			}
 
@@ -334,8 +341,8 @@
 		values: function(min, max){
 			if (typeof min !== "undefined" && typeof max !== "undefined")
 			{
-				this.leftHandle.rangeSliderHandle("value", min);
-				this.rightHandle.rangeSliderHandle("value", max);
+				this.leftHandle[this._handle()]("value", min);
+				this.rightHandle[this._handle()]("value", max);
 			}
 
 			return this._values;
@@ -354,8 +361,8 @@
 				&& parseFloat(min) === min && parseFloat(max) === max && min < max){
 				this.options.bounds = {min: min, max: max};
 				
-				this.leftHandle.rangeSliderHandle("option", "bounds", this.options.bounds);
-				this.rightHandle.rangeSliderHandle("option", "bounds", this.options.bounds);
+				this.leftHandle[this._handle()]("option", "bounds", this.options.bounds);
+				this.rightHandle[this._handle()]("option", "bounds", this.options.bounds);
 				this.bar.rangeSliderBar("option", "bounds", this.options.bounds);
 			}
 			

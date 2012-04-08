@@ -15,6 +15,7 @@
 			leftHandle: null,
 			rightHandle: null,
 			bounds: {min: 0, max: 100},
+			type: "rangeSliderHandle",
 			range: false,
 			containment: null,
 			drag: function() {},
@@ -85,7 +86,7 @@
 				leftRange.min = rightValue - this.options.range.max;
 			}
 
-			this.options.leftHandle.rangeSliderHandle("option", "range", leftRange);
+			this._leftHandle("option", "range", leftRange);
 		},
 
 		_setRightRange: function(){
@@ -100,7 +101,7 @@
 				rightRange.max = leftValue + this.options.range.max;
 			}
 
-			this.options.rightHandle.rangeSliderHandle("option", "range", rightRange);
+			this._rightHandle("option", "range", rightRange);
 		},
 
 		_onInitialized: function(){
@@ -116,9 +117,9 @@
 			this.min(this.options.values.min);
 			this.max(this.options.values.max);
 
-			var left = this.options.leftHandle.rangeSliderHandle("position"),
+			var left = this._leftHandle("position"),
 				top = this.cache.offset.top,
-				right = this.options.rightHandle.rangeSliderHandle("position") + this.options.rightHandle.width();
+				right = this._rightHandle("position") + this.options.rightHandle.width();
 
 			this.element.offset({
 				left: left,
@@ -126,6 +127,20 @@
 			});
 
 			this.element.css("width", right - left);
+		},
+
+		_leftHandle: function(){
+			return this._handleProxy(this.options.leftHandle, arguments);
+		},
+
+		_rightHandle: function(){
+			return this._handleProxy(this.options.rightHandle, arguments);
+		},
+
+		_handleProxy: function(element, args){
+			var array = Array.prototype.slice.call(args);
+
+			return element[this.options.type].apply(element, array);
 		},
 
 		/*
@@ -150,8 +165,8 @@
 		_mouseStart: function(event){
 			$.ui.rangeSliderDraggable.prototype._mouseStart.apply(this, [event]);
 
-			this.options.leftHandle.rangeSliderHandle("option", "range", false);
-			this.options.rightHandle.rangeSliderHandle("option", "range", false);
+			this._leftHandle("option", "range", false);
+			this._rightHandle("option", "range", false);
 		},
 
 		_mouseStop: function(event){
@@ -159,8 +174,8 @@
 
 			this._cacheHandles();
 
-			this._values.min = this.options.leftHandle.rangeSliderHandle("value");
-			this._values.max = this.options.rightHandle.rangeSliderHandle("value");
+			this._values.min = this._leftHandle("value");
+			this._values.max = this._rightHandle("value");
 			this._setRangeOption(this.options.range);
 		},
 
@@ -228,13 +243,11 @@
 			this.options.leftHandle = this.options.rightHandle;
 			this.options.rightHandle = temp;
 
-			this.options.leftHandle
-				.rangeSliderHandle("option", "isLeft", true)
+			this.leftHandle("option", "isLeft", true)
 				.unbind(".bar")
 				.bind("drag.bar update.bar", $.proxy(this._onDragLeftHandle, this));
 
-			this.options.rightHandle
-				.rangeSliderHandle("option", "isLeft", false)
+			this.rightHandle("option", "isLeft", false)
 				.unbind(".bar")
 				.bind("drag.bar update.bar", $.proxy(this._onDragRightHandle, this));
 
@@ -247,9 +260,9 @@
 
 			position.left = $.ui.rangeSliderDraggable.prototype._constraintPosition.apply(this, [left]);
 
-			position.left = this.options.leftHandle.rangeSliderHandle("position", position.left);
+			position.left = this._leftHandle("position", position.left);
 
-			right = this.options.rightHandle.rangeSliderHandle("position", position.left + this.cache.width.outer - this.cache.rightHandle.width);
+			right = this._rightHandle("position", position.left + this.cache.width.outer - this.cache.rightHandle.width);
 			position.width = right - position.left + this.cache.rightHandle.width;
 
 			return position;
@@ -264,11 +277,11 @@
 		 * Public
 		 */
 		 min: function(value){
-		 	return this.options.leftHandle.rangeSliderHandle("value", value);
+		 	return this._leftHandle("value", value);
 		 },
 
 		 max: function(value){
-		 	return this.options.rightHandle.rangeSliderHandle("value", value);
+		 	return this._rightHandle("value", value);
 		 }
 
 	});

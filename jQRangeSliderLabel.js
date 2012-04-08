@@ -14,14 +14,15 @@
 	$.widget("ui.rangeSliderLabel", {
 		options: {
 			handle: null,
-			formatter: false
+			formatter: false,
+			type: "rangeSliderHandle"
 		},
 
 		cache: null,
 		_positionner: null,
 
 		_create: function(){
-			var left = this.options.handle.rangeSliderHandle("option", "isLeft");
+			var left = this.options.handle[this.options.type]("option", "isLeft");
 
 			this.element
 				.addClass("ui-rangeSlider-label")

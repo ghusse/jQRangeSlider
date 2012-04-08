@@ -35,6 +35,10 @@
 			}
 		},
 
+		_handle: function(){
+			return "dateRangeSliderHandle";
+		},
+
 		option: function(key, value){
 			if (key === "bounds" || key === "defaultValues"){
 				var result = $.ui.rangeSlider.prototype.option.apply(this, arguments);

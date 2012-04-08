@@ -7,7 +7,7 @@
 			modifiable = $("<div id='modifiable' />").appendTo("body");
 
 		simple.sliderDemo();
-		//date.dateSliderDemo();
+		date.dateSliderDemo();
 		//modifiable.editSliderDemo();
 	}
 
