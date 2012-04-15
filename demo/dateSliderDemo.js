@@ -27,6 +27,58 @@
 			this._elements.minInput.change($.proxy(this._minChanged, this));
 		},
 
+		_createBoundsOptions: function(){
+			this._createDT("Bounds");
+
+			var minSelect = this._createSelect("min", "Bound"),
+				maxSelect = this._createSelect("max", "Bound");
+
+			this._addDateOption(minSelect, new Date(2010, 0, 1));
+			this._addDateOption(minSelect, new Date(2010, 2, 1));
+			this._addDateOption(minSelect, new Date(2010, 5, 1));
+
+			this._addDateOption(maxSelect, new Date(2011, 11, 31, 11, 59, 59));
+			this._addDateOption(maxSelect, new Date(2011, 8, 31, 11, 59, 59));
+			this._addDateOption(maxSelect, new Date(2011, 5, 30, 11, 59, 59));
+
+			minSelect.bind("change", "min", $.proxy(this._changeBound, this));
+			maxSelect.bind("change", "max", $.proxy(this._changeBound, this));
+		},
+
+		_addDateOption: function(select, date){
+			this._addOption(select, this._format(date), date.valueOf());
+		},
+
+		_changeBound: function(event){
+			var value = $(event.target).val(),
+				bounds = this._getOption("bounds");
+
+			bounds[event.data] = new Date(parseFloat(value));
+			this._setOption("bounds", bounds);
+		},
+
+		_createStepOption: function(){
+			this._createDT("Step");
+
+			var select = $("<select name='step' />");
+
+			this._createDD(select);
+
+			select.bind("change", $.proxy(this._stepOptionChange, this));
+
+			this._addOption(select, "false");
+			this._addOption(select, "2 days", '{"days":2}');
+			this._addOption(select, "7 days", '{"days":7}');
+			this._addOption(select, "1 month", '{"months":1}');
+		},
+
+		_stepOptionChange: function(e){
+			var target = $(e.target),
+				value = target.val();
+
+			this._setOption("step", $.parseJSON(value));
+		},
+
 		_valueChanged: function(value, name){
 			this._elements.slider[this._name](name, value);
 		},

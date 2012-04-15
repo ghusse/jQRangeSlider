@@ -49,14 +49,25 @@
 			return $.ui.rangeSlider.prototype.option.apply(this, this._toArray(arguments));
 		},
 
-		_defaultFormat: function(value){
+		_defaultFormatter: function(value){
 			var month = value.getMonth() + 1,
 				day = value.getDate();
+
 			return "" + value.getFullYear() + "-" + (month < 10 ? "0" + month : month) + "-" + (day < 10 ? "0" + day : day);
 		},
 
-		_format: function(value){
-			return $.ui.rangeSlider.prototype._format.apply(this, [new Date(value)]);
+		_getFormatter: function(){
+			var formatter = this.options.formatter;
+
+			if (this.options.formatter === false || this.options.formatter === null){
+				formatter = this._defaultFormatter;
+			}
+
+			return (function(formatter){
+				return function(value){
+					return formatter(new Date(value));
+				}
+			})(formatter);
 		},
 
 		values: function(min, max){

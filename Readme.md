@@ -89,7 +89,14 @@ Options
 	* examples: range: {min: 10, max: 50} or {min: 20} or {min: 20, max: false} or {max: false} or false
 * step (default: false)
 	* value steps, in order to constraint values
-	* Numerical value or false
+	* Numerical value (for rangeSlider and editSlider) for false
+	* An object with some of these properties:
+		* years
+		* months
+		* days
+		* hours
+		* minutes
+		* seconds
 * wheelMode: (default: null)
 	* Interaction mode when user uses the mouse wheel on the central bar
 	* Possible values : "zoom", "scroll" or null
@@ -165,3 +172,22 @@ Guys, YES !
 		// That's all you need
 		step: 2
 	});
+
+### Is it possible to set steps for date range slider ?
+
+Yes ! Take a look at examples below.
+
+	// Use a 2 days step:
+	$("#element").rangeSlider({
+		step: { days: 2 }
+	});
+
+	// More complex (and useless) step, but stil valid
+	$("#element").rangeSlider({
+		step: {
+			days: 2,
+			hours: 3
+		}
+	});
+
+Take a look at the documentation for other usable units.

@@ -201,7 +201,7 @@
 		},
 
 		_addOption: function(select, text, value){
-			var option = $("<option />").attr("value", value);
+			var option = $("<option />").attr("value", value || text);
 			option.text(text);
 
 			select.append(option);

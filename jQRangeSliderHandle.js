@@ -51,16 +51,26 @@
 					.toggleClass("ui-rangeSlider-rightHandle", !this.options.isLeft);
 
 				this._position(this._value);
-			} else if (key === "step" && (value === false || parseFloat(value) == value)){
+			} else if (key === "step" && this._checkStep(value)){
 				this.options.step = value;
 				this.update();
 			} else if (key === "bounds"){
 				this.options.bounds = value;
 				this.update();
-			}else if (key === "range"){
+			}else if (key === "range" && this._checkRange(value)){
 				this.options.range = value;
 				this.update();
 			}
+		},
+
+		_checkRange: function(range){
+			return range === false ||
+				((typeof range.min === "undefined" || range.min === false || parseFloat(range.min) === range.min)
+					&& (typeof range.max === "undefined" || range.max === false || parseFloat(range.max) === range.max));
+		},
+
+		_checkStep: function(step){
+			return (step === false || parseFloat(step) == step);
 		},
 
 		_initElement: function(){
@@ -201,9 +211,13 @@
 
 		update: function(){
 			this._cache();
-			var value = this._constraintValue(this._value);
+			var value = this._constraintValue(this._value),
+				position = this._getPositionForValue(value);
 
 			if (value != this._value){
+				this._position(value);
+				this._triggerMouseEvent("update");
+			}else if (position != this.cache.offset.left){
 				this._position(value);
 				this._triggerMouseEvent("update");
 			}

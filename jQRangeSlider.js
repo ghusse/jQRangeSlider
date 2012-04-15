@@ -182,6 +182,11 @@
 				}
 			}else if (key === "formatter" && value !== null && typeof value === "function"){
 				this.options.formatter = value;
+				
+				if (this.options.valueLabels !== "hide"){
+					this._destroyLabels();
+					this._createLabels();
+				}
 			}else if (key === "bounds" && typeof value.min !== "undefined" && typeof value.max !== "undefined")
 			{
 				this.bounds(value.min, value.max);
@@ -192,7 +197,7 @@
 				}
 
 				this.bar.rangeSliderBar("option", "range", this.options.range);
-			}else if (key === "step" && (value === false || (value != 0 && parseFloat(value) === value))){
+			}else if (key === "step"){
 				this.options.step = value;
 				this.leftHandle[this._handle()]("option", "step", value);
 				this.rightHandle[this._handle()]("option", "step", value);
@@ -245,8 +250,16 @@
 			var left = this.leftHandle[this._handle()]("value"),
 				right = this.rightHandle[this._handle()]("value");
 
-			this._values.min = Math.min(left, right);
-			this._values.max = Math.max(left, right);
+			this._values.min = this._min(left, right);
+			this._values.max = this._max(left, right);
+		},
+
+		_min: function(value1, value2){
+			return Math.min(value1, value2);
+		},
+
+		_max: function(value1, value2){
+			return Math.max(value1, value2);
 		},
 
 		/*
@@ -307,11 +320,24 @@
 					.appendTo(this.element)
 					.rangeSliderLabel({
 						handle: handle,
-						type: this._handle()
+						type: this._handle(),
+						formatter: this._getFormatter()
 					});
 			}
 
 			return label;
+		},
+
+		_getFormatter: function(){
+			if (this.options.formatter === false || this.options.formatter === null){
+				return this._defaultFormatter;
+			}
+
+			return this.options.formatter;
+		},
+
+		_defaultFormatter: function(value){
+			return Math.round(value);
 		},
 
 		_destroyLabel: function(label){
@@ -359,14 +385,18 @@
 		bounds: function(min, max){
 			if ((typeof min !== "undefined") && (typeof max !== "undefined") 
 				&& parseFloat(min) === min && parseFloat(max) === max && min < max){
-				this.options.bounds = {min: min, max: max};
 				
-				this.leftHandle[this._handle()]("option", "bounds", this.options.bounds);
-				this.rightHandle[this._handle()]("option", "bounds", this.options.bounds);
-				this.bar.rangeSliderBar("option", "bounds", this.options.bounds);
+				this._setBounds(min, max);
 			}
 			
 			return this.options.bounds;
+		},
+
+		_setBounds: function(min, max){
+			this.options.bounds = {min: min, max: max};
+			this.leftHandle[this._handle()]("option", "bounds", this.options.bounds);
+			this.rightHandle[this._handle()]("option", "bounds", this.options.bounds);
+			this.bar.rangeSliderBar("option", "bounds", this.options.bounds);
 		},
 
 		zoomIn: function(quantity){

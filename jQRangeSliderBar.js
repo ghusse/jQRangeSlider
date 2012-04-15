@@ -243,11 +243,11 @@
 			this.options.leftHandle = this.options.rightHandle;
 			this.options.rightHandle = temp;
 
-			this.leftHandle("option", "isLeft", true)
+			this._leftHandle("option", "isLeft", true)
 				.unbind(".bar")
 				.bind("drag.bar update.bar", $.proxy(this._onDragLeftHandle, this));
 
-			this.rightHandle("option", "isLeft", false)
+			this._rightHandle("option", "isLeft", false)
 				.unbind(".bar")
 				.bind("drag.bar update.bar", $.proxy(this._onDragRightHandle, this));
 
