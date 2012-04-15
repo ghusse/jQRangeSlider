@@ -4,6 +4,7 @@ SRCDIR=../
 
 DRAGGABLE=${SRCDIR}jQRangeSliderDraggable.js
 HANDLE=${SRCDIR}jQRangeSliderHandle.js
+DATEHANDLE=${SRCDIR}jQDateRangeSliderHandle.js
 BAR=${SRCDIR}jQRangeSliderBar.js
 LABEL=${SRCDIR}jQRangeSliderLabel.js
 
@@ -23,7 +24,7 @@ fi
 
 echo -----
 
-#./compress.sh jQDateRangeSlider "${DATEMIN}" "${DATE}"
+./compress.sh jQDateRangeSlider "${DATEMIN}" "${DRAGGABLE}" "${BAR}" "${LABEL}" "${HANDLE}" "${DATEHANDLE}" "${BASE}" "${DATE}"
 
 #echo -----
 
