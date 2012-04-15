@@ -31,6 +31,7 @@
 			if (key === "step"){
 				this.options.step = value;
 				this._createSteps();
+				this.update();
 				return;
 			}
 
