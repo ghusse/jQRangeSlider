@@ -148,21 +148,27 @@
 			value = Math.min(value, this.options.bounds.max);
 			value = Math.max(value, this.options.bounds.min);
 		
-			if (this.options.step !== false && this.options.step > 0){
-				value = Math.round(value / this.options.step) * this.options.step;
-			}
+			value = this._round(value);
 
 			if (this.options.range !== false){
 				var min = this.options.range.min || false,
 					max = this.options.range.max || false;
 
 				if (min !== false){
-					value = Math.max(value, min);
+					value = Math.max(value, this._round(min));
 				}
 
 				if (max !== false){
-					value = Math.min(value, max);
+					value = Math.min(value, this._round(max));
 				}
+			}
+
+			return value;
+		},
+
+		_round: function(value){
+			if (this.options.step !== false && this.options.step > 0){
+				return Math.round(value / this.options.step) * this.options.step;
 			}
 
 			return value;
