@@ -296,7 +296,7 @@
 
 		_barStop: function(event, ui){
 			this._position();
-			this._prepareFiringChanged();
+			this._prepareFiringChanged(true);
 		},
 
 		_switchHandles: function(){
@@ -337,7 +337,7 @@
 
 		_handleStop: function(event, ui){
 			this._position();
-			this._prepareFiringChanged();
+			this._prepareFiringChanged(true);
 		},
 
 		_changing: function(min, max){
@@ -361,13 +361,13 @@
 			}
 		},
 
-		_prepareFiringChanged: function(){
+		_prepareFiringChanged: function(isUserInitiated){
 			this.lastWheel = Math.random();
 			var last = this.lastWheel;
-			setTimeout($.proxy(function(){this._fireChanged(last);}, this), 200);
+			setTimeout($.proxy(function(){this._fireChanged(last, isUserInitiated);}, this), 200);
 		},
 
-		_fireChanged: function(last){
+		_fireChanged: function(last, isUserInitiated){
 			if (this.lastWheel === last && !this.bar.hasClass("ui-draggable-dragging") && !this.leftHandle.hasClass("ui-draggable-dragging") && !this.rightHandle.hasClass("ui-draggable-dragging")){
 				var changed = false;
 				if (this.changing.min){
@@ -384,6 +384,10 @@
 
 				if (changed){
 					this._trigger("valuesChanged");
+				}
+				
+				if (changed && isUserInitiated) {
+					this._trigger("userValuesChanged");
 				}
 
 				this._hideLabels();
@@ -417,7 +421,7 @@
 			}
 
 			this._changing(oldValues.min !== this._values.min, oldValues.max !== this._values.max);
-			this._prepareFiringChanged();
+			this._prepareFiringChanged(false);
 		},
 
 		/*

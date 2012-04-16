@@ -125,6 +125,8 @@ Events
 	* Triggered when the minimum/maximum selected value is starting to change (only fired once during a move)
 * minValueChanged/maxValueChanged
 	* Triggered has the minimum/maximum selected value have been changed, at the end of the move.
+* userValuesChanged
+	* Triggered only on the value changes that were initiated by the user ( e.g. by modifying the range with the mouse).
 
 Methods
 -------
@@ -169,6 +171,8 @@ On the other hand, it's not possible to set graphical steps when moving the rang
 
 Changelog
 ---------
+* 3.0.3: 2012-04-16 nouvak@gmail.com
+	* Added the new "userValuesChanged" event that is triggered only on the value changes that were initiated by the user ( e.g. by modifying the range with the mouse).
 * 3.0.2: 2012-03-03
 	* EditSlider: set values on focus lost
 	* editSlider unit tests
