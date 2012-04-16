@@ -387,7 +387,7 @@
 				}
 				
 				if (changed && isUserInitiated) {
-					this._trigger("valuesChangedUserInitiated");
+					this._trigger("userValuesChanged");
 				}
 
 				this._hideLabels();
