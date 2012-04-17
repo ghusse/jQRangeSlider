@@ -18,6 +18,7 @@
 			this._createInputs();
 			this._createOptions();
 			this._createSlider();
+			this._createLog();
 			this._createCode();
 		},
 
@@ -56,6 +57,7 @@
 
 			this._elements.sliderZone = $("<form onsubmit='return false' />").appendTo(inputZone);
 			this._elements.optionsZone = $("<form onsubmit='return false' />").appendTo(optionsZone);
+			this._elements.logZone = $("<div class='logZone' />").appendTo(wrapper);
 		},
 
 		_createTitle: function(){
@@ -312,6 +314,7 @@
 		},
 
 		_createCode: function(){
+			this.element.append("<hr />")
 			this.element.append("<h3>Code</h3>");
 			var pre = $("<pre />").appendTo(this.element),
 				container = $("<code />").appendTo(pre);
@@ -339,6 +342,29 @@
 
 		_addBlankLine: function(container){
 			container.append("<br />");
+		},
+
+		_createLog: function(){
+			this._elements.logZone.append("<h3>Events</h3>");
+
+			this._elements.log = $("<ol class='log' />").appendTo(this._elements.logZone);
+
+			this._bindEvents();
+		},
+
+		_bindEvents: function(){
+			this._elements.slider.bind("valuesChanging valuesChanged minValueChanging maxValueChanging minValueChanged maxValueChanged", $.proxy(this._log, this));
+		},
+
+		_log: function(e, data){
+			var line = $("<li />").appendTo(this._elements.log);
+
+			line.text(e.type + " " + this._returnValues(data));
+			this._elements.log.scrollTop(this._elements.log[0].scrollHeight);
+		},
+
+		_returnValues: function(data){
+			return "min:" + data.values.min + " max:" + data.values.max;
 		}
 
 	});

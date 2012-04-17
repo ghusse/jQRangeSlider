@@ -228,7 +228,7 @@
 				setTimeout(function(){
 					that.element.trigger(eventName, {
 							label: that.element,
-							values: that._values
+							values: that.values()
 					  });
 				}, 1);
 			})(this, eventName);

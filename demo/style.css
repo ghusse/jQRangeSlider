@@ -9,6 +9,17 @@ h1{
 	font-size:25px;
 }
 
+h3{
+	clear:both;
+}
+
+hr{
+	border:none;
+	clear: both;
+	margin: 0;
+	padding: 0;
+}
+
 .ui-sliderDemo{
 	margin-bottom:50px;
 }
@@ -92,7 +103,8 @@ dd{
 	float:left;
 }
 
-.sliderZone{
+.sliderZone,
+.logZone{
 	margin-right:400px;
 }
 
@@ -108,5 +120,20 @@ input[type=number]{
 
 .options form{
 	margin:0 10px;
+}
+
+.log{
+	height: 80px;
+	overflow: auto;
+	background-color:#333;
+	font-family:Consolas Courrier "Courrier New" Monospace;
+	color: #DDD;
+	padding: 5px;
+	list-style-type:none;
+}
+
+.log p{
+	margin:0;
+	padding: 0;
 }
 

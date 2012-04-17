@@ -101,24 +101,35 @@
 
 		_fillMinSelect: function(select){
 			this._addOption(select, "Deactivated", "");
-			this._addOption(select, "4 weeks", this._weeksToTime(4));
-			this._addOption(select, "8 weeks", this._weeksToTime(8));
-			this._addOption(select, "16 weeks", this._weeksToTime(16));
-		},
-
-		_daysToTime: function(days){
-			return days  * 3.6e6 * 24;
-		},
-
-		_weeksToTime: function(weeks){
-			return this._daysToTime(weeks * 7);
+			this._addOption(select, "4 weeks", '{"days": 28}');
+			this._addOption(select, "8 weeks", '{"days": 54}');
+			this._addOption(select, "16 weeks", '{"days": 108}');
 		},
 
 		_fillMaxSelect: function(select){
 			this._addOption(select, "Deactivated", "");
-			this._addOption(select, "365 days", this._daysToTime(365));
-			this._addOption(select, "400 days", this._daysToTime(400));
-			this._addOption(select, "500 days", this._daysToTime(500));
+			this._addOption(select, "365 days", '{"days": 365}');
+			this._addOption(select, "400 days", '{"days": 400}');
+			this._addOption(select, "500 days", '{"days": 500}');
+		},
+
+		_minSelectChange: function(e){
+			var value = $(e.target).val();
+			this._setRangeOption($.parseJSON(value), "min");
+		},
+
+		_maxSelectChange: function(e){
+			var value = $(e.target).val();
+			this._setRangeOption($.parseJSON(value), "max");
+		},
+
+		_returnValues: function(data){
+			try{
+				return "min:" + this._format(data.values.min) + " max:" + this._format(data.values.max);	
+			} catch (e){
+				return e;
+			}
+			
 		}
 
 	});

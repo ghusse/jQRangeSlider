@@ -133,11 +133,9 @@ Events
  * Triggered when the user is moving an element and changing internal values
  * Triggered a lot of times during the move
 * valuesChanged
- * Triggered when the user has moved and element and changed internal values (limits the number of events).
-* minValueChanging/maxValueChanging
-	* Triggered when the minimum/maximum selected value is starting to change (only fired once during a move)
-* minValueChanged/maxValueChanged
-	* Triggered has the minimum/maximum selected value have been changed, at the end of the move.
+ * Triggered when values have changed (user interaction or programmatically)
+* userValuesChanged
+ * Triggered when user has moved and element and changed internal values (limits the number of events).
 
 Methods
 -------
