@@ -198,11 +198,12 @@
 				}
 
 				this.bar.rangeSliderBar("option", "range", this.options.range);
+				this._changed(true);
 			}else if (key === "step"){
 				this.options.step = value;
 				this.leftHandle[this._handle()]("option", "step", value);
 				this.rightHandle[this._handle()]("option", "step", value);
-				this._changed();
+				this._changed(true);
 			}
 		},
 
@@ -243,9 +244,14 @@
 			}
 		},
 
-		_changed: function(event, ui){
+		_changed: function(isAutomatic){
 			if (this._updateValues() || this._valuesChanged){
 				this._trigger("valuesChanged");
+
+				if (isAutomatic !== true){
+					this._trigger("userValuesChanged");					
+				}
+
 				this._valuesChanged = false;
 			}
 		},
@@ -396,6 +402,7 @@
 				&& parseFloat(min) === min && parseFloat(max) === max && min < max){
 				
 				this._setBounds(min, max);
+				this._changed(true);
 			}
 			
 			return this.options.bounds;
