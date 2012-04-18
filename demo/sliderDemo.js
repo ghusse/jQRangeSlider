@@ -121,13 +121,13 @@
 			var minSelect = this._createSelect("min", "Bound"),
 				maxSelect = this._createSelect("max", "Bound");
 
-			this._addOption(minSelect, 0, 0);
-			this._addOption(minSelect, 10, 10);
-			this._addOption(minSelect, 20, 20);
+			this._addOption(minSelect, 0);
+			this._addOption(minSelect, 10);
+			this._addOption(minSelect, 20);
 
-			this._addOption(maxSelect, 100, 100);
-			this._addOption(maxSelect, 90, 90);
-			this._addOption(maxSelect, 80, 80);
+			this._addOption(maxSelect, 100);
+			this._addOption(maxSelect, 90);
+			this._addOption(maxSelect, 80);
 
 			minSelect.bind("change", "min", $.proxy(this._changeBound, this));
 			maxSelect.bind("change", "max", $.proxy(this._changeBound, this));
@@ -163,10 +163,10 @@
 
 			select.bind("change", $.proxy(this._easyOptionChange, this));
 
-			this._addOption(select, "false", "false");
-			this._addOption(select, "2", "2");
-			this._addOption(select, "5", "5");
-			this._addOption(select, "10", "10");
+			this._addOption(select, "false");
+			this._addOption(select, "2");
+			this._addOption(select, "5");
+			this._addOption(select, "10");
 		},
 
 		_createDT: function(text){
@@ -187,23 +187,30 @@
 		},
 
 		_fillMinSelect: function(select){
-			this._addOption(select, "Deactivated", "");
-			this._addOption(select, 10, 10);
-			this._addOption(select, 20, 20);
-			this._addOption(select, 30, 30);
-			this._addOption(select, 40, 40);
+			this._addOption(select, "false");
+			this._addOption(select, 10);
+			this._addOption(select, 20);
+			this._addOption(select, 30);
+			this._addOption(select, 40);
 		},
 
 		_fillMaxSelect: function(select){
-			this._addOption(select, "Deactivated", "");
-			this._addOption(select, 50, 50);
-			this._addOption(select, 60, 60);
-			this._addOption(select, 70, 70);
-			this._addOption(select, 80, 80);
+			this._addOption(select, "false");
+			this._addOption(select, 50);
+			this._addOption(select, 60);
+			this._addOption(select, 70);
+			this._addOption(select, 80);
 		},
 
 		_addOption: function(select, text, value){
-			var option = $("<option />").attr("value", value || text);
+			var value,
+				option = $("<option />");
+			
+			if (typeof value === "undefined"){
+				value = text;
+			}
+
+			option.attr("value", value);
 			option.text(text);
 
 			select.append(option);
@@ -224,7 +231,7 @@
 		_setRangeOption: function(value, optionName){
 			var option = {};
 
-			if (value == ""){
+			if (value == "false"){
 				option[optionName] = false;
 			}else{
 				option[optionName] = parseFloat(value);
@@ -282,8 +289,8 @@
 
 			var select = $("<select name='valueLabels' />");
 
-			this._addOption(select, "show", "show");
-			this._addOption(select, "hide", "hide");
+			this._addOption(select, "show");
+			this._addOption(select, "hide");
 			this._addOption(select, "on change", "change");
 
 			this._createDD(select);

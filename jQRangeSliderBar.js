@@ -80,10 +80,14 @@
 
 			if ((this.options.range.min || false) !== false){
 				leftRange.max = this._leftHandle("substract", rightValue, this.options.range.min);
+			}else{
+				leftRange.max = false;
 			}
 
 			if ((this.options.range.max || false) !== false){
 				leftRange.min = this._leftHandle("substract", rightValue, this.options.range.max);
+			}else{
+				leftRange.min = false;
 			}
 
 			this._leftHandle("option", "range", leftRange);
@@ -95,10 +99,14 @@
 
 			if ((this.options.range.min || false) !== false){
 				rightRange.min = this._rightHandle("add", leftValue, this.options.range.min);
+			}else {
+				rightRange.min = false;
 			}
 
 			if ((this.options.range.max || false) !== false){
 				rightRange.max = this._rightHandle("add", leftValue, this.options.range.max);
+			}else{
+				rightRange.max = false;
 			}
 
 			this._rightHandle("option", "range", rightRange);

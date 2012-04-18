@@ -193,8 +193,8 @@
 				this.bounds(value.min, value.max);
 			}else if (key === "range"){
 				if (value !== false){
-					this.options.range.min = value.min || this.options.range.min;
-					this.options.range.max = value.max || this.options.range.max;
+					this.options.range.min = typeof value.min !== "undefined" ? value.min : this.options.range.min;
+					this.options.range.max = typeof value.max !== "undefined" ? value.max : this.options.range.max;
 				}
 
 				this.bar.rangeSliderBar("option", "range", this.options.range);
