@@ -100,14 +100,14 @@
 		},
 
 		_fillMinSelect: function(select){
-			this._addOption(select, "Deactivated", "");
+			this._addOption(select, "false");
 			this._addOption(select, "4 weeks", '{"days": 28}');
 			this._addOption(select, "8 weeks", '{"days": 54}');
 			this._addOption(select, "16 weeks", '{"days": 108}');
 		},
 
 		_fillMaxSelect: function(select){
-			this._addOption(select, "Deactivated", "");
+			this._addOption(select, "false");
 			this._addOption(select, "365 days", '{"days": 365}');
 			this._addOption(select, "400 days", '{"days": 400}');
 			this._addOption(select, "500 days", '{"days": 500}');
