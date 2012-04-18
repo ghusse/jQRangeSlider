@@ -360,7 +360,7 @@
 		},
 
 		_bindEvents: function(){
-			this._elements.slider.bind("valuesChanging valuesChanged minValueChanging maxValueChanging minValueChanged maxValueChanged", $.proxy(this._log, this));
+			this._elements.slider.bind("valuesChanging valuesChanged userValuesChanged", $.proxy(this._log, this));
 		},
 
 		_log: function(e, data){
