@@ -84,6 +84,10 @@
 			}
 		},
 
+		_bounds: function(){
+			return this.options.bounds;
+		},
+
 		/*
 		 * From draggable
 		 */
@@ -145,8 +149,8 @@
 		},
 
 		_constraintValue: function(value){
-			value = Math.min(value, this.options.bounds.max);
-			value = Math.max(value, this.options.bounds.min);
+			value = Math.min(value, this._bounds().max);
+			value = Math.max(value, this._bounds().min);
 		
 			value = this._round(value);
 
@@ -238,6 +242,14 @@
 			}
 
 			return this._left;
+		},
+
+		add: function(value, step){
+			return value + step;
+		},
+
+		substract: function(value, step){
+			return value - step;
 		}
 	});
  })(jQuery);

@@ -12,6 +12,12 @@
 
 	$.widget("ui.dateRangeSliderHandle", $.ui.rangeSliderHandle, {
 		_steps: false,
+		_boundsValues: {},
+
+		_create: function(){
+			$.ui.rangeSliderHandle.prototype._create.apply(this);
+			this._createBoundsValues();
+		},
 
 		_getValueForPosition: function(position){
 			var min = this.options.bounds.min.valueOf(),
@@ -36,6 +42,21 @@
 			}
 
 			$.ui.rangeSliderHandle.prototype._setOption.apply(this, [key, value]);
+
+			if (key === "bounds"){
+				this._createBoundsValues();
+			}
+		},
+
+		_createBoundsValues: function(){
+			this._boundsValues = {
+					min: this.options.bounds.min.valueOf(),
+					max: this.options.bounds.max.valueOf()
+			};
+		},
+
+		_bounds: function(){
+			return this._boundsValues;
 		},
 
 		_createSteps: function(){
@@ -53,7 +74,7 @@
 			while (stepDate <= maxDate){
 				this._steps.push(stepDate.valueOf());
 
-				stepDate = this._addStep(minDate, i);
+				stepDate = this._addStep(minDate, i, this.options.step);
 				i++;
 			}
 		},
@@ -62,9 +83,8 @@
 			return typeof this.options.step === "object";
 		},
 
-		_addStep: function(reference, factor){
-			var result = new Date(reference.valueOf()),
-				step = this.options.step;
+		_addStep: function(reference, factor, step){
+			var result = new Date(reference.valueOf());
 
 			result = this._addThing(result, "FullYear", factor, step.years);
 			result = this._addThing(result, "Month", factor, step.months);
@@ -88,18 +108,11 @@
 			return date;
 		},
 
-		_constraintValue: function(value){
-			value = Math.min(this.options.bounds.max.valueOf(), value);
-			value = Math.max(this.options.bounds.min.valueOf(), value);
-
-			if (this._steps !== false){
-				value = this._round(value);
-			}
-			
-			return value;
-		},
-
 		_round: function(value){
+			if (this._steps === false){
+				return value;
+			}
+
 			var max = this.options.bounds.max.valueOf(),
 				min = this.options.bounds.min.valueOf(),
 				ratio = (value - min) / (max - min),
@@ -128,6 +141,14 @@
 			}
 
 			return after;
+		},
+
+		add: function(date, step){
+			return this._addStep(new Date(date), 1, step).valueOf();
+		},
+
+		substract: function(date, step){
+			return this._addStep(new Date(date), -1, step).valueOf();
 		}
 	});
 })(jQuery);

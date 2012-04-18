@@ -123,6 +123,18 @@
 			this._setRangeOption($.parseJSON(value), "max");
 		},
 
+		_setRangeOption: function(value, optionName){
+			var option = {};
+
+			if (value == ""){
+				option[optionName] = false;
+			}else{
+				option[optionName] = value;
+			}
+
+			this._setOption("range", option);
+		},
+
 		_returnValues: function(data){
 			try{
 				return "min:" + this._format(data.values.min) + " max:" + this._format(data.values.max);	

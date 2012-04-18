@@ -29,6 +29,7 @@
 		},
 
 		_values: null,
+		_valuesChanged: false,
 
 		// Created elements
 		bar: null,
@@ -201,6 +202,7 @@
 				this.options.step = value;
 				this.leftHandle[this._handle()]("option", "step", value);
 				this.rightHandle[this._handle()]("option", "step", value);
+				this._changed();
 			}
 		},
 
@@ -235,23 +237,30 @@
 		},
 
 		_changing: function(event, ui){
-			this._updateValues();
-
-			this._trigger("valuesChanging");
+			if(this._updateValues()){
+				this._trigger("valuesChanging");
+				this._valuesChanged = true;
+			}
 		},
 
 		_changed: function(event, ui){
-			this._updateValues();
-
-			this._trigger("valuesChanged");
+			if (this._updateValues() || this._valuesChanged){
+				this._trigger("valuesChanged");
+				this._valuesChanged = false;
+			}
 		},
 
 		_updateValues: function(){
 			var left = this.leftHandle[this._handle()]("value"),
-				right = this.rightHandle[this._handle()]("value");
+				right = this.rightHandle[this._handle()]("value"),
+				min = this._min(left, right),
+				max = this._max(left, right),
+				changing = (min !== this._values.min || max !== this._values.max);
 
 			this._values.min = this._min(left, right);
 			this._values.max = this._max(left, right);
+
+			return changing;
 		},
 
 		_min: function(value1, value2){
