@@ -15,7 +15,6 @@
 			this._elements = {};
 			this._createTitle();
 			this._createZones();
-			this._createInputs();
 			this._createOptions();
 			this._createSlider();
 			this._createLog();
@@ -86,16 +85,7 @@
 			var slider = $("<div />").appendTo(this._elements.sliderZone);
 			slider[this._name]();
 
-			slider.bind("valuesChanging", $.proxy(this._displayValues, this));
-
 			this._elements.slider = slider;
-		},
-
-		_displayValues: function(e){
-			var values = this._elements.slider[this._name]("values");
-
-			this._elements.minInput.val(this._format(values.min));
-			this._elements.maxInput.val(this._format(values.max));
 		},
 
 		_format: function(value){
@@ -112,7 +102,6 @@
 			this._createWheelSpeedOption();
 			this._createArrowsOption();
 			this._createLabelsOption();
-			this._createBindingOption();
 		},
 
 		_createBoundsOptions: function(){
@@ -296,28 +285,6 @@
 			this._createDD(select);
 
 			select.change($.proxy(this._easyOptionChange, this));
-		},
-
-		_createBindingOption: function(){
-			this._createDT("Binding");
-
-			var changing = $("<input value='valuesChanging' name='binding' class='binding' type='radio' checked='checked' />"),
-				changed = $("<input value='valuesChanged' name='binding' class='binding' type='radio' />");
-
-			this._createDD($("<label>valuesChanging</label>").prepend(changing));
-			this._createDD($("<label>valuesChanged</label>").prepend(changed));
-
-			changing.click($.proxy(this._changeBinding, this));
-			changed.click($.proxy(this._changeBinding, this));
-		},
-
-		_changeBinding: function(e){
-			var checked = $(e.target).parents("form").find(".binding:checked");
-
-			this._elements.slider
-				.unbind("valuesChanging")
-				.unbind("valuesChanged")
-				.bind(checked.val(), $.proxy(this._displayValues, this));
 		},
 
 		_createCode: function(){

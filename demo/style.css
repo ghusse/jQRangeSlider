@@ -9,6 +9,10 @@ h1{
 	font-size:25px;
 }
 
+h2{
+	margin-bottom:50px;
+}
+
 h3{
 	clear:both;
 }
@@ -80,14 +84,6 @@ dt{
 	margin-bottom:2px;
 }
 
-dl.values dt{
-	width:75px;
-}
-
-dl.values dd{
-	margin-left:75px;
-}
-
 dt+dd{
 	margin-top:2px;
 }
@@ -123,9 +119,9 @@ input[type=number]{
 }
 
 .log{
-	height: 80px;
+	height: 140px;
 	overflow: auto;
-	background-color:#333;
+	background-color:#555;
 	font-family:Consolas Courrier "Courrier New" Monospace;
 	color: #DDD;
 	padding: 5px;
