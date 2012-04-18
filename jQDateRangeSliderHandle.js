@@ -62,6 +62,7 @@
 		_createSteps: function(){
 			if (this.options.step === false || !this._isValidStep()){
 				this._steps = false;
+				return;
 			}
 
 			var minDate = new Date(this.options.bounds.min),
