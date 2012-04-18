@@ -144,6 +144,12 @@
 			return after;
 		},
 
+		update: function(){
+			this._createBoundsValues();
+			this._createSteps();
+			$.ui.rangeSliderHandle.prototype.update.apply(this);
+		},
+
 		add: function(date, step){
 			return this._addStep(new Date(date), 1, step).valueOf();
 		},
