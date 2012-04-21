@@ -173,16 +173,10 @@
 
 				this.options.arrows = value;
 				this._initWidth();
-			}else if (key === "valueLabels" && (value === "hide" || value === "show" || value === "change")){
-				this.options.valueLabels = value;
-
-				if (value !== "hide"){
-					this._createLabels();
-					this.labels.left.rangeSliderLabel("update");
-					this.labels.right.rangeSliderLabel("update");
-				}else{
-					this._destroyLabels();
-				}
+			}else if (key === "valueLabels"){
+				this._setLabelsOption(value);
+			}else if (key === "durationIn" || key === "durationOut" || key === "delayOut"){
+				this._setLabelsDurations(key, value);
 			}else if (key === "formatter" && value !== null && typeof value === "function"){
 				this.options.formatter = value;
 				
@@ -207,6 +201,36 @@
 				this.rightHandle[this._handle()]("option", "step", value);
 				this._changed(true);
 			}
+		},
+
+		_setLabelsOption: function(value){
+			if (value !== "hide" && value !== "show" && value !== "change"){
+				return;
+			}
+
+			this.options.valueLabels = value;
+
+			if (value !== "hide"){
+				this._createLabels();
+				this.labels.left.rangeSliderLabel("update");
+				this.labels.right.rangeSliderLabel("update");
+			}else{
+				this._destroyLabels();
+			}
+		},
+
+		_setLabelsDurations: function(key, value){
+			if (parseInt(value) !== value) return;
+
+			if (this.labels.left !== null){
+				this.labels.left.rangeSliderLabel("option", key, value);
+			}
+
+			if (this.labels.right !== null){
+				this.labels.right.rangeSliderLabel("option", key, value);
+			}
+
+			this.options[key] = value;
 		},
 
 		_createHandle: function(options){
@@ -339,11 +363,19 @@
 						handle: handle,
 						type: this._handle(),
 						formatter: this._getFormatter(),
-						show: this.options.valueLabels
+						show: this.options.valueLabels,
+						durationIn: this.options.durationIn,
+						durationOut: this.options.durationOut,
+						delayOut: this.options.delayOut
 					});
 			}else{
-				label.rangeSliderLabel("option", "show", this.options.valueLabels)
-					.rangeSliderLabel("option", "formatter", this._getFormatter());
+				label.rangeSliderLabel({
+						formatter: this._getFormatter(),
+						show: this.options.valueLabels,
+						durationIn: this.options.durationIn,
+						durationOut: this.options.durationOut,
+						delayOut: this.options.delayOut
+					});
 			}
 
 			return label;

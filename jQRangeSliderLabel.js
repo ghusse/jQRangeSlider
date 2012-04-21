@@ -16,7 +16,10 @@
 			handle: null,
 			formatter: false,
 			type: "rangeSliderHandle",
-			show: "show"
+			show: "show",
+			durationIn: 0,
+			durationOut: 500,
+			delayOut: 500
 		},
 
 		cache: null,
@@ -50,6 +53,8 @@
 		_setOption: function(key, value){
 			if (key === "show"){
 				this._updateShowOption(value);
+			} else if (key === "durationIn" || key === "durationOut" || key === "delayOut"){
+				this._updateDurations(key, value);
 			}
 		},
 
@@ -65,6 +70,13 @@
 			}
 			
 			this._positionner.options.show = this.options.show;
+		},
+
+		_updateDurations: function(key, value){
+			if (parseInt(value) !== value) return;
+
+			this._positionner.options[key] = value;
+			this.options[key] = value;
 		},
 
 		_display: function(value){
@@ -92,9 +104,15 @@
 		 * Label pair
 		 */
 		pair: function(label){
+			if (this._positionner != null) return;
+
 			this._positionner = new LabelPositioner(this.element, label, {
-				show: this.options.show
+				show: this.options.show,
+				durationIn: this.options.durationIn,
+				durationOut: this.options.durationOut,
+				delayOut: this.options.delayOut
 			});
+
 			label.rangeSliderLabel("positionner", this._positionner);
 		},
 
@@ -234,15 +252,15 @@
 		this.ShowIfNecessary = function(){
 			if (this.options.show === "show" || this.moving) return;
 
-			this.label1.show();
-			this.label2.show();
+			this.label1.stop().fadeIn(this.options.durationIn || 0);
+			this.label2.stop().fadeIn(this.options.durationIn || 0);
 			this.moving = true;
 		},
 
 		this.HideIfNeeded = function(lastMove){
 			if (this.moving === true){
-				this.label1.hide();
-				this.label2.hide();
+				this.label1.stop().delay(this.options.delayOut || 0).fadeOut(this.options.durationOut || 0);
+				this.label2.stop().delay(this.options.delayOut || 0).fadeOut(this.options.durationOut || 0);
 				this.moving = false;
 			}
 		},
