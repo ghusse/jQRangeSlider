@@ -185,6 +185,9 @@
 			this._values.min = this._leftHandle("value");
 			this._values.max = this._rightHandle("value");
 			this._setRangeOption(this.options.range);
+
+			this._leftHandle().trigger("stop");
+			this._rightHandle().trigger("stop");
 		},
 
 		/*

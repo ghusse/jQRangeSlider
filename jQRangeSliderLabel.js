@@ -15,14 +15,15 @@
 		options: {
 			handle: null,
 			formatter: false,
-			type: "rangeSliderHandle"
+			type: "rangeSliderHandle",
+			show: "show"
 		},
 
 		cache: null,
 		_positionner: null,
 
 		_create: function(){
-			var left = this.options.handle[this.options.type]("option", "isLeft");
+			var left = this._handle("option", "isLeft");
 
 			this.element
 				.addClass("ui-rangeSlider-label")
@@ -32,7 +33,38 @@
 				.css("display", "block");
 
 			this.options.handle
-				.bind("moving update", $.proxy(this._onMoving, this));
+				.bind("moving", $.proxy(this._onMoving, this))
+				.bind("update", $.proxy(this._onUpdate, this));
+
+			if (this.options.show !== "show"){
+				this.element.hide();
+			}
+		},
+
+		_handle: function(){
+			var args = Array.prototype.slice.apply(arguments);
+
+			return this.options.handle[this.options.type].apply(this.options.handle, args);
+		},
+
+		_setOption: function(key, value){
+			if (key === "show"){
+				this._updateShowOption(value);
+			}
+		},
+
+		_updateShowOption: function(value){
+			this.options.show = value;
+
+			if (this.options.show !== "show"){
+				this.element.hide();
+			}else{
+				this.element.show();
+				this._display(this.options.handle[this.options.type]("value"));
+				this._positionner.PositionLabels();
+			}
+			
+			this._positionner.options.show = this.options.show;
 		},
 
 		_display: function(value){
@@ -50,37 +82,54 @@
 			this._display(ui.value);
 		},
 
+		_onUpdate: function(event, ui){
+			if (this.options.show === "show"){
+				this._display(ui.value);
+			}
+		},
+
 		/*
 		 * Label pair
 		 */
 		pair: function(label){
-			this._positionner = new LabelPositioner(this.element, label);
+			this._positionner = new LabelPositioner(this.element, label, {
+				show: this.options.show
+			});
 			label.rangeSliderLabel("positionner", this._positionner);
 		},
 
 		positionner: function(pos){
 			if (typeof pos !== "undefined"){
-				this.positionner = pos;
+				this._positionner = pos;
 			}
 
-			return this.positionner;
+			return this._positionner;
+		},
+
+		update: function(){
+			this._display(this._handle("value"));
+			this._positionner.PositionLabels();
 		}
 	});
 
-	function LabelPositioner(label1, label2){
+	function LabelPositioner(label1, label2, options){
 		this.label1 = label1;
 		this.label2 = label2;
+		this.options = options;
 		this.handle1 = this.label1.rangeSliderLabel("option", "handle");
 		this.handle2 = this.label2.rangeSliderLabel("option", "handle");
 		this.cache = null;
 		this.left = label1;
 		this.right = label2;
+		this.moving = false;
 
 		this.Init = function(){
 			this.BindHandle(this.handle1);
 			this.BindHandle(this.handle2);
 
-			setTimeout($.proxy(this.PositionLabels, this), 200);
+			if (this.options.show === "show"){
+				setTimeout($.proxy(this.PositionLabels, this), 1);
+			}
 		}
 
 		this.Cache = function(){
@@ -109,6 +158,8 @@
 
 		this.CacheElement = function(label, cache){
 			this.CacheWidth(label, cache);
+			this.CacheHeight(label, cache);
+
 			cache.offset = label.offset();
 			cache.margin = {
 				left: this.ParsePixels("marginLeft", label),
@@ -137,7 +188,8 @@
 		}
 
 		this.BindHandle = function(handle){
-			handle.bind("moving", $.proxy(this.onHandleMoving, this));
+			handle.bind("moving update", $.proxy(this.onHandleMoving, this));
+			handle.bind("stop", $.proxy(this.onHandleStop, this));
 		}
 
 		this.PositionLabels = function(){
@@ -179,12 +231,33 @@
 			return right;
 		}
 
+		this.ShowIfNecessary = function(){
+			if (this.options.show === "show" || this.moving) return;
+
+			this.label1.show();
+			this.label2.show();
+			this.moving = true;
+		},
+
+		this.HideIfNeeded = function(lastMove){
+			if (this.moving === true){
+				this.label1.hide();
+				this.label2.hide();
+				this.moving = false;
+			}
+		},
+
 		this.onHandleMoving = function(event, ui){
 			this.CacheIfNecessary();
+			this.ShowIfNecessary();
 			this.UpdateHandlePosition(ui);
 
 			this.PositionLabels();
 		}
+
+		this.onHandleStop = function(event, ui){
+			this.HideIfNeeded();
+		},
 
 		this.UpdateHandlePosition = function(ui){
 			if (ui.element[0] == this.handle1[0]){

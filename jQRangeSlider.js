@@ -178,6 +178,8 @@
 
 				if (value !== "hide"){
 					this._createLabels();
+					this.labels.left.rangeSliderLabel("update");
+					this.labels.right.rangeSliderLabel("update");
 				}else{
 					this._destroyLabels();
 				}
@@ -336,8 +338,12 @@
 					.rangeSliderLabel({
 						handle: handle,
 						type: this._handle(),
-						formatter: this._getFormatter()
+						formatter: this._getFormatter(),
+						show: this.options.valueLabels
 					});
+			}else{
+				label.rangeSliderLabel("option", "show", this.options.valueLabels)
+					.rangeSliderLabel("option", "formatter", this._getFormatter());
 			}
 
 			return label;
