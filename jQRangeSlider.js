@@ -478,6 +478,9 @@
 			var diff = this._values.max - this._values.min,
 				min = this._values.min + quantity * this.options.wheelSpeed * diff / 100,
 				max = this._values.max + quantity * this.options.wheelSpeed * diff / 100;
+
+			this.leftHandle[this._handle()]("value", min);
+			this.rightHandle[this._handle()]("value", max);
 		},
 		
 		/**

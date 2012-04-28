@@ -9,7 +9,7 @@
  (function($, undefined){
  	"use strict";
 
- 	$.widget("ui.rangeSliderDraggable", $.ui.mouse, {
+ 	$.widget("ui.rangeSliderDraggable", $.ui.rangeSliderMouseTouch, {
  		cache: null,
 
  		options: {
