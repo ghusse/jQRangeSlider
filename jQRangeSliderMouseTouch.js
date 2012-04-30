@@ -36,11 +36,6 @@
 
  			this._fillTouchEvent(event);
 
- 			if (typeof event.originalEvent !== "undefined"){
- 				event.pageX = event.originalEvent.pageX;
- 				event.pageY = event.originalEvent.pageY;
- 			}
-
  			var that = this,
  				downEvent = this._mouseDownEvent;
 
@@ -60,8 +55,6 @@
 					.bind('touchmove.' + this.widgetName, this._touchMoveDelegate)
 					.bind('touchend.' + this.widgetName, this._touchEndDelegate);
  			}
-
-			return result;
  		},
 
  		_touchEnd: function(event){
@@ -74,9 +67,8 @@
 
 			this._mouseDownEvent = false;
 
+			// No other choice to reinitialize mouseHandled
 			$(document).trigger("mouseup");
-
-			return result;
  		},
 
  		_touchMove: function(event){
@@ -87,11 +79,16 @@
  		},
 
  		_fillTouchEvent: function(event){
- 			var touch = event.originalEvent.touches[0] || event.originalEvent.changedTouches[0];
+ 			var touch;
+
+ 			if (typeof event.targetTouches === "undefined" && typeof event.changedTouches === "undefined"){
+ 				touch = event.originalEvent.targetTouches[0] || event.originalEvent.changedTouches[0];
+ 			} else {
+ 				touch = event.targetTouches[0] || event.changedTouches[0];
+ 			}
 
  			event.pageX = touch.pageX;
  			event.pageY = touch.pageY;
  		}
-
  	});
  })(jQuery);
