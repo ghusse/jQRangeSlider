@@ -232,8 +232,8 @@
 			return position * (this.options.bounds.max - this.options.bounds.min) / (this.container.innerWidth() - handle.outerWidth(true)) + this.options.bounds.min;
 		},
 
-		_privateValues: function(min, max){
-			this._setValues(min, max);
+		_privateValues: function(min, max, isUserInitiated){
+			this._setValues(min, max, isUserInitiated);
 			this._position();
 
 			return this._values;
@@ -399,7 +399,7 @@
 			this._positionHandles();
 		},
 
-		_setValues: function(min, max){
+		_setValues: function(min, max, isUserInitiated){
 			var oldValues = this._values,
 				difference = Math.abs(max-min);
 
@@ -421,7 +421,7 @@
 			}
 
 			this._changing(oldValues.min !== this._values.min, oldValues.max !== this._values.max);
-			this._prepareFiringChanged(false);
+			this._prepareFiringChanged(isUserInitiated || false);
 		},
 
 		/*
@@ -638,7 +638,7 @@
 				min = this._values.min + quantity * this.options.wheelSpeed * diff / 200,
 				max = this._values.max - quantity * this.options.wheelSpeed * diff / 200;
 
-			this._privateValues(min, max);
+			this._privateValues(min, max, true);
 		},
 
 		zoomOut: function(quantity){
