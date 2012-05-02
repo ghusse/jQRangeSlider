@@ -401,8 +401,7 @@
 
 		_setValues: function(min, max, isUserInitiated){
 			var oldValues = this._values,
-				difference = Math.abs(max-min),
-				isUserInitiated = isUserInitiated || false;
+				difference = Math.abs(max-min);
 
 			if (difference >= this.options.bounds.max - this.options.bounds.min){
 				this._values.min = this.options.bounds.min;
@@ -422,7 +421,7 @@
 			}
 
 			this._changing(oldValues.min !== this._values.min, oldValues.max !== this._values.max);
-			this._prepareFiringChanged(isUserInitiated);
+			this._prepareFiringChanged(isUserInitiated || false);
 		},
 
 		/*
