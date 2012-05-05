@@ -36,13 +36,13 @@
 
 			this.options.leftHandle
 				.bind("initialize", $.proxy(this._onInitialized, this))
-				.bind("drag.bar update.bar", $.proxy(this._onDragLeftHandle, this))
+				.bind("drag.bar update.bar moving.bar", $.proxy(this._onDragLeftHandle, this))
 				.bind("mousestart", $.proxy(this._cache, this))
 				.bind("stop", $.proxy(this._onHandleStop, this));
 
 			this.options.rightHandle
 				.bind("initialize", $.proxy(this._onInitialized, this))
-				.bind("drag.bar update.bar", $.proxy(this._onDragRightHandle, this))
+				.bind("drag.bar update.bar moving.bar", $.proxy(this._onDragRightHandle, this))
 				.bind("mousestart", $.proxy(this._cache, this))
 				.bind("stop", $.proxy(this._onHandleStop, this));
 
@@ -112,6 +112,15 @@
 			this._rightHandle("option", "range", rightRange);
 		},
 
+		_deactivateRange: function(){
+			this._leftHandle("option", "range", false);
+			this._rightHandle("option", "range", false);
+		},
+
+		_reactivateRange: function(){
+			this._setRangeOption(this.options.range);
+		},
+
 		_onInitialized: function(){
 			this._waitingToInit--;
 
@@ -173,8 +182,7 @@
 		_mouseStart: function(event){
 			$.ui.rangeSliderDraggable.prototype._mouseStart.apply(this, [event]);
 
-			this._leftHandle("option", "range", false);
-			this._rightHandle("option", "range", false);
+			this._deactivateRange();
 		},
 
 		_mouseStop: function(event){
@@ -184,7 +192,7 @@
 
 			this._values.min = this._leftHandle("value");
 			this._values.max = this._rightHandle("value");
-			this._setRangeOption(this.options.range);
+			this._reactivateRange();
 
 			this._leftHandle().trigger("stop");
 			this._rightHandle().trigger("stop");
@@ -287,13 +295,44 @@
 		/*
 		 * Public
 		 */
-		 min: function(value){
-		 	return this._leftHandle("value", value);
-		 },
 
-		 max: function(value){
-		 	return this._rightHandle("value", value);
-		 }
+		min: function(value){
+			return this._leftHandle("value", value);
+		},
+
+		max: function(value){
+			return this._rightHandle("value", value);
+		},
+
+		startScroll: function(){
+			this._deactivateRange();
+		},
+
+		stopScroll: function(){
+			this._reactivateRange();
+		},
+
+		scrollLeft: function(quantity){
+			quantity = quantity || 1;
+
+			if (quantity < 0){
+				return this.scrollRight(-quantity);
+			}
+
+			quantity = this._leftHandle("moveLeft", quantity);
+			this._rightHandle("moveLeft", quantity);
+		},
+
+		scrollRight: function(quantity){
+			quantity = quantity || 1;
+
+			if (quantity < 0){
+				return this.scrollLeft(-quantity);
+			}
+
+			quantity = this._rightHandle("moveRight", quantity);
+			this._leftHandle("moveRight", quantity);
+		}
 
 	});
 

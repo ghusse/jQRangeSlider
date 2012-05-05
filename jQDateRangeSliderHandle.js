@@ -156,6 +156,44 @@
 
 		substract: function(date, step){
 			return this._addStep(new Date(date), -1, step).valueOf();
+		},
+
+		stepsBetween: function(date1, date2){
+			if (this.options.step === false){
+				return val2 - val1;
+			}
+
+			var min = Math.min(date1, date2),
+				max = Math.max(date1, date2),
+				steps = 0,
+				negative = false,
+				negativeResult = date1 > date2;
+
+			if (this.add(min, this.options.step) - min < 0){
+				negative = true;
+			}
+
+			while (min < max){
+					if (negative){
+						max = this.add(max, this.options.step);
+					}else{
+						min = this.add(min, this.options.step);	
+					}
+					
+					steps++;
+				}
+
+			return negativeResult ? -steps : steps;
+		},
+
+		multiplyStep: function(step, factor){
+			var result = {};
+
+			for (var name in step){
+				result[name] = step[name] * factor;
+			}
+
+			return result;
 		}
 	});
 })(jQuery);

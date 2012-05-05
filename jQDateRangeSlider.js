@@ -35,7 +35,7 @@
 			}
 		},
 
-		_handle: function(){
+		_handleType: function(){
 			return "dateRangeSliderHandle";
 		},
 

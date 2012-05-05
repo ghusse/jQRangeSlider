@@ -250,6 +250,38 @@
 
 		substract: function(value, step){
 			return value - step;
+		},
+
+		stepsBetween: function(val1, val2){
+			if (this.options.step === false){
+				return val2 - val1;
+			}
+
+			return (val2 - val1) / this.options.step;
+		},
+
+		multiplyStep: function(step, factor){
+			return step * factor;
+		},
+
+		moveRight: function(quantity){
+			var previous;
+
+			if (this.options.step == false){
+				previous = this._left;
+				this.position(this._left + quantity);
+
+				return this._left - previous;
+			}
+			
+			previous = this._value;
+			this.value(this.add(previous, this.multiplyStep(this.options.step, quantity)));
+
+			return this.stepsBetween(previous, this._value);
+		},
+
+		moveLeft: function(quantity){
+			return -this.moveRight(-quantity);
 		}
 	});
  })(jQuery);

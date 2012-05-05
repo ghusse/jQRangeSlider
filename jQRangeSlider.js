@@ -74,28 +74,25 @@
 			this.container = $("<div class='ui-rangeSlider-container' />")
 				.css("position", "absolute");
 
-			this.bar = $("<div />")
-				.rangeSliderBar({
+			this.bar = $("<div />")[this._barType()]
+				({
 					leftHandle: this.leftHandle,
 					rightHandle: this.rightHandle,
 					values: {min: this.options.defaultValues.min, max: this.options.defaultValues.max},
-					type: this._handle()
+					type: this._handleType()
 				})
-				.bind("mousewheel", $.proxy(this._wheelOnBar, this))
 				.bind("drag", $.proxy(this._changing, this))
 				.bind("stop", $.proxy(this._changed, this));
 
 			this.arrows.left = $("<div class='ui-rangeSlider-arrow ui-rangeSlider-leftArrow' />")
 				.css("position", "absolute")
 				.css("left", 0)
-				.bind("mousedown", $.proxy(this._startScrollLeft, this));
+				.bind("mousedown", $.proxy(this._scrollLeftClick, this));
 
 			this.arrows.right = $("<div class='ui-rangeSlider-arrow ui-rangeSlider-rightArrow' />")
 				.css("position", "absolute")
 				.css("right", 0)
-				.bind("mousedown", $.proxy(this._startScrollRight, this));
-
-			$(document).bind("mouseup", $.proxy(this._stopScroll, this));
+				.bind("mousedown", $.proxy(this._scrollRightClick, this));
 
 			this.container
 				.append(this.innerBar)
@@ -107,8 +104,7 @@
 				.append(this.container)
 				.append(this.arrows.left)
 				.append(this.arrows.right)
-				.addClass("ui-rangeSlider")
-				.bind("mousewheel", $.proxy(this._wheelOnContainer, this));
+				.addClass("ui-rangeSlider");
 
 			if (this.element.css("position") !== "absolute"){
 				this.element.css("position", "relative");
@@ -193,12 +189,12 @@
 					this.options.range.max = typeof value.max !== "undefined" ? value.max : this.options.range.max;
 				}
 
-				this.bar.rangeSliderBar("option", "range", this.options.range);
+				this._bar("option", "range", this.options.range);
 				this._changed(true);
 			}else if (key === "step"){
 				this.options.step = value;
-				this.leftHandle[this._handle()]("option", "step", value);
-				this.rightHandle[this._handle()]("option", "step", value);
+				this._leftHandle("option", "step", value);
+				this._rightHandle("option", "step", value);
 				this._changed(true);
 			}
 		},
@@ -212,8 +208,8 @@
 
 			if (value !== "hide"){
 				this._createLabels();
-				this.labels.left.rangeSliderLabel("update");
-				this.labels.right.rangeSliderLabel("update");
+				this._leftLabel("update");
+				this._rightLabel("update");
 			}else{
 				this._destroyLabels();
 			}
@@ -223,11 +219,11 @@
 			if (parseInt(value) !== value) return;
 
 			if (this.labels.left !== null){
-				this.labels.left.rangeSliderLabel("option", key, value);
+				this._leftLabel("option", key, value);
 			}
 
 			if (this.labels.right !== null){
-				this.labels.right.rangeSliderLabel("option", key, value);
+				this._rightLabel("option", key, value);
 			}
 
 			this.options[key] = value;
@@ -235,13 +231,47 @@
 
 		_createHandle: function(options){
 			return $("<div />")
-				[this._handle()](options)
+				[this._handleType()](options)
 				.bind("drag", $.proxy(this._changing, this))
 				.bind("stop", $.proxy(this._changed, this));
 		},
 
-		_handle: function(){
+		_proxy: function(element, type, args){
+			var array = Array.prototype.slice.call(args);
+
+			return element[type].apply(element, array);
+		},
+
+		_handleType: function(){
 			return "rangeSliderHandle";
+		},
+
+		_barType: function(){
+			return "rangeSliderBar";
+		},
+
+		_bar: function(){
+			return this._proxy(this.bar, this._barType(), arguments);
+		},
+
+		_labelType: function(){
+			return "rangeSliderLabel";
+		},
+
+		_leftLabel: function(){
+			return this._proxy(this.labels.left, this._labelType(), arguments);
+		},
+
+		_rightLabel: function(){
+			return this._proxy(this.labels.right, this._labelType(), arguments);
+		},
+
+		_leftHandle: function(){
+			return this._proxy(this.leftHandle, this._handleType(), arguments);
+		},
+
+		_rightHandle: function(){
+			return this._proxy(this.rightHandle, this._handleType(), arguments);
 		},
 
 		_getValue: function(position, handle){
@@ -283,8 +313,8 @@
 		},
 
 		_updateValues: function(){
-			var left = this.leftHandle[this._handle()]("value"),
-				right = this.rightHandle[this._handle()]("value"),
+			var left = this._leftHandle("value"),
+				right = this._rightHandle("value"),
 				min = this._min(left, right),
 				max = this._max(left, right),
 				changing = (min !== this._values.min || max !== this._values.max);
@@ -304,64 +334,15 @@
 		},
 
 		/*
-		 * Scrolling
-		 */
-		_startScrollLeft: function(event, ui){
-			this.lastScroll = Math.random();
-			this.scrollCount = 0;
-			this._continueScrollingRight(-1, this.lastScroll);
-		},
-
-		_startScrollRight: function(event, ui){
-			this.lastScroll = Math.random();
-			this.scrollCount = 0;
-			this._continueScrollingRight(1, this.lastScroll);
-		},
-
-		_continueScrollingRight: function(quantity, last){
-			if (last === this.lastScroll){
-				var factor = Math.min(Math.floor(this.scrollCount / 5) + 1, 4) / 4;
-
-				this.scrollRight(quantity * factor);
-				this.scrollCount++;
-				setTimeout($.proxy(function(){this._continueScrollingRight(quantity, last);}, this), 50);
-			}
-		},
-
-		_stopScroll: function(event, ui){
-			this.lastScroll = Math.random();
-		},
-
-		/*
-		 * Mouse wheel
-		 */
-
-		_wheelOnBar: function(event, delta, deltaX, deltaY){
-			if (this.options.wheelMode === "zoom"){
-				this.zoomIn(-deltaY);
-
-				return false;
-			}
-		},
-
-		_wheelOnContainer: function(event, delta, deltaX, deltaY){
-			if (this.options.wheelMode === "scroll"){
-				this.scrollRight(-deltaY);
-
-				return false;
-			}
-		},
-
-		/*
 		 * Value labels
 		 */
 		_createLabel: function(label, handle){
 			if (label === null){
 				label = $("<div />")
 					.appendTo(this.element)
-					.rangeSliderLabel({
+					[this._labelType()]({
 						handle: handle,
-						type: this._handle(),
+						type: this._handleType(),
 						formatter: this._getFormatter(),
 						show: this.options.valueLabels,
 						durationIn: this.options.durationIn,
@@ -369,7 +350,7 @@
 						delayOut: this.options.delayOut
 					});
 			}else{
-				label.rangeSliderLabel({
+				label[this._labelType()]({
 						formatter: this._getFormatter(),
 						show: this.options.valueLabels,
 						durationIn: this.options.durationIn,
@@ -406,7 +387,7 @@
 			this.labels.left = this._createLabel(this.labels.left, this.leftHandle);
 			this.labels.right = this._createLabel(this.labels.right, this.rightHandle);
 
-			this.labels.left.rangeSliderLabel("pair", this.labels.right);
+			this._leftLabel("pair", this.labels.right);
 		},
 
 		_destroyLabels: function(){
@@ -415,13 +396,44 @@
 		},
 
 		/*
+		 * Scrolling
+		 */
+		_scrollRightClick: function(){
+			this._bar("startScroll");
+			this._bindStopScroll();
+
+			this._bar("scrollRight", 10);
+		},
+
+		_scrollLeftClick: function(){
+			this._bar("startScroll");
+			this._bindStopScroll();
+
+			this._bar("scrollLeft", 10);
+		},
+
+		_bindStopScroll: function(){
+			var that = this;
+			this._stopScrollHandle = function(){
+				that._stopScroll();
+			}
+
+			$(document).bind("mouseup", this._stopScrollHandle);
+		},
+
+		_stopScroll: function(){
+			$(document).unbind("mouseup", this._stopScrollHandle);
+			this._bar("stopScroll");
+		},
+
+		/*
 		 * Public methods
 		 */
 		values: function(min, max){
 			if (typeof min !== "undefined" && typeof max !== "undefined")
 			{
-				this.leftHandle[this._handle()]("value", min);
-				this.rightHandle[this._handle()]("value", max);
+				this._leftHandle("value", min);
+				this._rightHandle("value", max);
 			}
 
 			return this._values;
@@ -448,9 +460,9 @@
 
 		_setBounds: function(min, max){
 			this.options.bounds = {min: min, max: max};
-			this.leftHandle[this._handle()]("option", "bounds", this.options.bounds);
-			this.rightHandle[this._handle()]("option", "bounds", this.options.bounds);
-			this.bar.rangeSliderBar("option", "bounds", this.options.bounds);
+			this._leftHandle("option", "bounds", this.options.bounds);
+			this._rightHandle("option", "bounds", this.options.bounds);
+			this._bar("option", "bounds", this.options.bounds);
 		},
 
 		zoomIn: function(quantity){
@@ -466,21 +478,11 @@
 		},
 
 		scrollLeft: function(quantity){
-			if (typeof quantity === 'undefined')
-				quantity = 1;
-			this.scrollRight(-quantity);
+			this._bar("scrollLeft", quantity);
 		},
 
 		scrollRight: function(quantity){
-			if (typeof quantity === "undefined")
-				quantity = 1;
-
-			var diff = this._values.max - this._values.min,
-				min = this._values.min + quantity * this.options.wheelSpeed * diff / 100,
-				max = this._values.max + quantity * this.options.wheelSpeed * diff / 100;
-
-			this.leftHandle[this._handle()]("value", min);
-			this.rightHandle[this._handle()]("value", max);
+			this._bar("scrollRight", quantity);
 		},
 		
 		/**
