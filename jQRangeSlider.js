@@ -84,27 +84,26 @@
 				.bind("drag scroll", $.proxy(this._changing, this))
 				.bind("stop", $.proxy(this._changed, this));
 
-			this.arrows.left = $("<div class='ui-rangeSlider-arrow ui-rangeSlider-leftArrow' />")
-				.css("position", "absolute")
-				.css("left", 0)
-				.bind("mousedown", $.proxy(this._scrollLeftClick, this));
-
-			this.arrows.right = $("<div class='ui-rangeSlider-arrow ui-rangeSlider-rightArrow' />")
-				.css("position", "absolute")
-				.css("right", 0)
-				.bind("mousedown", $.proxy(this._scrollRightClick, this));
-
 			this.container
 				.append(this.innerBar)
 				.append(this.bar)
 				.append(this.leftHandle)
-			  .append(this.rightHandle);
+			  .append(this.rightHandle)
+			  .appendTo(this.element);
 
-			this.element
-				.append(this.container)
-				.append(this.arrows.left)
-				.append(this.arrows.right)
-				.addClass("ui-rangeSlider");
+			this.arrows.left = $("<div class='ui-rangeSlider-arrow ui-rangeSlider-leftArrow' />")
+				.css("position", "absolute")
+				.css("left", 0)
+				.appendTo(this.element)
+				.bind("mousedown touchstart", $.proxy(this._scrollLeftClick, this));
+
+			this.arrows.right = $("<div class='ui-rangeSlider-arrow ui-rangeSlider-rightArrow' />")
+				.css("position", "absolute")
+				.css("right", 0)
+				.appendTo(this.element)
+				.bind("mousedown touchstart", $.proxy(this._scrollRightClick, this));
+
+			this.element.addClass("ui-rangeSlider");
 
 			if (this.element.css("position") !== "absolute"){
 				this.element.css("position", "relative");
@@ -402,7 +401,8 @@
 			return this._leftHandle("stepRatio");
 		},
 
-		_scrollRightClick: function(){
+		_scrollRightClick: function(e){
+			e.preventDefault();
 			this._bar("startScroll");
 			this._bindStopScroll();
 
@@ -433,7 +433,9 @@
 			}, timeout);
 		},
 
-		_scrollLeftClick: function(){
+		_scrollLeftClick: function(e){
+			e.preventDefault();
+
 			this._bar("startScroll");
 			this._bindStopScroll();
 
@@ -442,15 +444,16 @@
 
 		_bindStopScroll: function(){
 			var that = this;
-			this._stopScrollHandle = function(){
+			this._stopScrollHandle = function(e){
+				e.preventDefault()
 				that._stopScroll();
 			}
 
-			$(document).bind("mouseup", this._stopScrollHandle);
+			$(document).bind("mouseup touchend", this._stopScrollHandle);
 		},
 
 		_stopScroll: function(){
-			$(document).unbind("mouseup", this._stopScrollHandle);
+			$(document).unbind("mouseup touchend", this._stopScrollHandle);
 			this._bar("stopScroll");
 			clearTimeout(this._scrollTimeout);
 		},
