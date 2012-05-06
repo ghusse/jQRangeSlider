@@ -519,6 +519,8 @@
 		 */
 		resize: function(){
 			this._initWidth();
+			this._leftHandle("update");
+			this._rightHandle("update");
 		},
 
 		destroy: function(){
