@@ -310,6 +310,7 @@
 
 		stopScroll: function(){
 			this._reactivateRange();
+			this._triggerMouseEvent("stop");
 		},
 
 		scrollLeft: function(quantity){
@@ -321,6 +322,9 @@
 
 			quantity = this._leftHandle("moveLeft", quantity);
 			this._rightHandle("moveLeft", quantity);
+
+			this.update();
+			this._triggerMouseEvent("scroll");
 		},
 
 		scrollRight: function(quantity){
@@ -332,6 +336,13 @@
 
 			quantity = this._rightHandle("moveRight", quantity);
 			this._leftHandle("moveRight", quantity);
+
+			this.update();
+			this._triggerMouseEvent("scroll");
+		},
+
+		update: function(){
+
 		}
 
 	});

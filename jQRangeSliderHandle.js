@@ -282,6 +282,15 @@
 
 		moveLeft: function(quantity){
 			return -this.moveRight(-quantity);
+		},
+
+		stepRatio: function(){
+			if (this.options.step == false){
+				return 1;
+			}else{
+				var steps = (this.options.bounds.max - this.options.bounds.min) / this.options.step;
+				return this.cache.parent.width / steps;
+			}
 		}
 	});
  })(jQuery);

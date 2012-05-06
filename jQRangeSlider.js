@@ -81,7 +81,7 @@
 					values: {min: this.options.defaultValues.min, max: this.options.defaultValues.max},
 					type: this._handleType()
 				})
-				.bind("drag", $.proxy(this._changing, this))
+				.bind("drag scroll", $.proxy(this._changing, this))
 				.bind("stop", $.proxy(this._changed, this));
 
 			this.arrows.left = $("<div class='ui-rangeSlider-arrow ui-rangeSlider-leftArrow' />")
@@ -398,18 +398,46 @@
 		/*
 		 * Scrolling
 		 */
+		_stepRatio: function(){
+			return this._leftHandle("stepRatio");
+		},
+
 		_scrollRightClick: function(){
 			this._bar("startScroll");
 			this._bindStopScroll();
 
-			this._bar("scrollRight", 10);
+			this._continueScrolling("scrollRight", 4 * this._stepRatio(), 1);
+		},
+
+		_continueScrolling: function(action, timeout, quantity, timesBeforeSpeedingUp){
+			this._bar(action, quantity);
+			timesBeforeSpeedingUp = timesBeforeSpeedingUp || 5;
+			timesBeforeSpeedingUp--;
+
+			var that = this,
+				minTimeout = 16,
+				maxQuantity = Math.max(1, 4 / this._stepRatio());
+
+			this._scrollTimeout = setTimeout(function(){
+				if (timesBeforeSpeedingUp == 0){
+					if (timeout > minTimeout){
+						timeout = Math.max(minTimeout, timeout * 1.5);	
+					} else {
+						quantity = Math.min(maxQuantity, quantity * 2)
+					}
+					
+					timesBeforeSpeedingUp = 5;
+				}
+
+				that._continueScrolling(action, timeout, quantity, timesBeforeSpeedingUp);
+			}, timeout);
 		},
 
 		_scrollLeftClick: function(){
 			this._bar("startScroll");
 			this._bindStopScroll();
 
-			this._bar("scrollLeft", 10);
+			this._continueScrolling("scrollLeft", 4 * this._stepRatio(), 1);
 		},
 
 		_bindStopScroll: function(){
@@ -424,6 +452,7 @@
 		_stopScroll: function(){
 			$(document).unbind("mouseup", this._stopScrollHandle);
 			this._bar("stopScroll");
+			clearTimeout(this._scrollTimeout);
 		},
 
 		/*

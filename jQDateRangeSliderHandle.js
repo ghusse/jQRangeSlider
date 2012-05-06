@@ -194,6 +194,15 @@
 			}
 
 			return result;
+		},
+
+		stepRatio: function(){
+			if (this.options.step == false){
+				return 1;
+			}else{
+				var steps = this._steps.length;
+				return this.cache.parent.width / steps;
+			}
 		}
 	});
 })(jQuery);
