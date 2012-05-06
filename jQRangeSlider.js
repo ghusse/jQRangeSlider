@@ -116,7 +116,6 @@
 			}else{
 				this.element.addClass("ui-rangeSlider-withArrows");
 			}
-
 			if (this.options.valueLabels !== "hide"){
 				this._createLabels();
 			}else{
@@ -215,7 +214,7 @@
 		},
 
 		_setLabelsDurations: function(key, value){
-			if (parseInt(value) !== value) return;
+			if (parseInt(value, 10) !== value) return;
 
 			if (this.labels.left !== null){
 				this._leftLabel("option", key, value);
@@ -282,14 +281,14 @@
 		},
 
 		_trigger: function(eventName){
-			(function(that, eventName){
-				setTimeout(function(){
-					that.element.trigger(eventName, {
-							label: that.element,
-							values: that.values()
-					  });
-				}, 1);
-			})(this, eventName);
+			var that = this;
+
+			setTimeout(function(){
+				that.element.trigger(eventName, {
+						label: that.element,
+						values: that.values()
+				  });
+			}, 1);
 		},
 
 		_changing: function(event, ui){
@@ -419,11 +418,11 @@
 				maxQuantity = Math.max(1, 4 / this._stepRatio());
 
 			this._scrollTimeout = setTimeout(function(){
-				if (timesBeforeSpeedingUp == 0){
+				if (timesBeforeSpeedingUp === 0){
 					if (timeout > minTimeout){
 						timeout = Math.max(minTimeout, timeout / 1.5);	
 					} else {
-						quantity = Math.min(maxQuantity, quantity * 2)
+						quantity = Math.min(maxQuantity, quantity * 2);
 					}
 					
 					timesBeforeSpeedingUp = 5;
@@ -445,9 +444,9 @@
 		_bindStopScroll: function(){
 			var that = this;
 			this._stopScrollHandle = function(e){
-				e.preventDefault()
+				e.preventDefault();
 				that._stopScroll();
-			}
+			};
 
 			$(document).bind("mouseup touchend", this._stopScrollHandle);
 		},
