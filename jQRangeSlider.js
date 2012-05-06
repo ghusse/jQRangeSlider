@@ -421,7 +421,7 @@
 			this._scrollTimeout = setTimeout(function(){
 				if (timesBeforeSpeedingUp == 0){
 					if (timeout > minTimeout){
-						timeout = Math.max(minTimeout, timeout * 1.5);	
+						timeout = Math.max(minTimeout, timeout / 1.5);	
 					} else {
 						quantity = Math.min(maxQuantity, quantity * 2)
 					}
