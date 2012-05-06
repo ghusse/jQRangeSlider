@@ -146,8 +146,9 @@
 				{
 					this.options.defaultValues = value;
 				}
-			}else if (key === "wheelMode" && (value === "zoom" || value === "scroll" || value===null)){
-				this.options.wheelMode = value;
+			}else if (key === "wheelMode" || key === "wheelSpeed"){
+				this.options[key] = value;
+				this._bar("option", key, value);
 			}else if (key === "wheelSpeed" && !isNaN(parseFloat(value)) && Math.abs(parseFloat(value)) <= 100){
 				this.options.wheelSpeed = parseFloat(value);
 			}else if (key === "arrows" && (value === true || value === false) && value !== this.options.arrows){
