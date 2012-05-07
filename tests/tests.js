@@ -236,7 +236,7 @@ var rangeSetterTest = new TestCase(
 	"Range constraints",
 	function(){},
 	function(){
-		var def = {min: false, max: false};
+		var def = false;
 		el.rangeSlider("option", "range", null);
 		deepEqual(el.rangeSlider("option", "range"), def, "Default value should be an object");
 		

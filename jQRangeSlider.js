@@ -184,12 +184,13 @@
 				this.bounds(value.min, value.max);
 			}else if (key === "range"){
 				if (value !== false){
-					this.options.range.min = typeof value.min !== "undefined" ? value.min : this.options.range.min;
-					this.options.range.max = typeof value.max !== "undefined" ? value.max : this.options.range.max;
+					this.options.range.min = value != null && typeof value.min !== "undefined" ? value.min : this.options.range.min;
+					this.options.range.max = value != null && typeof value.max !== "undefined" ? value.max : this.options.range.max;
 				}
 
 				this._bar("option", "range", this.options.range);
 				this._changed(true);
+				this.options.range = this._bar("option", "range");
 			}else if (key === "step"){
 				this.options.step = value;
 				this._leftHandle("option", "step", value);

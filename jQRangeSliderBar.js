@@ -61,6 +61,10 @@
 		},
 
 		_setRangeOption: function(value){
+			if (typeof value != "Object"){
+				value = false;
+			}
+
 			if (value === false && this.options.range === false){
 				return;
 			}
