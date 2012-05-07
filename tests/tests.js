@@ -27,8 +27,9 @@ var defaultCtorTest = new TestCase(
 	},
 	function() {
 		// Default values tests
-		deepEqual(el.rangeSlider("option", "bounds"), { min:0, max:100 }, "Default bounds should be 0-100");
-		deepEqual(el.rangeSlider("option", "defaultValues"), {min:20, max:50}, "Default values should be 20-50");
+		deepEqualEpsilon(el.rangeSlider("option", "bounds"), { min:0, max:100 }, 1e-3, "Default bounds should be 0-100");
+		deepEqualEpsilon(el.rangeSlider("option", "bounds"), { min:0, max:100 }, 1e-3, "Default bounds should be 0-100");
+		deepEqualEpsilon(el.rangeSlider("option", "defaultValues"), {min:20, max:50}, 1e-3, "Default values should be 20-50");
 		same(el.rangeSlider("option", "wheelMode"), null, "Default wheel mode should be empty");
 		same(el.rangeSlider("option", "wheelSpeed"), 4, "Default wheel mode should be empty");
 		ok(el.rangeSlider("option", "arrows"), "Arrows should be activated by default");
@@ -59,8 +60,8 @@ var defaultCtorTest = new TestCase(
 		same($(".ui-rangeSlider-container").outerWidth(true), el.innerWidth(), "Container");
 		
 		// Values
-		same(this.min(), 20, "Values should be equal to the default values");
-		same(this.max(), 50, "Values should be equal to the default values");
+		equalEpsilon(this.min(), 20, 1e-3, "Values should be equal to the default values");
+		equalEpsilon(this.max(), 50, 1e-3, "Values should be equal to the default values");
 		
 	}
 );
@@ -318,11 +319,11 @@ var minMaxSetter = new TestCase(
 		this.maxResult = el.rangeSlider("max", this.max);
 	},
 	function(){
-		same(this.minResult, this.min, "Min setter should return the new value");
-		same(this.maxResult, this.max, "Max setter should return the new value");
+		equalEpsilon(this.minResult, this.min, 1e-3, "Min setter should return the new value");
+		equalEpsilon(this.maxResult, this.max, 1e-3, "Max setter should return the new value");
 		
-		same(el.rangeSlider("min"), this.min, "Min getter should return the new value");
-		same(el.rangeSlider("max"), this.max, "Max getter should return the new value");
+		equalEpsilon(el.rangeSlider("min"), this.min, 1e-3, "Min getter should return the new value");
+		equalEpsilon(el.rangeSlider("max"), this.max, 1e-3, "Max getter should return the new value");
 	}
 );
 

@@ -476,8 +476,8 @@
 		values: function(min, max){
 			if (typeof min !== "undefined" && typeof max !== "undefined")
 			{
-				this._leftHandle("value", min);
-				this._rightHandle("value", max);
+				this._values.min = this._leftHandle("value", min);
+				this._values.max = this._rightHandle("value", max);
 			}
 
 			return this._values;
