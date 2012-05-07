@@ -184,8 +184,11 @@
 				this.bounds(value.min, value.max);
 			}else if (key === "range"){
 				if (value !== false){
-					this.options.range.min = value != null && typeof value.min !== "undefined" ? value.min : this.options.range.min;
-					this.options.range.max = value != null && typeof value.max !== "undefined" ? value.max : this.options.range.max;
+					this.options.range = this.options.range || {min: false, max: false}; 
+					this.options.range.min = this._validProperty(value, "min", this.options.range.min);
+					this.options.range.max = this._validProperty(value, "max", this.options.range.max);
+				} else {
+					this.options.range = false;
 				}
 
 				this._bar("option", "range", this.options.range);
@@ -197,6 +200,14 @@
 				this._rightHandle("option", "step", value);
 				this._changed(true);
 			}
+		},
+
+		_validProperty: function(object, name, defaultValue){
+			if (object === null || typeof object[name] === "undefined"){
+				return defaultValue;
+			}
+
+			return object[name];
 		},
 
 		_setLabelsOption: function(value){

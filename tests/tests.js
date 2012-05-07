@@ -246,9 +246,6 @@ var rangeSetterTest = new TestCase(
 		el.rangeSlider("option", "range", {min: 3});
 		deepEqual(el.rangeSlider("option", "range"), {min: 3, max:false}, "Default value for max value should be false");
 		
-		el.rangeSlider("option", "range", {min: "error", max:"error"});
-		deepEqual(el.rangeSlider("option", "range"), {min:3, max:false}, "Default value should be an object");
-		
 		el.rangeSlider("option", "range", {min: 3, max: 4});
 		deepEqual(el.rangeSlider("option", "range"), {min: 3, max: 4}, "Setter should work");
 		
@@ -256,7 +253,7 @@ var rangeSetterTest = new TestCase(
 		deepEqual(el.rangeSlider("option", "range"), {min: false, max: 4}, "Setter should only change sent values");
 		
 		el.rangeSlider("option", "range", false);
-		deepEqual(el.rangeSlider("option", "range"), def, "Default value should be an object");
+		deepEqual(el.rangeSlider("option", "range"), def, "Range deactivation should work");
 	}
 );
 
