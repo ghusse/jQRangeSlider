@@ -171,6 +171,8 @@ On the other hand, it's not possible to set graphical steps when moving the rang
 
 Changelog
 ---------
+* 3.1.1: 2012-05-07 eonlepapillon
+	* Fixed bug #22: Event 'userValuesChanged' is not triggered after zooming with wheelmouse
 * 3.1: 2012-04-16 nouvak@gmail.com
 	* Added the new "userValuesChanged" event that is triggered only on the value changes that were initiated by the user ( e.g. by modifying the range with the mouse).
 * 3.0.2: 2012-03-03
