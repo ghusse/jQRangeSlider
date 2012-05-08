@@ -462,6 +462,7 @@ var rangeLimitMaxWithMinAndMax = new TestCase(
 var rangeLimitMin = new TestCase(
 	"Range limit (min)",
 	function(){
+		el.rangeSlider("option", "range", false);
 		el.rangeSlider("option", "range", {min:50});
 		el.rangeSlider("values", 0, 70);
 	},
