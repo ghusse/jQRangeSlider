@@ -50,7 +50,7 @@
 					.toggleClass("ui-rangeSlider-leftHandle", this.options.isLeft)
 					.toggleClass("ui-rangeSlider-rightHandle", !this.options.isLeft);
 
-				this._position();
+				this._position(this._value);
 			} else if (key === "step" && this._checkStep(value)){
 				this.options.step = value;
 				this.update();
@@ -76,8 +76,8 @@
 		_initElement: function(){
 			$.ui.rangeSliderDraggable.prototype._initElement.apply(this);
 			
-			if (this.cache.parent.width === 0){
-				setTimeout($.proxy(this._initElement, this), 100);
+			if (this.cache.parent.width === 0 || this.cache.parent.width === null){
+				setTimeout($.proxy(this._initElement, this), 500);
 			}else{
 				this._position(this.options.value);
 				this._triggerMouseEvent("initialize");

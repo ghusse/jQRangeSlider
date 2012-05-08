@@ -122,10 +122,20 @@
 				this._destroyLabels();
 			}
 
-			$(window).resize($.proxy(this.resize, this));
+			this._bindResize();
 
 			setTimeout($.proxy(this.resize, this), 1);
 			setTimeout($.proxy(this._initValues, this), 1);
+		},
+
+		_bindResize: function(){
+			var that = this;
+
+			this._resizeProxy = function(e){
+				that.resize(e);
+			};
+
+			$(window).resize(this._resizeProxy);
 		},
 
 		_initWidth: function(){
@@ -553,6 +563,8 @@
 			this.element.removeClass("ui-rangeSlider");
 			this._destroyLabels();
 			delete this.options;
+
+			$(window).unbind("resize", this._resizeProxy);
 
 			$.Widget.prototype.destroy.apply(this, arguments);
 		}

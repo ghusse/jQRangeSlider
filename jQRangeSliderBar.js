@@ -364,8 +364,8 @@
 				this.options.leftHandle.unbind(".bar");
 				this.options.rightHandle.unbind(".bar");
 
-				this._leftHandle("value", minValue);
-				this._rightHandle("value", maxValue);
+				this._values.min = this._leftHandle("value", minValue);
+				this._values.max = this._rightHandle("value", maxValue);
 
 				this._bindHandles();
 				this._reactivateRange();
