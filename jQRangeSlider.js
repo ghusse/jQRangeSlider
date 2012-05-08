@@ -42,11 +42,6 @@
 		changing: {min:false, max:false},
 		changed: {min:false, max:false},
 
-		// Scroll management
-		lastWheel : 0,
-		lastScroll: 0,
-		scrollCount: 0,
-
 		_create: function(){
 			this._values = this.options.defaultValues;
 			this.labels = {left: null, right:null, leftDisplayed:true, rightDisplayed:true};
@@ -81,7 +76,7 @@
 					values: {min: this.options.defaultValues.min, max: this.options.defaultValues.max},
 					type: this._handleType()
 				})
-				.bind("drag scroll", $.proxy(this._changing, this))
+				.bind("drag scroll zoom", $.proxy(this._changing, this))
 				.bind("stop", $.proxy(this._changed, this));
 
 			this.container
@@ -157,27 +152,10 @@
 					this.options.defaultValues = value;
 				}
 			}else if (key === "wheelMode" || key === "wheelSpeed"){
-				this.options[key] = value;
 				this._bar("option", key, value);
-			}else if (key === "wheelSpeed" && !isNaN(parseFloat(value)) && Math.abs(parseFloat(value)) <= 100){
-				this.options.wheelSpeed = parseFloat(value);
+				this.options[key] = this._bar("option", key);
 			}else if (key === "arrows" && (value === true || value === false) && value !== this.options.arrows){
-				if (value){
-					this.element
-						.removeClass("ui-rangeSlider-noArrow")
-						.addClass("ui-rangeSlider-withArrows");
-					this.arrows.left.css("display", "block");
-					this.arrows.right.css("display", "block");
-				}else{
-					this.element
-						.addClass("ui-rangeSlider-noArrow")
-						.removeClass("ui-rangeSlider-withArrows");
-					this.arrows.left.css("display", "none");
-					this.arrows.right.css("display", "none");
-				}
-
-				this.options.arrows = value;
-				this._initWidth();
+				this._setArrowsOption(value);
 			}else if (key === "valueLabels"){
 				this._setLabelsOption(value);
 			}else if (key === "durationIn" || key === "durationOut" || key === "delayOut"){
@@ -189,21 +167,12 @@
 					this._destroyLabels();
 					this._createLabels();
 				}
-			}else if (key === "bounds" && typeof value.min !== "undefined" && typeof value.max !== "undefined")
-			{
+			}else if (key === "bounds" && typeof value.min !== "undefined" && typeof value.max !== "undefined"){
 				this.bounds(value.min, value.max);
 			}else if (key === "range"){
-				if (value !== false){
-					this.options.range = this.options.range || {min: false, max: false}; 
-					this.options.range.min = this._validProperty(value, "min", this.options.range.min);
-					this.options.range.max = this._validProperty(value, "max", this.options.range.max);
-				} else {
-					this.options.range = false;
-				}
-
-				this._bar("option", "range", this.options.range);
-				this._changed(true);
+				this._bar("option", "range", value);
 				this.options.range = this._bar("option", "range");
+				this._changed(true);
 			}else if (key === "step"){
 				this.options.step = value;
 				this._leftHandle("option", "step", value);
@@ -234,6 +203,26 @@
 			}else{
 				this._destroyLabels();
 			}
+		},
+
+		_setArrowsOption: function(value){
+			if (value === true){
+				this.element
+					.removeClass("ui-rangeSlider-noArrow")
+					.addClass("ui-rangeSlider-withArrows");
+				this.arrows.left.css("display", "block");
+				this.arrows.right.css("display", "block");
+				this.options.arrows = true;
+			}else if (value === false){
+				this.element
+					.addClass("ui-rangeSlider-noArrow")
+					.removeClass("ui-rangeSlider-withArrows");
+				this.arrows.left.css("display", "none");
+				this.arrows.right.css("display", "none");
+				this.options.arrows = false;
+			}
+
+			this._initWidth();
 		},
 
 		_setLabelsDurations: function(key, value){
@@ -518,15 +507,11 @@
 		},
 
 		zoomIn: function(quantity){
-			var diff = this._values.max - this._values.min,
-				min = this._values.min + quantity * this.options.wheelSpeed * diff / 200,
-				max = this._values.max - quantity * this.options.wheelSpeed * diff / 200;
-
-			//this._privateValues(min, max);
+			this._bar("zoomIn", quantity)
 		},
 
 		zoomOut: function(quantity){
-			this.zoomIn(-quantity);
+			this._bar("zoomOut", quantity);
 		},
 
 		scrollLeft: function(quantity){

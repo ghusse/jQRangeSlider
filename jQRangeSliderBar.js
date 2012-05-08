@@ -17,14 +17,16 @@
 			bounds: {min: 0, max: 100},
 			type: "rangeSliderHandle",
 			range: false,
-			containment: null,
 			drag: function() {},
 			stop: function() {},
-			values: {min: 0, max:20}
+			values: {min: 0, max:20},
+			wheelSpeed: 4,
+			wheelMode: null
 		},
 
 		_values: {min: 0, max: 20},
 		_waitingToInit: 2,
+		_wheelTimeout: false,
 
 		_create: function(){
 			$.ui.rangeSliderDraggable.prototype._create.apply(this);
@@ -51,17 +53,16 @@
 
 		_setOption: function(key, value){
 			if (key === "range"){
-				if (value === false || ((value.min || false) === false && (value.max || false) == false)){
-					value = false;
-				}
-
 				this._setRangeOption(value);
-				this.options.range = value;
+			} else if (key === "wheelSpeed"){
+				this._setWheelSpeedOption(value);
+			} else if (key === "wheelMode"){
+				this._setWheelModeOption(value);
 			}
 		},
 
 		_setRangeOption: function(value){
-			if (typeof value != "object"){
+			if (typeof value != "object" || value === null){
 				value = false;
 			}
 
@@ -69,9 +70,45 @@
 				return;
 			}
 
-			this.options.range = value;
+			if (value !== false){
+				var min = typeof value.min === "undefined" ? this.options.range.min || false : value.min,
+					max = typeof value.max === "undefined" ? this.options.range.max || false : value.max;
+
+				this.options.range = {
+					min: min,
+					max: max
+				};
+			}else{
+				this.options.range = false;
+			}
+
 			this._setLeftRange();
 			this._setRightRange();
+		},
+
+		_setWheelSpeedOption: function(value){
+			if (typeof value === "number" && value > 0){
+				this.options.wheelSpeed = value;
+			}
+		},
+
+		_setWheelModeOption: function(value){
+			if (value === "null" || value === "zoom" || value === "scroll"){
+				if (this.options.wheelMode !== value){
+					this.element.parent().unbind("mousewheel.bar");
+				}
+
+				this._bindMouseWheel(value);
+				this.options.wheelMode = value;
+			}
+		},
+
+		_bindMouseWheel: function(mode){
+			if (mode === "zoom"){
+				this.element.parent().bind("mousewheel.bar", $.proxy(this._mouseWheelZoom, this));
+			}else if (mode === "scroll"){
+				this.element.parent().bind("mousewheel.bar", $.proxy(this._mouseWheelScroll, this));
+			}
 		},
 
 		_setLeftRange: function(){
@@ -306,6 +343,57 @@
 		},
 
 		/*
+		 * Mouse wheel
+		 */
+
+		_mouseWheelZoom: function(event, delta, deltaX, deltaY){
+			var middle = this._values.min + (this._values.max - this._values.min) / 2,
+				leftRange = {},
+				rightRange = {};
+
+			if (this.options.range === false || this.options.range.min === false){
+				leftRange.max = middle;
+				rightRange.min = middle;
+			} else {
+				leftRange.max = middle - this.options.range.min / 2;
+				rightRange.min = middle + this.options.range.min / 2;
+			}
+
+			if (this.options.range !== false && this.options.range.max !== false){
+				leftRange.min = middle - this.options.range.max / 2;
+				rightRange.max = middle + this.options.range.max / 2;
+			}
+
+			this._leftHandle("option", "range", leftRange);
+			this._rightHandle("option", "range", rightRange);
+
+			clearTimeout(this._wheelTimeout);
+			this._wheelTimeout = setTimeout($.proxy(this._wheelStop, this), 200);
+
+			this.zoomOut(deltaY * this.options.wheelSpeed);
+
+			return false;
+		},
+
+		_mouseWheelScroll: function(event, delta, deltaX, deltaY){
+			if (this._wheelTimeout === false){
+				this.startScroll();
+			} else {
+				clearTimeout(this._wheelTimeout);
+			}
+
+			this._wheelTimeout = setTimeout($.proxy(this._wheelStop, this), 200);
+
+			this.scrollLeft(deltaY * this.options.wheelSpeed);
+			return false;
+		},
+
+		_wheelStop: function(){
+			this.stopScroll();
+			this._wheelTimeout = false;
+		},
+
+		/*
 		 * Public
 		 */
 
@@ -352,6 +440,46 @@
 
 			this.update();
 			this._triggerMouseEvent("scroll");
+		},
+
+		zoomIn: function(quantity){
+			quantity = quantity || 1;
+
+			if (quantity < 0){
+				return this.zoomOut(-quantity);
+			}
+
+			var newQuantity = this._rightHandle("moveLeft", quantity);
+
+			if (quantity > newQuantity){
+				newQuantity = newQuantity / 2;
+				this._rightHandle("moveRight", newQuantity);
+			}
+
+			this._leftHandle("moveRight", newQuantity);
+
+			this.update();
+			this._triggerMouseEvent("zoom");
+		},
+
+		zoomOut: function(quantity){
+			quantity = quantity || 1;
+
+			if (quantity < 0){
+				return this.zoomIn(-quantity);
+			}
+
+			var newQuantity = this._rightHandle("moveRight", quantity);
+
+			if (quantity > newQuantity){
+				newQuantity = newQuantity / 2;
+				this._rightHandle("moveLeft", newQuantity);
+			}
+
+			this._leftHandle("moveLeft", newQuantity);
+
+			this.update();
+			this._triggerMouseEvent("zoom");
 		},
 
 		values: function(min, max){
