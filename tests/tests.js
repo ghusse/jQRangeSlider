@@ -309,6 +309,19 @@ var valuesSetter = new TestCase(
 	}
 );
 
+var changeValuesTest = new TestCase(
+	"Change values",
+	function(){
+		el.rangeSlider("values", 100, 100);
+		el.rangeSlider("values", 20, 50);
+	},
+	function(){
+		var values = {min: 20, max: 50};
+
+		deepEqualEpsilon(el.rangeSlider("values"), values, 1e-3, "Values should be correct");
+	}
+);
+
 var minMaxSetter = new TestCase(
 	"Min & max setters",
 	function(){
@@ -490,7 +503,7 @@ testRunner.add("jQRangeSlider", [setUp,
 			customCtorTest,
 			destroy,
 			defaultCtorTest,
-			valuesSetter, minMaxSetter, boundsSetter,
+			valuesSetter, changeValuesTest, minMaxSetter, boundsSetter,
 			zoomInTest, zoomOutTest, scrollLeftTest, scrollRightTest,
 			issue12,
 			rangeLimitMax, rangeLimitMaxWithMinAndMax, rangeLimitMin, rangeLimitMinWithMinAndMax,

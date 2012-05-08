@@ -474,24 +474,19 @@
 		 * Public methods
 		 */
 		values: function(min, max){
-			if (typeof min !== "undefined" && typeof max !== "undefined")
-			{
-				this._values.min = this._leftHandle("value", min);
-				this._values.max = this._rightHandle("value", max);
-			}
-
-			return {
-				min: this._values.min,
-				max: this._values.max
-			};
+			return this._bar("values", min, max);
 		},
 
 		min: function(min){
-			return this.values(min, this._values.max).min;
+			this._values.min = this.values(min, this._values.max).min;
+
+			return this._values.min;
 		},
 
 		max: function(max){
-			return this.values(this._values.min, max).max;
+			this._values.max = this.values(this._values.min, max).max;
+
+			return this._values.max;
 		},
 		
 		bounds: function(min, max){

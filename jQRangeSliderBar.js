@@ -36,15 +36,15 @@
 
 			this.options.leftHandle
 				.bind("initialize", $.proxy(this._onInitialized, this))
-				.bind("drag.bar update.bar moving.bar", $.proxy(this._onDragLeftHandle, this))
 				.bind("mousestart", $.proxy(this._cache, this))
 				.bind("stop", $.proxy(this._onHandleStop, this));
 
 			this.options.rightHandle
 				.bind("initialize", $.proxy(this._onInitialized, this))
-				.bind("drag.bar update.bar moving.bar", $.proxy(this._onDragRightHandle, this))
 				.bind("mousestart", $.proxy(this._cache, this))
 				.bind("stop", $.proxy(this._onHandleStop, this));
+
+			this._bindHandles();
 
 			this._values = this.options.values;
 		},
@@ -61,7 +61,7 @@
 		},
 
 		_setRangeOption: function(value){
-			if (typeof value != "Object"){
+			if (typeof value != "object"){
 				value = false;
 			}
 
@@ -208,7 +208,6 @@
 
 		_onDragLeftHandle: function(event, ui){
 			this._cacheIfNecessary();
-			this._values.min = ui.value;
 
 			if (this._switchedValues()){
 				this._switchHandles();
@@ -216,16 +215,15 @@
 				return;
 			}
 
-			this.element.offset({left: ui.offset.left, top: this.cache.offset.top});
-			this.element.css("width", this.cache.rightHandle.offset.left - ui.offset.left + this.cache.rightHandle.width);
-
+			this._values.min = ui.value;
 			this.cache.offset.left = ui.offset.left;
 			this.cache.leftHandle.offset = ui.offset;
+
+			this._positionBar();
 		},
 
 		_onDragRightHandle: function(event, ui){
 			this._cacheIfNecessary();
-			this._values.max = ui.value;
 
 			if (this._switchedValues()){
 				this._switchHandles(),
@@ -233,14 +231,19 @@
 				return;
 			}
 
-			var width = ui.offset.left + this.cache.rightHandle.width - this.cache.leftHandle.offset.left;
-			
+			this._values.max = ui.value;
+			this.cache.rightHandle.offset = ui.offset;
+
+			this._positionBar();
+		},
+
+		_positionBar: function(){
+			var width = this.cache.rightHandle.offset.left + this.cache.rightHandle.width - this.cache.leftHandle.offset.left;
+			this.cache.width.inner = width;
+
 			this.element
 				.css("width", width)
 				.offset({left: this.cache.leftHandle.offset.left, top: this.cache.offset.top});
-			
-			this.cache.width.inner = width;
-			this.cache.rightHandle.offset = ui.offset;
 		},
 
 		_onHandleStop: function(){
@@ -266,15 +269,21 @@
 			this.options.leftHandle = this.options.rightHandle;
 			this.options.rightHandle = temp;
 
-			this._leftHandle("option", "isLeft", true)
-				.unbind(".bar")
-				.bind("drag.bar update.bar", $.proxy(this._onDragLeftHandle, this));
+			this._leftHandle("option", "isLeft", true);
+			this._rightHandle("option", "isLeft", false);
 
-			this._rightHandle("option", "isLeft", false)
-				.unbind(".bar")
-				.bind("drag.bar update.bar", $.proxy(this._onDragRightHandle, this));
-
+			this._bindHandles();
 			this._cacheHandles();
+		},
+
+		_bindHandles: function(){
+			this.options.leftHandle
+				.unbind(".bar")
+				.bind("drag.bar update.bar moving.bar", $.proxy(this._onDragLeftHandle, this));
+
+			this.options.rightHandle
+				.unbind(".bar")
+				.bind("drag.bar update.bar moving.bar", $.proxy(this._onDragRightHandle, this));
 		},
 
 		_constraintPosition: function(left){
@@ -345,8 +354,37 @@
 			this._triggerMouseEvent("scroll");
 		},
 
-		update: function(){
+		values: function(min, max){
+			if (typeof min !== "undefined" && typeof max !== "undefined")
+			{
+				var minValue = Math.min(min, max),
+					maxValue = Math.max(min, max);
 
+				this._deactivateRange();
+				this.options.leftHandle.unbind(".bar");
+				this.options.rightHandle.unbind(".bar");
+
+				this._leftHandle("value", minValue);
+				this._rightHandle("value", maxValue);
+
+				this._bindHandles();
+				this._reactivateRange();
+
+				this.update();
+			}
+
+			return {
+				min: this._values.min,
+				max: this._values.max
+			};
+		},
+
+		update: function(){
+			this._values.min = this.min();
+			this._values.max = this.max();
+
+			this._cache();
+			this._positionBar();
 		}
 
 	});

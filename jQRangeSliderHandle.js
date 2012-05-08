@@ -50,7 +50,7 @@
 					.toggleClass("ui-rangeSlider-leftHandle", this.options.isLeft)
 					.toggleClass("ui-rangeSlider-rightHandle", !this.options.isLeft);
 
-				this._position(this._value);
+				this._position();
 			} else if (key === "step" && this._checkStep(value)){
 				this.options.step = value;
 				this.update();
