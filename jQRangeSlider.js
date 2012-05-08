@@ -480,7 +480,10 @@
 				this._values.max = this._rightHandle("value", max);
 			}
 
-			return this._values;
+			return {
+				min: this._values.min,
+				max: this._values.max
+			};
 		},
 
 		min: function(min){
@@ -522,11 +525,15 @@
 		},
 
 		scrollLeft: function(quantity){
+			this._bar("startScroll");
 			this._bar("scrollLeft", quantity);
+			this._bar("stopScroll");
 		},
 
 		scrollRight: function(quantity){
+			this._bar("startScroll");
 			this._bar("scrollRight", quantity);
+			this._bar("stopScroll");
 		},
 		
 		/**

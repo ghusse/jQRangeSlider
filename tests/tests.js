@@ -368,6 +368,7 @@ var zoomOutTest = new TestCase(
 var scrollLeftTest = new TestCase(
 	"Scroll left",
 	function(){
+		el.rangeSlider("values", 12, 13);
 		this.getValues();
 		el.rangeSlider("scrollLeft", 2);
 	},
@@ -380,6 +381,7 @@ var scrollLeftTest = new TestCase(
 var scrollRightTest = new TestCase(
 	"Scroll right",
 	function(){
+		el.rangeSlider("values", 12, 13);
 		this.getValues();
 		el.rangeSlider("scrollRight", 2);
 	},
@@ -397,7 +399,7 @@ var issue12 = new TestCase(
 		var leftHandle = el.find(".ui-rangeSlider-leftHandle");
 		
 		leftHandle.simulate("drag", {
-			dx: el.find(".ui-rangeSlider-container").innerWidth() - leftHandle.position().left - leftHandle.outerWidth(true),
+			dx: el.find(".ui-rangeSlider-container").innerWidth() - leftHandle.position().left,
 			dy: 0
 		});
 				

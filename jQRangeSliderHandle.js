@@ -179,6 +179,10 @@
 		},
 
 		_getPositionForValue: function(value){
+			if (this.cache.parent.offset == null){
+				return 0;
+			}
+
 			value = this._constraintValue(value);
 
 			var ratio = (value - this.options.bounds.min) / (this.options.bounds.max - this.options.bounds.min),
