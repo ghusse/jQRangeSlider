@@ -74,8 +74,8 @@ var dateBoundsSetterTest = new TestCase(
 		ok(bounds.min instanceof Date, "Bounds min value should be a date");
 		ok(bounds.max instanceof Date, "Bounds max value should be a date");
 		
-		same(bounds.min.toLocaleString(), this.bounds.min.toLocaleString(), "Bounds min value should have been correctly set");
-		same(bounds.max.toLocaleString(), this.bounds.max.toLocaleString(), "Bounds min value should have been correctly set");
+		equal(bounds.min.toLocaleString(), this.bounds.min.toLocaleString(), "Bounds min value should have been correctly set");
+		equal(bounds.max.toLocaleString(), this.bounds.max.toLocaleString(), "Bounds min value should have been correctly set");
 	}
 );
 
@@ -166,13 +166,15 @@ var boundsSetter = new TestCase(
 	"Bounds setter",
 	function(){},
 	function(){
+		el.dateRangeSlider("values", new Date(2010, 0, 1), new Date(2012, 0, 1));
+
 		var b = {min: new Date(2010, 5, 1), max: new Date(2010, 6, 1)};
 		
 		deepEqual(el.dateRangeSlider("bounds", b.min, b.max), b, "Should return the new value");
 		deepEqual(el.dateRangeSlider("bounds"), b, "Should return the new value");
 		
-		same(el.dateRangeSlider("min"), b.min);
-		same(el.dateRangeSlider("max"), b.max);
+		equal(el.dateRangeSlider("min").toLocaleString(), b.min.toLocaleString());
+		equal(el.dateRangeSlider("max").toLocaleString(), b.max.toLocaleString());
 	}
 );
 	
