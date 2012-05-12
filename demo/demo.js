@@ -8,7 +8,7 @@
 
 		simple.sliderDemo();
 		date.dateSliderDemo();
-		//modifiable.editSliderDemo();
+		modifiable.editSliderDemo();
 	}
 
 	$(document).ready(function(){

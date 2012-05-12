@@ -122,10 +122,6 @@ Options
 
 * type (default:'text', 'number')
   * input type used for creating labels
-* round: (false or a number used for rounding)
-	* false to deactivate
-	* a number used for formatting the displayed values in inputs
-	* if a custom formatter function is provided, this parameter is ignored
 
 Events
 -----

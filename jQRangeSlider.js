@@ -7,8 +7,6 @@
  *
  */
 
-// TODO: minValueChanging / Changed
-
 (function ($, undefined) {
 	"use strict";
 
@@ -351,29 +349,42 @@
 		 * Value labels
 		 */
 		_createLabel: function(label, handle){
+			var params;
+
 			if (label === null){
+				params = this._getLabelConstructorParameters(label, handle);
 				label = $("<div />")
 					.appendTo(this.element)
-					[this._labelType()]({
-						handle: handle,
-						type: this._handleType(),
-						formatter: this._getFormatter(),
-						show: this.options.valueLabels,
-						durationIn: this.options.durationIn,
-						durationOut: this.options.durationOut,
-						delayOut: this.options.delayOut
-					});
+					[this._labelType()](params);
 			}else{
-				label[this._labelType()]({
-						formatter: this._getFormatter(),
-						show: this.options.valueLabels,
-						durationIn: this.options.durationIn,
-						durationOut: this.options.durationOut,
-						delayOut: this.options.delayOut
-					});
+				params = this._getLabelRefreshParameters(label, handle);
+
+				label[this._labelType()](params);
 			}
 
 			return label;
+		},
+
+		_getLabelConstructorParameters: function(label, handle){
+			return {
+				handle: handle,
+				handleType: this._handleType(),
+				formatter: this._getFormatter(),
+				show: this.options.valueLabels,
+				durationIn: this.options.durationIn,
+				durationOut: this.options.durationOut,
+				delayOut: this.options.delayOut
+			};
+		},
+
+		_getLabelRefreshParameters: function(label, handle){
+			return {
+				formatter: this._getFormatter(),
+				show: this.options.valueLabels,
+				durationIn: this.options.durationIn,
+				durationOut: this.options.durationOut,
+				delayOut: this.options.delayOut
+			};
 		},
 
 		_getFormatter: function(){

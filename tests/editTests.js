@@ -27,7 +27,6 @@
 
 			equal(inputs.length, 2, "Input should have been created");
 			equal(inputs.attr("type"), "text", "Default type is text");
-			equal(el.editRangeSlider("option", "round"), 1, "Default rounding value is 1");
 		}
 	);
 
@@ -57,52 +56,6 @@
 			ok(second.val() === min.toString() || second.val() === max.toString(), "Displayed value should be rounded");
 			ok(first.val() != second.val(), "Values should be different");
 	}
-
-	var roundCtor = new TestCase(
-		"Ctor specifying the round value",
-		function(){
-			el.editRangeSlider({
-				round: 10,
-				defaultValues: {min: 11, max: 33}
-			});
-		},
-		function(){
-			equal(el.editRangeSlider("option", "round"), 10, "The round option should have been set");
-			testDisplayedValues(10, 30);
-		}
-	);
-
-	var setRoundOption = new TestCase(
-		"Set round option",
-		function(){
-			el.editRangeSlider("option", "round", 1);
-			el.editRangeSlider("values", 11.3, 55.5);
-		},
-		function(){
-			var values = el.editRangeSlider("values");
-			equal(values.min, 11.3, "Values should not have been rounded");
-			equal(values.max, 55.5, "Values should not have been rounded");
-
-			testDisplayedValues(11, 56);
-
-			el.editRangeSlider("option", "round", 10);
-			testDisplayedValues(10, 60);			
-			equal(el.editRangeSlider("option", "round"), 10, "Option should have been set");
-		}
-	);
-
-	var setRoundZero = new TestCase(
-		"Assign a zero value to the round",
-		function(){
-			el.editRangeSlider("option", "round", 1);
-			el.editRangeSlider("values", 11, 55);
-			el.editRangeSlider("option", "round", 0);
-		},
-		function(){
-			equal(el.editRangeSlider("option", "round"), 1, "zero should not have been assigned");
-			testDisplayedValues(11, 55);
-		}
-	);
 
 	var typeCtor = new TestCase(
 		"Ctor specifying input type",
@@ -203,17 +156,55 @@
 		}
 	);
 
+	var stepNumberCtor = new TestCase(
+		"Step option on ctor, with number inputs",
+		function(){
+			el.editRangeSlider({
+				step: 5,
+				type: "number"
+			});
+		},
+		function(){
+			var input = el.find("input");
+
+			equal(2, input.length, "Should have found 2 inputs");
+			equal("number", input.attr("type"), "Should be number input");
+			equal("5", input.attr("step"), "Step should be propagated to inputs");
+		}
+	);
+
+	var stepNumberSetter = new TestCase(
+		"Step option with number inputs",
+		function(){
+			el.editRangeSlider({
+				step: 10,
+				type: "number"
+			});
+		},
+		function(){
+			var input = el.find("input");
+
+			equal(input.length, 2, "Should have found 2 inputs");
+			equal("number", input.attr("type"), "Should be number input");
+			equal(input.attr("step"), '10', "Step should be propagated to inputs");
+
+			el.editRangeSlider("option", "step", false);
+			input = el.find("input");
+			equal(input.attr("step"), "any", "Step should be propagated to inputs");
+		}
+	);
+
 
 	testRunner.add("jQEditRangeSlider", [
 		editSetup,
 		ctorTest,
 		destroy,
 		
-		roundCtor, setRoundOption, setRoundZero,
-		destroy,
-		
 		typeCtor, setType, setInvalidType,
 		enterKeyBindingTest, clickBindingTest, clickBindingWithoutFocusTest, blurBinding,
+
+		destroy,
+		stepNumberCtor, stepNumberSetter,
 
 		destroyTest
 	]);

@@ -15,7 +15,7 @@
 		options: {
 			handle: null,
 			formatter: false,
-			type: "rangeSliderHandle",
+			handleType: "rangeSliderHandle",
 			show: "show",
 			durationIn: 0,
 			durationOut: 500,
@@ -47,7 +47,7 @@
 		_handle: function(){
 			var args = Array.prototype.slice.apply(arguments);
 
-			return this.options.handle[this.options.type].apply(this.options.handle, args);
+			return this.options.handle[this.options.handleType].apply(this.options.handle, args);
 		},
 
 		_setOption: function(key, value){
@@ -65,7 +65,7 @@
 				this.element.hide();
 			}else{
 				this.element.show();
-				this._display(this.options.handle[this.options.type]("value"));
+				this._display(this.options.handle[this.options.handleType]("value"));
 				this._positionner.PositionLabels();
 			}
 			
@@ -81,10 +81,14 @@
 
 		_display: function(value){
 			if (this.options.formatter == false){
-				this.element.text(Math.round(value));
+				this._displayText(Math.round(value));
 			}else{
-				this.element.text(this.options.formatter(value));
+				this._displayText(this.options.formatter(value));
 			}
+		},
+
+		_displayText: function(text){
+			this.element.text(text);
 		},
 
 		/*
@@ -106,14 +110,14 @@
 		pair: function(label){
 			if (this._positionner != null) return;
 
-			this._positionner = new LabelPositioner(this.element, label, {
+			this._positionner = new LabelPositioner(this.element, label, this.widgetName, {
 				show: this.options.show,
 				durationIn: this.options.durationIn,
 				durationOut: this.options.durationOut,
 				delayOut: this.options.delayOut
 			});
 
-			label.rangeSliderLabel("positionner", this._positionner);
+			label[this.widgetName]("positionner", this._positionner);
 		},
 
 		positionner: function(pos){
@@ -130,12 +134,13 @@
 		}
 	});
 
-	function LabelPositioner(label1, label2, options){
+	function LabelPositioner(label1, label2, type, options){
 		this.label1 = label1;
 		this.label2 = label2;
+		this.type = type;
 		this.options = options;
-		this.handle1 = this.label1.rangeSliderLabel("option", "handle");
-		this.handle2 = this.label2.rangeSliderLabel("option", "handle");
+		this.handle1 = this.label1[this.type]("option", "handle");
+		this.handle2 = this.label2[this.type]("option", "handle");
 		this.cache = null;
 		this.left = label1;
 		this.right = label2;
