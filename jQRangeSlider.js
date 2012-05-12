@@ -43,7 +43,11 @@
 		changed: {min:false, max:false},
 
 		_create: function(){
-			this._values = this.options.defaultValues;
+			this._values = {
+				min: this.options.defaultValues.min,
+				max: this.options.defaultValues.max
+			};
+
 			this.labels = {left: null, right:null, leftDisplayed:true, rightDisplayed:true};
 			this.arrows = {left:null, right:null};
 			this.changing = {min:false, max:false};
