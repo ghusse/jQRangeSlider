@@ -167,12 +167,15 @@ var changeBoundsTest = new TestCase(
 var wheelModeZoomTest = new TestCase(
 	"Zoom wheel mode",
 	function(){
+		el.rangeSlider("option", "bounds", {min: 0, max: 100});
+		el.rangeSlider("option", "values", {min: 30, max: 40});
 		el.rangeSlider("option", "wheelMode", "zoom");
+	},
+	function(){
 		this.getPositions();
 		this.getValues();
 		$(".ui-rangeSlider-bar").trigger("mousewheel", [-10, 0, -10]);
-	},
-	function(){
+
 		same(el.rangeSlider("option", "wheelMode"), "zoom", "Wheelmode setter should have worked");
 		ok($(".ui-rangeSlider-leftHandle").offset().left > this.minHandlerPos, "Left handle should have been moved");
 		ok($(".ui-rangeSlider-rightHandle").offset().left < this.maxHandlerPos, "Right handle should have been moved");
@@ -187,12 +190,18 @@ var wheelModeZoomTest = new TestCase(
 var wheelModeScrollTest = new TestCase(
 	"Scroll wheel mode",
 	function(){
-		el.rangeSlider("option", "wheelMode", "scroll");
+		el.rangeSlider({
+			wheelMode: "scroll",
+			bounds: {min: 0, max: 100}
+		});
+
+		el.rangeSlider("values", 30, 40);
+	},
+	function(){
 		this.getValues();
 		this.getPositions();
 		el.find(".ui-rangeSlider-container").trigger("mousewheel", [-10, 0, -10]);
-	},
-	function(){
+
 		same(el.rangeSlider("option", "wheelMode"), "scroll", "Wheelmode setter should have worked");
 		
 		ok($(".ui-rangeSlider-leftHandle").offset().left > this.minHandlerPos, "Left handle should have been moved");
@@ -202,7 +211,7 @@ var wheelModeScrollTest = new TestCase(
 		
 		ok(this.min() > this.values.min, "Scroll should have worked");
 		ok(this.max() > this.values.max, "Scroll should have worked");
-		same(this.min() - this.values.min, this.max() - this.values.max, "Scrolling must add or remove the same value on both ends");
+		equalEpsilon(this.min() - this.values.min, this.max() - this.values.max, 1e-3, "Scrolling must add or remove the same value on both ends");
 	}
 );
 
@@ -214,7 +223,7 @@ var wheelModeSetterTest = new TestCase(
 		same(el.rangeSlider("option", "wheelMode"), "scroll", "Wheelmode setter with a bad value should not have worked");
 		
 		el.rangeSlider("option", "wheelMode", null);
-		same(el.rangeSlider("option", "wheelMode"), null, "Wheelmode setter with a bad value should not have worked");
+		same(el.rangeSlider("option", "wheelMode"), null, "Null wheelmode should disable mouse wheel");
 	}
 );
 
