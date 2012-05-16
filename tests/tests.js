@@ -351,15 +351,17 @@ var minMaxSetter = new TestCase(
 
 var boundsSetter = new TestCase(
 	"Bounds setter",
-	function(){},
 	function(){
-		var b = {min: 10, max: 20}
+		this.bounds = {min: 10, max: 20}
+		this.result = el.rangeSlider("bounds", this.bounds.min, this.bounds.max);
+		this.delay = 500;
+	},
+	function(){
+		deepEqual(this.result, this.bounds, "Should return the new value");
+		deepEqual(el.rangeSlider("bounds"), this.bounds, "Should return the value");
 		
-		deepEqual(el.rangeSlider("bounds", b.min, b.max), b, "Should return the new value");
-		deepEqual(el.rangeSlider("bounds"), b, "Should return the value");
-		
-		same(el.rangeSlider("min"), b.min, "Min value should have been changed");
-		same(el.rangeSlider("max"), b.max, "Max value should have been changed");
+		same(el.rangeSlider("min"), this.bounds.min, "Min value should have been changed");
+		same(el.rangeSlider("max"), this.bounds.max, "Max value should have been changed");
 	}
 );
 

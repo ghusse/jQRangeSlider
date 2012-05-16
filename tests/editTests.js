@@ -123,7 +123,7 @@
 		},
 
 		function(){
-			ok(this.min() == 40 || this.max() == 40, "Value should have been set")
+			ok(this.min() == 40 || this.max() == 40, "Value should have been set " + this.min() + " " + this.max());
 		}
 	);
 

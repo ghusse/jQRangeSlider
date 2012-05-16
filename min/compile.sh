@@ -14,10 +14,13 @@ BASEMIN=${MINDIR}jQRangeSlider-min.js
 DATE=${SRCDIR}jQDateRangeSlider.js
 DATEMIN=${SRCDIR}jQDateRangeSlider-min.js
 EDIT=${SRCDIR}jQEditRangeSlider.js
+EDITLABEL=${SRCDIR}jQEditRangeSliderLabel.js
 EDITMIN=${SRCDIR}jQEditRangeSlider-min.js
 ALLMIN=${MINDIR}jQAllRangeSliders-min.js
 
 CORE="\"${TOUCH}\" \"${DRAGGABLE}\" \"${BAR}\" \"${LABEL}\" \"${HANDLE}\" \"${BASE}\""
+DATECOMPONENTS="\"${DATEHANDLE}\" \"${DATE}\""
+EDITCOMPONENTS="\"${EDITLABEL}\" \"${EDIT}\""
 
 if [ ! -d "${MINDIR}" ]; then
 	mkdir ${MINDIR}
@@ -27,12 +30,12 @@ fi
 
 echo -----
 
-./compress.sh jQDateRangeSlider "${DATEMIN}" ${CORE} "${DATEHANDLE}" "${DATE}"
+./compress.sh jQDateRangeSlider "${DATEMIN}" ${CORE} ${DATECOMPONENTS} 
 
-#echo -----
+echo -----
 
-#./compress.sh jQEditRangeSlider "${EDITMIN}" "${EDIT}"
+./compress.sh jQEditRangeSlider "${EDITMIN}" ${CORE} ${EDITCOMPONENTS} 
 
-#echo -----
+echo -----
 
-#./compress.sh jQAllRangeSliders "${ALLMIN}" "${BASE}" "${DATE}" "${EDIT}"
+./compress.sh jQAllRangeSliders "${ALLMIN}" ${CORE} ${DATECOMPONENTS} ${EDITCOMPONENTS}
