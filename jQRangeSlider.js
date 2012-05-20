@@ -488,7 +488,11 @@
 		 * Public methods
 		 */
 		values: function(min, max){
-			return this._bar("values", min, max);
+			var val = this._bar("values", min, max);
+
+			this._changed(false);
+
+			return val;
 		},
 
 		min: function(min){
