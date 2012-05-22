@@ -60,7 +60,7 @@
 				label = $.ui.rangeSlider.prototype._createLabel.apply(this, [label, whichOne]);
 
 				var input = $("<input type='" + this.options.type + "' class='ui-editRangeSlider-inputValue' />")
-					.attr("name", whichOne);
+					.attr("name", this._getInputName(whichOne));
 
 				this._inputs.push(input);
 
@@ -75,6 +75,10 @@
 			}
 
 			return label;
+		},
+		
+		_getInputName: function(whichOne){
+			return (this.element.attr("id") || "") + whichOne;
 		},
 
 		_onChange: function(){
@@ -113,7 +117,6 @@
 			if (Math.abs(values.min - current.min) < Math.abs(values.max - current.max)){
 				moveMax = true;
 			}	
-
 
 			if (this.options.range.min !== false && this.options.range.min > difference){
 				if (moveMax){
