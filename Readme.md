@@ -171,6 +171,8 @@ On the other hand, it's not possible to set graphical steps when moving the rang
 
 Changelog
 ---------
+* 3.2: 2012-05-22
+	* Bug #27, generate better input names for editSlider. Names are based on the element id.
 * 3.1.1: 2012-05-07 eonlepapillon
 	* Fixed bug #22: Event 'userValuesChanged' is not triggered after zooming with wheelmouse
 * 3.1: 2012-04-16 nouvak@gmail.com
