@@ -490,7 +490,9 @@
 		values: function(min, max){
 			var val = this._bar("values", min, max);
 
-			this._changed(false);
+			if (typeof min !== "undefined" && typeof max !== "undefined"){
+				this._changed(false);
+			}
 
 			return val;
 		},

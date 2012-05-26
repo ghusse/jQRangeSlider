@@ -331,7 +331,8 @@
 		},
 
 		_log: function(e, data){
-			var line = $("<li />").appendTo(this._elements.log);
+			var line = $("<li />").appendTo(this._elements.log)
+				.addClass(e.type);
 
 			line.text(e.type + " " + this._returnValues(data));
 			this._elements.log.scrollTop(this._elements.log[0].scrollHeight);
