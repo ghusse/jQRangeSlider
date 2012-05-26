@@ -55,6 +55,10 @@ hr{
 	margin-bottom:50px;
 }
 
+.sliderZone{
+	height:40px;
+}
+
 pre{
 	overflow:auto;
 	margin-right:400px;
