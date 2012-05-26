@@ -6,6 +6,12 @@ jQRangeSlider
 	* Native support of touch devices (tested on iOS and Android)
 	* Removed min/max values Changing/Changed events. Use valuesChanged or valuesChanging instead.
 	* Event log in demo
+* 3.2: 2012-05-22
+	* Bug #27, generate better input names for editSlider. Names are based on the element id.
+* 3.1.1: 2012-05-07 eonlepapillon
+	* Fixed bug #22: Event 'userValuesChanged' is not triggered after zooming with wheelmouse
+* 3.1: 2012-04-16 nouvak@gmail.com
+	* Added the new "userValuesChanged" event that is triggered only on the value changes that were initiated by the user ( e.g. by modifying the range with the mouse).
 * 3.0.2: 2012-03-03
 	* EditSlider: set values on focus lost
 	* editSlider unit tests
