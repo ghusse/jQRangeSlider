@@ -1,7 +1,8 @@
 jQRangeSlider
 -------------
 
-* 4.0: alpha
+* 4.0: 2012-05-26
+	* Massive rewrite of jQRangeSlider
 	* Steps !
 	* Native support of touch devices (tested on iOS and Android)
 	* Removed min/max values Changing/Changed events. Use valuesChanged or valuesChanging instead.
