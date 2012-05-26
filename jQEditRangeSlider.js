@@ -64,6 +64,7 @@
 		_addPropertiesToParameter: function(parameters){
 			parameters.type = this.options.type;
 			parameters.step = this.options.step;
+			parameters.id = this.element.attr("id");
 
 			return parameters;
 		},

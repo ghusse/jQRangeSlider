@@ -19,25 +19,27 @@
 			show: "show",
 			durationIn: 0,
 			durationOut: 500,
-			delayOut: 500
+			delayOut: 500,
+			isLeft: false
 		},
 
 		cache: null,
 		_positionner: null,
 
 		_create: function(){
-			var left = this._handle("option", "isLeft");
+			this.options.isLeft = this._handle("option", "isLeft");
 
 			this.element
 				.addClass("ui-rangeSlider-label")
-				.toggleClass("ui-rangeSlider-leftLabel", left)
-				.toggleClass("ui-rangeSlider-rightLabel", !left)
 				.css("position", "absolute")
 				.css("display", "block");
 
+			this._toggleClass();
+
 			this.options.handle
 				.bind("moving", $.proxy(this._onMoving, this))
-				.bind("update", $.proxy(this._onUpdate, this));
+				.bind("update", $.proxy(this._onUpdate, this))
+				.bind("switch", $.proxy(this._onSwitch, this));
 
 			if (this.options.show !== "show"){
 				this.element.hide();
@@ -91,6 +93,11 @@
 			this.element.text(text);
 		},
 
+		_toggleClass: function(){
+			this.element.toggleClass("ui-rangeSlider-leftLabel", this.options.isLeft)
+				.toggleClass("ui-rangeSlider-rightLabel", !this.options.isLeft);
+		},
+
 		/*
 		 * Event binding
 		 */
@@ -102,6 +109,13 @@
 			if (this.options.show === "show"){
 				this._display(ui.value);
 			}
+		},
+
+		_onSwitch: function(event, isLeft){
+			this.options.isLeft = isLeft;
+			
+			this._toggleClass();
+			this._positionner.PositionLabels();
 		},
 
 		/*

@@ -155,6 +155,16 @@
 			ok(this.min() == 40 || this.max() == 40, "Value should have been set")
 		}
 	);
+	
+	var nameBasedOnId = new TestCase(
+		"#27 name based on id",
+		function(){
+		},
+		function(){ 
+			equal(el.find(".ui-rangeSlider-leftLabel input").attr("name"), "testleft");
+			equal(el.find(".ui-rangeSlider-rightLabel input").attr("name"), "testright");
+		}
+	);
 
 	var stepNumberCtor = new TestCase(
 		"Step option on ctor, with number inputs",
@@ -202,6 +212,7 @@
 		
 		typeCtor, setType, setInvalidType,
 		enterKeyBindingTest, clickBindingTest, clickBindingWithoutFocusTest, blurBinding,
+		nameBasedOnId,
 
 		destroy,
 		stepNumberCtor, stepNumberSetter,

@@ -41,9 +41,7 @@
 		},
 
 		_setOption: function(key, value){
-			$.ui.draggable.prototype._setOption.apply(this, [key, value]);
-
-			if (key === "isLeft" && (value === true || value === false)){
+			if (key === "isLeft" && (value === true || value === false) && value != this.options.isLeft){
 				this.options.isLeft = value;
 
 				this.element
@@ -51,6 +49,8 @@
 					.toggleClass("ui-rangeSlider-rightHandle", !this.options.isLeft);
 
 				this._position(this._value);
+
+				this.element.trigger("switch", this.options.isLeft);
 			} else if (key === "step" && this._checkStep(value)){
 				this.options.step = value;
 				this.update();
@@ -61,6 +61,8 @@
 				this.options.range = value;
 				this.update();
 			}
+
+			$.ui.draggable.prototype._setOption.apply(this, [key, value]);
 		},
 
 		_checkRange: function(range){

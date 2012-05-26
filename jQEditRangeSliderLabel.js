@@ -12,7 +12,8 @@
  	$.widget("ui.editRangeSliderLabel", $.ui.rangeSliderLabel, {
  		options: {
  			type: "text",
- 			step: false
+ 			step: false,
+ 			id: ""
  		},
 
  		_input: null,
@@ -39,6 +40,8 @@
  				.addClass("ui-editRangeSlider-inputValue")
  				.appendTo(this.element);
 
+ 			this._setInputName();
+
  			this._input.bind("keyup", $.proxy(this._onKeyUp, this));
  			this._input.blur($.proxy(this._onChange, this));
 
@@ -51,6 +54,18 @@
  			}
 
  			this._input.val(this._text);
+ 		},
+
+ 		_setInputName: function(){
+ 			var name = this.options.isLeft ? "left" : "right";
+
+ 			this._input.attr("name", this.options.id + name);
+ 		},
+
+ 		_onSwitch: function(event, isLeft){
+ 			$.ui.rangeSliderLabel.prototype._onSwitch.apply(this, [event, isLeft]);
+
+ 			this._setInputName();
  		},
 
  		_destroyInput: function(){
