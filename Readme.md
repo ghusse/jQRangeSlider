@@ -52,7 +52,7 @@ Range slider creation:
 
 	$("#element").dateRangeSlider({/*options*/});
 
-# A editable range slider
+# An editable range slider
 Javascript reference for development:
 
 	<script type="text/javascript" src="jQRangeSlider.js"></script>
