@@ -1,5 +1,5 @@
-/**!
- * @license jQRangeSlider
+/**
+ * jQRangeSlider
  * A javascript slider selector that supports dates
  *
  * Copyright (C) Guillaume Gautreau 2012
@@ -16,8 +16,6 @@
 			round: 1
 		},
 
-		_inputs: [],
-
 		_create: function(){
 			$.ui.rangeSlider.prototype._create.apply(this);
 
@@ -31,132 +29,64 @@
 		},
 
 		_setOption: function(key, value){
-			if (key === "type" && this._isValidInputType(value)){
-				this.options.type = value;
+			if (key === "type" || key === "step"){
+				this._setLabelOption(key, value);
+			}	
 
-				if (this.labels != null){
-					this._destroyLabels();
-					this._createLabels();
-				}
-			} else if (key === "round" && this._isValidRoundValue(value)){
-				this.options.round = value;
-				this._fillInLabels();
+			if (key === "type"){
+				this.options[key] = this.labels.left === null ? value : this._leftLabel("option", key);
 			}
 
 			$.ui.rangeSlider.prototype._setOption.apply(this, [key, value]);
 		},
 
-		_isValidInputType: function(type){
-			return (type =="text" || type == "number") && type != this.options.type;
-		},
-
-		_isValidRoundValue: function(value){
-			return (typeof value === "number" && value > 0 )
-				|| value === false;
-		},
-
-		_createLabel: function(label, whichOne){
-			if (label == null){
-				label = $.ui.rangeSlider.prototype._createLabel.apply(this, [label, whichOne]);
-
-				var input = $("<input type='" + this.options.type + "' class='ui-editRangeSlider-inputValue' />")
-					.attr("name", this._getInputName(whichOne));
-
-				this._inputs.push(input);
-
-				if (this.options.type === "number"){
-					input.click($.proxy(this._onChange, this));
-				}
-
-				input.keyup($.proxy(this._onKeyUp, this));
-				input.blur($.proxy(this._onChange, this));
-
-				label.append(input);
-			}
-
-			return label;
-		},
-		
-		_getInputName: function(whichOne){
-			return (this.element.attr("id") || "") + whichOne;
-		},
-
-		_onChange: function(){
-			if (this._inputs.length == 2){
-				var first = this._returnCheckedValue(this._inputs[0].val()),
-					second = this._returnCheckedValue(this._inputs[1].val()),
-					values;
-
-				if (first !== false && second !== false){
-					values = this._returnCheckedValues(first, second);
-
-					this.values(values.min, values.max);
-				}
+		_setLabelOption: function(key, value){
+			if (this.labels.left !== null){
+				this._leftLabel("option", key, value);
+				this._rightLabel("option", key, value);
 			}
 		},
 
-		_returnCheckedValue: function(val){
-			var floatValue = parseFloat(val);
+		_labelType: function(){
+			return "editRangeSliderLabel";
+		},
 
-			if (isNaN(floatValue) || floatValue.toString() != val){
-				return false;
+		_createLabel: function(label, handle){
+			var result = $.ui.rangeSlider.prototype._createLabel.apply(this, [label, handle]);
+			
+			if (label === null){
+				result.bind("valueChange", $.proxy(this._onValueChange, this));
 			}
 
-			floatValue = Math.min(this.options.bounds.max, floatValue);
-			floatValue = Math.max(this.options.bounds.min, floatValue);
-
-			return floatValue;
+			return result;
 		},
 
-		_returnCheckedValues: function(first, second){
-			var values = {min: Math.min(first, second), max: Math.max(first, second)},
-				difference = values.max - values.min,
-				current = this.values(),
-				moveMax = false;
+		_addPropertiesToParameter: function(parameters){
+			parameters.type = this.options.type;
+			parameters.step = this.options.step;
+			parameters.id = this.element.attr("id");
 
-			if (Math.abs(values.min - current.min) < Math.abs(values.max - current.max)){
-				moveMax = true;
-			}	
-
-			if (this.options.range.min !== false && this.options.range.min > difference){
-				if (moveMax){
-					values.max = values.min + this.options.range.min;
-				}else{
-					values.min = values.max - this.options.range.min;
-				}
-			} else if (this.options.range.max !== false && this.options.range.max < difference){
-				if (moveMax){
-					values.max = values.min + this.options.range.max;
-				}else{
-					values.min = values.max - this.options.range.max;
-				}
-			}			
-
-			return values;
+			return parameters;
 		},
 
-		_onKeyUp: function(e){
-			if (e.which == 13){
-				this._onChange(e);
-				return false;
+		_getLabelConstructorParameters: function(label, handle){
+			var parameters = $.ui.rangeSlider.prototype._getLabelConstructorParameters.apply(this, [label, handle]);
+
+			return this._addPropertiesToParameter(parameters);
+		},
+
+		_getLabelRefreshParameters: function(label, handle){
+			var parameters = $.ui.rangeSlider.prototype._getLabelRefreshParameters.apply(this, [label, handle]);
+
+			return this._addPropertiesToParameter(parameters);
+		},
+
+		_onValueChange: function(event, data){
+			if (data.isLeft){
+				this.min(data.value);
+			}else{
+				this.max(data.value);
 			}
-		},
-
-		_destroyLabels: function(){
-			this._inputs = [];
-			$.ui.rangeSlider.prototype._destroyLabels.apply(this);
-		},
-
-		_fillInLabel: function(label, value){
-			label.find("input").val(this._format(value));
-		},
-
-		_defaultFormat: function(value){
-			if (this.options.round !== false){
-				return Math.round(value / this.options.round) * this.options.round;
-			}
-
-			return value;
 		}
 	});
 

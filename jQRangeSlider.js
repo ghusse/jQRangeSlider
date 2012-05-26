@@ -1,5 +1,5 @@
-/**!
- * @license jQRangeSlider
+/**
+ * jQRangeSlider
  * A javascript slider selector that supports dates
  *
  * Copyright (C) Guillaume Gautreau 2012
@@ -22,10 +22,12 @@
 			durationIn: 0,
 			durationOut: 400,
 			delayOut: 200,
-			range: {min: false, max: false}
+			range: {min: false, max: false},
+			step: false
 		},
 
 		_values: null,
+		_valuesChanged: false,
 
 		// Created elements
 		bar: null,
@@ -38,39 +40,28 @@
 		changing: {min:false, max:false},
 		changed: {min:false, max:false},
 
-		// Scroll management
-		lastWheel : 0,
-		lastScroll: 0,
-		scrollCount: 0,
-
 		_create: function(){
-			this._values = this.options.defaultValues;
+			this._values = {
+				min: this.options.defaultValues.min,
+				max: this.options.defaultValues.max
+			};
+
 			this.labels = {left: null, right:null, leftDisplayed:true, rightDisplayed:true};
 			this.arrows = {left:null, right:null};
 			this.changing = {min:false, max:false};
 			this.changed = {min:false, max:false};
-			
-			this.leftContainment = $("<div class='ui-rangeSlider-handleContainment ui-rangeSlider-leftContainment' />")
-				.css("position", "absolute")
-				.css("top", 0)
-				.css("left", 0);
-			
-			this.rightContainment = $("<div class='ui-rangeSlider-handleContainment ui-rangeSlider-rightContainment' />")
-				.css("top", 0)
-				.css("left", 0);
 
-			this.leftHandle = $("<div class='ui-rangeSlider-handle  ui-rangeSlider-leftHandle' />")
-				.draggable({axis:"x", containment: this.leftContainment,
-					drag: $.proxy(this._handleMoved, this),
-					stop: $.proxy(this._handleStop, this)})
-				.css("position", "absolute")
-				.css("top", 0);
-			this.rightHandle = $("<div class='ui-rangeSlider-handle ui-rangeSlider-rightHandle' />")
-				.draggable({axis:"x", containment: this.rightContainment,
-					drag: $.proxy(this._handleMoved, this),
-					stop: $.proxy(this._handleStop, this)})
-				.css("position", "absolute")
-				.css("top", 0);
+			this.leftHandle = this._createHandle({
+					isLeft: true,
+					bounds: this.options.bounds,
+					value: this.options.defaultValues.min
+			});
+	
+			this.rightHandle = this._createHandle({
+				isLeft: false,
+				bounds: this.options.bounds,
+				value: this.options.defaultValues.max
+			});
 			
 			this.innerBar = $("<div class='ui-rangeSlider-innerBar' />")
 				.css("position", "absolute")
@@ -80,41 +71,36 @@
 			this.container = $("<div class='ui-rangeSlider-container' />")
 				.css("position", "absolute");
 
-			this.bar = $("<div class='ui-rangeSlider-bar' />")
-				.draggable({axis:"x",
-					drag: $.proxy(this._barMoved, this),
-					stop: $.proxy(this._barStop, this),
-					containment: this.container})
-				.css("position", "absolute")
-				.css("top", 0)
-				.bind("mousewheel", $.proxy(this._wheelOnBar, this));
+			this.bar = $("<div />")[this._barType()]
+				({
+					leftHandle: this.leftHandle,
+					rightHandle: this.rightHandle,
+					values: {min: this.options.defaultValues.min, max: this.options.defaultValues.max},
+					type: this._handleType()
+				})
+				.bind("drag scroll zoom", $.proxy(this._changing, this))
+				.bind("stop", $.proxy(this._changed, this));
+
+			this.container
+				.append(this.innerBar)
+				.append(this.bar)
+				.append(this.leftHandle)
+			  .append(this.rightHandle)
+			  .appendTo(this.element);
 
 			this.arrows.left = $("<div class='ui-rangeSlider-arrow ui-rangeSlider-leftArrow' />")
 				.css("position", "absolute")
 				.css("left", 0)
-				.bind("mousedown", $.proxy(this._startScrollLeft, this));
+				.appendTo(this.element)
+				.bind("mousedown touchstart", $.proxy(this._scrollLeftClick, this));
 
 			this.arrows.right = $("<div class='ui-rangeSlider-arrow ui-rangeSlider-rightArrow' />")
 				.css("position", "absolute")
 				.css("right", 0)
-				.bind("mousedown", $.proxy(this._startScrollRight, this));
+				.appendTo(this.element)
+				.bind("mousedown touchstart", $.proxy(this._scrollRightClick, this));
 
-			$(document).bind("mouseup", $.proxy(this._stopScroll, this));
-
-			this.container
-				.append(this.leftContainment)
-				.append(this.rightContainment)
-				.append(this.innerBar)
-				.append(this.bar)
-				.append(this.leftHandle)
-			  .append(this.rightHandle);
-
-			this.element
-				.append(this.container)
-				.append(this.arrows.left)
-				.append(this.arrows.right)
-				.addClass("ui-rangeSlider")
-				.bind("mousewheel", $.proxy(this._wheelOnContainer, this));
+			this.element.addClass("ui-rangeSlider");
 
 			if (this.element.css("position") !== "absolute"){
 				this.element.css("position", "relative");
@@ -127,28 +113,31 @@
 			}else{
 				this.element.addClass("ui-rangeSlider-withArrows");
 			}
-
 			if (this.options.valueLabels !== "hide"){
 				this._createLabels();
 			}else{
 				this._destroyLabels();
 			}
 
-			$(window).resize($.proxy(this.resize, this));
-
-			this.option(this.options);
+			this._bindResize();
 
 			setTimeout($.proxy(this.resize, this), 1);
 			setTimeout($.proxy(this._initValues, this), 1);
 		},
 
+		_bindResize: function(){
+			var that = this;
+
+			this._resizeProxy = function(e){
+				that.resize(e);
+			};
+
+			$(window).resize(this._resizeProxy);
+		},
+
 		_initWidth: function(){
 			this.container.css("width", this.element.width() - this.container.outerWidth(true) + this.container.width());
 			this.innerBar.css("width", this.container.width() - this.innerBar.outerWidth(true) + this.innerBar.width());
-			this.leftContainment.css("width", this.container.innerWidth())
-				.css("height", this.container.innerHeight());
-			this.rightContainment.css("width", this.container.innerWidth())
-				.css("height", this.container.innerHeight());
 		},
 
 		_initValues: function(){
@@ -164,64 +153,137 @@
 				{
 					this.options.defaultValues = value;
 				}
-			}else if (key === "wheelMode" && (value === "zoom" || value === "scroll" || value===null)){
-				this.options.wheelMode = value;
-			}else if (key === "wheelSpeed" && !isNaN(parseFloat(value)) && Math.abs(parseFloat(value)) <= 100){
-				this.options.wheelSpeed = parseFloat(value);
+			}else if (key === "wheelMode" || key === "wheelSpeed"){
+				this._bar("option", key, value);
+				this.options[key] = this._bar("option", key);
 			}else if (key === "arrows" && (value === true || value === false) && value !== this.options.arrows){
-				if (value){
-					this.element
-						.removeClass("ui-rangeSlider-noArrow")
-						.addClass("ui-rangeSlider-withArrows");
-					this.arrows.left.css("display", "block");
-					this.arrows.right.css("display", "block");
-				}else{
-					this.element
-						.addClass("ui-rangeSlider-noArrow")
-						.removeClass("ui-rangeSlider-withArrows");
-					this.arrows.left.css("display", "none");
-					this.arrows.right.css("display", "none");
-				}
-
-				this.options.arrows = value;
-				this._initWidth();
-				this._position();
-			}else if (key === "valueLabels" && (value === "hide" || value === "show" || value === "change")){
-				this.options.valueLabels = value;
-
-				if (value !== "hide"){
-					this._createLabels();
-				}else{
-					this._destroyLabels();
-				}
+				this._setArrowsOption(value);
+			}else if (key === "valueLabels"){
+				this._setLabelsOption(value);
+			}else if (key === "durationIn" || key === "durationOut" || key === "delayOut"){
+				this._setLabelsDurations(key, value);
 			}else if (key === "formatter" && value !== null && typeof value === "function"){
 				this.options.formatter = value;
-				this._position();
-			}else if (key === "bounds" && typeof value.min !== "undefined" && typeof value.max !== "undefined")
-			{
+				
+				if (this.options.valueLabels !== "hide"){
+					this._destroyLabels();
+					this._createLabels();
+				}
+			}else if (key === "bounds" && typeof value.min !== "undefined" && typeof value.max !== "undefined"){
 				this.bounds(value.min, value.max);
 			}else if (key === "range"){
-				if (value === false){
-					option.range = {min: false, max: false};
-					return;
-				}
-				
-				var newVal = value || {};
-				newVal.min = (parseFloat(newVal.min) === newVal.min || newVal.min === false ? newVal.min : option.range.min);
-				newVal.max = (parseFloat(newVal.max) === newVal.max || newVal.max === false ? newVal.max : option.range.max);
-				
-				option.range = newVal;
-				this._initWidth();
-				this._position();
+				this._bar("option", "range", value);
+				this.options.range = this._bar("option", "range");
+				this._changed(true);
+			}else if (key === "step"){
+				this.options.step = value;
+				this._leftHandle("option", "step", value);
+				this._rightHandle("option", "step", value);
+				this._changed(true);
 			}
 		},
 
-		_getPosition: function(value, handle){
-			return this._getLeftPosition(value, handle) + (handle === this.rightHandle ? handle.outerWidth(true) : 0);
+		_validProperty: function(object, name, defaultValue){
+			if (object === null || typeof object[name] === "undefined"){
+				return defaultValue;
+			}
+
+			return object[name];
 		},
-		
-		_getLeftPosition: function(value, handle){
-			return (value - this.options.bounds.min) * (this.container.innerWidth() - handle.outerWidth(true)) / (this.options.bounds.max - this.options.bounds.min);
+
+		_setLabelsOption: function(value){
+			if (value !== "hide" && value !== "show" && value !== "change"){
+				return;
+			}
+
+			this.options.valueLabels = value;
+
+			if (value !== "hide"){
+				this._createLabels();
+				this._leftLabel("update");
+				this._rightLabel("update");
+			}else{
+				this._destroyLabels();
+			}
+		},
+
+		_setArrowsOption: function(value){
+			if (value === true){
+				this.element
+					.removeClass("ui-rangeSlider-noArrow")
+					.addClass("ui-rangeSlider-withArrows");
+				this.arrows.left.css("display", "block");
+				this.arrows.right.css("display", "block");
+				this.options.arrows = true;
+			}else if (value === false){
+				this.element
+					.addClass("ui-rangeSlider-noArrow")
+					.removeClass("ui-rangeSlider-withArrows");
+				this.arrows.left.css("display", "none");
+				this.arrows.right.css("display", "none");
+				this.options.arrows = false;
+			}
+
+			this._initWidth();
+		},
+
+		_setLabelsDurations: function(key, value){
+			if (parseInt(value, 10) !== value) return;
+
+			if (this.labels.left !== null){
+				this._leftLabel("option", key, value);
+			}
+
+			if (this.labels.right !== null){
+				this._rightLabel("option", key, value);
+			}
+
+			this.options[key] = value;
+		},
+
+		_createHandle: function(options){
+			return $("<div />")
+				[this._handleType()](options)
+				.bind("drag", $.proxy(this._changing, this))
+				.bind("stop", $.proxy(this._changed, this));
+		},
+
+		_proxy: function(element, type, args){
+			var array = Array.prototype.slice.call(args);
+
+			return element[type].apply(element, array);
+		},
+
+		_handleType: function(){
+			return "rangeSliderHandle";
+		},
+
+		_barType: function(){
+			return "rangeSliderBar";
+		},
+
+		_bar: function(){
+			return this._proxy(this.bar, this._barType(), arguments);
+		},
+
+		_labelType: function(){
+			return "rangeSliderLabel";
+		},
+
+		_leftLabel: function(){
+			return this._proxy(this.labels.left, this._labelType(), arguments);
+		},
+
+		_rightLabel: function(){
+			return this._proxy(this.labels.right, this._labelType(), arguments);
+		},
+
+		_leftHandle: function(){
+			return this._proxy(this.leftHandle, this._handleType(), arguments);
+		},
+
+		_rightHandle: function(){
+			return this._proxy(this.rightHandle, this._handleType(), arguments);
 		},
 
 		_getValue: function(position, handle){
@@ -232,259 +294,109 @@
 			return position * (this.options.bounds.max - this.options.bounds.min) / (this.container.innerWidth() - handle.outerWidth(true)) + this.options.bounds.min;
 		},
 
-		_privateValues: function(min, max, isUserInitiated){
-			this._setValues(min, max, isUserInitiated);
-			this._position();
-
-			return this._values;
-		},
-
 		_trigger: function(eventName){
-			this.element.trigger(eventName, {
-					label: this.element,
-					values: this.values()
-			  });
+			var that = this;
+
+			setTimeout(function(){
+				that.element.trigger(eventName, {
+						label: that.element,
+						values: that.values()
+				  });
+			}, 1);
 		},
 
-		_position: function(){
-			var leftPosition = this._getPosition(this._values.min, this.leftHandle),
-				rightPosition = this._getPosition(this._values.max, this.rightHandle);
-
-			this._positionHandles();
-			this.bar
-				.css("left", leftPosition)
-				.css("width", rightPosition- leftPosition + this.bar.width() - this.bar.outerWidth(true));
-		},
-
-		_positionHandles: function(){
-			var left = this._getPosition(this._values.min, this.leftHandle),
-				right = this._getPosition(this._values.max, this.rightHandle) - this.rightHandle.outerWidth(true),
-				leftBounds = {min : this.options.bounds.min, max: this.options.bounds.max},
-				rightBounds = {min : this.options.bounds.min, max: this.options.bounds.max};
-				
-			this.leftHandle.css("left", left);
-			this.rightHandle.css("left", right);
-			
-			// Set min and max position according to range constraints
-			if (this.options.range.min !== false){
-				leftBounds.max = Math.max(this._values.max - this.options.range.min, this.options.bounds.min);
-				rightBounds.min = Math.min(this._values.min + this.options.range.min, this.options.bounds.max);
-			}
-			
-			if(this.options.range.max !== false){
-				leftBounds.min = Math.max(this._values.max - this.options.range.max, this.options.bounds.min);
-				rightBounds.max = Math.min(this._values.min + this.options.range.max, this.options.bounds.max);
-			}
-
-			left = Math.round(this._getLeftPosition(leftBounds.min, this.leftHandle));
-			this.leftContainment.css("margin-left", left)
-				.css("width", Math.round(this._getLeftPosition(leftBounds.max, this.leftHandle) + this.leftHandle.outerWidth(true)) - left);
-
-			left = Math.round(this._getLeftPosition(rightBounds.min, this.rightHandle));
-			this.rightContainment.css("margin-left", left)
-				.css("width", Math.round(this._getLeftPosition(rightBounds.max, this.rightHandle) + this.rightHandle.outerWidth(true)) - left);
-			this._positionLabels();
-		},
-
-		_barMoved: function(event, ui){
-			var left = ui.position.left,
-				right = left + this.bar.outerWidth(true);
-
-			this._setValues(this._getValue(left, this.leftHandle), this._getValue(right, this.rightHandle));
-			this._positionHandles();
-		},
-
-		_barStop: function(event, ui){
-			this._position();
-			this._prepareFiringChanged(true);
-		},
-
-		_switchHandles: function(){
-				var temp = this.leftHandle;
-				this.leftHandle = this.rightHandle;
-				this.rightHandle = temp;
-
-				this.leftHandle
-					.removeClass("ui-rangeSlider-rightHandle")
-					.addClass("ui-rangeSlider-leftHandle");
-				this.rightHandle
-					.addClass("ui-rangeSlider-rightHandle")
-					.removeClass("ui-rangeSlider-leftHandle");
-		},
-
-		_handleMoved: function(event, ui){
-			var min = this._values.min,
-				max = this._values.max;
-
-			if (ui.helper[0] === this.leftHandle[0]){
-					min = this._getValue(ui.position.left, this.leftHandle);
-			}else if (ui.helper[0] === this.rightHandle[0])
-			{
-				max = this._getValue(ui.position.left + ui.helper.outerWidth(true), this.rightHandle);
-			}else{
-				return;
-			}
-
-			if (min > max){
-				this._switchHandles();
-				var temp = min;
-				min = max;
-				max = temp;
-			}
-
-			this._privateValues(min, max);
-		},
-
-		_handleStop: function(event, ui){
-			this._position();
-			this._prepareFiringChanged(true);
-		},
-
-		_changing: function(min, max){
-			this._trigger("valuesChanging");
-
-			var show = false;
-			if (min && !this.changing.min){
-				this._trigger("minValueChanging");
-				this.changing.min = true;
-				show = true;
-			}
-
-			if (max && !this.changing.max){
-				this._trigger("maxValueChanging");
-				this.changing.max = true;
-				show = true;
-			}
-
-			if (show){
-				this._showLabels();
+		_changing: function(event, ui){
+			if(this._updateValues()){
+				this._trigger("valuesChanging");
+				this._valuesChanged = true;
 			}
 		},
 
-		_prepareFiringChanged: function(isUserInitiated){
-			this.lastWheel = Math.random();
-			var last = this.lastWheel;
-			setTimeout($.proxy(function(){this._fireChanged(last, isUserInitiated);}, this), 200);
-		},
+		_changed: function(isAutomatic){
+			if (this._updateValues() || this._valuesChanged){
+				this._trigger("valuesChanged");
 
-		_fireChanged: function(last, isUserInitiated){
-			if (this.lastWheel === last && !this.bar.hasClass("ui-draggable-dragging") && !this.leftHandle.hasClass("ui-draggable-dragging") && !this.rightHandle.hasClass("ui-draggable-dragging")){
-				var changed = false;
-				if (this.changing.min){
-					this.changing.min = false;
-					this._trigger("minValueChanged");
-					changed = true;
+				if (isAutomatic !== true){
+					this._trigger("userValuesChanged");					
 				}
 
-				if (this.changing.max){
-					this.changing.max = false;
-					this._trigger("maxValueChanged");
-					changed = true;
-				}
-
-				if (changed){
-					this._trigger("valuesChanged");
-				}
-				
-				if (changed && isUserInitiated) {
-					this._trigger("userValuesChanged");
-				}
-
-				this._hideLabels();
+				this._valuesChanged = false;
 			}
 		},
 
-		_setValuesHandles: function(min, max){
-			this._setValues(min, max);
-			this._positionHandles();
+		_updateValues: function(){
+			var left = this._leftHandle("value"),
+				right = this._rightHandle("value"),
+				min = this._min(left, right),
+				max = this._max(left, right),
+				changing = (min !== this._values.min || max !== this._values.max);
+
+			this._values.min = this._min(left, right);
+			this._values.max = this._max(left, right);
+
+			return changing;
 		},
 
-		_setValues: function(min, max, isUserInitiated){
-			var oldValues = this._values,
-				difference = Math.abs(max-min);
-
-			if (difference >= this.options.bounds.max - this.options.bounds.min){
-				this._values.min = this.options.bounds.min;
-				this._values.max = this.options.bounds.max;
-			}else{
-				var values = {min: Math.min(max, min), max:Math.max(min, max)};
-
-				if (values.min < this.options.bounds.min){
-					values.min = this.options.bounds.min;
-					values.max = values.min + difference;
-				}else if (values.max > this.options.bounds.max){
-					values.max = this.options.bounds.max;
-					values.min = values.max - difference;
-				}
-
-				this._values = values;
-			}
-
-			this._changing(oldValues.min !== this._values.min, oldValues.max !== this._values.max);
-			this._prepareFiringChanged(isUserInitiated || false);
+		_min: function(value1, value2){
+			return Math.min(value1, value2);
 		},
 
-		/*
-		 * Scrolling
-		 */
-		_startScrollLeft: function(event, ui){
-			this.lastScroll = Math.random();
-			this.scrollCount = 0;
-			this._continueScrollingRight(-1, this.lastScroll);
-		},
-
-		_startScrollRight: function(event, ui){
-			this.lastScroll = Math.random();
-			this.scrollCount = 0;
-			this._continueScrollingRight(1, this.lastScroll);
-		},
-
-		_continueScrollingRight: function(quantity, last){
-			if (last === this.lastScroll){
-				var factor = Math.min(Math.floor(this.scrollCount / 5) + 1, 4) / 4;
-
-				this.scrollRight(quantity * factor);
-				this.scrollCount++;
-				setTimeout($.proxy(function(){this._continueScrollingRight(quantity, last);}, this), 50);
-			}
-		},
-
-		_stopScroll: function(event, ui){
-			this.lastScroll = Math.random();
-		},
-
-		/*
-		 * Mouse wheel
-		 */
-
-		_wheelOnBar: function(event, delta, deltaX, deltaY){
-			if (this.options.wheelMode === "zoom"){
-				this.zoomIn(-deltaY);
-
-				return false;
-			}
-		},
-
-		_wheelOnContainer: function(event, delta, deltaX, deltaY){
-			if (this.options.wheelMode === "scroll"){
-				this.scrollRight(-deltaY);
-
-				return false;
-			}
+		_max: function(value1, value2){
+			return Math.max(value1, value2);
 		},
 
 		/*
 		 * Value labels
 		 */
-		_createLabel: function(label, whichOne){
+		_createLabel: function(label, handle){
+			var params;
+
 			if (label === null){
-				label = $("<div class='ui-rangeSlider-label'/>")
-					.addClass("ui-rangeSlider-" + whichOne + "Label")
-					.css("position", "absolute");
-				this.element.append(label);
+				params = this._getLabelConstructorParameters(label, handle);
+				label = $("<div />")
+					.appendTo(this.element)
+					[this._labelType()](params);
+			}else{
+				params = this._getLabelRefreshParameters(label, handle);
+
+				label[this._labelType()](params);
 			}
 
 			return label;
+		},
+
+		_getLabelConstructorParameters: function(label, handle){
+			return {
+				handle: handle,
+				handleType: this._handleType(),
+				formatter: this._getFormatter(),
+				show: this.options.valueLabels,
+				durationIn: this.options.durationIn,
+				durationOut: this.options.durationOut,
+				delayOut: this.options.delayOut
+			};
+		},
+
+		_getLabelRefreshParameters: function(label, handle){
+			return {
+				formatter: this._getFormatter(),
+				show: this.options.valueLabels,
+				durationIn: this.options.durationIn,
+				durationOut: this.options.durationOut,
+				delayOut: this.options.delayOut
+			};
+		},
+
+		_getFormatter: function(){
+			if (this.options.formatter === false || this.options.formatter === null){
+				return this._defaultFormatter;
+			}
+
+			return this.options.formatter;
+		},
+
+		_defaultFormatter: function(value){
+			return Math.round(value);
 		},
 
 		_destroyLabel: function(label){
@@ -497,24 +409,10 @@
 		},
 
 		_createLabels: function(){
-			this.labels.left = this._createLabel(this.labels.left, "left");
-			this.labels.right = this._createLabel(this.labels.right, "right");
+			this.labels.left = this._createLabel(this.labels.left, this.leftHandle);
+			this.labels.right = this._createLabel(this.labels.right, this.rightHandle);
 
-			if (this.options.valueLabels === "change"){
-				this.labels.left.css("display", "none");
-				this.labels.right.css("display", "none");
-				this.labels.leftDisplayed = false;
-				this.labels.rightDisplayed = false;
-			}else{
-				this.labels.leftDisplayed = true;
-				this.labels.rightDisplayed = true;
-				this.labels.left.css("display", "block");
-				this.labels.right.css("display", "block");
-
-				this._position();
-			}
-
-			this._positionLabels();
+			this._leftLabel("pair", this.labels.right);
 		},
 
 		_destroyLabels: function(){
@@ -522,144 +420,131 @@
 			this.labels.right = this._destroyLabel(this.labels.right);
 		},
 
-		_positionLabel: function(label, position){
-			var topPos = this.leftHandle.offset().top - label.outerHeight(true),
-				parent = label.offsetParent(),
-				leftPos = position - parent.offset().left;
-
-			topPos = topPos - parent.offset().top;
-
-			label
-				.css("left", leftPos)
-				.css("top", topPos);
+		/*
+		 * Scrolling
+		 */
+		_stepRatio: function(){
+			return this._leftHandle("stepRatio");
 		},
 
-		_fillInLabel: function(label, value){
-			label.text(this._format(value));
+		_scrollRightClick: function(e){
+			e.preventDefault();
+			this._bar("startScroll");
+			this._bindStopScroll();
+
+			this._continueScrolling("scrollRight", 4 * this._stepRatio(), 1);
 		},
 
-		_fillInLabels: function(){
-			this._fillInLabel(this.labels.left, this._values.min);
-			this._fillInLabel(this.labels.right, this._values.max);
-		},
+		_continueScrolling: function(action, timeout, quantity, timesBeforeSpeedingUp){
+			this._bar(action, quantity);
+			timesBeforeSpeedingUp = timesBeforeSpeedingUp || 5;
+			timesBeforeSpeedingUp--;
 
-		_positionLabels: function(){
-			if (this.labels.left !== null && this.labels.right !== null){
-				this._fillInLabels();
-				var minSize = this.labels.leftDisplayed ? this.labels.left.outerWidth(true) : 0,
-					maxSize = this.labels.rightDisplayed ? this.labels.right.outerWidth(true) : 0,
-					leftBound = 0,
-					rightBound = $(window).width() - maxSize,
-					minLeft = Math.max(leftBound, this.leftHandle.offset().left + this.leftHandle.outerWidth(true) / 2 - minSize / 2),
-					maxLeft = Math.min(rightBound, this.rightHandle.offset().left + this.rightHandle.outerWidth(true) / 2 - maxSize / 2);
+			var that = this,
+				minTimeout = 16,
+				maxQuantity = Math.max(1, 4 / this._stepRatio());
 
-				// Need to find a better position
-				if (minLeft + minSize >= maxLeft){
-					var diff =  minLeft + minSize - maxLeft;
-					minLeft = Math.max(leftBound, minLeft - diff / 2);
-					maxLeft = Math.min(rightBound, minLeft + minSize);
-					minLeft = Math.max(leftBound, maxLeft - minSize);
+			this._scrollTimeout = setTimeout(function(){
+				if (timesBeforeSpeedingUp === 0){
+					if (timeout > minTimeout){
+						timeout = Math.max(minTimeout, timeout / 1.5);	
+					} else {
+						quantity = Math.min(maxQuantity, quantity * 2);
+					}
+					
+					timesBeforeSpeedingUp = 5;
 				}
 
-				if (this.labels.leftDisplayed) this._positionLabel(this.labels.left, minLeft);
-				if (this.labels.rightDisplayed) this._positionLabel(this.labels.right, maxLeft);
-			}
+				that._continueScrolling(action, timeout, quantity, timesBeforeSpeedingUp);
+			}, timeout);
 		},
 
-		_format: function(value){
-			if (typeof this.options.formatter !== "undefined" && this.options.formatter !== null){
-				return this.options.formatter(value);
-			}else{
-				return this._defaultFormat(value);
-			}
+		_scrollLeftClick: function(e){
+			e.preventDefault();
+
+			this._bar("startScroll");
+			this._bindStopScroll();
+
+			this._continueScrolling("scrollLeft", 4 * this._stepRatio(), 1);
 		},
 
-		_defaultFormat: function(value){
-			return Math.round(value);
+		_bindStopScroll: function(){
+			var that = this;
+			this._stopScrollHandle = function(e){
+				e.preventDefault();
+				that._stopScroll();
+			};
+
+			$(document).bind("mouseup touchend", this._stopScrollHandle);
 		},
 
-		_showLabels: function(){
-			if (this.options.valueLabels === "change" && !this.privateChange){
-				if (this.changing.min && !this.labels.leftDisplayed){
-					this.labels.left.stop(true, true).fadeIn(this.options.durationIn);
-					this.labels.leftDisplayed = true;
-				}
-
-				if (this.changing.max && !this.labels.rightDisplayed){
-					this.labels.rightDisplayed = true;
-					this.labels.right.stop(true, true).fadeIn(this.options.durationIn);
-				}
-			}
-		},
-
-		_hideLabels: function(){
-			if (this.options.valueLabels === "change" && this.labels.left !== null && this.labels.right !== null){
-				this.labels.leftDisplayed = false;
-				this.labels.rightDisplayed = false;
-				this.labels.left.stop(true, true).delay(this.options.delayOut).fadeOut(this.options.durationOut);
-				this.labels.right.stop(true, true).delay(this.options.delayOut).fadeOut(this.options.durationOut);
-			}
+		_stopScroll: function(){
+			$(document).unbind("mouseup touchend", this._stopScrollHandle);
+			this._bar("stopScroll");
+			clearTimeout(this._scrollTimeout);
 		},
 
 		/*
 		 * Public methods
 		 */
 		values: function(min, max){
-			if (typeof min !== "undefined" && typeof max !== "undefined")
-			{
-				this.internalChange = false;
-				this._privateValues(min,max);
-				this.internalChange = true;
+			var val = this._bar("values", min, max);
+
+			if (typeof min !== "undefined" && typeof max !== "undefined"){
+				this._changed(false);
 			}
 
-			return this._values;
+			return val;
 		},
 
 		min: function(min){
-			return this.values(min, this._values.max).min;
+			this._values.min = this.values(min, this._values.max).min;
+
+			return this._values.min;
 		},
 
 		max: function(max){
-			return this.values(this._values.min, max).max;
+			this._values.max = this.values(this._values.min, max).max;
+
+			return this._values.max;
 		},
 		
 		bounds: function(min, max){
 			if ((typeof min !== "undefined") && (typeof max !== "undefined") 
 				&& parseFloat(min) === min && parseFloat(max) === max && min < max){
-				this.options.bounds = {min: min, max: max};
-				this.values(this._values.min, this._values.max);
+				
+				this._setBounds(min, max);
+				this._changed(true);
 			}
 			
 			return this.options.bounds;
 		},
 
-		zoomIn: function(quantity){
-			var diff = this._values.max - this._values.min,
-				min = this._values.min + quantity * this.options.wheelSpeed * diff / 200,
-				max = this._values.max - quantity * this.options.wheelSpeed * diff / 200;
+		_setBounds: function(min, max){
+			this.options.bounds = {min: min, max: max};
+			this._leftHandle("option", "bounds", this.options.bounds);
+			this._rightHandle("option", "bounds", this.options.bounds);
+			this._bar("option", "bounds", this.options.bounds);
+		},
 
-			this._privateValues(min, max, true);
+		zoomIn: function(quantity){
+			this._bar("zoomIn", quantity)
 		},
 
 		zoomOut: function(quantity){
-			this.zoomIn(-quantity);
+			this._bar("zoomOut", quantity);
 		},
 
 		scrollLeft: function(quantity){
-			if (typeof quantity === 'undefined')
-				quantity = 1;
-			this.scrollRight(-quantity);
+			this._bar("startScroll");
+			this._bar("scrollLeft", quantity);
+			this._bar("stopScroll");
 		},
 
 		scrollRight: function(quantity){
-			if (typeof quantity === "undefined")
-				quantity = 1;
-
-			var diff = this._values.max - this._values.min,
-				min = this._values.min + quantity * this.options.wheelSpeed * diff / 100,
-				max = this._values.max + quantity * this.options.wheelSpeed * diff / 100;
-
-			this._privateValues(min, max);
+			this._bar("startScroll");
+			this._bar("scrollRight", quantity);
+			this._bar("stopScroll");
 		},
 		
 		/**
@@ -667,7 +552,8 @@
 		 */
 		resize: function(){
 			this._initWidth();
-			this._position();
+			this._leftHandle("update");
+			this._rightHandle("update");
 		},
 
 		destroy: function(){
@@ -683,6 +569,8 @@
 			this.element.removeClass("ui-rangeSlider");
 			this._destroyLabels();
 			delete this.options;
+
+			$(window).unbind("resize", this._resizeProxy);
 
 			$.Widget.prototype.destroy.apply(this, arguments);
 		}

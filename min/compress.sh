@@ -14,3 +14,5 @@ done
 
 echo Compile $1
 java -jar ${COMPILER} ${JS} --js_output_file=${BASEMIN} ${OPTIONS}
+
+echo -e '0r header.js\nw' | ed -s ${BASEMIN}

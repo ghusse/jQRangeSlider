@@ -1,6 +1,6 @@
 {
 	name: "jQRangeSlider",
-	version: "3.2",
+	version: "4.0",
 	title: "jQRangeSlider: A javascript slider selector that supports dates",
 	author: "Guillaume Gautreau",
 	licenses: [

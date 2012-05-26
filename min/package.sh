@@ -22,6 +22,7 @@ cp -R ${SRCDIR}/demo ${DIR}
 cp ${SRCDIR}/GPL-License.txt ${DIR}
 cp ${SRCDIR}/MIT-License.txt ${DIR}
 cp ${SRCDIR}/Readme.md ${DIR}
+cp ${SRCDIR}/History.md ${DIR}
 
 # Copy libs
 DIRLIB=${DIR}/lib

@@ -27,8 +27,9 @@ var defaultCtorTest = new TestCase(
 	},
 	function() {
 		// Default values tests
-		deepEqual(el.rangeSlider("option", "bounds"), { min:0, max:100 }, "Default bounds should be 0-100");
-		deepEqual(el.rangeSlider("option", "defaultValues"), {min:20, max:50}, "Default values should be 20-50");
+		deepEqualEpsilon(el.rangeSlider("option", "bounds"), { min:0, max:100 }, 1e-3, "Default bounds should be 0-100");
+		deepEqualEpsilon(el.rangeSlider("option", "bounds"), { min:0, max:100 }, 1e-3, "Default bounds should be 0-100");
+		deepEqualEpsilon(el.rangeSlider("option", "defaultValues"), {min:20, max:50}, 1e-3, "Default values should be 20-50");
 		same(el.rangeSlider("option", "wheelMode"), null, "Default wheel mode should be empty");
 		same(el.rangeSlider("option", "wheelSpeed"), 4, "Default wheel mode should be empty");
 		ok(el.rangeSlider("option", "arrows"), "Arrows should be activated by default");
@@ -59,8 +60,8 @@ var defaultCtorTest = new TestCase(
 		same($(".ui-rangeSlider-container").outerWidth(true), el.innerWidth(), "Container");
 		
 		// Values
-		same(this.min(), 20, "Values should be equal to the default values");
-		same(this.max(), 50, "Values should be equal to the default values");
+		equalEpsilon(this.min(), 20, 1e-3, "Values should be equal to the default values");
+		equalEpsilon(this.max(), 50, 1e-3, "Values should be equal to the default values");
 		
 	}
 );
@@ -166,12 +167,15 @@ var changeBoundsTest = new TestCase(
 var wheelModeZoomTest = new TestCase(
 	"Zoom wheel mode",
 	function(){
+		el.rangeSlider("option", "bounds", {min: 0, max: 100});
+		el.rangeSlider("option", "values", {min: 30, max: 40});
 		el.rangeSlider("option", "wheelMode", "zoom");
+	},
+	function(){
 		this.getPositions();
 		this.getValues();
 		$(".ui-rangeSlider-bar").trigger("mousewheel", [-10, 0, -10]);
-	},
-	function(){
+
 		same(el.rangeSlider("option", "wheelMode"), "zoom", "Wheelmode setter should have worked");
 		ok($(".ui-rangeSlider-leftHandle").offset().left > this.minHandlerPos, "Left handle should have been moved");
 		ok($(".ui-rangeSlider-rightHandle").offset().left < this.maxHandlerPos, "Right handle should have been moved");
@@ -186,12 +190,18 @@ var wheelModeZoomTest = new TestCase(
 var wheelModeScrollTest = new TestCase(
 	"Scroll wheel mode",
 	function(){
-		el.rangeSlider("option", "wheelMode", "scroll");
+		el.rangeSlider({
+			wheelMode: "scroll",
+			bounds: {min: 0, max: 100}
+		});
+
+		el.rangeSlider("values", 30, 40);
+	},
+	function(){
 		this.getValues();
 		this.getPositions();
 		el.find(".ui-rangeSlider-container").trigger("mousewheel", [-10, 0, -10]);
-	},
-	function(){
+
 		same(el.rangeSlider("option", "wheelMode"), "scroll", "Wheelmode setter should have worked");
 		
 		ok($(".ui-rangeSlider-leftHandle").offset().left > this.minHandlerPos, "Left handle should have been moved");
@@ -201,7 +211,7 @@ var wheelModeScrollTest = new TestCase(
 		
 		ok(this.min() > this.values.min, "Scroll should have worked");
 		ok(this.max() > this.values.max, "Scroll should have worked");
-		same(this.min() - this.values.min, this.max() - this.values.max, "Scrolling must add or remove the same value on both ends");
+		equalEpsilon(this.min() - this.values.min, this.max() - this.values.max, 1e-3, "Scrolling must add or remove the same value on both ends");
 	}
 );
 
@@ -213,7 +223,7 @@ var wheelModeSetterTest = new TestCase(
 		same(el.rangeSlider("option", "wheelMode"), "scroll", "Wheelmode setter with a bad value should not have worked");
 		
 		el.rangeSlider("option", "wheelMode", null);
-		same(el.rangeSlider("option", "wheelMode"), null, "Wheelmode setter with a bad value should not have worked");
+		same(el.rangeSlider("option", "wheelMode"), null, "Null wheelmode should disable mouse wheel");
 	}
 );
 
@@ -236,7 +246,7 @@ var rangeSetterTest = new TestCase(
 	"Range constraints",
 	function(){},
 	function(){
-		var def = {min: false, max: false};
+		var def = false;
 		el.rangeSlider("option", "range", null);
 		deepEqual(el.rangeSlider("option", "range"), def, "Default value should be an object");
 		
@@ -244,10 +254,7 @@ var rangeSetterTest = new TestCase(
 		deepEqual(el.rangeSlider("option", "range"), def, "Default value should be an object");
 		
 		el.rangeSlider("option", "range", {min: 3});
-		deepEqual(el.rangeSlider("option", "range"), {min: 3, max:false}, "Default value for max value should be false");
-		
-		el.rangeSlider("option", "range", {min: "error", max:"error"});
-		deepEqual(el.rangeSlider("option", "range"), {min:3, max:false}, "Default value should be an object");
+		deepEqual(el.rangeSlider("option", "range"), {min: 3, max: false}, "Default value for max value should be false");
 		
 		el.rangeSlider("option", "range", {min: 3, max: 4});
 		deepEqual(el.rangeSlider("option", "range"), {min: 3, max: 4}, "Setter should work");
@@ -256,7 +263,7 @@ var rangeSetterTest = new TestCase(
 		deepEqual(el.rangeSlider("option", "range"), {min: false, max: 4}, "Setter should only change sent values");
 		
 		el.rangeSlider("option", "range", false);
-		deepEqual(el.rangeSlider("option", "range"), def, "Default value should be an object");
+		deepEqual(el.rangeSlider("option", "range"), def, "Range deactivation should work");
 	}
 );
 
@@ -311,6 +318,19 @@ var valuesSetter = new TestCase(
 	}
 );
 
+var changeValuesTest = new TestCase(
+	"Change values",
+	function(){
+		el.rangeSlider("values", 100, 100);
+		el.rangeSlider("values", 20, 50);
+	},
+	function(){
+		var values = {min: 20, max: 50};
+
+		deepEqualEpsilon(el.rangeSlider("values"), values, 1e-3, "Values should be correct");
+	}
+);
+
 var minMaxSetter = new TestCase(
 	"Min & max setters",
 	function(){
@@ -321,25 +341,27 @@ var minMaxSetter = new TestCase(
 		this.maxResult = el.rangeSlider("max", this.max);
 	},
 	function(){
-		same(this.minResult, this.min, "Min setter should return the new value");
-		same(this.maxResult, this.max, "Max setter should return the new value");
+		equalEpsilon(this.minResult, this.min, 1e-3, "Min setter should return the new value");
+		equalEpsilon(this.maxResult, this.max, 1e-3, "Max setter should return the new value");
 		
-		same(el.rangeSlider("min"), this.min, "Min getter should return the new value");
-		same(el.rangeSlider("max"), this.max, "Max getter should return the new value");
+		equalEpsilon(el.rangeSlider("min"), this.min, 1e-3, "Min getter should return the new value");
+		equalEpsilon(el.rangeSlider("max"), this.max, 1e-3, "Max getter should return the new value");
 	}
 );
 
 var boundsSetter = new TestCase(
 	"Bounds setter",
-	function(){},
 	function(){
-		var b = {min: 10, max: 20}
+		this.bounds = {min: 10, max: 20}
+		this.result = el.rangeSlider("bounds", this.bounds.min, this.bounds.max);
+		this.delay = 500;
+	},
+	function(){
+		deepEqual(this.result, this.bounds, "Should return the new value");
+		deepEqual(el.rangeSlider("bounds"), this.bounds, "Should return the value");
 		
-		deepEqual(el.rangeSlider("bounds", b.min, b.max), b, "Should return the new value");
-		deepEqual(el.rangeSlider("bounds"), b, "Should return the value");
-		
-		same(el.rangeSlider("min"), b.min, "Min value should have been changed");
-		same(el.rangeSlider("max"), b.max, "Max value should have been changed");
+		same(el.rangeSlider("min"), this.bounds.min, "Min value should have been changed");
+		same(el.rangeSlider("max"), this.bounds.max, "Max value should have been changed");
 	}
 );
 
@@ -370,6 +392,7 @@ var zoomOutTest = new TestCase(
 var scrollLeftTest = new TestCase(
 	"Scroll left",
 	function(){
+		el.rangeSlider("values", 12, 13);
 		this.getValues();
 		el.rangeSlider("scrollLeft", 2);
 	},
@@ -382,6 +405,7 @@ var scrollLeftTest = new TestCase(
 var scrollRightTest = new TestCase(
 	"Scroll right",
 	function(){
+		el.rangeSlider("values", 12, 13);
 		this.getValues();
 		el.rangeSlider("scrollRight", 2);
 	},
@@ -399,7 +423,7 @@ var issue12 = new TestCase(
 		var leftHandle = el.find(".ui-rangeSlider-leftHandle");
 		
 		leftHandle.simulate("drag", {
-			dx: el.find(".ui-rangeSlider-container").innerWidth() - leftHandle.position().left - leftHandle.outerWidth(true),
+			dx: el.find(".ui-rangeSlider-container").innerWidth() - leftHandle.position().left,
 			dy: 0
 		});
 				
@@ -449,6 +473,7 @@ var rangeLimitMaxWithMinAndMax = new TestCase(
 var rangeLimitMin = new TestCase(
 	"Range limit (min)",
 	function(){
+		el.rangeSlider("option", "range", false);
 		el.rangeSlider("option", "range", {min:50});
 		el.rangeSlider("values", 0, 70);
 	},
@@ -490,7 +515,7 @@ testRunner.add("jQRangeSlider", [setUp,
 			customCtorTest,
 			destroy,
 			defaultCtorTest,
-			valuesSetter, minMaxSetter, boundsSetter,
+			valuesSetter, changeValuesTest, minMaxSetter, boundsSetter,
 			zoomInTest, zoomOutTest, scrollLeftTest, scrollRightTest,
 			issue12,
 			rangeLimitMax, rangeLimitMaxWithMinAndMax, rangeLimitMin, rangeLimitMinWithMinAndMax,

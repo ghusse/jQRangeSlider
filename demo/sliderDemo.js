@@ -15,9 +15,9 @@
 			this._elements = {};
 			this._createTitle();
 			this._createZones();
-			this._createInputs();
 			this._createOptions();
 			this._createSlider();
+			this._createLog();
 			this._createCode();
 		},
 
@@ -27,6 +27,10 @@
 
 		_setOption: function(name, value){
 			this._elements.slider[this._name]("option", name, value);
+		},
+
+		_getOption: function(name){
+			return this._elements.slider[this._name]("option", name);
 		},
 
 		_easyOptionChange: function(e){
@@ -52,6 +56,7 @@
 
 			this._elements.sliderZone = $("<form onsubmit='return false' />").appendTo(inputZone);
 			this._elements.optionsZone = $("<form onsubmit='return false' />").appendTo(optionsZone);
+			this._elements.logZone = $("<div class='logZone' />").appendTo(wrapper);
 		},
 
 		_createTitle: function(){
@@ -80,16 +85,7 @@
 			var slider = $("<div />").appendTo(this._elements.sliderZone);
 			slider[this._name]();
 
-			slider.bind("valuesChanging", $.proxy(this._displayValues, this));
-
 			this._elements.slider = slider;
-		},
-
-		_displayValues: function(e){
-			var values = this._elements.slider[this._name]("values");
-
-			this._elements.minInput.val(this._format(values.min));
-			this._elements.maxInput.val(this._format(values.max));
 		},
 
 		_format: function(value){
@@ -99,25 +95,67 @@
 		_createOptions: function(){
 			this._elements.options = $("<dl />").appendTo(this._elements.optionsZone);
 
+			this._createBoundsOptions();
 			this._createRangeOptions();
+			this._createStepOption();
 			this._createWheelModeOption();
 			this._createWheelSpeedOption();
 			this._createArrowsOption();
 			this._createLabelsOption();
-			this._createBindingOption();
+		},
+
+		_createBoundsOptions: function(){
+			this._createDT("Bounds");
+
+			var minSelect = this._createSelect("min", "Bound"),
+				maxSelect = this._createSelect("max", "Bound");
+
+			this._addOption(minSelect, 0);
+			this._addOption(minSelect, 10);
+			this._addOption(minSelect, 20);
+
+			this._addOption(maxSelect, 100);
+			this._addOption(maxSelect, 90);
+			this._addOption(maxSelect, 80);
+
+			minSelect.bind("change", "min", $.proxy(this._changeBound, this));
+			maxSelect.bind("change", "max", $.proxy(this._changeBound, this));
+		},
+
+		_changeBound: function(event, ui){
+			var value = $(event.target).val(),
+				bounds = this._getOption("bounds");
+
+			bounds[event.data] = parseFloat(value);
+			this._setOption("bounds", bounds);
 		},
 
 		_createRangeOptions: function(){
 			this._createDT("Range limit");
 
-			var minSelect = this._createSelect("min"),
-			maxSelect = this._createSelect("max");
+			var minSelect = this._createSelect("min", "RangeLimit"),
+			maxSelect = this._createSelect("max", "RangeLimit");
 
 			this._fillMinSelect(minSelect);
 			this._fillMaxSelect(maxSelect);
 
 			minSelect.bind("change", $.proxy(this._minSelectChange, this));
 			maxSelect.bind("change", $.proxy(this._maxSelectChange, this));
+		},
+
+		_createStepOption: function(){
+			this._createDT("Step");
+
+			var select = $("<select name='step' />");
+
+			this._createDD(select);
+
+			select.bind("change", $.proxy(this._easyOptionChange, this));
+
+			this._addOption(select, "false");
+			this._addOption(select, "2");
+			this._addOption(select, "5");
+			this._addOption(select, "10");
 		},
 
 		_createDT: function(text){
@@ -127,8 +165,8 @@
 			this._elements.options.append(dt);
 		},
 
-		_createSelect: function(name){
-			var select = $("<select />").attr("name", name + "RangeLimit");
+		_createSelect: function(name, suffix){
+			var select = $("<select />").attr("name", name + suffix);
 
 			this._elements.options.append($("<dd />")
 				.append(name + ":")
@@ -138,23 +176,30 @@
 		},
 
 		_fillMinSelect: function(select){
-			this._addOption(select, "Deactivated", "");
-			this._addOption(select, 10, 10);
-			this._addOption(select, 20, 20);
-			this._addOption(select, 30, 30);
-			this._addOption(select, 40, 40);
+			this._addOption(select, "false");
+			this._addOption(select, 10);
+			this._addOption(select, 20);
+			this._addOption(select, 30);
+			this._addOption(select, 40);
 		},
 
 		_fillMaxSelect: function(select){
-			this._addOption(select, "Deactivated", "");
-			this._addOption(select, 50, 50);
-			this._addOption(select, 60, 60);
-			this._addOption(select, 70, 70);
-			this._addOption(select, 80, 80);
+			this._addOption(select, "false");
+			this._addOption(select, 50);
+			this._addOption(select, 60);
+			this._addOption(select, 70);
+			this._addOption(select, 80);
 		},
 
 		_addOption: function(select, text, value){
-			var option = $("<option />").attr("value", value);
+			var value,
+				option = $("<option />");
+			
+			if (typeof value === "undefined"){
+				value = text;
+			}
+
+			option.attr("value", value);
 			option.text(text);
 
 			select.append(option);
@@ -175,7 +220,7 @@
 		_setRangeOption: function(value, optionName){
 			var option = {};
 
-			if (value == ""){
+			if (value == "false"){
 				option[optionName] = false;
 			}else{
 				option[optionName] = parseFloat(value);
@@ -233,8 +278,8 @@
 
 			var select = $("<select name='valueLabels' />");
 
-			this._addOption(select, "show", "show");
-			this._addOption(select, "hide", "hide");
+			this._addOption(select, "show");
+			this._addOption(select, "hide");
 			this._addOption(select, "on change", "change");
 
 			this._createDD(select);
@@ -242,29 +287,8 @@
 			select.change($.proxy(this._easyOptionChange, this));
 		},
 
-		_createBindingOption: function(){
-			this._createDT("Binding");
-
-			var changing = $("<input value='valuesChanging' name='binding' class='binding' type='radio' checked='checked' />"),
-				changed = $("<input value='valuesChanged' name='binding' class='binding' type='radio' />");
-
-			this._createDD($("<label>valuesChanging</label>").prepend(changing));
-			this._createDD($("<label>valuesChanged</label>").prepend(changed));
-
-			changing.click($.proxy(this._changeBinding, this));
-			changed.click($.proxy(this._changeBinding, this));
-		},
-
-		_changeBinding: function(e){
-			var checked = $(e.target).parents("form").find(".binding:checked");
-
-			this._elements.slider
-				.unbind("valuesChanging")
-				.unbind("valuesChanged")
-				.bind(checked.val(), $.proxy(this._displayValues, this));
-		},
-
 		_createCode: function(){
+			this.element.append("<hr />")
 			this.element.append("<h3>Code</h3>");
 			var pre = $("<pre />").appendTo(this.element),
 				container = $("<code />").appendTo(pre);
@@ -292,6 +316,30 @@
 
 		_addBlankLine: function(container){
 			container.append("<br />");
+		},
+
+		_createLog: function(){
+			this._elements.logZone.append("<h3>Events</h3>");
+
+			this._elements.log = $("<ol class='log' />").appendTo(this._elements.logZone);
+
+			this._bindEvents();
+		},
+
+		_bindEvents: function(){
+			this._elements.slider.bind("valuesChanging valuesChanged userValuesChanged", $.proxy(this._log, this));
+		},
+
+		_log: function(e, data){
+			var line = $("<li />").appendTo(this._elements.log)
+				.addClass(e.type);
+
+			line.text(e.type + " " + this._returnValues(data));
+			this._elements.log.scrollTop(this._elements.log[0].scrollHeight);
+		},
+
+		_returnValues: function(data){
+			return "min:" + data.values.min + " max:" + data.values.max;
 		}
 
 	});

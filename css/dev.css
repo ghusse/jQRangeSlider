@@ -72,15 +72,12 @@
 	background-image:url('icons/label.png');
 	background-position:bottom center;
 	background-repeat:no-repeat;
-        white-space: nowrap;
+  white-space: nowrap;
 }
 
 /*
  * Edit slider
  */
-.ui-editRangeSlider .ui-rangeSlider-label{
-
-}
 
 input.ui-editRangeSlider-inputValue{
 	width:3em;
