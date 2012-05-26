@@ -89,8 +89,8 @@ Options
 	* examples: range: {min: 10, max: 50} or {min: 20} or {min: 20, max: false} or {max: false} or false
 * step (default: false)
 	* value steps, in order to constraint values
-	* Numerical value (for rangeSlider and editSlider) for false
-	* An object with some of these properties:
+	* Numerical value (for rangeSlider and editSlider) or false
+	* An object with some of these properties (for date slider):
 		* years
 		* months
 		* days
