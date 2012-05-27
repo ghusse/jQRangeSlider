@@ -53,6 +53,10 @@
 	background-position:center right;
 }
 
+.ui-rangeSlider-arrow-inner{
+	display: none;
+}
+
 .ui-rangeSlider-container{
 	height:22px;
 }
