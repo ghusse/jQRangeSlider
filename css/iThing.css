@@ -120,7 +120,7 @@
 }
 
 .ui-rangeSlider-label{
-  background: #67707F;
+  background: #888DA0;
   background: -moz-linear-gradient(top, #67707F 0%, #888DA0 100%);
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#67707F), color-stop(100%,#888DA0));
   padding: 5px 10px;
