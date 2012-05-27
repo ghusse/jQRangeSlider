@@ -25,6 +25,8 @@
 
 		cache: null,
 		_positionner: null,
+		_valueContainer:null,
+		_innerElement:null,
 
 		_create: function(){
 			this.options.isLeft = this._handle("option", "isLeft");
@@ -33,6 +35,12 @@
 				.addClass("ui-rangeSlider-label")
 				.css("position", "absolute")
 				.css("display", "block");
+
+			this._valueContainer = $("<div class='ui-rangeSlider-label-value' />")
+				.appendTo(this.element);
+
+			this._innerElement = $("<div class='ui-rangeSlider-label-inner' />")
+				.appendTo(this.element);
 
 			this._toggleClass();
 
@@ -90,7 +98,7 @@
 		},
 
 		_displayText: function(text){
-			this.element.text(text);
+			this._valueContainer.text(text);
 		},
 
 		_toggleClass: function(){

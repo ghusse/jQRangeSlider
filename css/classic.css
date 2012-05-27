@@ -79,6 +79,10 @@
   margin-top:-25px;
 }
 
+.ui-rangeSlider-label-inner{
+	display:none;
+}
+
 /*
  * Edit slider
  */

@@ -133,9 +133,8 @@
   font-size:15px;
 }
 
-.ui-rangeSlider-label:after,
-.ui-rangeSlider-label:before{
-  content: "";
+.ui-rangeSlider-label-inner{
+ 
   position: absolute;
   top: 100%;
   left: 50%;
@@ -145,9 +144,6 @@
   border-right: 10px solid transparent;
 
   margin-left: -10px;
-}
-
-.ui-rangeSlider-label:after{
   border-top: 10px solid #888DA0;
   margin-top: -2px;
 }
