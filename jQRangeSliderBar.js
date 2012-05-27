@@ -33,7 +33,7 @@
 
 			this.element
 				.css("position", "absolute")
-			.css("top", 0)
+				.css("top", 0)
 				.addClass("ui-rangeSlider-bar");
 
 			this.options.leftHandle
@@ -176,12 +176,10 @@
 			this.max(this.options.values.max);
 
 			var left = this._leftHandle("position"),
-				top = this.cache.offset.top,
 				right = this._rightHandle("position") + this.options.rightHandle.width();
 
 			this.element.offset({
-				left: left,
-				top: top
+				left: left
 			});
 
 			this.element.css("width", right - left);
@@ -280,7 +278,7 @@
 
 			this.element
 				.css("width", width)
-				.offset({left: this.cache.leftHandle.offset.left, top: this.cache.offset.top});
+				.offset({left: this.cache.leftHandle.offset.left});
 		},
 
 		_onHandleStop: function(){
