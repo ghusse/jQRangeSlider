@@ -106,8 +106,10 @@
   cursor:move;
 	cursor:grab;
 	cursor: -moz-grab;
+  
 	-webkit-box-shadow: inset 0 2px 6px RGBA(0,0,0,0.5);
   -moz-box-shadow: inset 0 2px 6px RGBA(0,0,0,0.5);
+  box-shadow: inset 0 2px 6px RGBA(0,0,0,0.5);;
  }
 
 .ui-rangeSlider-handle{
@@ -123,10 +125,14 @@
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#67707F), color-stop(100%,#888DA0));
   padding: 5px 10px;
   margin-bottom:10px;
+
   -moz-border-radius: 4px;
   border-radius: 4px;
+
   -webkit-box-shadow: 0px 1px 0px #c2c5d6;
   -moz-box-shadow: 0px 1px 0px #c2c5d6;
+  box-shadow: 0px 1px 0px #c2c5d6;
+
   color:white;
   font-size:15px;
 }

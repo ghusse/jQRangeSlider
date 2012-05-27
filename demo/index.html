@@ -3,7 +3,8 @@
   <head>  
 	<meta charset="utf-8">  
 	<title>jQRangeSlider demo page</title>  
-	<link rel="stylesheet" href="../css/dev.css">  
+
+	<link rel="stylesheet" id="themeCSS" href="../css/classic.css"> 
 	<link rel="stylesheet" href="style.css">  
 	<link rel="stylesheet" href="lib/jquery-ui/css/smoothness/jquery-ui-1.8.10.custom.css">  
 	
@@ -41,6 +42,15 @@
   </head>  
   <body>
   	<h1>jQRangeSlider demos</h1>
+
+  	<form onsubmit="return false">
+  	<dl id="themeSelector">
+  		<dt class="classic selected">Classic</dt>
+  		<dd class="classic selected"><img src="img/classicTheme.png" alt="classic" /></dd>
+  		<dt class="iThing">iThing</dt>
+  		<dd class="iThing"><img src="img/iThingTheme.png" alt="iThing" /></dd>
+  	</dl>
+  	</form>
 
 	</body>  
 </html>  
