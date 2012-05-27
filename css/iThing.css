@@ -128,6 +128,7 @@
   -webkit-box-shadow: 0px 1px 0px #c2c5d6;
   -moz-box-shadow: 0px 1px 0px #c2c5d6;
   color:white;
+  font-size:15px;
 }
 
 .ui-rangeSlider-label:after,
@@ -147,5 +148,11 @@
 .ui-rangeSlider-label:after{
   border-top: 10px solid #888DA0;
   margin-top: -2px;
+}
+
+.ui-editRangeSlider-inputValue{
+  width:2em;
+  text-align:center;
+  font-size:15px;
 }
 
