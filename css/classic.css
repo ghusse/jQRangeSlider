@@ -70,13 +70,13 @@
 }
 
 .ui-rangeSlider-label{
-	padding:2px 5px 6px;
 	margin:0 2px 2px;
 	background-image:url('icons/label.png');
 	background-position:bottom center;
 	background-repeat:no-repeat;
   white-space: nowrap;
-  margin-top:-25px;
+  bottom:20px;
+  padding:3px 6px 7px;
 }
 
 .ui-rangeSlider-label-inner{
