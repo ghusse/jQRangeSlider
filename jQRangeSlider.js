@@ -51,27 +51,34 @@
 			this.changing = {min:false, max:false};
 			this.changed = {min:false, max:false};
 
-			this.leftHandle = this._createHandle({
-					isLeft: true,
-					bounds: this.options.bounds,
-					value: this.options.defaultValues.min
-			});
-	
-			this.rightHandle = this._createHandle({
-				isLeft: false,
-				bounds: this.options.bounds,
-				value: this.options.defaultValues.max
-			});
+			if (this.element.css("position") !== "absolute"){
+				this.element.css("position", "relative");
+			}
+
+			this.container = $("<div class='ui-rangeSlider-container' />")
+				.css("position", "absolute")
+				.appendTo(this.element);
 			
 			this.innerBar = $("<div class='ui-rangeSlider-innerBar' />")
 				.css("position", "absolute")
 				.css("top", 0)
 				.css("left", 0);
 
-			this.container = $("<div class='ui-rangeSlider-container' />")
-				.css("position", "absolute");
+			this.leftHandle = this._createHandle({
+					isLeft: true,
+					bounds: this.options.bounds,
+					value: this.options.defaultValues.min
+			}).appendTo(this.container);
+	
+			this.rightHandle = this._createHandle({
+				isLeft: false,
+				bounds: this.options.bounds,
+				value: this.options.defaultValues.max
+			}).appendTo(this.container);
 
-			this.bar = $("<div />")[this._barType()]
+			this.bar = $("<div />")
+				.prependTo(this.container)
+				[this._barType()]
 				({
 					leftHandle: this.leftHandle,
 					rightHandle: this.rightHandle,
@@ -81,12 +88,8 @@
 				.bind("drag scroll zoom", $.proxy(this._changing, this))
 				.bind("stop", $.proxy(this._changed, this));
 
-			this.container
-				.append(this.innerBar)
-				.append(this.bar)
-				.append(this.leftHandle)
-			  .append(this.rightHandle)
-			  .appendTo(this.element);
+			this.container.prepend(this.innerBar);
+
 
 			this.arrows.left = $("<div class='ui-rangeSlider-arrow ui-rangeSlider-leftArrow' />")
 				.css("position", "absolute")
@@ -101,10 +104,6 @@
 				.bind("mousedown touchstart", $.proxy(this._scrollRightClick, this));
 
 			this.element.addClass("ui-rangeSlider");
-
-			if (this.element.css("position") !== "absolute"){
-				this.element.css("position", "relative");
-			}
 
 			if (!this.options.arrows){
 				this.arrows.left.css("display", "none");

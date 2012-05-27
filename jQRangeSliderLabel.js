@@ -237,8 +237,8 @@
 
 			this.ConstraintPositions(label1Pos, label2Pos);
 
-			this.label1.offset(label1Pos);
-			this.label2.offset(label2Pos);
+			this.label1.offset({left:label1Pos.left});
+			this.label2.offset({left:label2Pos.left});
 		}
 
 		this.ConstraintPositions = function(pos1, pos2){
