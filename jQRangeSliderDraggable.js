@@ -89,7 +89,7 @@
  				left: position
  			}
 
- 			this.element.offset(offset);
+ 			this.element.offset({left:position});
 
  			this.cache.offset = offset;
  		},
