@@ -1,6 +1,9 @@
 jQRangeSlider
 -------------
 
+* 4.1: 2012-05-31
+	* New theme: iThing
+	* Bug fixes on IE
 * 4.0: 2012-05-26
 	* Massive rewrite of jQRangeSlider
 	* Steps !
