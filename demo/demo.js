@@ -28,7 +28,9 @@
 
 		$("#themeCSS").attr("href", path + theme + ".css");
 
-		$(window).resize();
+		setTimeout(function(){
+			$(window).resize();
+		}, 500);
 	}
 
 	function initTheme(){
