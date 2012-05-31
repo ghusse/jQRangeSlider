@@ -29,3 +29,29 @@ ul.features img{
 	margin-right:10px;
 	vertical-align:middle;
 }
+
+.themes{
+	height:130px;
+	position: relative;
+}
+
+.themes dt,
+.themes dd{
+	position: absolute;
+	width:100px;
+	text-align:center;
+	padding: 0;
+	margin: 0;
+}
+
+.themes dt{
+	bottom:0;
+}
+
+.themes dd{
+	top:0;
+}
+
+.themes .ithing{
+	left:130px;
+}
