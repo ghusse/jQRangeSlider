@@ -41,7 +41,6 @@
 	margin:2px 0;
 	width:16px;
 	background-repeat:no-repeat;
-	cursor:pointer;
 }
 
 .ui-rangeSlider-arrow.ui-rangeSlider-leftArrow{
@@ -52,6 +51,10 @@
 .ui-rangeSlider-arrow.ui-rangeSlider-rightArrow{
 	background-image: url('icons/resultset_next.png');
 	background-position:center right;
+}
+
+.ui-rangeSlider-arrow-inner{
+	display: none;
 }
 
 .ui-rangeSlider-container{
@@ -67,12 +70,17 @@
 }
 
 .ui-rangeSlider-label{
-	padding:2px 5px 6px;
 	margin:0 2px 2px;
 	background-image:url('icons/label.png');
 	background-position:bottom center;
 	background-repeat:no-repeat;
   white-space: nowrap;
+  bottom:20px;
+  padding:3px 6px 7px;
+}
+
+.ui-rangeSlider-label-inner{
+	display:none;
 }
 
 /*

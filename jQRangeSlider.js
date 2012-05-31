@@ -51,27 +51,34 @@
 			this.changing = {min:false, max:false};
 			this.changed = {min:false, max:false};
 
-			this.leftHandle = this._createHandle({
-					isLeft: true,
-					bounds: this.options.bounds,
-					value: this.options.defaultValues.min
-			});
-	
-			this.rightHandle = this._createHandle({
-				isLeft: false,
-				bounds: this.options.bounds,
-				value: this.options.defaultValues.max
-			});
+			if (this.element.css("position") !== "absolute"){
+				this.element.css("position", "relative");
+			}
+
+			this.container = $("<div class='ui-rangeSlider-container' />")
+				.css("position", "absolute")
+				.appendTo(this.element);
 			
 			this.innerBar = $("<div class='ui-rangeSlider-innerBar' />")
 				.css("position", "absolute")
 				.css("top", 0)
 				.css("left", 0);
 
-			this.container = $("<div class='ui-rangeSlider-container' />")
-				.css("position", "absolute");
+			this.leftHandle = this._createHandle({
+					isLeft: true,
+					bounds: this.options.bounds,
+					value: this.options.defaultValues.min
+			}).appendTo(this.container);
+	
+			this.rightHandle = this._createHandle({
+				isLeft: false,
+				bounds: this.options.bounds,
+				value: this.options.defaultValues.max
+			}).appendTo(this.container);
 
-			this.bar = $("<div />")[this._barType()]
+			this.bar = $("<div />")
+				.prependTo(this.container)
+				[this._barType()]
 				({
 					leftHandle: this.leftHandle,
 					rightHandle: this.rightHandle,
@@ -81,30 +88,12 @@
 				.bind("drag scroll zoom", $.proxy(this._changing, this))
 				.bind("stop", $.proxy(this._changed, this));
 
-			this.container
-				.append(this.innerBar)
-				.append(this.bar)
-				.append(this.leftHandle)
-			  .append(this.rightHandle)
-			  .appendTo(this.element);
+			this.container.prepend(this.innerBar);
 
-			this.arrows.left = $("<div class='ui-rangeSlider-arrow ui-rangeSlider-leftArrow' />")
-				.css("position", "absolute")
-				.css("left", 0)
-				.appendTo(this.element)
-				.bind("mousedown touchstart", $.proxy(this._scrollLeftClick, this));
-
-			this.arrows.right = $("<div class='ui-rangeSlider-arrow ui-rangeSlider-rightArrow' />")
-				.css("position", "absolute")
-				.css("right", 0)
-				.appendTo(this.element)
-				.bind("mousedown touchstart", $.proxy(this._scrollRightClick, this));
+			this.arrows.left = this._createArrow("left");
+			this.arrows.right = this._createArrow("right");
 
 			this.element.addClass("ui-rangeSlider");
-
-			if (this.element.css("position") !== "absolute"){
-				this.element.css("position", "relative");
-			}
 
 			if (!this.options.arrows){
 				this.arrows.left.css("display", "none");
@@ -246,6 +235,26 @@
 				[this._handleType()](options)
 				.bind("drag", $.proxy(this._changing, this))
 				.bind("stop", $.proxy(this._changed, this));
+		},
+
+		_createArrow: function(whichOne){
+			var arrow = $("<div class='ui-rangeSlider-arrow' />")
+				.append("<div class='ui-rangeSlider-arrow-inner' />")
+				.addClass("ui-rangeSlider-" + whichOne + "Arrow")
+				.css("position", "absolute")
+				.css(whichOne, 0)
+				.appendTo(this.element),
+				target;
+
+			if (whichOne === "right"){
+				target = $.proxy(this._scrollRightClick, this);
+			}else{
+				target = $.proxy(this._scrollLeftClick, this);
+			}
+
+			arrow.bind("mousedown touchstart", target);
+
+			return arrow;
 		},
 
 		_proxy: function(element, type, args){
