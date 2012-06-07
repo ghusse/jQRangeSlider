@@ -1,6 +1,8 @@
 jQRangeSlider
 -------------
 
+* 4.1.1: 2012-06-07
+	* Step option is not working in constructor
 * 4.1: 2012-05-31
 	* New theme: iThing
 	* Bug fixes on IE
