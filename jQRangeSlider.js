@@ -67,13 +67,15 @@
 			this.leftHandle = this._createHandle({
 					isLeft: true,
 					bounds: this.options.bounds,
-					value: this.options.defaultValues.min
+					value: this.options.defaultValues.min,
+					step: this.options.step
 			}).appendTo(this.container);
 	
 			this.rightHandle = this._createHandle({
 				isLeft: false,
 				bounds: this.options.bounds,
-				value: this.options.defaultValues.max
+				value: this.options.defaultValues.max,
+				step: this.options.step
 			}).appendTo(this.container);
 
 			this.bar = $("<div />")
