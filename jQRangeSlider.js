@@ -78,17 +78,7 @@
 				step: this.options.step
 			}).appendTo(this.container);
 
-			this.bar = $("<div />")
-				.prependTo(this.container)
-				[this._barType()]
-				({
-					leftHandle: this.leftHandle,
-					rightHandle: this.rightHandle,
-					values: {min: this.options.defaultValues.min, max: this.options.defaultValues.max},
-					type: this._handleType()
-				})
-				.bind("drag scroll zoom", $.proxy(this._changing, this))
-				.bind("stop", $.proxy(this._changed, this));
+			this._createBar();
 
 			this.container.prepend(this.innerBar);
 
@@ -237,6 +227,23 @@
 				[this._handleType()](options)
 				.bind("drag", $.proxy(this._changing, this))
 				.bind("stop", $.proxy(this._changed, this));
+		},
+		
+		_createBar: function(){
+			this.bar = $("<div />")
+				.prependTo(this.container)
+				.bind("drag scroll zoom", $.proxy(this._changing, this))
+				.bind("stop", $.proxy(this._changed, this));
+			
+			this._bar({
+					leftHandle: this.leftHandle,
+					rightHandle: this.rightHandle,
+					values: {min: this.options.defaultValues.min, max: this.options.defaultValues.max},
+					type: this._handleType(),
+					range: this.options.range
+				});
+
+			this.options.range = this._bar("option", "range");
 		},
 
 		_createArrow: function(whichOne){

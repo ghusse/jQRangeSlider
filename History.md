@@ -1,6 +1,7 @@
 jQRangeSlider
 -------------
-
+* 4.1.2: 2012-06-11
+	* Fixed #29
 * 4.1.1: 2012-06-07
 	* Step option is not working in constructor
 * 4.1: 2012-05-31
