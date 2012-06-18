@@ -1,5 +1,7 @@
 jQRangeSlider
 -------------
+* 4.2: 2012-06-18
+	* Draggable labels (Issue #28)
 * 4.1.2: 2012-06-11
 	* Fixed #29: range option in constructor is not working
 * 4.1.1: 2012-06-07

@@ -131,6 +131,8 @@
 
   color:white;
   font-size:15px;
+
+  cursor:col-resize;
 }
 
 .ui-editRangeSlider .ui-rangeSlider-label{

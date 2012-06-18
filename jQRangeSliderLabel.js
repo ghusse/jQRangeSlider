@@ -11,7 +11,7 @@
 	
 	"use strict";
 
-	$.widget("ui.rangeSliderLabel", {
+	$.widget("ui.rangeSliderLabel", $.ui.rangeSliderMouseTouch, {
 		options: {
 			handle: null,
 			formatter: false,
@@ -52,6 +52,8 @@
 			if (this.options.show !== "show"){
 				this.element.hide();
 			}
+
+			this._mouseInit();
 		},
 
 		_handle: function(){
@@ -104,6 +106,21 @@
 		_toggleClass: function(){
 			this.element.toggleClass("ui-rangeSlider-leftLabel", this.options.isLeft)
 				.toggleClass("ui-rangeSlider-rightLabel", !this.options.isLeft);
+		},
+
+		/*
+		 * Mouse touch redirection
+		 */
+		_mouseDown: function(event){
+			this.options.handle.trigger(event);
+		},
+
+		_mouseUp: function(event){
+			this.options.handle.trigger(event);
+		},
+
+		_mouseMove: function(event){
+			this.options.handle.trigger(event);
 		},
 
 		/*
