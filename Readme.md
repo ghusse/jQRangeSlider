@@ -42,6 +42,11 @@ Range slider creation:
 # A rangeSlider with dates 
 Javascript reference for development:
 
+	<script type="text/javascript" src="jQRangeSliderDraggable.js"></script>
+	<script type="text/javascript" src="jQRangeSliderBar.js"></script>
+	<script type="text/javascript" src="jQRangeSliderHandle.js"></script>
+	<script type="text/javascript" src="jQDateRangeSliderHandle.js"></script>
+	<script type="text/javascript" src="jQRangeSliderLabel.js"></script>
 	<script type="text/javascript" src="jQRangeSlider.js"></script>
 	<script type="text/javascript" src="jQDateRangeSlider.js"></script>
 
