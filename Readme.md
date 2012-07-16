@@ -25,6 +25,7 @@ Usage
 # A rangeSlider widget with float values
 Javascript reference for development:
 	
+	<script type="text/javascript" src="jQRangeSliderMouseTouch.js"></script>
 	<script type="text/javascript" src="jQRangeSliderDraggable.js"></script>
 	<script type="text/javascript" src="jQRangeSliderBar.js"></script>
 	<script type="text/javascript" src="jQRangeSliderHandle.js"></script>
@@ -42,6 +43,7 @@ Range slider creation:
 # A rangeSlider with dates 
 Javascript reference for development:
 
+	<script type="text/javascript" src="jQRangeSliderMouseTouch.js"></script>
 	<script type="text/javascript" src="jQRangeSliderDraggable.js"></script>
 	<script type="text/javascript" src="jQRangeSliderBar.js"></script>
 	<script type="text/javascript" src="jQRangeSliderHandle.js"></script>
@@ -61,6 +63,7 @@ Range slider creation:
 # An editable range slider
 Javascript reference for development:
 
+	<script type="text/javascript" src="jQRangeSliderMouseTouch.js"></script>
 	<script type="text/javascript" src="jQRangeSliderDraggable.js"></script>
 	<script type="text/javascript" src="jQRangeSliderBar.js"></script>
 	<script type="text/javascript" src="jQRangeSliderHandle.js"></script>
