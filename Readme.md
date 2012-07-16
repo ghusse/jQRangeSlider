@@ -61,6 +61,11 @@ Range slider creation:
 # An editable range slider
 Javascript reference for development:
 
+	<script type="text/javascript" src="jQRangeSliderDraggable.js"></script>
+	<script type="text/javascript" src="jQRangeSliderBar.js"></script>
+	<script type="text/javascript" src="jQRangeSliderHandle.js"></script>
+	<script type="text/javascript" src="jQRangeSliderLabel.js"></script>
+	<script type="text/javascript" src="jQEditRangeSliderLabel.js"></script>
 	<script type="text/javascript" src="jQRangeSlider.js"></script>
 	<script type="text/javascript" src="jQEditRangeSlider.js"></script>
 
