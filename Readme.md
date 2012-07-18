@@ -137,6 +137,22 @@ Options
 * type (default:'text', 'number')
   * input type used for creating labels
 
+### Usage
+	// When constructing the slider
+	$("#slider").rangeSlider({
+		wheelSpeed: 5,
+		valueLabels: "show",
+		formatter: function(value){
+			return value;
+		}
+	});
+	
+	// Changing an option, live
+	$("#slider").rangeSlider("option", "wheelmode", "zoom");
+	
+	// If you are using a special kind of slider
+	$("#slider").dateRangeSlider("option", "arrows", false);
+
 Events
 -----
 * valuesChanging
@@ -146,6 +162,9 @@ Events
  * Triggered when values have changed (user interaction or programmatically)
 * userValuesChanged
  * Triggered when user has moved and element and changed internal values (limits the number of events).
+
+### Usage
+	$("#slider").bind("valuesChanging", function(){/*Your code*/});
 
 Methods
 -------
@@ -158,6 +177,16 @@ Methods
 * max(value): gets or sets the maximum value
 * resize
 * bounds(min, max): gets or sets the bounds
+
+### Usage
+	// Set a value
+	$("#slider").rangeSlider("min", value);
+	
+	// Get the value
+	var max = $("#slider").rangeSlider("max");
+	
+	// If you're using another kind of slider
+	var minDate = $("#slider").dateRangeSlider("min");
  
 Prerequisites 
 -------------
@@ -172,6 +201,10 @@ Launch min/compile.sh (on Linux or Mac) or min/compile.bat (on Windows).
 
 FAQ
 ---
+### How can I use methods?
+
+
+
 ### Is it possible to set steps?
 
 Guys, YES !
