@@ -203,7 +203,39 @@ FAQ
 ---
 ### How can I use methods?
 
+	// For range sliders, example with method "values" and two parameters
+	$("#element").rangeSlider("values", 0, 100);
+	
+	// For edit sliders, a getter method
+	var min = $("#element").editRangeSlider("min");
+	
+	// For date sliders, use date objects
+	var max = $("#element").dateRangeSlider("max", new Date(2010, 0, 1));
 
+### How to set options?
+
+	// When constructing the slider (example with basic range slider)
+	// Or after construction, the same method can be called
+	$("#element").rangeSlider({
+		bounds: {min: 10, max:100},
+		wheelMode: "zoom",
+		step: false
+	});
+	
+	// After construction, for setting specific options (example with edit slider)
+	$("#element").editRangeSlider("option", "arrows", true);
+	
+	// Another example with date slider
+	$("#element").dateRangeSlider("option", "formatter", function(value){
+		return "Nice date";
+	});
+
+### How to bind events?
+	
+	$("#element").bind("valuesChanging", function(event, values){
+		// Do stuff
+		// Values is an object with two properties: min and max.
+	});
 
 ### Is it possible to set steps?
 
