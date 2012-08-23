@@ -62,7 +62,7 @@
 				this.update();
 			}
 
-			$.ui.draggable.prototype._setOption.apply(this, [key, value]);
+			$.ui.rangeSliderDraggable.prototype._setOption.apply(this, [key, value]);
 		},
 
 		_checkRange: function(range){
