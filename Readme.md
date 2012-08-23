@@ -2,6 +2,7 @@ jQRangeSlider, jQDateRangeSlider & jQEditRangeSlider
 ====================================================
 A javascript slider selector that supports dates and touch devices
 
+* [Twitter](https://twitter.com/jQRangeSlider)
 * [Project page](http://ghusse.github.com/jQRangeSlider/)
 * [Github project](https://github.com/ghusse/jQRangeSlider/)
 * [Online demo](http://ghusse.github.com/jQRangeSlider/stable/demo/)
@@ -24,6 +25,7 @@ Usage
 # A rangeSlider widget with float values
 Javascript reference for development:
 	
+	<script type="text/javascript" src="jQRangeSliderMouseTouch.js"></script>
 	<script type="text/javascript" src="jQRangeSliderDraggable.js"></script>
 	<script type="text/javascript" src="jQRangeSliderBar.js"></script>
 	<script type="text/javascript" src="jQRangeSliderHandle.js"></script>
@@ -41,6 +43,12 @@ Range slider creation:
 # A rangeSlider with dates 
 Javascript reference for development:
 
+	<script type="text/javascript" src="jQRangeSliderMouseTouch.js"></script>
+	<script type="text/javascript" src="jQRangeSliderDraggable.js"></script>
+	<script type="text/javascript" src="jQRangeSliderBar.js"></script>
+	<script type="text/javascript" src="jQRangeSliderHandle.js"></script>
+	<script type="text/javascript" src="jQDateRangeSliderHandle.js"></script>
+	<script type="text/javascript" src="jQRangeSliderLabel.js"></script>
 	<script type="text/javascript" src="jQRangeSlider.js"></script>
 	<script type="text/javascript" src="jQDateRangeSlider.js"></script>
 
@@ -55,6 +63,12 @@ Range slider creation:
 # An editable range slider
 Javascript reference for development:
 
+	<script type="text/javascript" src="jQRangeSliderMouseTouch.js"></script>
+	<script type="text/javascript" src="jQRangeSliderDraggable.js"></script>
+	<script type="text/javascript" src="jQRangeSliderBar.js"></script>
+	<script type="text/javascript" src="jQRangeSliderHandle.js"></script>
+	<script type="text/javascript" src="jQRangeSliderLabel.js"></script>
+	<script type="text/javascript" src="jQEditRangeSliderLabel.js"></script>
 	<script type="text/javascript" src="jQRangeSlider.js"></script>
 	<script type="text/javascript" src="jQEditRangeSlider.js"></script>
 
@@ -123,6 +137,22 @@ Options
 * type (default:'text', 'number')
   * input type used for creating labels
 
+### Usage
+	// When constructing the slider
+	$("#slider").rangeSlider({
+		wheelSpeed: 5,
+		valueLabels: "show",
+		formatter: function(value){
+			return value;
+		}
+	});
+	
+	// Changing an option, live
+	$("#slider").rangeSlider("option", "wheelmode", "zoom");
+	
+	// If you are using a special kind of slider
+	$("#slider").dateRangeSlider("option", "arrows", false);
+
 Events
 -----
 * valuesChanging
@@ -132,6 +162,9 @@ Events
  * Triggered when values have changed (user interaction or programmatically)
 * userValuesChanged
  * Triggered when user has moved and element and changed internal values (limits the number of events).
+
+### Usage
+	$("#slider").bind("valuesChanging", function(){/*Your code*/});
 
 Methods
 -------
@@ -144,6 +177,16 @@ Methods
 * max(value): gets or sets the maximum value
 * resize
 * bounds(min, max): gets or sets the bounds
+
+### Usage
+	// Set a value
+	$("#slider").rangeSlider("min", value);
+	
+	// Get the value
+	var max = $("#slider").rangeSlider("max");
+	
+	// If you're using another kind of slider
+	var minDate = $("#slider").dateRangeSlider("min");
  
 Prerequisites 
 -------------
@@ -158,6 +201,42 @@ Launch min/compile.sh (on Linux or Mac) or min/compile.bat (on Windows).
 
 FAQ
 ---
+### How can I use methods?
+
+	// For range sliders, example with method "values" and two parameters
+	$("#element").rangeSlider("values", 0, 100);
+	
+	// For edit sliders, a getter method
+	var min = $("#element").editRangeSlider("min");
+	
+	// For date sliders, use date objects
+	var max = $("#element").dateRangeSlider("max", new Date(2010, 0, 1));
+
+### How to set options?
+
+	// When constructing the slider (example with basic range slider)
+	// Or after construction, the same method can be called
+	$("#element").rangeSlider({
+		bounds: {min: 10, max:100},
+		wheelMode: "zoom",
+		step: false
+	});
+	
+	// After construction, for setting specific options (example with edit slider)
+	$("#element").editRangeSlider("option", "arrows", true);
+	
+	// Another example with date slider
+	$("#element").dateRangeSlider("option", "formatter", function(value){
+		return "Nice date";
+	});
+
+### How to bind events?
+	
+	$("#element").bind("valuesChanging", function(event, values){
+		// Do stuff
+		// Values is an object with two properties: min and max.
+	});
+
 ### Is it possible to set steps?
 
 Guys, YES !
