@@ -96,15 +96,27 @@ Options
 	* example: defaultValues: {min: 20, max:50}
 * range (default: false - false)
 	* Range bounds, to constraint the range size
-	* for date ranges, values are expressed in **milliseconds**
+	* for ***date ranges***, values are expressed with ***an object*** containing some of these properties:
+		* years
+		* months
+		* days
+		* hours
+		* minutes
+		* seconds
 	* Possible values:
 		* false or null to deactivate
 		* object with to fields: min and max. Set a value to false to deactivate one constraint
-	* examples: range: {min: 10, max: 50} or {min: 20} or {min: 20, max: false} or {max: false} or false
+	* examples: 
+		* range: {min: 10, max: 50}
+		* {min: 20}
+		* {min: 20, max: false}
+		* {max: false}
+		* false
+		* {min: {days: 7}, max: {days: 21}}
 * step (default: false)
 	* value steps, in order to constraint values
 	* Numerical value (for rangeSlider and editSlider) or false
-	* An object with some of these properties (for date slider):
+	* ***An object*** with some of these properties (for ***date slider***):
 		* years
 		* months
 		* days
