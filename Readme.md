@@ -276,3 +276,17 @@ Yes ! Take a look at examples below.
 	});
 
 Take a look at the documentation for other usable units.
+
+### How can I bind events ?
+
+Simple:
+    
+     // Default contructor
+     $("#slider").rangeSlider();
+
+     // Fired when values changed
+     $("#slider").bind("valuesChanged", function(event, data){
+       var values = data.values;
+
+       alert("Values changed ! " + data.min + " " + data.max);
+     });
