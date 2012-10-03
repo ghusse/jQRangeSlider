@@ -104,7 +104,7 @@ var customCtorTest = new TestCase(
 		el.rangeSlider(
 			{
 				defaultValues : this.defaultValues,
-				bounds: this.bounds,
+				bounds: this.bounds
 			}
 		);
 	},
@@ -187,6 +187,24 @@ var wheelModeZoomTest = new TestCase(
 	}
 );
 
+function scrollAssert(){
+	this.getValues();
+	this.getPositions();
+	el.find(".ui-rangeSlider-container").trigger("mousewheel", [-10, 0, -10]);
+
+	same(el.rangeSlider("option", "wheelMode"), "scroll", "Wheelmode setter should have worked");
+	
+	ok($(".ui-rangeSlider-leftHandle").offset().left > this.minHandlerPos, "Left handle should have been moved");
+	ok($(".ui-rangeSlider-rightHandle").offset().left > this.maxHandlerPos, "Right handle should have been moved");
+	ok($(".ui-rangeSlider-leftLabel").offset().left > this.minLabelPos, "Left label should have been moved");
+	ok($(".ui-rangeSlider-rightLabel").offset().left > this.maxLabelPos, "Right label should have been moved");
+	
+	ok(this.min() > this.values.min, "Scroll should have worked");
+	ok(this.max() > this.values.max, "Scroll should have worked");
+	equalEpsilon(this.min() - this.values.min, this.max() - this.values.max, 1e-3, "Scrolling must add or remove the same value on both ends");
+
+}
+
 var wheelModeScrollTest = new TestCase(
 	"Scroll wheel mode",
 	function(){
@@ -197,22 +215,20 @@ var wheelModeScrollTest = new TestCase(
 
 		el.rangeSlider("values", 30, 40);
 	},
-	function(){
-		this.getValues();
-		this.getPositions();
-		el.find(".ui-rangeSlider-container").trigger("mousewheel", [-10, 0, -10]);
+	scrollAssert
+);
 
-		same(el.rangeSlider("option", "wheelMode"), "scroll", "Wheelmode setter should have worked");
-		
-		ok($(".ui-rangeSlider-leftHandle").offset().left > this.minHandlerPos, "Left handle should have been moved");
-		ok($(".ui-rangeSlider-rightHandle").offset().left > this.maxHandlerPos, "Right handle should have been moved");
-		ok($(".ui-rangeSlider-leftLabel").offset().left > this.minLabelPos, "Left label should have been moved");
-		ok($(".ui-rangeSlider-rightLabel").offset().left > this.maxLabelPos, "Right label should have been moved");
-		
-		ok(this.min() > this.values.min, "Scroll should have worked");
-		ok(this.max() > this.values.max, "Scroll should have worked");
-		equalEpsilon(this.min() - this.values.min, this.max() - this.values.max, 1e-3, "Scrolling must add or remove the same value on both ends");
-	}
+var wheelModeConstructorTest = new TestCase(
+	"Wheel mode in constructor",
+	function(){
+		el.rangeSlider("destroy");
+		el.rangeSlider({
+			wheelMode: "scroll"
+		});
+
+		el.rangeSlider("values", 30, 40);
+	},
+	scrollAssert
 );
 
 var wheelModeSetterTest = new TestCase(
@@ -510,6 +526,7 @@ var rangeLimitMinWithMinAndMax = new TestCase(
 testRunner.add("jQRangeSlider", [setUp,
 			defaultCtorTest, hideLabelsTest, showLabelsTest, changeBoundsTest,
 			wheelModeZoomTest, wheelModeScrollTest, wheelModeSetterTest, wheelSpeedSetterTest, rangeSetterTest,
+			wheelModeConstructorTest,
 			noArrowsSetterTest, arrowsScrollingMouseUpTest,
 			defaultSetup,
 			customCtorTest,

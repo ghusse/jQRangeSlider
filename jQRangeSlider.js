@@ -240,10 +240,14 @@
 					rightHandle: this.rightHandle,
 					values: {min: this.options.defaultValues.min, max: this.options.defaultValues.max},
 					type: this._handleType(),
-					range: this.options.range
+					range: this.options.range,
+					wheelMode: this.options.wheelMode,
+					wheelSpeed: this.options.wheelSpeed
 				});
 
 			this.options.range = this._bar("option", "range");
+			this.options.wheelMode = this._bar("option", "wheelMode");
+			this.options.wheelSpeed = this._bar("option", "wheelSpeed");
 		},
 
 		_createArrow: function(whichOne){

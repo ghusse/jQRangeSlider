@@ -49,6 +49,7 @@
 			this._bindHandles();
 
 			this._values = this.options.values;
+			this._setWheelModeOption(this.options.wheelMode);
 		},
 
 		_setOption: function(key, value){

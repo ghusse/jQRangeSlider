@@ -1,5 +1,8 @@
 jQRangeSlider
 -------------
+* 4.2.1: 2012-10-04
+	* Fixed wheelmode setter in constructor
+	* Documentation update
 * 4.2: 2012-06-18
 	* Draggable labels (Issue #28)
 * 4.1.2: 2012-06-11
