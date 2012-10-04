@@ -246,7 +246,7 @@ Simple:
      $("#slider").bind("valuesChanged", function(event, data){
        var values = data.values;
 
-       alert("Values changed ! " + data.min + " " + data.max);
+       alert("Values changed ! " + values.min + " " + values.max);
      });
 
 ### Is it possible to set steps?
