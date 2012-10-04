@@ -290,3 +290,9 @@ Simple:
 
        alert("Values changed ! " + data.min + " " + data.max);
      });
+
+### I'm hiding the slider, and after showing it again, it does not work
+
+Just **after showing it** (or one of its parent), you have to call the *resize* method.
+	
+	$("#slider").rangeSlider("resize");
