@@ -34,7 +34,7 @@ Javascript reference for development:
 
 Javascript reference for production:
 
-  <script type="text/javascript" src="jQRangeSlider-min.js"></script>
+  	<script type="text/javascript" src="jQRangeSlider-min.js"></script>
 
 Range slider creation:
 
@@ -54,7 +54,7 @@ Javascript reference for development:
 
 Javascript reference for production:
 
-  <script type="text/javascript" src="jQAllRangeSliders-min.js"></script>
+  	<script type="text/javascript" src="jQAllRangeSliders-min.js"></script>
 
 Range slider creation:
 
@@ -74,7 +74,7 @@ Javascript reference for development:
 
 Javascript reference for production:
 
-  <script type="text/javascript" src="jQAllRangeSliders-min.js"></script>
+  	<script type="text/javascript" src="jQAllRangeSliders-min.js"></script>
 
 Range slider creation:
 
