@@ -199,13 +199,6 @@ Methods
 	
 	// If you're using another kind of slider
 	var minDate = $("#slider").dateRangeSlider("min");
- 
-Prerequisites 
--------------
-* Element on which .rangeSlider() is applied will be positioned as relative if no positioning is set.
-* jQDateRangeSlider.js is only required by the dateRangeSlider widget.
-* jQEditRangeSlider.js is only required for using the editRangeSlider widget
-* jQRangeSlider.js is needed by all widgets
 
 Generating minified jQRangeSlider files
 ---------------------------------------
