@@ -202,7 +202,7 @@ Methods
 
 Generating minified jQRangeSlider files
 ---------------------------------------
-Launch min/compile.sh (on Linux or Mac) or min/compile.bat (on Windows).
+Launch min/compile.sh for compiling all sliders. On windows, you'll need cygwin installed with "ed" (command line).
 
 FAQ
 ---
