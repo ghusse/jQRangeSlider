@@ -513,7 +513,7 @@
 			var val = this._bar("values", min, max);
 
 			if (typeof min !== "undefined" && typeof max !== "undefined"){
-				this._changed(false);
+				this._changed(true);
 			}
 
 			return val;
