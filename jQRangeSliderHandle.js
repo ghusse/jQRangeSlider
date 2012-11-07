@@ -188,22 +188,33 @@
 			value = this._constraintValue(value);
 
 			var ratio = (value - this.options.bounds.min) / (this.options.bounds.max - this.options.bounds.min),
-				position = this.cache.parent.offset.left;
+				leftShift = Math.round(this.cache.width.outer / 2),
+				position = this.cache.parent.offset.left + leftShift,
+				rightShift = this.cache.width.outer - leftShift;
 
-			if (!this.options.isLeft){
-				position -= this.cache.width.outer;
+			if (this.options.isLeft){
+				position -= leftShift;
+			}else{
+				position -= rightShift;
 			}
 
 
-			return position + ratio * this.cache.parent.width;
+			return position + ratio * (this.cache.parent.width - this.cache.width.outer);
 		},
 
 		_getValueForPosition: function(position){
-			if (!this.options.isLeft){
-				position += this.cache.width.outer;
+			var leftShift = Math.round(this.cache.width.outer / 2),
+				rightShift = this.cache.width.outer - leftShift;
+
+			if (this.options.isLeft){
+				position += leftShift;
+			}else{
+				position += rightShift;
 			}
 
-			var ratio = (position - this.cache.parent.offset.left) / this.cache.parent.width,
+			position -= leftShift;
+
+			var ratio = (position - this.cache.parent.offset.left) / (this.cache.parent.width - this.cache.width.outer),
 				raw = ratio * (this.options.bounds.max - this.options.bounds.min) + this.options.bounds.min;
 
 			return this._constraintValue(raw);
