@@ -196,16 +196,15 @@
 		},
 
 		_getValueForPosition: function(position){
-			
 			var raw = this._getRawValueForPositionAndBounds(position, this.options.bounds.min, this.options.bounds.max);
 
 			return this._constraintValue(raw);
 		},
 
 		_getRawValueForPositionAndBounds: function(position, min, max){
-			var parentPosition = this.cache.parent.offset.left,
+			var parentPosition =  this.cache.parent.offset == null ? 0 : this.cache.parent.offset.left,
 					availableWidth = this.cache.parent.width - this.cache.width.outer,
-					ratio = (position - this.cache.parent.offset.left) / availableWidth;
+					ratio = (position - parentPosition) / availableWidth;
 
 			return	ratio * (max - min) + min;
 		},
