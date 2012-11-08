@@ -1,5 +1,9 @@
 jQRangeSlider
 -------------
+* 4.2.2: 2012-11-08
+	* Fixed #46: Labels swap when they are very close
+	* Fixed #45: Access to a property of a null object
+	# Fixed #49: UserValuesChanged event fired when changing values programmatically
 * 4.2.1: 2012-10-04
 	* Fixed wheelmode setter in constructor
 	* Documentation update
