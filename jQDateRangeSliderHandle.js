@@ -20,15 +20,8 @@
 		},
 
 		_getValueForPosition: function(position){
-			var min = this.options.bounds.min.valueOf(),
-				max = this.options.bounds.max.valueOf();
-
-			if (!this.options.isLeft){
-				position += this.cache.width.outer;
-			}
-
-			var ratio = (position - this.cache.parent.offset.left) / this.cache.parent.width,
-				raw = ratio * (max - min) + min;
+			
+			var raw = this._getRawValueForPositionAndBounds(position, this.options.bounds.min.valueOf(), this.options.bounds.max.valueOf());
 
 			return this._constraintValue(new Date(raw));
 		},
