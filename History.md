@@ -1,5 +1,8 @@
 jQRangeSlider
 -------------
+* 4.2.3: 2012-11-16
+	* Fixed #52 and #53: Labels shown when valueLabels option set to "change"
+	* Fixed #51: right label display bug in Chrome
 * 4.2.2: 2012-11-08
 	* Fixed #46: Labels swap when they are very close
 	* Fixed #45: Access to a property of a null object
