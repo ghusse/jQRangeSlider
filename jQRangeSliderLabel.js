@@ -184,6 +184,7 @@
 		this.left = label1;
 		this.right = label2;
 		this.moving = false;
+		this.initialized = false;
 
 		this.Init = function(){
 			this.BindHandle(this.handle1);
@@ -191,20 +192,33 @@
 
 			if (this.options.show === "show"){
 				setTimeout($.proxy(this.PositionLabels, this), 1);
+				this.initialized = true;
+			}else{
+				setTimeout($.proxy(this.AfterInit, this), 1000);
 			}
 		}
 
+		this.AfterInit = function () {
+			this.initialized = true;
+		}
+
 		this.Cache = function(){
+			if (this.label1.css("display") == "none"){
+				return;
+			}
+
 			this.cache = {};
 			this.cache.label1 = {};
 			this.cache.label2 = {};
 			this.cache.handle1 = {};
 			this.cache.handle2 = {};
+			this.cache.offsetParent = {};
 
 			this.CacheElement(this.label1, this.cache.label1);
 			this.CacheElement(this.label2, this.cache.label2);
 			this.CacheElement(this.handle1, this.cache.handle1);
 			this.CacheElement(this.handle2, this.cache.handle2);
+			this.CacheElement(this.label1.offsetParent(), this.cache.offsetParent);
 		}
 
 		this.CacheIfNecessary = function(){
@@ -215,6 +229,7 @@
 				this.CacheWidth(this.label2, this.cache.label2);
 				this.CacheHeight(this.label1, this.cache.label1);
 				this.CacheHeight(this.label2, this.cache.label2);
+				this.CacheWidth(this.label1.offsetParent(), this.cache.offsetParent);
 			}
 		}
 
@@ -257,13 +272,40 @@
 		this.PositionLabels = function(){
 			this.CacheIfNecessary();
 
+			if (this.cache == null){
+				return;
+			}
+
 			var label1Pos = this.GetRawPosition(this.cache.label1, this.cache.handle1),
 				label2Pos = this.GetRawPosition(this.cache.label2, this.cache.handle2);
 
 			this.ConstraintPositions(label1Pos, label2Pos);
 
-			this.label1.offset({left:label1Pos.left});
-			this.label2.offset({left:label2Pos.left});
+			this.PositionLabel(this.label1, label1Pos.left, this.cache.label1);
+			this.PositionLabel(this.label2, label2Pos.left, this.cache.label2);
+		}
+
+		this.PositionLabel = function(label, leftOffset, cache){
+			var parentShift = this.cache.offsetParent.offset.left + this.cache.offsetParent.border.left,
+					parentRightPosition,
+					labelRightPosition,
+					rightPosition;
+
+			if ((parentShift - leftOffset) >= 0){
+				label.css("right", "");
+				label.offset({left: leftOffset});
+			}else{
+				parentRightPosition = parentShift
+																			+ this.cache.offsetParent.width;
+				labelRightPosition = leftOffset
+																			+ cache.margin.left
+																			+ cache.outerWidth
+																			+ cache.margin.right,
+				rightPosition = parentRightPosition - labelRightPosition;
+
+				label.css("left", "");
+				label.css("right", rightPosition);
+			}
 		}
 
 		this.ConstraintPositions = function(pos1, pos2){
@@ -294,24 +336,24 @@
 		}
 
 		this.ShowIfNecessary = function(){
-			if (this.options.show === "show" || this.moving) return;
+			if (this.options.show === "show" || this.moving || !this.initialized) return;
 
-			this.label1.stop().fadeIn(this.options.durationIn || 0);
-			this.label2.stop().fadeIn(this.options.durationIn || 0);
+			this.label1.stop(true, true).fadeIn(this.options.durationIn || 0);
+			this.label2.stop(true, true).fadeIn(this.options.durationIn || 0);
 			this.moving = true;
 		},
 
 		this.HideIfNeeded = function(lastMove){
 			if (this.moving === true){
-				this.label1.stop().delay(this.options.delayOut || 0).fadeOut(this.options.durationOut || 0);
-				this.label2.stop().delay(this.options.delayOut || 0).fadeOut(this.options.durationOut || 0);
+				this.label1.stop(true, true).delay(this.options.delayOut || 0).fadeOut(this.options.durationOut || 0);
+				this.label2.stop(true, true).delay(this.options.delayOut || 0).fadeOut(this.options.durationOut || 0);
 				this.moving = false;
 			}
 		},
 
 		this.onHandleMoving = function(event, ui){
-			this.CacheIfNecessary();
 			this.ShowIfNecessary();
+			this.CacheIfNecessary();
 			this.UpdateHandlePosition(ui);
 
 			this.PositionLabels();
@@ -322,6 +364,8 @@
 		},
 
 		this.UpdateHandlePosition = function(ui){
+			if (this.cache == null) return;
+			
 			if (ui.element[0] == this.handle1[0]){
 				this.UpdatePosition(ui, this.cache.handle1);
 			}else{
