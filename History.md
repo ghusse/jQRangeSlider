@@ -1,5 +1,7 @@
 jQRangeSlider
 -------------
+* 4.2.4: to be released
+	* Fixed a bug in resize method, when displaying a slider in a previously hidden parent.
 * 4.2.3: 2012-11-16
 	* Fixed #52 and #53: Labels shown when valueLabels option set to "change"
 	* Fixed #51: right label display bug in Chrome
