@@ -132,7 +132,7 @@
 
 		_onUpdate: function(event, ui){
 			if (this.options.show === "show"){
-				this._display(ui.value);
+				this.update();
 			}
 		},
 
@@ -168,6 +168,7 @@
 		},
 
 		update: function(){
+			this._positionner.cache = null;
 			this._display(this._handle("value"));
 			this._positionner.PositionLabels();
 		}
@@ -265,7 +266,7 @@
 		}
 
 		this.BindHandle = function(handle){
-			handle.bind("moving update", $.proxy(this.onHandleMoving, this));
+			handle.bind("moving", $.proxy(this.onHandleMoving, this));
 			handle.bind("stop", $.proxy(this.onHandleStop, this));
 		}
 
