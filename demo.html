@@ -27,12 +27,12 @@
 <body>
   <nav class="navbar navbar-inverse navbar-fixed-top">
   	<div class="navbar-inner">
-  		<a class="brand" href="index.html">jQRangeSlider</a>
+  		<a class="brand" href="index.html" onClick="_gaq.push(['_trackEvent', 'Home', 'MenubarBrand']);">jQRangeSlider</a>
 			<ul class="nav">
-				<li><a href="index.html"><i class="icon icon-white icon-home"></i> Home</a></li>
+				<li><a href="index.html" onClick="_gaq.push(['_trackEvent', 'Home', 'Menubar']);"><i class="icon icon-white icon-home"></i> Home</a></li>
 				<li class="active"><a href="demo.html"><i class="icon icon-white icon-play"></i> Demo</a></li>
-				<li><a href="documentation.html"><i class="icon icon-white icon-book"></i> Documentation</a></li>
-        <li><a href="technicalDemo.html"><i class="icon icon-white icon-fast-forward"></i> Technical demo</a></li>
+				<li><a href="documentation.html" onClick="_gaq.push(['_trackEvent', 'Documentation', 'Menubar']);"><i class="icon icon-white icon-book"></i> Documentation</a></li>
+        <li><a href="technicalDemo.html"  onClick="_gaq.push(['_trackEvent', 'TechnicalDocumentation', 'Menubar']);"><i class="icon icon-white icon-fast-forward"></i> Technical demo</a></li>
 			</ul>
   	</div>
   </nav>
@@ -43,23 +43,23 @@
       <div class="sliderContainer"><div id="slider"></div></div>
       <div class="sliderContainer"><div id="dateSlider"></div></div>
       <div class="sliderContainer"><div id="editSlider"></div></div>
-      <p class="buttons">Convinced? <a class="btn btn-large btn-primary" href="https://github.com/downloads/ghusse/jQRangeSlider/jQRangeSlider-4.2.4.min.zip" onClick="_gaq.push(['_trackEvent', 'Demo', 'Download']);">Download jQRangeSlider <i class="icon icon-white icon-download-alt"></i></a></p>
+      <p class="buttons">Convinced? <a class="btn btn-large btn-primary" href="https://github.com/downloads/ghusse/jQRangeSlider/jQRangeSlider-4.2.4.min.zip" onClick="_gaq.push(['_trackEvent', 'Download', 'Download-DemoConvinced']);">Download jQRangeSlider <i class="icon icon-white icon-download-alt"></i></a></p>
     </div>
 
     <div class="row">
       <div class="span4">
         <h3>Need more?</h3>
-        <p>If you want to test different options, you can try the <a href="technicalDemo.html" onClick="_gaq.push(['_trackEvent', 'Demo', 'TechnicalDemoLink']);">technical demo</a>.</p>
-        <p class="buttons"><a href="technicalDemo.html" class="btn btn-small" onClick="_gaq.push(['_trackEvent', 'Demo', 'TechnicalDemoButton']);">Try the technical demo <i class="icon icon-fast-forward"></i></a></p>
+        <p>If you want to test different options, you can try the <a href="technicalDemo.html" onClick="_gaq.push(['_trackEvent', 'TechnicalDemo', 'Demo-TechnicalDemoLink']);">technical demo</a>.</p>
+        <p class="buttons"><a href="technicalDemo.html" class="btn btn-small" onClick="_gaq.push(['_trackEvent', 'TechnicalDemo', 'Demo-TechnicalDemoButton']);">Try the technical demo <i class="icon icon-fast-forward"></i></a></p>
       </div>
 
       <div class="span4">
         <h3>Play with sliders.</h3>
         <p>If you want to go further and test different options, you can use jsFiddle with these 3 pre-configured <strong>js fiddles</strong>.</p>
         <p class="buttons">
-          <a class="btn btn-small" href="http://jsfiddle.net/ghusse/zrbCj/" onClick="_gaq.push(['_trackEvent', 'Demo', 'BasicFiddle']);">Basic <i class="icon-chevron-right"></i></a>
-          <a class="btn btn-small" href="http://jsfiddle.net/ghusse/vM844/" onClick="_gaq.push(['_trackEvent', 'Demo', 'DateFiddle']);">Date <i class="icon-chevron-right"></i></a>
-          <a class="btn btn-small" href="http://jsfiddle.net/ghusse/WQgwL/" onClick="_gaq.push(['_trackEvent', 'Demo', 'EditFiddle']);">Edit <i class="icon-chevron-right"></i></a>
+          <a class="btn btn-small" href="http://jsfiddle.net/ghusse/zrbCj/" onClick="_gaq.push(['_trackEvent', 'Fiddle', 'Demo-BasicFiddleButton']);">Basic <i class="icon-chevron-right"></i></a>
+          <a class="btn btn-small" href="http://jsfiddle.net/ghusse/vM844/" onClick="_gaq.push(['_trackEvent', 'Fiddle', 'Demo-DateFiddleButton']);">Date <i class="icon-chevron-right"></i></a>
+          <a class="btn btn-small" href="http://jsfiddle.net/ghusse/WQgwL/" onClick="_gaq.push(['_trackEvent', 'Fiddle', 'Demo-EditFiddleButton']);">Edit <i class="icon-chevron-right"></i></a>
         </p>
       </div>
     </div>
