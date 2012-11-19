@@ -11,6 +11,7 @@
   <link rel="icon" type="image/png" href="favicon.png" />
   <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
 
+  <!--
 	<script type="text/javascript">
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-20560239-1']);
@@ -22,6 +23,7 @@
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
 </script>
+-->
 </head>
 
 <body data-spy="scroll" data-target="#tableOfContent" data-offset="60">
@@ -101,7 +103,7 @@
 
           <h2>Basic slider</h2>
           <div class="alert alert-info">
-            <strong>Info</strong>: If you use more than one type of sliders, please report to the <strong><a href="#allSlidersScript">multiple sliders</a></strong> section.
+            <strong>Info</strong>: If you use more than one type of slider, please report to the <strong><a href="#allSlidersScript">multiple sliders</a></strong> section.
           </div>
 
 <pre class="prettyprint linenums"><code class="language-html">&lt;!DOCTYPE>
@@ -257,7 +259,7 @@ $("#dateSlider").dateRangeSlider(
 
         <h2 id="arrowsOption">Arrows</h2>
 
-        <p>The option <code>arrows</code> lets you remove scrolling arrows on both sides of the slider.</p>
+        <p>The option <code>arrows</code> let you remove scrolling arrows on both sides of the slider.</p>
 
         <div class="alert alert-info">
           <strong>Info</strong>: By default, arrows are activated.
@@ -311,10 +313,10 @@ $("#dateSlider").dateRangeSlider(
 
         <h2 id="defaultValuesOption">Default values</h2>
 
-        <p>The option <code>defaultValues</code> lets you specify values selected by default on construction.</p>
+        <p>The option <code>defaultValues</code> let you specify values selected by default on construction.</p>
 
         <div class="alert alert-warning">
-          <strong>Warning</strong>: This option can only be used in constructor. Once the slider has been constructed, it has no effect.
+          <strong>Warning</strong>: This option can only be used in constructor. Once the slider constructed, it has no effect
         </div>
 
         <div class="example">
@@ -342,7 +344,7 @@ $("#dateSlider").dateRangeSlider(
 
         <h2 id="delayOption">Delay out</h2>
 
-        <p>Option <code>delayOut</code> lets you specify the duration labels are shown when the user changes slider's values.</p>
+        <p>Option <code>delayOut</code> let you specify the duration labels are shown after the user changed its values..</p>
 
         <div class="alert alert-warning">
           <strong>Warning</strong>: This option can only be used in conjonction with <code><strong>valueLabels: "change"</strong></code>.
@@ -378,7 +380,7 @@ $("#dateSlider").dateRangeSlider(
 
         <h2 id="durationOptions">Duration in/out</h2>
 
-        <p>Option <code>durationIn</code> lets you specify the animation duration when displaying value labels. Similarly, <code>durationOut</code> allows to customize the animation duration when hiding those labels.</p>
+        <p>Option <code>durationIn</code> let you specify the animation length when displaying value labels. Similarly, <code>durationOut</code> allow to customize the animation duration when hiding those labels.</p>
 
         <div class="alert alert-warning">
           <strong>Warning</strong>: This option can only be used in conjonction with <code><strong>valueLabels: "change"</strong></code>.
@@ -417,7 +419,7 @@ $("#dateSlider").dateRangeSlider(
 
         <h2 id="formatterOption">Formatter</h2>
 
-        <p>The option <code>formatter</code> lets you customize displayed label text.</p>
+        <p>The option <code>formatter</code> let you customize displayed label text.</p>
 
         <div class="example">
           <div class="sliderContainer">
@@ -462,9 +464,9 @@ $("#dateSlider").dateRangeSlider(
 
         <h2 id="rangeOption">Range</h2>
 
-        <p>The option <code>range</code> lets you specify minimum and/or maximum range length. For instance, let's consider you want the user to choose a range of dates during 2012. You can constraint people to choose <strong>at least 1 week</strong> during this period. Similarly, you also can constraint the user to choose 90 days at maximum.</p>
+        <p>The option <code>range</code> let you specify minimum and/or maximum range length. For instance, let's consider you want the user to choose a range of dates during 2012. You can constraint people to choose <strong>at least 1 week</strong> during this period. Similarly, you also can constraint the user to choose 90 days at maximum.</p>
 
-        <p>When this option is activated, the slider constraints the user input. When minimum or maximum value is reached, the user cannot move an extremity further to shrink/enlarge the selected range.</p>
+        <p>When this option is activated, the slider constraint by design the user input. When minimum or maximum value is reached, the user cannot move an extremity further to shrink/enlarge the selected range.</p>
 
         <div class="alert alert-info">
           <strong>Info</strong>: This option is <strong>deactivated by default</strong>
@@ -501,7 +503,7 @@ $("#rangeExample").rangeSlider({range: {min: false}});</code></pre></dd>
           </dl>
         </div>
 
-        <p>Ranges in date sliders have to be set using an object, specifying at least one property in this list below.</p>
+        <p>Ranges in date slider have to be set using an object, specifying at least one property in this list below</p>
 
         <ul>
           <li>years</li>
@@ -519,7 +521,7 @@ $("#rangeExample").rangeSlider({range: {min: false}});</code></pre></dd>
 
         <h2 id="stepOption">Step</h2>
 
-        <p>The option <code>step</code> allows to customize values rounding, and graphically render this rounding. Considering you configured a slider with a step value of 10: it'll only allow your user to choose a value corresponding to <code>minBound + 10n</code>.</p>
+        <p>The option <code>step</code> allows to customize values rounding, and graphically render this rounding. Considering you configured a slider with a step value of 10. It'll only allow your user to choose a value corresponding to <code>minBound + 10n</code>.</p>
 
         
         <div class="alert alert-info">
@@ -547,7 +549,7 @@ $("#rangeExample").rangeSlider({range: {min: false}});</code></pre></dd>
           </dl>
         </div>
 
-        <p>Steps in date sliders have to be set using an object, specifying at least one property in this list below:</p>
+        <p>Step in date slider have to be set using an object, specifying at least one property in this list below.</p>
 
         <ul>
           <li>years</li>
@@ -592,7 +594,7 @@ $("#typeExample").editRangeSlider({type: "number"});</code></pre></dd>
 
         <h2 id="valueLabelsOption">Value labels</h2>
 
-        <p>The option <code>valueLabels</code> lets you specify a display mode for value labels: hidden, shown, or only shown when moving. Possible values are: <code>show</code>, <code>hide</code> and <code>change</code>.</p>
+        <p>The option <code>valueLabels</code> let you specify a display mode for value labels: hidden, shown, or only shown when moving. Possible values are: <code>show</code>, <code>hide</code> and <code>change</code>.</p>
 
         
         <div class="alert alert-info">
@@ -656,11 +658,11 @@ $("#typeExample").editRangeSlider({type: "number"});</code></pre></dd>
 
         <h2 id="wheelSpeedOption">Wheel speed</h2>
 
-        <p>The option <code>wheelSpeed</code> lets you customize the speed of mouse wheel interactions. This parameter requires the <code><a href="#wheelModeOption">wheelMode</a></code> to be set.</p>
+        <p>The option <code>wheelSpeed</code> lets you customize the speed mouse wheel interactions. This parameter requires the <code><a href="#wheelModeOption">wheelMode</a></code> to be set.</p>
 
         
         <div class="alert alert-info">
-          <strong>Info</strong>: Default value for this option is 4. Increase this value to obtain faster interactions. You can set a negative value if you want to reverse. 
+          <strong>Info</strong>: Default value for this option is 4. Increase this value to obtain faster interactions. You can set a negative value if you want to inverse 
         </div>
 
         <div class="alert alert-warning">
@@ -792,7 +794,7 @@ $("#slider").dateRangeSlider("values", new Date(2012, 0, 1), new Date(2012, 0, 3
 
           <p>The method <code>bounds([min, max])</code> gets or sets the bounds. You can get and change bounds with this method or with the <a href="#boundsOption">bounds</a> option.</p>
 
-          <p><code>bounds()</code> accepts zero or two arguments. If both arguments are provided, then this method initializes slider's bounds to given values. In both cases, it returns bounds values.</p>
+          <p><code>bounds()</code> accepts zero or two arguments. If both arguments are provided, then this method initialize slider's bounds to given values. In both cases, it returns bounds values.</p>
 
           <div class="alert alert-info">
             <strong>Info</strong>: <code>bounds()</code> always returns an object containing the properties <code>min</code> and <code>max</code>.
@@ -830,8 +832,6 @@ $("#editSlider").editRangeSlider("bounds", 20, 100);
           <p>Methods <code>min([value])</code> and <code>max([value])</code> can be used to get or set minimum/maximum selected value in the slider.</p>
 
           <p>Both methods accept one optional argument. When used, this value is set as a new minimum/maximum value for the selected range. This methods always return new value for the minimum/maximum value of selected range.</p>
-
-          <p><code>min()</code> and <code>max()</code> change the value of the minimum/maximum selected value. Consider that currently selected range is <code>{min: 10, max:20}</code>, calling <code>min(30)</code> will change selected range to <code>{min: 20, max: 30}</code>.</p>
 
           <dl>
             <dt>Get values</dt>
