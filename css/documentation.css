@@ -1,0 +1,74 @@
+.example{
+	margin:15px 0;
+	padding: 14px 19px;
+	border: 1px solid rgb(221, 221, 221);
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+}
+
+h1, h2{
+	padding-top: 45px;
+	margin-top: -35px;
+}
+
+pre.afterExample{
+	margin-top: 20px;
+}
+
+.sliderContainer{
+	height: 50px;
+	margin-top: 60px;
+	width: 100%;
+}
+
+input[type=number]{
+	width:4em;
+	height: auto;
+}
+
+#tableOfContent ul ul{
+	list-style-type: none;
+	margin: 0;
+}
+
+#tableOfContent li a{
+	display: block;
+	line-height: 20px;
+	padding: 3px 15px;
+	font-weight: normal;
+	text-transform: none;
+	font-size: 14px;
+	margin-left: -10px;
+}
+
+#tableOfContent li.nav-header{
+	cursor: pointer;
+	font-size: 13px;
+}
+
+#tableOfContent li.nav-header span.trigger{
+	display: block;
+	margin-left: -10px;
+}
+
+#tableOfContent span.trigger i.icon-generic{
+	background-position: -313px -119px;
+	background-image:url("../lib/bootstrap/img/glyphicons-halflings.png");
+	opacity: .5;
+}
+
+#tableOfContent span.trigger.collapsed i.icon-generic{
+	background-position: -456px -72px;
+}
+
+#tableOfContent li a:hover{
+	text-decoration: none;
+	background-color: #EEE;
+}
+
+#tableOfContent li.active a,
+#tableOfContent li.active a:hover{
+	background-color: #08C;
+	color:white;
+}

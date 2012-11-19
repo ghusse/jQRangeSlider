@@ -1,0 +1,24 @@
+body{
+	padding-top:45px;
+}
+
+.navbar-fixed-top .navbar-inner{
+	padding-left: 20px;
+}
+
+.buttons{
+	margin:0;
+}
+
+footer{
+	font-size: 11px;
+	color:#888;
+	padding: 50px;
+	margin-top: 50px;
+	background-color: #EEE;
+	border-radius: 5px;
+}
+
+footer a{
+	color:#6AF;
+}

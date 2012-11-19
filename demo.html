@@ -1,0 +1,100 @@
+<!DOCTYPE>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>jQRangeSlider - Demo</title>
+	<link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+  <link href="css/style.css" rel="stylesheet" media="screen">
+	<link href="css/demo.css" rel="stylesheet" media="screen">
+  <link href="stable/css/iThing.css" rel="stylesheet" media="screen">
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+
+  <script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-20560239-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+</head>
+
+<body>
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+  	<div class="navbar-inner">
+  		<a class="brand" href="index.html">jQRangeSlider</a>
+			<ul class="nav">
+				<li><a href="index.html"><i class="icon icon-white icon-home"></i> Home</a></li>
+				<li class="active"><a href="demo.html"><i class="icon icon-white icon-play"></i> Demo</a></li>
+				<li><a href="documentation.html"><i class="icon icon-white icon-book"></i> Documentation</a></li>
+        <li><a href="technicalDemo.html"><i class="icon icon-white icon-fast-forward"></i> Technical demo</a></li>
+			</ul>
+  	</div>
+  </nav>
+
+  <div class="container">
+    <div class="hero-unit">
+      <h1>Try jQRangeSlider!</h1>
+      <div class="sliderContainer"><div id="slider"></div></div>
+      <div class="sliderContainer"><div id="dateSlider"></div></div>
+      <div class="sliderContainer"><div id="editSlider"></div></div>
+      <p class="buttons">Convinced? <a class="btn btn-large btn-primary" href="https://github.com/downloads/ghusse/jQRangeSlider/jQRangeSlider-4.2.4.min.zip" onClick="_gaq.push(['_trackEvent', 'Demo', 'Download']);">Download jQRangeSlider <i class="icon icon-white icon-download-alt"></i></a></p>
+    </div>
+
+    <div class="row">
+      <div class="span4">
+        <h3>Need more?</h3>
+        <p>If you want to test different options, you can try the <a href="technicalDemo.html" onClick="_gaq.push(['_trackEvent', 'Demo', 'TechnicalDemoLink']);">technical demo</a>.</p>
+        <p class="buttons"><a href="technicalDemo.html" class="btn btn-small" onClick="_gaq.push(['_trackEvent', 'Demo', 'TechnicalDemoButton']);">Try the technical demo <i class="icon icon-fast-forward"></i></a></p>
+      </div>
+
+      <div class="span4">
+        <h3>Play with sliders.</h3>
+        <p>If you want to go further and test different options, you can use jsFiddle with these 3 pre-configured <strong>js fiddles</strong>.</p>
+        <p class="buttons">
+          <a class="btn btn-small" href="http://jsfiddle.net/ghusse/zrbCj/" onClick="_gaq.push(['_trackEvent', 'Demo', 'BasicFiddle']);">Basic <i class="icon-chevron-right"></i></a>
+          <a class="btn btn-small" href="http://jsfiddle.net/ghusse/vM844/" onClick="_gaq.push(['_trackEvent', 'Demo', 'DateFiddle']);">Date <i class="icon-chevron-right"></i></a>
+          <a class="btn btn-small" href="http://jsfiddle.net/ghusse/WQgwL/" onClick="_gaq.push(['_trackEvent', 'Demo', 'EditFiddle']);">Edit <i class="icon-chevron-right"></i></a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <footer class="container">
+    <p>Thanks to <a href="http://twitter.github.com/bootstrap">twitter bootstrap</a> for its awesome CSS framework.</p>
+  </footer>
+
+  <script src="stable/lib/jquery-1.7.1.min.js"></script>
+  <script src="stable/demo/lib/jquery-ui/js/jquery-ui-1.8.16.custom.min.js"></script>
+  
+  <script src="stable/jQRangeSliderMouseTouch.js"></script>
+  <script src="stable/jQRangeSliderDraggable.js"></script>
+  <script src="stable/jQRangeSliderHandle.js"></script>
+  <script src="stable/jQRangeSliderBar.js"></script>
+  <script src="stable/jQRangeSliderLabel.js"></script>
+  <script src="stable/jQRangeSlider.js"></script>
+
+  <script src="stable/jQDateRangeSliderHandle.js"></script>
+  <script src="stable/jQDateRangeSlider.js"></script>
+  
+  <script src="stable/jQEditRangeSliderLabel.js"></script>
+  <script src="stable/jQEditRangeSlider.js"></script>
+
+  <script>
+  //<!--
+  (function($){
+    $(document).ready(function(){
+      $("#slider").rangeSlider();
+      $("#dateSlider").dateRangeSlider();
+      $("#editSlider").editRangeSlider();
+    });
+  })(jQuery);
+  //-->
+  </script>
+</body>
+</html>

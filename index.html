@@ -1,10 +1,15 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE>
+<html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-	<title>ghusse/jQRangeSlider @ GitHub</title>
-	<link  type="text/css"  href="style.css" rel="stylesheet" media="screen"/>
-	<script type="text/javascript">
+	<meta charset="utf-8"/>
+	<title>jQRangeSlider: jQuery plugin for range sliders</title>
+	<link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+	<link href="css/style.css" rel="stylesheet" media="screen">
+  <link href="css/index.css" rel="stylesheet" media="screen">
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+
+  <script type="text/javascript">
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-20560239-1']);
   _gaq.push(['_trackPageview']);
@@ -18,76 +23,112 @@
 </head>
 
 <body>
-  <a href="http://github.com/ghusse/jQRangeSlider"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+  	<div class="navbar-inner">
+  		<a class="brand" href="index.html">jQRangeSlider</a>
+			<ul class="nav">
+				<li class="active"><a href="index.html"><i class="icon icon-white icon-home"></i> Home</a></li>
+				<li><a href="demo.html"><i class="icon icon-white icon-play"></i> Demo</a></li>
+				<li><a href="documentation.html"><i class="icon icon-white icon-book"></i> Documentation</a></li>
+        <li><a href="technicalDemo.html"><i class="icon icon-white icon-fast-forward"></i> Technical demo</a></li>
+			</ul>
+  	</div>
+  </nav>
 
-  <div id="container">
+  <div class="container">
+  	<div class="hero-unit">
+  		<h1>jQRangeSlider</h1>
+  		<p>A powerful slider for selecting value ranges, supporting dates and more.</p>
+  		<p class="buttons"><a class="btn btn-primary btn-large" href="https://github.com/downloads/ghusse/jQRangeSlider/jQRangeSlider-4.2.4.min.zip" onClick="_gaq.push(['_trackEvent', 'Hero', 'Download']);">Download jQRangeSlider  <i class="icon icon-white icon-download-alt"></i></a></p>
+      <ul class="links">
+        <li><a href="https://github.com/ghusse/jQRangeSlider" onClick="_gaq.push(['_trackEvent', 'Hero', 'Github']);">Github</a></li>
+        <li><a href="https://github.com/ghusse/jQRangeSlider/issues" onClick="_gaq.push(['_trackEvent', 'Hero', 'Issues']);">Issues</a></li>
+        <li><a href="https://twitter.com/jQRangeSlider" onClick="_gaq.push(['_trackEvent', 'Hero', 'Twitter']);">Twitter</a></li>
+        <li>Version 4.2.3</li>
+      </ul>
+  	</div>
 
-    <div class="download">
-      <a href="https://github.com/ghusse/jQRangeSlider/archives/master">
-        <img border="0" width="90" src="http://github.com/images/modules/download/zip.png"></a>
+    <ul class="thumbnails">
+      <li class="span4">
+        <div class="thumbnail">
+          <img src="images/calendar.png"/>
+          <div class="caption">
+            <h3>Select dates</h3>
+            <p>jQRangeSlider supports both <strong>numerical values</strong> and <strong>date and time</strong>. Selecting a time frame has never been so easy.</p>
+
+            <p class="buttons"><a class="btn" href="documentation.html#quickStart" onClick="_gaq.push(['_trackEvent', 'Index', 'LearnDates']);">Learn how <i class="icon icon-chevron-right"></i></a></p>
+          </div>
+        </div>
+      </li>
+
+      <li class="span4">
+        <div class="thumbnail">
+          <img src="images/tablet.png"/>
+           <div class="caption">
+            <h3>Touch devices</h3>
+            <p>jQRangeSlider supports touch devices: tested with <strong>iOS</strong> and <strong>Android</strong>. User can select a range simply by touching and swaping on his tablet or phone.</p>
+
+            <p class="buttons"><a class="btn" href="technicalDemo.html" onClick="_gaq.push(['_trackEvent', 'Index', 'TryDemo']);">Try demo <i class="icon icon-chevron-right"></i></a></p>
+          </div>
+        </div>
+      </li>
+
+      <li class="span4">
+         <div class="thumbnail">
+          <img src="images/steps.png"/>
+          <div class="caption">
+            <h3>Steps</h3>
+            <p>jQRangeSlider supports <stron>steps</strong> for both <strong>numerical</strong> and <strong>date values</strong>. Select values 5 by 5 or month by month, simply by changing an option.</p>
+
+            <p class="buttons"><a class="btn" href="documentation.html#stepOption" onClick="_gaq.push(['_trackEvent', 'Index', 'LearnSteps']);">Learn how <i class="icon icon-chevron-right"></i></a></p>
+          </div>
+        </div>
+      </li>
+    </ul>
+
+    <ul class="thumbnails">
+       <li class="span4">
+         <div class="thumbnail">
+          <img src="images/tie.png"/>
+          <div class="caption">
+            <h3>Adapt to your style</h3>
+            <p>jQRangeSlider comes by default with <strong>two themes</strong> to demonstrate its ability to be restyled. You can customize it as you want: <strong>nothing is hard coded.</strong>.</p>
+
+            <p class="buttons"><a class="btn" href="technicalDemo.html" onClick="_gaq.push(['_trackEvent', 'Index', 'TryThemes']);">Try themes <i class="icon icon-chevron-right"></i></a></p>
+          </div>
+        </div>
+      </li>
+
+      <li class="span4">
+         <div class="thumbnail">
+          <img src="images/refresh.png"/>
+          <div class="caption">
+            <h3>Real time refresh</h3>
+            <p>jQRangeSlider exposes <strong>events</strong> you can use for refreshing your UI. You can also interact with it through javascript <strong>methods</strong>.</p>
+
+            <p class="buttons"><a class="btn" href="documentation.html#bindingEvents" onClick="_gaq.push(['_trackEvent', 'Index', 'LearnEvents']);">Learn how <i class="icon icon-chevron-right" ></i></a></p>
+          </div>
+        </div>
+      </li>
+
+      <li class="span4">
+         <div class="thumbnail">
+          <img src="images/dove.png"/>
+          <div class="caption">
+            <h3>GPL + MIT</h3>
+            <p>jQRangeSlider is <strong>open source</strong> published under dual license GPL and MIT. You can use it in both open source and <strong>commercial software</strong>.</p>
+            <p class="buttons"><a class="btn" href="https://github.com/ghusse/jQRangeSlider" onClick="_gaq.push(['_trackEvent', 'Index', 'ForkAndContribute']);">Fork and contribute <i class="icon icon-chevron-right"></i></a></p>
+          </div>
+        </div>
+      </li>
+    </ul>
     </div>
-
-    <h1><a href="http://github.com/ghusse/jQRangeSlider">jQRangeSlider</a>
-      <span class="small">by <a href="http://github.com/ghusse">ghusse</a></span></h1>
-
-    <div class="description">
-      A jquery UI range selection slider that supports dates.
-    </div>
-    		
-    <h2>Downloads</h2>
-    
-    <p>Download <a href="https://github.com/ghusse/jQRangeSlider/archives/master">jQRangeSlider and jQDateRangeSlider</a> on GitHub: <strong>source code</strong> and <strong>minified version</strong> are available.</p>
-		
-    <p>You can also clone the project with <a href="http://git-scm.com">Git</a>
-      by running:
-      <pre>$ git clone git://github.com/ghusse/jQRangeSlider</pre>
-    </p>
-		
-		<h2>Demo</h2>
-		
-		<p>Check out the demo <a href="stable/demo/">here</a>.</p>
-		
-		<h2>Features</h2>
-		
-		<ul class="features">
-			<li><img src="images/range.png" alt="Range" />Select a range of values inside defined bounds.</li>
-			<li><img src="images/resize.png" alt="Grab an end" />Adjust your selection by moving an end.</li>
-			<li><img src="images/grabbing.png" alt="Move whole selection" />Move your range as a whole.</li>
-			<li><img src="images/scroll.png" alt="scroll" />Move selected range with scrolling arrows.</li>
-			<li><img src="images/helper.png" alt="scroll" />Select precisely your values.</li>
-			<li>Use your mouse wheel to scrool or extend/reduce the range (depends on an option).</li>
-		</ul>
-
-		<h2>Themes</h2>
-
-		<dl class="themes">
-			<dt>Classic</dt>
-			<dd><img src="images/classicTheme.png" alt="classic" width="116" height="80"/></dd>
-			<dt class="ithing">iThing</dt>
-			<dd class="ithing"><img src="images/iThingTheme.png" alt="iThing" width="116" height="80"/></dd>
-		</dl>
-		
-		<h2>Dependencies</h2>
-		
-		<ul>
-			<li>jQuery</li>
-			<li>jQuery UI core</li>
-			<li>jQuery UI widget</li>
-			<li>jQuery <a href="http://brandonaaron.net/code/mousewheel/docs">mousewheel plugin</a> (optional)</li>
-		</ul>
-		
-		<h2>License</h2>
-		<p>Copyright (C) Guillaume Gautreau 2010</p>
-		<p>GPL v3 license, see License.txt</p>
-		<h2>Authors</h2>
-		<p>Guillaume Gautreau (guillaume+jqrangeslider@ghusse.com)</p>
-
-    <div class="footer">
-      get the source code on GitHub : <a href="http://github.com/ghusse/jQRangeSlider">ghusse/jQRangeSlider</a>
-    </div>
-
   </div>
 
+  <footer class="container">
+    <p>Thanks to <a href="http://twitter.github.com/bootstrap">twitter bootstrap</a> for its awesome CSS framework.</p>
+
+    <p>Credits: <a href="http://thenounproject.com/noun/tablet/#icon-No7364" target="_blank">Tablet</a> designed by <a href="http://thenounproject.com/derrick_snider" target="_blank">Derrick Snider</a>, <a href="http://thenounproject.com/noun/tie/#icon-No3974" target="_blank">Tie</a> designed by <a href="http://thenounproject.com/prerakpatel" target="_blank">Prerak Patel</a>, <a href="http://thenounproject.com/noun/sync/#icon-No5966" target="_blank">Sync</a> designed by <a href="http://thenounproject.com/swedler" target="_blank">Steve Swedler</a>, <a href="http://thenounproject.com/noun/dove/#icon-No5214" target="_blank">Dove</a> designed by <a href="http://thenounproject.com/iconify" target="_blank">Scott Lewis</a> from The Noun Project</p></footer>
   
 </body>
 </html>
