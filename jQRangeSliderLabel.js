@@ -248,8 +248,6 @@
 				left: this.ParsePixels("borderLeftWidth", label),
 				right: this.ParsePixels("borderRightWidth", label)
 			};
-
-			cache.outerWidth = cache.width + cache.margin.left + cache.margin.right + cache.border.left + cache.border.right;
 		}
 
 		this.CacheWidth = function(label, cache){
