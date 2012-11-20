@@ -129,34 +129,6 @@
 &lt;/html>
 </code></pre>
 
-          <h2>Date slider</h2>
-           <div class="alert alert-info">
-            <strong>Info</strong>: If you use more than one type of slider, please report to the <strong><a href="#allSlidersScript">multiple sliders</a></strong> section.
-          </div>
-
-<pre class="prettyprint linenums"><code class="language-html">&lt;!DOCTYPE>
-  &lt;html>
-  &lt;head>
-    &lt;meta charset="utf-8"/>
-    &lt;title>example&lt;/title>
-  &lt;/head>
-  &lt;body>
-
-    &lt;h1>Hello world&lt;/h1>
-    &lt;div id="slider">&lt;/div>
-
-    &lt;script src="jquery.js">&lt;/script>
-    &lt;script src="jquery-ui.custom.js">&lt;/script>
-    <strong>&lt;script src="jQDateRangeSlider-min.js">&lt;/script></strong>
-    &lt;script>
-    //&lt;!--
-      <strong>$("#slider").dateRangeSlider();</strong>
-    //--&gt;
-    &lt;/script>
-  &lt;/body>
-&lt;/html>
-</code></pre>
-
           <h2>Edit slider</h2>
            <div class="alert alert-info">
             <strong>Info</strong>: If you use more than one type of slider, please report to the <strong><a href="#allSlidersScript">multiple sliders</a></strong> section.
@@ -179,6 +151,34 @@
     &lt;script>
     //&lt;!--
       <strong>$("#slider").editRangeSlider();</strong>
+    //--&gt;
+    &lt;/script>
+  &lt;/body>
+&lt;/html>
+</code></pre>
+
+          <h2>Date slider</h2>
+           <div class="alert alert-info">
+            <strong>Info</strong>: If you use more than one type of slider, please report to the <strong><a href="#allSlidersScript">multiple sliders</a></strong> section.
+          </div>
+
+<pre class="prettyprint linenums"><code class="language-html">&lt;!DOCTYPE>
+  &lt;html>
+  &lt;head>
+    &lt;meta charset="utf-8"/>
+    &lt;title>example&lt;/title>
+  &lt;/head>
+  &lt;body>
+
+    &lt;h1>Hello world&lt;/h1>
+    &lt;div id="slider">&lt;/div>
+
+    &lt;script src="jquery.js">&lt;/script>
+    &lt;script src="jquery-ui.custom.js">&lt;/script>
+    <strong>&lt;script src="jQDateRangeSlider-min.js">&lt;/script></strong>
+    &lt;script>
+    //&lt;!--
+      <strong>$("#slider").dateRangeSlider();</strong>
     //--&gt;
     &lt;/script>
   &lt;/body>
@@ -806,27 +806,27 @@ $("#slider").dateRangeSlider("values", new Date(2012, 0, 1), new Date(2012, 0, 3
 var basicSliderBounds = $("#slider").rangeSlider("bounds");
 console.log(basicSliderBounds.min + " " + basicSliderBounds.max);
 
-// Date slider
-var dateSliderBounds = $("#dateSlider").dateRangeSlider("bounds");
-console.log(dateSliderBounds.min.toString() + " " + dateSliderBounds.max.toString());
-
 // Edit slider
 var editSliderBounds = $("#editSlider").editRangeSlider("bounds");
 console.log(editSliderBounds.min + " " + editSliderBounds.max);
+
+// Date slider
+var dateSliderBounds = $("#dateSlider").dateRangeSlider("bounds");
+console.log(dateSliderBounds.min.toString() + " " + dateSliderBounds.max.toString());
 </code></pre></dd>
             <dt>Set values</dt>
             <dd><pre class="prettyprint linenums"><code class="language-js">// Basic slider
 $("#slider").rangeSlider("bounds", 10, 20);
 
-// Date slider
-$("#dateSlider").dateRangeSlider("bounds", new Date(2012, 0, 1), new Date(2012, 0, 31));
-
 // Edit slider
 $("#editSlider").editRangeSlider("bounds", 20, 100);
+
+// Date slider
+$("#dateSlider").dateRangeSlider("bounds", new Date(2012, 0, 1), new Date(2012, 0, 31));
 </code></pre></dd>
           </dl>
 
-          
+
           <h2 id="destroyMethod">Destroy</h2>
 
           <p>The method <code>destroy()</code> allows you to remove a slider from your page. It releases memory and removes all DOM elements added by the slider constructor.</p>
@@ -861,23 +861,23 @@ $("#editSlider").editRangeSlider("bounds", 20, 100);
 var basicSliderMin = $("#slider").rangeSlider("min");
 console.log(basicSliderMin);
 
-// Date slider
-var dateSliderMax = $("#dateSlider").dateRangeSlider("max");
-console.log(dateSliderMax.toString());
-
 // Edit slider
 var editSliderMin = $("#editSlider").editRangeSlider("min");
 console.log(editSliderMin);
+
+// Date slider
+var dateSliderMax = $("#dateSlider").dateRangeSlider("max");
+console.log(dateSliderMax.toString());
 </code></pre></dd>
             <dt>Set values</dt>
             <dd><pre class="prettyprint linenums"><code class="language-js">// Basic slider
 $("#slider").rangeSlider("min", 10);
 
-// Date slider
-$("#dateSlider").dateRangeSlider("max", new Date(2012, 1, 1));
-
 // Edit slider
 $("#editSlider").editRangeSlider("min", 20);
+
+// Date slider
+$("#dateSlider").dateRangeSlider("max", new Date(2012, 1, 1));
 </code></pre></dd>
           </dl>
 
@@ -949,23 +949,23 @@ $("#scrollRight").click(function(){
 var basicValues = $("#slider").rangeSlider("values");
 console.log(basicValues.min + " " + basicValues.max);
 
-// Date slider
-var dateValues = $("#dateSlider").dateRangeSlider("values");
-console.log(dateValues.min.toString() + " " + dateValues.max.toString());
-
 // Edit slider
 var editValues = $("#editSlider").editRangeSlider("values");
 console.log(editValues.min + " " + editValues.max);
+
+// Date slider
+var dateValues = $("#dateSlider").dateRangeSlider("values");
+console.log(dateValues.min.toString() + " " + dateValues.max.toString());
 </code></pre></dd>
             <dt>Set values</dt>
             <dd><pre class="prettyprint linenums"><code class="language-js">// Basic slider
 $("#slider").rangeSlider("values", 10, 20);
 
-// Date slider
-$("#dateSlider").dateRangeSlider("values", new Date(2012, 0, 1), new Date(2012, 0, 31));
-
 // Edit slider
 $("#editSlider").editRangeSlider("values", 20, 100);
+
+// Date slider
+$("#dateSlider").dateRangeSlider("values", new Date(2012, 0, 1), new Date(2012, 0, 31));
 </code></pre></dd>
           </dl>
 
@@ -985,11 +985,11 @@ $("#editSlider").editRangeSlider("values", 20, 100);
 <pre class="prettyprint linenums afterExample"><code class="language-js">// Basic slider
 $("#slider").rangeSlider("zoomIn", 10);
 
-// Date slider
-$("#dateSlider").dateRangeSlider("zoomOut", 42);
-
 // Edit slider
 $("#editSlider").editRangeSlider("zoomIn", 27);
+
+// Date slider
+$("#dateSlider").dateRangeSlider("zoomOut", 42);
 </code></pre>
 
           </div>
