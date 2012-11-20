@@ -74,6 +74,7 @@
               <li><a href="#executingMethods">Executing methods</a></li>
               <li class="divider"></li>
               <li><a href="#boundsMethod">Bounds</a></li>
+              <li><a href="#destroyMethod">Destroy</a></li>
               <li><a href="#minMaxMethods">Min / max</a></li>
               <li><a href="#resizeMethod">Resize</a></li>
               <li><a href="#scrollMethods">Scroll left/right</a></li>
@@ -825,6 +826,28 @@ $("#editSlider").editRangeSlider("bounds", 20, 100);
 </code></pre></dd>
           </dl>
 
+          
+          <h2 id="destroyMethod">Destroy</h2>
+
+          <p>The method <code>destroy()</code> allows you to remove a slider from your page. It releases memory and removes all DOM elements added by the slider constructor.</p>
+
+          <div class="example">
+            <div class="sliderContainer"><div id="destroyExample"></div></div>
+            <p><a href="#" onClick="$('#destroyExample').rangeSlider('destroy');return false;" class="btn">Destroy</a> <a href="#" onClick="$('#destroyExample').rangeSlider();return false;" class="btn">Re-create</a></p>
+
+            <dl>
+            <dt>Basic slider</dt>
+            <dd><pre class="prettyprint linenums"><code class="language-js">$("#slider").rangeSlider("destroy");
+</code></pre></dd>
+            <dt>Edit slider</dt>
+            <dd><pre class="prettyprint linenums"><code class="language-js">$("#slider").editRangeSlider("destroy");
+</code></pre></dd>
+            <dt>Date slider</dt>
+            <dd><pre class="prettyprint linenums"><code class="language-js">$("#slider").dateRangeSlider("destroy");
+</code></pre></dd>
+          </dl>
+          </div>
+
 
           <h2 id="minMaxMethods">Min / max</h2>
 
@@ -1040,6 +1063,7 @@ $("#editSlider").editRangeSlider("zoomIn", 27);
 
       $("#hiddenSlider").rangeSlider();
       $("#scrollExample, #zoomExample").rangeSlider();
+      $('#destroyExample').rangeSlider();
   //-->
   </script>
 </body>
