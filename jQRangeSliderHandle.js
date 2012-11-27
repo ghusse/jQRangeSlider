@@ -231,9 +231,11 @@
 				position = this._getPositionForValue(value);
 
 			if (value != this._value){
+				this._triggerMouseEvent("updating");
 				this._position(value);
 				this._triggerMouseEvent("update");
 			}else if (position != this.cache.offset.left){
+				this._triggerMouseEvent("updating");
 				this._position(value);
 				this._triggerMouseEvent("update");
 			}

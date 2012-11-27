@@ -170,7 +170,10 @@
 		update: function(){
 			this._positionner.cache = null;
 			this._display(this._handle("value"));
-			this._positionner.PositionLabels();
+
+			if (this.options.show == "show"){
+				this._positionner.PositionLabels();
+			}
 		}
 	});
 
@@ -186,6 +189,7 @@
 		this.right = label2;
 		this.moving = false;
 		this.initialized = false;
+		this.updating = false;
 
 		this.Init = function(){
 			this.BindHandle(this.handle1);
@@ -264,6 +268,8 @@
 		}
 
 		this.BindHandle = function(handle){
+			handle.bind("updating", $.proxy(this.onHandleUpdating, this));
+			handle.bind("update", $.proxy(this.onHandleUpdated, this));
 			handle.bind("moving", $.proxy(this.onHandleMoving, this));
 			handle.bind("stop", $.proxy(this.onHandleStop, this));
 		}
@@ -335,7 +341,7 @@
 		}
 
 		this.ShowIfNecessary = function(){
-			if (this.options.show === "show" || this.moving || !this.initialized) return;
+			if (this.options.show === "show" || this.moving || !this.initialized || this.updating) return;
 
 			this.label1.stop(true, true).fadeIn(this.options.durationIn || 0);
 			this.label2.stop(true, true).fadeIn(this.options.durationIn || 0);
@@ -356,6 +362,14 @@
 			this.UpdateHandlePosition(ui);
 
 			this.PositionLabels();
+		}
+
+		this.onHandleUpdating = function(){
+			this.updating = true;
+		}
+
+		this.onHandleUpdated = function(){
+			this.updating = false;
 		}
 
 		this.onHandleStop = function(event, ui){
