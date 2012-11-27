@@ -370,6 +370,7 @@
 
 		this.onHandleUpdated = function(){
 			this.updating = false;
+			this.cache = null;
 		}
 
 		this.onHandleStop = function(event, ui){
