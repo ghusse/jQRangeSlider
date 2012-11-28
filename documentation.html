@@ -106,6 +106,12 @@
             <strong>Info</strong>: If you use more than one type of slider, please report to the <strong><a href="#allSlidersScript">multiple sliders</a></strong> section.
           </div>
 
+          <div class="example">
+
+            <div class="sliderContainer">
+              <div id="basicSliderExample"></div>
+            </div>
+
 <pre class="prettyprint linenums"><code class="language-html">&lt;!DOCTYPE>
   &lt;html>
   &lt;head>
@@ -129,10 +135,18 @@
 &lt;/html>
 </code></pre>
 
+        </div>
+
           <h2>Edit slider</h2>
            <div class="alert alert-info">
             <strong>Info</strong>: If you use more than one type of slider, please report to the <strong><a href="#allSlidersScript">multiple sliders</a></strong> section.
           </div>
+
+          <div class="example">
+
+            <div class="sliderContainer">
+              <div id="editSliderExample"></div>
+            </div>
 
 <pre class="prettyprint linenums"><code class="language-html">&lt;!DOCTYPE>
   &lt;html>
@@ -157,10 +171,18 @@
 &lt;/html>
 </code></pre>
 
-          <h2>Date slider</h2>
+          </div>
+
+          <h2 id="dateSliderQuickStart">Date slider</h2>
            <div class="alert alert-info">
             <strong>Info</strong>: If you use more than one type of slider, please report to the <strong><a href="#allSlidersScript">multiple sliders</a></strong> section.
           </div>
+
+          <div class="example">
+
+            <div class="sliderContainer">
+              <div id="dateSliderExample"></div>
+            </div>
 
 <pre class="prettyprint linenums"><code class="language-html">&lt;!DOCTYPE>
   &lt;html>
@@ -185,8 +207,12 @@
 &lt;/html>
 </code></pre>
 
+        </div>
+
 
           <h2 id="allSlidersScript">Multiple sliders</h2>
+
+          <p>If you are using multiple sliders on the same page, you need to use another javascript file: <code>jQAllRangeSliders-min.js</code>. This file contains all necessary javascript for creating all types of slider. As most part of the source code is common between different kind of sliders, it's a good practice to use this file instead of including multiple minified files.</p>
 
 <pre class="prettyprint linenums"><code class="language-html">&lt;!DOCTYPE>
   &lt;html>
@@ -1033,6 +1059,9 @@ $("#dateSlider").dateRangeSlider("zoomOut", 42);
     $(document).ready(function(){
       prettyPrint();
 
+      $("#basicSliderExample").rangeSlider();
+      $("#editSliderExample").editRangeSlider();
+      $("#dateSliderExample").dateRangeSlider();
       $("#boundsExample").rangeSlider({bounds: {min: 10, max: 90}});
       $("#defaultValuesExample").rangeSlider({defaultValues: {min: 10, max: 90}});
       $("#rangeExample").rangeSlider({range: {min: 10, max: 40}});
