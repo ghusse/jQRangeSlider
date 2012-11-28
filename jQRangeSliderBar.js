@@ -315,11 +315,11 @@
 		_bindHandles: function(){
 			this.options.leftHandle
 				.unbind(".bar")
-				.bind("drag.bar update.bar moving.bar", $.proxy(this._onDragLeftHandle, this));
+				.bind("sliderDrag.bar update.bar moving.bar", $.proxy(this._onDragLeftHandle, this));
 
 			this.options.rightHandle
 				.unbind(".bar")
-				.bind("drag.bar update.bar moving.bar", $.proxy(this._onDragRightHandle, this));
+				.bind("sliderDrag.bar update.bar moving.bar", $.proxy(this._onDragRightHandle, this));
 		},
 
 		_constraintPosition: function(left){

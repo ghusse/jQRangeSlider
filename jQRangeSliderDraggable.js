@@ -60,7 +60,7 @@
 
  			this._applyPosition(position);
 
- 			this._triggerMouseEvent("drag");
+ 			this._triggerMouseEvent("sliderDrag");
 
  			return false;
  		},

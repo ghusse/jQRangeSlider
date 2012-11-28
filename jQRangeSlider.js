@@ -225,14 +225,14 @@
 		_createHandle: function(options){
 			return $("<div />")
 				[this._handleType()](options)
-				.bind("drag", $.proxy(this._changing, this))
+				.bind("sliderDrag", $.proxy(this._changing, this))
 				.bind("stop", $.proxy(this._changed, this));
 		},
 		
 		_createBar: function(){
 			this.bar = $("<div />")
 				.prependTo(this.container)
-				.bind("drag scroll zoom", $.proxy(this._changing, this))
+				.bind("sliderDrag scroll zoom", $.proxy(this._changing, this))
 				.bind("stop", $.proxy(this._changed, this));
 			
 			this._bar({
