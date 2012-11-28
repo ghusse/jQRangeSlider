@@ -1,6 +1,6 @@
 {
 	name: "jQRangeSlider",
-	version: "4.2.2",
+	version: "4.2.5",
 	title: "jQRangeSlider: A javascript slider selector that supports dates",
 	author: "Guillaume Gautreau",
 	licenses: [
@@ -21,7 +21,7 @@
 		"jquery-mousewheel": ">=1"
 	},
 	homepage: "http://ghusse.github.com/jQRangeSlider/",
-	demo: "http://ghusse.github.com/jQRangeSlider/stable/demo/",
+	demo: "http://ghusse.github.com/jQRangeSlider/demo.html",
 	people:[
 		{
 			name: "Guillaume Gautreau",

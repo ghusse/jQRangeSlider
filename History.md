@@ -1,5 +1,8 @@
 jQRangeSlider
 -------------
+* 4.2.5: 2012-11-28
+	* Fixed #58: Date labels are shifted after parent resize, even after calling resize method
+	* Fixed #35: Event drag (used internally) conflicts with other libraries. Renamed to sliderDrag.
 * 4.2.4: 2012-11-19
 	* Fixed a bug in resize method, when displaying a slider in a previously hidden parent.
 	* Bug in label positionning
