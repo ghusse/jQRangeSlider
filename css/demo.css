@@ -22,4 +22,5 @@
 input.ui-editRangeSlider-inputValue{
 	margin:0;
 	width: 3em;
+	height: auto;
 }
