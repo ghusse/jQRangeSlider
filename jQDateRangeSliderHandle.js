@@ -109,7 +109,7 @@
 
 			var max = this.options.bounds.max.valueOf(),
 				min = this.options.bounds.min.valueOf(),
-				ratio = (value - min) / (max - min),
+				ratio = Math.max(0, (value - min) / (max - min)),
 				index = Math.floor(this._steps.length * ratio),
 				before, after;
 
