@@ -36,6 +36,10 @@
 				<li class="active"><a href="documentation.html"><i class="icon icon-white icon-book"></i> Documentation</a></li>
         <li><a href="technicalDemo.html"  onClick="_gaq.push(['_trackEvent', 'TechnicalDocumentation', 'Menubar']);"><i class="icon icon-white icon-fast-forward"></i> Technical demo</a></li>
 			</ul>
+
+      <ul id="downBar" class="pull-right nav" style="display:none">
+        <li><a href="download.html" onClick="_gaq.push(['_trackEvent', 'Download', 'Menubar']);">Download <i class="icon icon-white icon-download-alt"></i></a></li>
+      </ul>
   	</div>
   </nav>
 
@@ -1057,6 +1061,12 @@ $("#dateSlider").dateRangeSlider("zoomOut", 42);
 
   <script>
   //<!--
+    if (document.cookie.length > 0){
+      if (document.cookie.indexOf("variation=C")>=0){
+        $("#downBar").show();
+      }
+    }
+
     $(document).ready(function(){
       prettyPrint();
 
