@@ -35,7 +35,7 @@
         <li class="active"><a href="technicalDemo.html"><i class="icon icon-white icon-fast-forward"></i> Technical demo</a></li>
       </ul>
 
-      <ul id="downBar" class="pull-right nav" style="display:none">
+      <ul class="pull-right nav">
         <li><a href="download.html" onClick="_gaq.push(['_trackEvent', 'Download', 'Menubar']);">Download <i class="icon icon-white icon-download-alt"></i></a></li>
       </ul>
     </div>
@@ -44,14 +44,4 @@
   <div class="container">
     <iframe src="stable/demo/index.html"></iframe>
   </div>
-
-  <script src="stable/lib/jquery-1.7.1.min.js"></script>
-
-  <script>
-  if (document.cookie.length > 0){
-      if (document.cookie.indexOf("variation=C")>=0){
-        $("#downBar").show();
-      }
-    }
-  </script>
 </body>

@@ -35,7 +35,7 @@
 				<li><a href="documentation.html" onClick="_gaq.push(['_trackEvent', 'Documentation', 'Menubar']);"><i class="icon icon-white icon-book"></i> Documentation</a></li>
         <li><a href="technicalDemo.html"  onClick="_gaq.push(['_trackEvent', 'TechnicalDocumentation', 'Menubar']);"><i class="icon icon-white icon-fast-forward"></i> Technical demo</a></li>
 			</ul>
-      <ul id="downBar" class="pull-right nav" style="display:none">
+      <ul class="pull-right nav">
         <li><a href="download.html" onClick="_gaq.push(['_trackEvent', 'Download', 'Menubar']);">Download <i class="icon icon-white icon-download-alt"></i></a></li>
       </ul>
   	</div>
@@ -91,12 +91,6 @@
 
   <script>
   //<!--
-  if (document.cookie.length > 0){
-    if (document.cookie.indexOf("variation=C")>=0){
-      $("#downBar").show();
-    }
-  }
-
   (function($){
     $(document).ready(function(){
       $("#slider").rangeSlider();

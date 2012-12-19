@@ -1,3 +1,18 @@
+.hero-unit h1{
+  position: relative;
+}
+
+#slider{
+  display: block;
+  width: 250px;
+  position: absolute;
+  right: 0;
+  bottom: 20px;
+}
+
+#slider .ui-rangeSlider-label{
+  font-weight: normal;
+}
 
 .hero-unit .buttons{
 	text-align: center;
@@ -8,7 +23,12 @@
 .thumbnails p{
 	height: 90px;
 }
+
 .thumbnail p.buttons{
 	height: auto; 
 	text-align: right;
+}
+
+.ui-rangeSlider-label-value{
+	letter-spacing: normal;
 }

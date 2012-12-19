@@ -2,28 +2,13 @@
 <html>
 <head>
 
-  <!-- Google Analytics Content Experiment code -->
-  <script>function utmx_section(){}function utmx(){}(function(){var
-  k='40713345-1',d=document,l=d.location,c=d.cookie;
-  if(l.search.indexOf('utm_expid='+k)>0)return;
-  function f(n){if(c){var i=c.indexOf(n+'=');if(i>-1){var j=c.
-  indexOf(';',i);return escape(c.substring(i+n.length+1,j<0?c.
-  length:j))}}}var x=f('__utmx'),xx=f('__utmxx'),h=l.hash;d.write(
-  '<sc'+'ript src="'+'http'+(l.protocol=='https:'?'s://ssl':
-  '://www')+'.google-analytics.com/ga_exp.js?'+'utmxkey='+k+
-  '&utmx='+(x?x:'')+'&utmxx='+(xx?xx:'')+'&utmxtime='+new Date().
-  valueOf()+(h?'&utmxhash='+escape(h.substr(1)):'')+
-  '" type="text/javascript" charset="utf-8"><\/sc'+'ript>')})();
-  </script><script>utmx('url','A/B');</script>
-  <!-- End of Google Analytics Content Experiment code -->
-
-  
 	<meta charset="utf-8"/>
 	<title>jQRangeSlider: jQuery plugin for range sliders</title>
   <meta name="viewport" content="width=980" />
 	<link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
 	<link href="css/style.css" rel="stylesheet" media="screen">
   <link href="css/index.css" rel="stylesheet" media="screen">
+  <link href="stable/css/iThing.css" rel="stylesheet" media="screen">
   <link rel="icon" type="image/png" href="favicon.png" />
   <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
 
@@ -42,20 +27,23 @@
 
 <body>
   <nav class="navbar navbar-inverse navbar-fixed-top">
-  	<div class="navbar-inner">
-  		<a class="brand" href="index.html">jQRangeSlider</a>
-			<ul class="nav">
-				<li class="active"><a href="index.html"><i class="icon icon-white icon-home"></i> Home</a></li>
-				<li><a href="demo.html" onClick="_gaq.push(['_trackEvent', 'Demo', 'Menubar']);"><i class="icon icon-white icon-play"></i> Demo</a></li>
-				<li><a href="documentation.html" onClick="_gaq.push(['_trackEvent', 'Documentation', 'Menubar']);"><i class="icon icon-white icon-book"></i> Documentation</a></li>
+    <div class="navbar-inner">
+      <a class="brand" href="index.html">jQRangeSlider</a>
+      <ul class="nav">
+        <li class="active"><a href="index.html"><i class="icon icon-white icon-home"></i> Home</a></li>
+        <li><a href="demo.html" onClick="_gaq.push(['_trackEvent', 'Demo', 'Menubar']);"><i class="icon icon-white icon-play"></i> Demo</a></li>
+        <li><a href="documentation.html" onClick="_gaq.push(['_trackEvent', 'Documentation', 'Menubar']);"><i class="icon icon-white icon-book"></i> Documentation</a></li>
         <li><a href="technicalDemo.html" onClick="_gaq.push(['_trackEvent', 'TechnicalDocumentation', 'Menubar']);"><i class="icon icon-white icon-fast-forward"></i> Technical demo</a></li>
-			</ul>
-  	</div>
+      </ul>
+      <ul class="pull-right nav">
+        <li><a href="download.html" onClick="_gaq.push(['_trackEvent', 'Download', 'Menubar']);">Download <i class="icon icon-white icon-download-alt"></i></a></li>
+      </ul>
+    </div>
   </nav>
 
   <div class="container">
   	<div class="hero-unit">
-  		<h1>jQRangeSlider</h1>
+      <h1>jQRangeSlider <span id="slider"></span></h1>
   		<p>A powerful slider for selecting value ranges, supporting dates and more.</p>
   		<p class="buttons"><a class="btn btn-primary btn-large" href="download.html" onClick="_gaq.push(['_trackEvent', 'Download', 'Download-IndexHero']);">Download jQRangeSlider  <i class="icon icon-white icon-download-alt"></i></a></p>
       <ul class="links">
@@ -147,5 +135,20 @@
 
     <p>Credits: <a href="http://thenounproject.com/noun/tablet/#icon-No7364" target="_blank">Tablet</a> designed by <a href="http://thenounproject.com/derrick_snider" target="_blank">Derrick Snider</a>, <a href="http://thenounproject.com/noun/tie/#icon-No3974" target="_blank">Tie</a> designed by <a href="http://thenounproject.com/prerakpatel" target="_blank">Prerak Patel</a>, <a href="http://thenounproject.com/noun/sync/#icon-No5966" target="_blank">Sync</a> designed by <a href="http://thenounproject.com/swedler" target="_blank">Steve Swedler</a>, <a href="http://thenounproject.com/noun/dove/#icon-No5214" target="_blank">Dove</a> designed by <a href="http://thenounproject.com/iconify" target="_blank">Scott Lewis</a> from The Noun Project</p></footer>
   
+  <script src="demo.min.js"></script>
+  <script>
+  //<!--
+    var min = new Date(2012, 0, 1),
+      max = new Date(2013, 11, 31);
+
+    $("#slider").dateRangeSlider({
+      bounds: {min: min, max: max},
+      defaultValues: {
+        min: new Date(2012, 4, 22),
+        max: new Date(2013, 4, 22)
+      }
+    });
+  //-->
+  </script>
 </body>
 </html>
