@@ -411,6 +411,8 @@
 		stopScroll: function(){
 			this._reactivateRange();
 			this._triggerMouseEvent("stop");
+			this._leftHandle().trigger("stop");
+			this._rightHandle().trigger("stop");
 		},
 
 		scrollLeft: function(quantity){
