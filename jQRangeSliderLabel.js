@@ -20,7 +20,8 @@
 			durationIn: 0,
 			durationOut: 500,
 			delayOut: 500,
-			isLeft: false
+			isLeft: false,
+			draggable: true
 		},
 
 		cache: null,
@@ -34,7 +35,8 @@
 			this.element
 				.addClass("ui-rangeSlider-label")
 				.css("position", "absolute")
-				.css("display", "block");
+				.css("display", "block")
+				.toggleClass("ui-rangeSlider-draggable", this.options.draggable);
 
 			this._valueContainer = $("<div class='ui-rangeSlider-label-value' />")
 				.appendTo(this.element);
@@ -49,11 +51,11 @@
 				.bind("update", $.proxy(this._onUpdate, this))
 				.bind("switch", $.proxy(this._onSwitch, this));
 
+			this._mouseInit();
+
 			if (this.options.show !== "show"){
 				this.element.hide();
 			}
-
-			this._mouseInit();
 		},
 
 		_handle: function(){
@@ -67,6 +69,9 @@
 				this._updateShowOption(value);
 			} else if (key === "durationIn" || key === "durationOut" || key === "delayOut"){
 				this._updateDurations(key, value);
+			} else if (key == "draggable"){
+				this.options.draggable = !(value === false);
+				this.element.toggleClass("ui-rangeSlider-draggable", this.options.draggable);
 			}
 		},
 
@@ -112,7 +117,9 @@
 		 * Mouse touch redirection
 		 */
 		_mouseDown: function(event){
-			this.options.handle.trigger(event);
+			if (this.options.draggable){
+				this.options.handle.trigger(event);
+			}
 		},
 
 		_mouseUp: function(event){

@@ -23,7 +23,8 @@
 			durationOut: 400,
 			delayOut: 200,
 			range: {min: false, max: false},
-			step: false
+			step: false,
+			allowResize: true
 		},
 
 		_values: null,
@@ -68,14 +69,16 @@
 					isLeft: true,
 					bounds: this.options.bounds,
 					value: this.options.defaultValues.min,
-					step: this.options.step
+					step: this.options.step,
+					draggable: this.options.allowResize
 			}).appendTo(this.container);
 	
 			this.rightHandle = this._createHandle({
 				isLeft: false,
 				bounds: this.options.bounds,
 				value: this.options.defaultValues.max,
-				step: this.options.step
+				step: this.options.step,
+				draggable: this.options.allowResize
 			}).appendTo(this.container);
 
 			this._createBar();
@@ -145,11 +148,7 @@
 				this._setLabelsDurations(key, value);
 			}else if (key === "formatter" && value !== null && typeof value === "function"){
 				this.options.formatter = value;
-				
-				if (this.options.valueLabels !== "hide"){
-					this._destroyLabels();
-					this._createLabels();
-				}
+				this._refreshLabels();
 			}else if (key === "bounds" && typeof value.min !== "undefined" && typeof value.max !== "undefined"){
 				this.bounds(value.min, value.max);
 			}else if (key === "range"){
@@ -161,6 +160,12 @@
 				this._leftHandle("option", "step", value);
 				this._rightHandle("option", "step", value);
 				this._changed(true);
+			}else if (key === "allowResize"){
+				this.options.allowResize = !(value === false);
+				this._bar("option", "allowResize", this.options.allowResize);
+				this._leftHandle("option", "draggable", this.options.allowResize);
+				this._rightHandle("option", "draggable", this.options.allowResize);
+				this._refreshLabels();
 			}
 		},
 
@@ -170,6 +175,13 @@
 			}
 
 			return object[name];
+		},
+
+		_refreshLabels: function(){
+			if (this.options.valueLabels !== "hide"){
+				this._destroyLabels();
+				this._createLabels();
+			}
 		},
 
 		_setLabelsOption: function(value){
@@ -242,7 +254,8 @@
 					type: this._handleType(),
 					range: this.options.range,
 					wheelMode: this.options.wheelMode,
-					wheelSpeed: this.options.wheelSpeed
+					wheelSpeed: this.options.wheelSpeed,
+					allowResize: this.options.allowResize
 				});
 
 			this.options.range = this._bar("option", "range");
@@ -395,7 +408,8 @@
 				show: this.options.valueLabels,
 				durationIn: this.options.durationIn,
 				durationOut: this.options.durationOut,
-				delayOut: this.options.delayOut
+				delayOut: this.options.delayOut,
+				draggable: this.options.allowResize
 			};
 		},
 
@@ -435,6 +449,8 @@
 			this.labels.right = this._createLabel(this.labels.right, this.rightHandle);
 
 			this._leftLabel("pair", this.labels.right);
+			this._leftLabel("update");
+			this._rightLabel("update");
 		},
 
 		_destroyLabels: function(){

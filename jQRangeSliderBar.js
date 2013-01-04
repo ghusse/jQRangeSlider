@@ -21,7 +21,8 @@
 			stop: function() {},
 			values: {min: 0, max:20},
 			wheelSpeed: 4,
-			wheelMode: null
+			wheelMode: null,
+			allowResize: true
 		},
 
 		_values: {min: 0, max: 20},
@@ -59,6 +60,8 @@
 				this._setWheelSpeedOption(value);
 			} else if (key === "wheelMode"){
 				this._setWheelModeOption(value);
+			} else if (key === "allowResize"){
+				this.options.allowResize = !(value === false);
 			}
 		},
 
@@ -346,6 +349,10 @@
 		 */
 
 		_mouseWheelZoom: function(event, delta, deltaX, deltaY){
+			if (!this.options.allowResize){
+				return;
+			}
+			
 			var middle = this._values.min + (this._values.max - this._values.min) / 2,
 				leftRange = {},
 				rightRange = {};

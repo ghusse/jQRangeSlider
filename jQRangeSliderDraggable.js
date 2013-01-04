@@ -13,11 +13,16 @@
  		cache: null,
 
  		options: {
- 			containment: null
+ 			containment: null,
+ 			draggable: true
  		},
 
  		_create: function(){
  			setTimeout($.proxy(this._initElement, this), 10);
+
+ 			if (this.options.draggable){
+ 				this.element.addClass("ui-rangeSlider-draggable");
+ 			}
  		},
 
  		_initElement: function(){
@@ -32,6 +37,10 @@
  				}else{
  					this.options.containment = $(value);
  				}
+ 			} else if (key === "draggable"){
+ 				this.options.draggable = !(value === false);
+
+ 				this.element.toggleClass("ui-rangeSlider-draggable", this.options.draggable);
  			}
  		},
 
@@ -40,6 +49,10 @@
  		 */
 
  		_mouseStart: function(event){
+ 			if (!this.options.draggable){
+ 				return false;
+ 			}
+
  			this._cache();
  			this.cache.click = {
  					left: event.pageX,

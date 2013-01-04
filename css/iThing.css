@@ -112,7 +112,10 @@
 	width:10px;
 	height:30px;
 	background: transparent;
-	cursor:col-resize;
+}
+
+.ui-rangeSlider-handle.ui-rangeSlider-draggable{
+  cursor:col-resize;
 }
 
 .ui-rangeSlider-label{
@@ -131,11 +134,10 @@
 
   color:white;
   font-size:15px;
-
-  cursor:col-resize;
 }
 
-.ui-editRangeSlider .ui-rangeSlider-label{
+.ui-rangeSlider-label.ui-rangeSlider-draggable{
+  cursor:col-resize;
 }
 
 .ui-rangeSlider-label-inner{
