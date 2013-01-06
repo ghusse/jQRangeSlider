@@ -3,10 +3,11 @@ COMPILER=../lib/compiler/compiler.jar
 OPTIONS="--language_in ECMASCRIPT5_STRICT"
 
 BASEMIN=$2
+VERSION=$3
 JS=""
 BASESIZE=0
 
-for ((i=3; i <= $#; i++))
+for ((i=4; i <= $#; i++))
 do
 	File=${!i}
 	JS=${JS}"--js=${File} "
@@ -16,3 +17,4 @@ echo Compile $1
 java -jar ${COMPILER} ${JS} --js_output_file=${BASEMIN} ${OPTIONS}
 
 echo -e '0r header.js\nw' | ed -s ${BASEMIN}
+sed -i "" "s/\\\$version/${VERSION}/" ${BASEMIN}

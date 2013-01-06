@@ -2,6 +2,14 @@
 MINDIR=../
 SRCDIR=../
 
+# Version number
+if [ -z "$1" ]; then
+	echo Version number:
+	read VERSION
+else
+	VERSION=$1
+fi
+
 TOUCH=${SRCDIR}jQRangeSliderMouseTouch.js
 DRAGGABLE=${SRCDIR}jQRangeSliderDraggable.js
 HANDLE=${SRCDIR}jQRangeSliderHandle.js
@@ -26,16 +34,16 @@ if [ ! -d "${MINDIR}" ]; then
 	mkdir ${MINDIR}
 fi
 
-./compress.sh jQRangeSlider "${BASEMIN}" ${CORE}
+./compress.sh jQRangeSlider "${BASEMIN}" ${VERSION} ${CORE}
 
 echo -----
 
-./compress.sh jQDateRangeSlider "${DATEMIN}" ${CORE} ${DATECOMPONENTS} 
+./compress.sh jQDateRangeSlider "${DATEMIN}" ${VERSION} ${CORE} ${DATECOMPONENTS}
 
 echo -----
 
-./compress.sh jQEditRangeSlider "${EDITMIN}" ${CORE} ${EDITCOMPONENTS} 
+./compress.sh jQEditRangeSlider "${EDITMIN}" ${VERSION} ${CORE} ${EDITCOMPONENTS}
 
 echo -----
 
-./compress.sh jQAllRangeSliders "${ALLMIN}" ${CORE} ${DATECOMPONENTS} ${EDITCOMPONENTS}
+./compress.sh jQAllRangeSliders "${ALLMIN}" ${VERSION} ${CORE} ${DATECOMPONENTS} ${EDITCOMPONENTS}

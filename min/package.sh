@@ -3,10 +3,19 @@ SRCDIR=..
 LIBS=${SRCDIR}/lib
 OUTPUT=..
 
-DIR=${OUTPUT}/jQRangeSlider-min
+# Ask for version number
+if [ -z "$1" ]; then
+	echo Version number:
+	read VERSION
+else
+	VERSION=$1
+fi
+
+FILE=jQRangeSlider-${VERSION}-min
+DIR=${OUTPUT}/${FILE}
 
 # Compile
-./compile.sh
+./compile.sh ${VERSION}
 
 # Remove the directory if present
 rm -rf ${DIR}
@@ -38,9 +47,8 @@ sed -i "" 's/<!-- Minified --><!--/ /g' ${DIR}/demo/index.html
 sed -i "" 's/--><!-- \/Minified -->/ /g' ${DIR}/demo/index.html
 
 # Compress
-cp -r ${DIR} .
-zip -r -q -9 ${DIR} jQRangeSlider-min
+zip -r -q -9 ${DIR}.zip ${DIR}
 
 # flush
 rm -Rf ${DIR}
-rm -Rf jQRangeSlider-min
+
