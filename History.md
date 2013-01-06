@@ -1,5 +1,7 @@
 jQRangeSlider
 -------------
+* 4.2.7: 2013-01-03
+	* Fixed #71: Labels not hidden when scrolling with arrows
 * 4.2.6: 2012-11-30
 	* Fixed #59: NaN value in date slider
 * 4.2.5: 2012-11-28
