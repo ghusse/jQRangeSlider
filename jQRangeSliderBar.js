@@ -173,8 +173,8 @@
 
 		_initMe: function(){
 			this._cache();
-			this.min(this.options.values.min);
-			this.max(this.options.values.max);
+			this.min(this._values.min);
+			this.max(this._values.max);
 
 			var left = this._leftHandle("position"),
 				right = this._rightHandle("position") + this.options.rightHandle.width();
