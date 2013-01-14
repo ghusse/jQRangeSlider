@@ -67,14 +67,14 @@
 			this.leftHandle = this._createHandle({
 					isLeft: true,
 					bounds: this.options.bounds,
-					value: this.options.defaultValues.min,
+					value: this._values.min,
 					step: this.options.step
 			}).appendTo(this.container);
 	
 			this.rightHandle = this._createHandle({
 				isLeft: false,
 				bounds: this.options.bounds,
-				value: this.options.defaultValues.max,
+				value: this._values.max,
 				step: this.options.step
 			}).appendTo(this.container);
 
@@ -122,19 +122,13 @@
 		},
 
 		_initValues: function(){
-			this.values(this.options.defaultValues.min, this.options.defaultValues.max);
+			this.values(this._values.min, this._values.max);
 		},
 
 		_setOption: function(key, value) {
 			var option = this.options;
-			
-			if (key === "defaultValues")
-			{
-				if ((typeof value.min !== "undefined") && (typeof value.max !== "undefined") && parseFloat(value.min) === value.min && parseFloat(value.max) === value.max)
-				{
-					this.options.defaultValues = value;
-				}
-			}else if (key === "wheelMode" || key === "wheelSpeed"){
+
+                        if (key === "wheelMode" || key === "wheelSpeed"){
 				this._bar("option", key, value);
 				this.options[key] = this._bar("option", key);
 			}else if (key === "arrows" && (value === true || value === false) && value !== this.options.arrows){
@@ -238,7 +232,7 @@
 			this._bar({
 					leftHandle: this.leftHandle,
 					rightHandle: this.rightHandle,
-					values: {min: this.options.defaultValues.min, max: this.options.defaultValues.max},
+					values: {min: this._values.min, max: this._values.max},
 					type: this._handleType(),
 					range: this.options.range,
 					wheelMode: this.options.wheelMode,
