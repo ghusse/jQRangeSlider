@@ -33,6 +33,11 @@
 		},
 		{
 			name: "David Dean"
+		},
+		{
+			name: "Rodrigo Rosenfeld Rosas",
+			url: "https://rosenfeld.herokuapp.com/",
+			email: "rr.rosas@gmail.com"
 		}
 	]
 }
