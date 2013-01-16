@@ -1,5 +1,7 @@
 jQRangeSlider
 -------------
+* 4.2.8: 2013-01-16
+	* Fixed #73: Can't always set the slider values programatically
 * 4.2.7: 2013-01-03
 	* Fixed #71: Labels not hidden when scrolling with arrows
 * 4.2.6: 2012-11-30
