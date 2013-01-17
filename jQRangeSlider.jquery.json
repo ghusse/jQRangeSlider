@@ -28,22 +28,11 @@
 	"demo": "http://ghusse.github.com/jQRangeSlider/demo.html",
 	"download":"http://ghusse.github.com/jQRangeSlider/download.html",
 	"bugs": "https://github.com/ghusse/jQRangeSlider/issues",
-	"people":[
+	"maintainers":[
 		{
 			"name": "Guillaume Gautreau",
 			"url": "http://www.ghusse.com",
 			"email": "guillaume+jqrangeslider@ghusse.com"
-		},
-		{
-			"name": "victor871129"
-		},
-		{
-			"name": "David Dean"
-		},
-		{
-			"name": "Rodrigo Rosenfeld Rosas",
-			"url": "https://rosenfeld.herokuapp.com/",
-			"email": "rr.rosas@gmail.com"
 		}
 	]
 }
