@@ -5,3 +5,5 @@
 .DS_Store
 /jQRangeSlider-min.js
 /jQAllRangeSliders-min.js
+/node_modules/
+/out/
