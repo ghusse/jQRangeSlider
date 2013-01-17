@@ -1,5 +1,7 @@
 jQRangeSlider
 -------------
+* 4.2.9: 2013-01-17
+	* Technical release: modified manifest to appear in plugins.jquery.com
 * 4.2.8: 2013-01-16
 	* Fixed #73: Can't always set the slider values programatically
 * 4.2.7: 2013-01-03
