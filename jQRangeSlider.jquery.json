@@ -1,8 +1,12 @@
 {
 	"name": "jQRangeSlider",
 	"version": "4.2.8",
-	"title": "jQRangeSlider: A javascript slider selector that supports dates",
-	"author": "Guillaume Gautreau",
+	"title": "A javascript slider selector that supports dates",
+	"author": {
+			"name": "Guillaume Gautreau",
+			"url": "http://www.ghusse.com",
+			"email": "guillaume+jqrangeslider@ghusse.com"
+	},
 	"licenses": [
 		{
 			"type": "GPLv3",
@@ -18,10 +22,12 @@
 		"jquery-ui-core": ">=1.7",
 		"jquery-ui-widget": ">=1.7",
 		"jquery-ui-draggable": ">=1.7",
-		"jquery-mousewheel": ">=1"
+		"jquery-mousewheel": ">=3.0.6"
 	},
 	"homepage": "http://ghusse.github.com/jQRangeSlider/",
 	"demo": "http://ghusse.github.com/jQRangeSlider/demo.html",
+	"download":"http://ghusse.github.com/jQRangeSlider/download.html",
+	"bugs": "https://github.com/ghusse/jQRangeSlider/issues",
 	"people":[
 		{
 			"name": "Guillaume Gautreau",
