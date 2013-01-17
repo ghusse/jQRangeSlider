@@ -1,7 +1,8 @@
 {
 	"name": "jQRangeSlider",
-	"version": "4.2.9",
-	"title": "A javascript slider selector that supports dates",
+	"version": "4.2.9-1",
+	"title": "jQRangeSlider",
+	"description": "A javascript slider selector that supports dates",
 	"author": {
 			"name": "Guillaume Gautreau",
 			"url": "http://www.ghusse.com",
@@ -34,5 +35,6 @@
 			"url": "http://www.ghusse.com",
 			"email": "guillaume+jqrangeslider@ghusse.com"
 		}
-	]
+	],
+	"keywords": ["date", "slider", "range", "value", "selection", "select", "ui", "widget", "number", "scroll"]
 }
