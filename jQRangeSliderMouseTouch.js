@@ -91,4 +91,4 @@
 			event.pageY = touch.pageY;
 		}
 	});
-})(jQuery);
+}(jQuery));

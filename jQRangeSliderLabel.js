@@ -85,14 +85,14 @@
 		},
 
 		_updateDurations: function(key, value){
-			if (parseInt(value) !== value) return;
+			if (parseInt(value, 10) !== value) return;
 
 			this._positionner.options[key] = value;
 			this.options[key] = value;
 		},
 
 		_display: function(value){
-			if (this.options.formatter == false){
+			if (this.options.formatter === false){
 				this._displayText(Math.round(value));
 			}else{
 				this._displayText(this.options.formatter(value));
@@ -147,7 +147,7 @@
 		 * Label pair
 		 */
 		pair: function(label){
-			if (this._positionner != null) return;
+			if (this._positionner !== null) return;
 
 			this._positionner = new LabelPositioner(this.element, label, this.widgetName, {
 				show: this.options.show,
@@ -171,7 +171,7 @@
 			this._positionner.cache = null;
 			this._display(this._handle("value"));
 
-			if (this.options.show == "show"){
+			if (this.options.show === "show"){
 				this._positionner.PositionLabels();
 			}
 		}
@@ -208,7 +208,7 @@
 		}
 
 		this.Cache = function(){
-			if (this.label1.css("display") == "none"){
+			if (this.label1.css("display") === "none"){
 				return;
 			}
 
@@ -261,7 +261,7 @@
 
 		this.CacheHeight = function(label, cache){
 			cache.outerHeightMargin = label.outerHeight(true);
-		},
+		}
 
 		this.ParsePixels = function(name, element){
 			return parseInt(element.css(name), 10) || 0;
@@ -277,7 +277,7 @@
 		this.PositionLabels = function(){
 			this.CacheIfNecessary();
 
-			if (this.cache == null){
+			if (this.cache === null){
 				return;
 			}
 
@@ -300,12 +300,8 @@
 				label.css("right", "");
 				label.offset({left: leftOffset});
 			}else{
-				parentRightPosition = parentShift
-																			+ this.cache.offsetParent.width;
-				labelRightPosition = leftOffset
-																			+ cache.margin.left
-																			+ cache.outerWidth
-																			+ cache.margin.right,
+				parentRightPosition = parentShift + this.cache.offsetParent.width;
+				labelRightPosition = leftOffset + cache.margin.left + cache.outerWidth + cache.margin.right;
 				rightPosition = parentRightPosition - labelRightPosition;
 
 				label.css("left", "");
@@ -346,7 +342,7 @@
 			this.label1.stop(true, true).fadeIn(this.options.durationIn || 0);
 			this.label2.stop(true, true).fadeIn(this.options.durationIn || 0);
 			this.moving = true;
-		},
+		}
 
 		this.HideIfNeeded = function(lastMove){
 			if (this.moving === true){
@@ -354,7 +350,7 @@
 				this.label2.stop(true, true).delay(this.options.delayOut || 0).fadeOut(this.options.durationOut || 0);
 				this.moving = false;
 			}
-		},
+		}
 
 		this.onHandleMoving = function(event, ui){
 			this.ShowIfNecessary();
@@ -375,12 +371,12 @@
 
 		this.onHandleStop = function(event, ui){
 			this.HideIfNeeded();
-		},
+		}
 
 		this.UpdateHandlePosition = function(ui){
-			if (this.cache == null) return;
+			if (this.cache === null) return;
 			
-			if (ui.element[0] == this.handle1[0]){
+			if (ui.element[0] === this.handle1[0]){
 				this.UpdatePosition(ui, this.cache.handle1);
 			}else{
 				this.UpdatePosition(ui, this.cache.handle2);
@@ -412,6 +408,6 @@
 		this.Init();
 	}
 
-})(jQuery);
+}(jQuery));
 
 

@@ -74,7 +74,7 @@
 		 */
 
 		_constraintPosition: function(position){
-			if (this.element.parent().length !== 0 && this.cache.parent.offset != null){
+			if (this.element.parent().length !== 0 && this.cache.parent.offset !== null){
 				position = Math.min(position, 
 					this.cache.parent.offset.left + this.cache.parent.width - this.cache.width.outer);
 				position = Math.max(position, this.cache.parent.offset.left);
