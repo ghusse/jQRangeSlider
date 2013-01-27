@@ -123,7 +123,7 @@
 
 			if (index >= this._steps.length - 1){
 				return this._steps[this._steps.length - 1];
-			} else if (index == 0){
+			} else if (index === 0){
 				return this._steps[0];
 			}
 
@@ -167,14 +167,14 @@
 			}
 
 			while (min < max){
-					if (negative){
-						max = this.add(max, this.options.step);
-					}else{
-						min = this.add(min, this.options.step);	
-					}
-					
-					steps++;
+				if (negative){
+					max = this.add(max, this.options.step);
+				}else{
+					min = this.add(min, this.options.step);	
 				}
+				
+				steps++;
+			}
 
 			return negativeResult ? -steps : steps;
 		},
@@ -183,14 +183,16 @@
 			var result = {};
 
 			for (var name in step){
-				result[name] = step[name] * factor;
+				if (step.hasOwnProperty(name)){
+					result[name] = step[name] * factor;
+				}
 			}
 
 			return result;
 		},
 
 		stepRatio: function(){
-			if (this.options.step == false){
+			if (this.options.step === false){
 				return 1;
 			}else{
 				var steps = this._steps.length;
@@ -198,4 +200,4 @@
 			}
 		}
 	});
-})(jQuery);
+}(jQuery));
