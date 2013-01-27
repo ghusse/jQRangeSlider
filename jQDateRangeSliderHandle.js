@@ -153,7 +153,7 @@
 
 		stepsBetween: function(date1, date2){
 			if (this.options.step === false){
-				return val2 - val1;
+				return date2 - date1;
 			}
 
 			var min = Math.min(date1, date2),
