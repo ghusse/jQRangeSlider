@@ -75,7 +75,7 @@
 		},
 
 		_onKeyUp: function(e){
-			if (e.which == 13){
+			if (e.which === 13){
 			this._onChange(e);
 			return false;
 		}
@@ -101,7 +101,7 @@
 		_returnCheckedValue: function(val){
 		var floatValue = parseFloat(val);
 
-		if (isNaN(floatValue) || floatValue.toString() != val){
+		if (isNaN(floatValue) || floatValue.toString() !== val){
 			return false;
 		}
 
@@ -109,7 +109,7 @@
 	},
 
 		_setTypeOption: function(value){
-			if ((value === "text" || value === "number") && this.options.type != value){
+			if ((value === "text" || value === "number") && this.options.type !== value){
 				this._destroyInput();
 				this.options.type = value;
 				this._createInput();
@@ -131,4 +131,4 @@
 
 	});
 
-})(jQuery);
+}(jQuery));

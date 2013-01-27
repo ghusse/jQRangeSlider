@@ -17,5 +17,7 @@
   "maxstatements": 15,
   "maxparams": 4,
   "maxcomplexity": 7,
-  "jquery": true
+  "jquery": true,
+  "smarttabs": true,
+  "browser": true
 }

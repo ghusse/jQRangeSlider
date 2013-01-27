@@ -317,7 +317,7 @@
 				that.element.trigger(eventName, {
 						label: that.element,
 						values: that.values()
-				  });
+					});
 			}, 1);
 		},
 
@@ -526,14 +526,17 @@
 		},
 		
 		bounds: function(min, max){
-			if ((typeof min !== "undefined") && (typeof max !== "undefined") 
-				&& parseFloat(min) === min && parseFloat(max) === max && min < max){
+			if (this._isValidValue(min) && this._isValidValue(max) && min < max){
 				
 				this._setBounds(min, max);
 				this._changed(true);
 			}
 			
 			return this.options.bounds;
+		},
+
+		_isValidValue: function(value){
+			return typeof value !== "undefined" && parseFloat(value) == value;
 		},
 
 		_setBounds: function(min, max){
@@ -591,4 +594,4 @@
 			$.Widget.prototype.destroy.apply(this, arguments);
 		}
 	});
-})(jQuery);
+}(jQuery));
