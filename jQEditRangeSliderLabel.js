@@ -8,6 +8,7 @@
  */
 
 (function($){
+	"use strict";
 
 	$.widget("ui.editRangeSliderLabel", $.ui.rangeSliderLabel, {
 		options: {
