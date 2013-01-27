@@ -28,7 +28,7 @@
 		},
 
 		_setOption: function(key, value){
-			if ((key === "defaultValues" || key === "bounds") && typeof value !== "undefined" && value !== null && typeof value.min !== "undefined" && typeof value.max !== "undefined" && value.min instanceof Date && value.max instanceof Date){
+			if ((key === "defaultValues" || key === "bounds") && typeof value !== "undefined" && value !== null && this._isValidDate(value.min) && this._isValidDate(value.max)){
 				$.ui.rangeSlider.prototype._setOption.apply(this, [key, {min:value.min.valueOf(), max:value.max.valueOf()}]);
 			}else{
 				$.ui.rangeSlider.prototype._setOption.apply(this, this._toArray(arguments));
@@ -67,13 +67,13 @@
 				return function(value){
 					return formatter(new Date(value));
 				}
-			})(formatter);
+			}(formatter));
 		},
 
 		values: function(min, max){
 			var values = null;
 			
-			if (typeof min !== "undefined" && typeof max !== "undefined" && min instanceof Date && max instanceof Date)
+			if (this._isValidDate(min) && this._isValidDate(max))
 			{
 				values = $.ui.rangeSlider.prototype.values.apply(this, [min.valueOf(), max.valueOf()]);
 			}else{
@@ -84,7 +84,7 @@
 		},
 
 		min: function(min){
-			if (typeof min !== "undefined" && min instanceof Date){
+			if (this._isValidDate(min)){
 				return new Date($.ui.rangeSlider.prototype.min.apply(this, [min.valueOf()]));
 			}
 
@@ -92,7 +92,7 @@
 		},
 
 		max: function(max){
-			if (typeof max !== "undefined" && max instanceof Date){
+			if (this._isValidDate(max)){
 				return new Date($.ui.rangeSlider.prototype.max.apply(this, [max.valueOf()]));
 			}
 
@@ -102,8 +102,7 @@
 		bounds: function(min, max){
 			var result;
 			
-			if (typeof min !== "undefined" && min instanceof Date
-						&& typeof max !== "undefined" && max instanceof Date) {
+			if (this._isValidDate(min) && this._isValidDate(max)) {
 				result = $.ui.rangeSlider.prototype.bounds.apply(this, [min.valueOf(), max.valueOf()]);
 			} else {
 				result = $.ui.rangeSlider.prototype.bounds.apply(this, this._toArray(arguments));
@@ -112,8 +111,12 @@
 			return {min: new Date(result.min), max: new Date(result.max)};
 		},
 
+		_isValidDate: function(value){
+			return typeof value !== "undefined" && value instanceof Date;
+		},
+
 		_toArray: function(argsObject){
 			return Array.prototype.slice.call(argsObject);
 		}
 	});
-})(jQuery);
+}(jQuery));
