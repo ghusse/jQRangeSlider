@@ -30,22 +30,26 @@ var equalEpsilon, deepEqualEpsilon;
 		if (typeof expected === "number"){
 			return equal(actual, expected, epsilon);
 		} else if (typeof expected === "object"){
-			for(var name in expected){
-				if (!equiv(actual[name], expected[name], epsilon)){
-					return false;
-				}
-			}
-
-			for(name in actual){
-				if (!equiv(actual[name], expected[name], epsilon)){
-					return false;
-				}
-			}
-
-			return true;
+			return equivObject(actual, expected, epsilon);
 		} else {
 			return actual === expected;
 		}
+	}
+
+	function equivObject(actual, expected, epsilon){
+		for(var name in expected){
+			if (!equiv(actual[name], expected[name], epsilon)){
+				return false;
+			}
+		}
+
+		for(name in actual){
+			if (!equiv(actual[name], expected[name], epsilon)){
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	equalEpsilon = function(actual, expected, epsilon, message){

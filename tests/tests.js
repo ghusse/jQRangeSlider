@@ -9,71 +9,74 @@
 /**
  * jQRangeSlider
  */
- 
+
 var el = null;
 
-var setUp = new TestCase(
-	"Setup",
-	function(){
-		el = $("#test");
-	},
-	null
-);
+(function(){
+	"use strict";
+	/*jshint maxstatements: 100*/
+	var setUp = new TestCase(
+		"Setup",
+		function(){
+			el = $("#test");
+		},
+		null
+	);
 
-var defaultCtorTest = new TestCase(
-	"Default ctor",
-	function(){
-		el.rangeSlider();
-	},
-	function() {
-		// Default values tests
-		deepEqualEpsilon(el.rangeSlider("option", "bounds"), { min:0, max:100 }, 1e-3, "Default bounds should be 0-100");
-		deepEqualEpsilon(el.rangeSlider("option", "bounds"), { min:0, max:100 }, 1e-3, "Default bounds should be 0-100");
-		deepEqualEpsilon(el.rangeSlider("option", "defaultValues"), {min:20, max:50}, 1e-3, "Default values should be 20-50");
-		same(el.rangeSlider("option", "wheelMode"), null, "Default wheel mode should be empty");
-		same(el.rangeSlider("option", "wheelSpeed"), 4, "Default wheel mode should be empty");
-		ok(el.rangeSlider("option", "arrows"), "Arrows should be activated by default");
-		same(el.rangeSlider("option", "valueLabels"), "show", "Value labels should be activated on value 'show' by default");
-		same(el.rangeSlider("option", "formatter"), null, "Default formatter should be used (null value)");
-		same(el.rangeSlider("option", "durationIn"), 0, "Default duration for showing labels is 0ms");
-		same(el.rangeSlider("option", "durationOut"), 400, "Default duration for hiding labels is 400ms");
-		same(el.rangeSlider("option", "delayOut"), 200, "Default delay before hiding labels is 200ms");
-		deepEqual(el.rangeSlider("option", "range"), {min:false, max:false}, "Default constraints on range");
-		
-		// Created elements
-		same($(".ui-rangeSlider-handle.ui-rangeSlider-leftHandle").length, 1, "Left handle should have been created");
-		same($(".ui-rangeSlider-handle.ui-rangeSlider-rightHandle").length, 1, "Right handle should have been created");
-		same($(".ui-rangeSlider-label.ui-rangeSlider-leftLabel").length, 1, "Left label should have been created");
-		same($(".ui-rangeSlider-label.ui-rangeSlider-rightLabel").length, 1, "Right label should have been created");
-		
-		// Arrows
-		same($(".ui-rangeSlider-arrow.ui-rangeSlider-leftArrow").length, 1, "Left arrow should have been created");
-		same($(".ui-rangeSlider-arrow.ui-rangeSlider-rightArrow").length, 1, "Right arrow should have been created");
-		same($(".ui-rangeSlider-arrow.ui-rangeSlider-leftArrow").css("display"), "block", "Left arrow should have been created");
-		same($(".ui-rangeSlider-arrow.ui-rangeSlider-rightArrow").css("display"), "block", "Arrows should be visible");
-		ok(el.hasClass("ui-rangeSlider-withArrows"), "ui-rangeSlider-withArrows should be applied to the parent element");
-		
-		// Bars
-		same($(".ui-rangeSlider-innerBar").length, 1, "The inner bar should have been created");
-		same($(".ui-rangeSlider-bar").length, 1, "The bar should have been created");
-		
-		same($(".ui-rangeSlider-container").outerWidth(true), el.innerWidth(), "Container");
-		
-		// Values
-		equalEpsilon(this.min(), 20, 1e-3, "Values should be equal to the default values");
-		equalEpsilon(this.max(), 50, 1e-3, "Values should be equal to the default values");
-		
-	}
-);
+	var defaultCtorTest = new TestCase(
+		"Default ctor",
+		function(){
+			el.rangeSlider();
+		},
+		function() {
+			// Default values tests
+			deepEqualEpsilon(el.rangeSlider("option", "bounds"), { min:0, max:100 }, 1e-3, "Default bounds should be 0-100");
+			deepEqualEpsilon(el.rangeSlider("option", "bounds"), { min:0, max:100 }, 1e-3, "Default bounds should be 0-100");
+			deepEqualEpsilon(el.rangeSlider("option", "defaultValues"), {min:20, max:50}, 1e-3, "Default values should be 20-50");
+			same(el.rangeSlider("option", "wheelMode"), null, "Default wheel mode should be empty");
+			same(el.rangeSlider("option", "wheelSpeed"), 4, "Default wheel mode should be empty");
+			ok(el.rangeSlider("option", "arrows"), "Arrows should be activated by default");
+			same(el.rangeSlider("option", "valueLabels"), "show", "Value labels should be activated on value 'show' by default");
+			same(el.rangeSlider("option", "formatter"), null, "Default formatter should be used (null value)");
+			same(el.rangeSlider("option", "durationIn"), 0, "Default duration for showing labels is 0ms");
+			same(el.rangeSlider("option", "durationOut"), 400, "Default duration for hiding labels is 400ms");
+			same(el.rangeSlider("option", "delayOut"), 200, "Default delay before hiding labels is 200ms");
+			deepEqual(el.rangeSlider("option", "range"), {min:false, max:false}, "Default constraints on range");
+			
+			// Created elements
+			same($(".ui-rangeSlider-handle.ui-rangeSlider-leftHandle").length, 1, "Left handle should have been created");
+			same($(".ui-rangeSlider-handle.ui-rangeSlider-rightHandle").length, 1, "Right handle should have been created");
+			same($(".ui-rangeSlider-label.ui-rangeSlider-leftLabel").length, 1, "Left label should have been created");
+			same($(".ui-rangeSlider-label.ui-rangeSlider-rightLabel").length, 1, "Right label should have been created");
+			
+			// Arrows
+			same($(".ui-rangeSlider-arrow.ui-rangeSlider-leftArrow").length, 1, "Left arrow should have been created");
+			same($(".ui-rangeSlider-arrow.ui-rangeSlider-rightArrow").length, 1, "Right arrow should have been created");
+			same($(".ui-rangeSlider-arrow.ui-rangeSlider-leftArrow").css("display"), "block", "Left arrow should have been created");
+			same($(".ui-rangeSlider-arrow.ui-rangeSlider-rightArrow").css("display"), "block", "Arrows should be visible");
+			ok(el.hasClass("ui-rangeSlider-withArrows"), "ui-rangeSlider-withArrows should be applied to the parent element");
+			
+			// Bars
+			same($(".ui-rangeSlider-innerBar").length, 1, "The inner bar should have been created");
+			same($(".ui-rangeSlider-bar").length, 1, "The bar should have been created");
+			
+			same($(".ui-rangeSlider-container").outerWidth(true), el.innerWidth(), "Container");
+			
+			// Values
+			equalEpsilon(this.min(), 20, 1e-3, "Values should be equal to the default values");
+			equalEpsilon(this.max(), 50, 1e-3, "Values should be equal to the default values");
+			
+		}
+	);
 
-var defaultSetup = new TestCase(
-	"Default setup without assertions",
-	function(){
-		el.rangeSlider("destroy");
-		el.rangeSlider();
-	},
-	null
-);
+	var defaultSetup = new TestCase(
+		"Default setup without assertions",
+		function(){
+			el.rangeSlider("destroy");
+			el.rangeSlider();
+		},
+		null
+	);
 
 var destroyTest = new TestCase(
 	"Destroy",
@@ -312,7 +315,7 @@ var arrowsScrollingMouseUpTest = new TestCase(
 	},
 	function(){
 		// mouseup on another element than the clicked arrow should stop scrolling
-		ok(this.max() != el.rangeSlider("option", "bounds").max, "mouseup on another element than the clicked arrow should stop scrolling");
+		ok(this.max() !== el.rangeSlider("option", "bounds").max, "mouseup on another element than the clicked arrow should stop scrolling");
 	}
 );
 
@@ -325,12 +328,12 @@ var valuesSetter = new TestCase(
 		this.previousResult = el.rangeSlider("values", 21, 22);
 	},
 	function(){
-		same(this.previousResult.min, 21, "Method should have returned the good min value");
-		same(this.previousResult.max, 22, "Method should have returned the good max value");
+		equalEpsilon(this.previousResult.min, 21, 1e-6, "Method should have returned the good min value");
+		equalEpsilon(this.previousResult.max, 22, 1e-6, "Method should have returned the good max value");
 		
 		var values = el.rangeSlider("values");
-		same(values.min, 21, "Min value should have been set");
-		same(values.max, 22, "Max value should have been set");
+		equalEpsilon(values.min, 21, 1e-6, "Min value should have been set");
+		equalEpsilon(values.max, 22, 1e-6, "Max value should have been set");
 	}
 );
 
@@ -537,4 +540,6 @@ testRunner.add("jQRangeSlider", [setUp,
 			issue12,
 			rangeLimitMax, rangeLimitMaxWithMinAndMax, rangeLimitMin, rangeLimitMinWithMinAndMax,
 			destroyTest]);
+
+}());
 

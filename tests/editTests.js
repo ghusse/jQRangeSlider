@@ -8,6 +8,9 @@
  
 
 (function(){
+	"use strict";
+	/*jshint maxstatements: 100*/
+
 	var editSetup = new TestCase(
 		'Setup for EditSlider',
 		function(){
@@ -47,16 +50,6 @@
 		},
 		null);
 
-	function testDisplayedValues(min, max){
-		var inputs = el.find("input"),
-				first = $(inputs[0]),
-				second = $(inputs[1]);
-
-			ok(first.val() === min.toString() || first.val() === max.toString(), "Displayed value should be rounded");
-			ok(second.val() === min.toString() || second.val() === max.toString(), "Displayed value should be rounded");
-			ok(first.val() != second.val(), "Values should be different");
-	}
-
 	var typeCtor = new TestCase(
 		"Ctor specifying input type",
 		function(){
@@ -90,8 +83,8 @@
 			el.editRangeSlider("option", "type", "date");
 		},
 		function(){
-			ok(el.editRangeSlider("option", "type") != "date", "Invalid input type should not be set");
-			ok(el.find("input").attr("type") != "date", "Invalid input type");
+			ok(el.editRangeSlider("option", "type") !== "date", "Invalid input type should not be set");
+			ok(el.find("input").attr("type") !== "date", "Invalid input type");
 		}
 	);
 
@@ -107,7 +100,7 @@
 			this.type = "editRangeSlider";
 		},
 		function(){
-			ok(this.min() == 40 || this.max() == 40, "Entered value should have been set");
+			ok(this.min() === 40 || this.max() === 40, "Entered value should have been set");
 		}
 	);
 
@@ -123,7 +116,7 @@
 		},
 
 		function(){
-			ok(this.min() == 40 || this.max() == 40, "Value should have been set " + this.min() + " " + this.max());
+			ok(this.min() === 40 || this.max() === 40, "Value should have been set " + this.min() + " " + this.max());
 		}
 	);
 
@@ -138,7 +131,7 @@
 			this.type = "editRangeSlider";
 		},
 		function(){
-			ok(this.min() != 40 || this.max() != 40, "Value should not have been set")
+			ok(this.min() !== 40 || this.max() !== 40, "Value should not have been set")
 		}
 	);
 
@@ -152,7 +145,7 @@
 			this.type = "editRangeSlider";
 		},
 		function(){
-			ok(this.min() == 40 || this.max() == 40, "Value should have been set")
+			ok(this.min() === 40 || this.max() === 40, "Value should have been set")
 		}
 	);
 	

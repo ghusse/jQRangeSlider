@@ -36,11 +36,7 @@
 				.css("position", "absolute")
 				.css("display", "block");
 
-			this._valueContainer = $("<div class='ui-rangeSlider-label-value' />")
-				.appendTo(this.element);
-
-			this._innerElement = $("<div class='ui-rangeSlider-label-inner' />")
-				.appendTo(this.element);
+			this._createElements();
 
 			this._toggleClass();
 
@@ -54,6 +50,14 @@
 			}
 
 			this._mouseInit();
+		},
+
+		_createElements: function(){
+			this._valueContainer = $("<div class='ui-rangeSlider-label-value' />")
+				.appendTo(this.element);
+
+			this._innerElement = $("<div class='ui-rangeSlider-label-inner' />")
+				.appendTo(this.element);
 		},
 
 		_handle: function(){
@@ -130,7 +134,7 @@
 			this._display(ui.value);
 		},
 
-		_onUpdate: function(event, ui){
+		_onUpdate: function(){
 			if (this.options.show === "show"){
 				this.update();
 			}
@@ -178,6 +182,9 @@
 	});
 
 	function LabelPositioner(label1, label2, type, options){
+		/* jshint, i love you, but it is a constructor*/
+		/*jshint maxstatements:40 */
+
 		this.label1 = label1;
 		this.label2 = label2;
 		this.type = type;
@@ -344,7 +351,7 @@
 			this.moving = true;
 		}
 
-		this.HideIfNeeded = function(lastMove){
+		this.HideIfNeeded = function(){
 			if (this.moving === true){
 				this.label1.stop(true, true).delay(this.options.delayOut || 0).fadeOut(this.options.durationOut || 0);
 				this.label2.stop(true, true).delay(this.options.delayOut || 0).fadeOut(this.options.durationOut || 0);
@@ -369,7 +376,7 @@
 			this.cache = null;
 		}
 
-		this.onHandleStop = function(event, ui){
+		this.onHandleStop = function(){
 			this.HideIfNeeded();
 		}
 

@@ -65,7 +65,7 @@
 			return false;
 		},
 
-		_mouseStop: function(event){
+		_mouseStop: function(){
 			this._triggerMouseEvent("stop");
 		},
 

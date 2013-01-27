@@ -51,54 +51,7 @@
 			this.changing = {min:false, max:false};
 			this.changed = {min:false, max:false};
 
-			if (this.element.css("position") !== "absolute"){
-				this.element.css("position", "relative");
-			}
-
-			this.container = $("<div class='ui-rangeSlider-container' />")
-				.css("position", "absolute")
-				.appendTo(this.element);
-			
-			this.innerBar = $("<div class='ui-rangeSlider-innerBar' />")
-				.css("position", "absolute")
-				.css("top", 0)
-				.css("left", 0);
-
-			this.leftHandle = this._createHandle({
-					isLeft: true,
-					bounds: this.options.bounds,
-					value: this._values.min,
-					step: this.options.step
-			}).appendTo(this.container);
-	
-			this.rightHandle = this._createHandle({
-				isLeft: false,
-				bounds: this.options.bounds,
-				value: this._values.max,
-				step: this.options.step
-			}).appendTo(this.container);
-
-			this._createBar();
-
-			this.container.prepend(this.innerBar);
-
-			this.arrows.left = this._createArrow("left");
-			this.arrows.right = this._createArrow("right");
-
-			this.element.addClass("ui-rangeSlider");
-
-			if (!this.options.arrows){
-				this.arrows.left.css("display", "none");
-				this.arrows.right.css("display", "none");
-				this.element.addClass("ui-rangeSlider-noArrow");
-			}else{
-				this.element.addClass("ui-rangeSlider-withArrows");
-			}
-			if (this.options.valueLabels !== "hide"){
-				this._createLabels();
-			}else{
-				this._destroyLabels();
-			}
+			this._createElements();
 
 			this._bindResize();
 
@@ -126,36 +79,14 @@
 		},
 
 		_setOption: function(key, value) {
-			var option = this.options;
-
-                        if (key === "wheelMode" || key === "wheelSpeed"){
-				this._bar("option", key, value);
-				this.options[key] = this._bar("option", key);
-			}else if (key === "arrows" && (value === true || value === false) && value !== this.options.arrows){
-				this._setArrowsOption(value);
-			}else if (key === "valueLabels"){
-				this._setLabelsOption(value);
-			}else if (key === "durationIn" || key === "durationOut" || key === "delayOut"){
-				this._setLabelsDurations(key, value);
-			}else if (key === "formatter" && value !== null && typeof value === "function"){
-				this.options.formatter = value;
-				
-				if (this.options.valueLabels !== "hide"){
-					this._destroyLabels();
-					this._createLabels();
-				}
-			}else if (key === "bounds" && typeof value.min !== "undefined" && typeof value.max !== "undefined"){
-				this.bounds(value.min, value.max);
-			}else if (key === "range"){
-				this._bar("option", "range", value);
-				this.options.range = this._bar("option", "range");
-				this._changed(true);
-			}else if (key === "step"){
-				this.options.step = value;
-				this._leftHandle("option", "step", value);
-				this._rightHandle("option", "step", value);
-				this._changed(true);
-			}
+			this._setWheelOption(key, value);		
+			this._setArrowsOption(key, value);
+			this._setLabelsOption(key, value);
+			this._setLabelsDurations(key, value);
+			this._setFormatterOption(key, value);
+			this._setBoundsOption(key, value);
+			this._setRangeOption(key, value);
+			this._setStepOption(key, value);
 		},
 
 		_validProperty: function(object, name, defaultValue){
@@ -166,54 +97,132 @@
 			return object[name];
 		},
 
-		_setLabelsOption: function(value){
-			if (value !== "hide" && value !== "show" && value !== "change"){
-				return;
-			}
-
-			this.options.valueLabels = value;
-
-			if (value !== "hide"){
-				this._createLabels();
-				this._leftLabel("update");
-				this._rightLabel("update");
-			}else{
-				this._destroyLabels();
+		_setStepOption: function(key, value){
+			if (key === "step"){
+				this.options.step = value;
+				this._leftHandle("option", "step", value);
+				this._rightHandle("option", "step", value);
+				this._changed(true);
 			}
 		},
 
-		_setArrowsOption: function(value){
-			if (value === true){
-				this.element
-					.removeClass("ui-rangeSlider-noArrow")
-					.addClass("ui-rangeSlider-withArrows");
-				this.arrows.left.css("display", "block");
-				this.arrows.right.css("display", "block");
-				this.options.arrows = true;
-			}else if (value === false){
-				this.element
-					.addClass("ui-rangeSlider-noArrow")
-					.removeClass("ui-rangeSlider-withArrows");
-				this.arrows.left.css("display", "none");
-				this.arrows.right.css("display", "none");
-				this.options.arrows = false;
+		_setRangeOption: function(key, value){
+			if (key === "range"){
+				this._bar("option", "range", value);
+				this.options.range = this._bar("option", "range");
+				this._changed(true);
 			}
+		},
 
-			this._initWidth();
+		_setBoundsOption: function(key, value){
+			if (key === "bounds" && typeof value.min !== "undefined" && typeof value.max !== "undefined"){
+				this.bounds(value.min, value.max);
+			}
+		},
+
+		_setWheelOption: function(key, value){
+			if (key === "wheelMode" || key === "wheelSpeed"){
+				this._bar("option", key, value);
+				this.options[key] = this._bar("option", key);
+			}
+		},
+
+		_setLabelsOption: function(key, value){
+			if (key === "valueLabels"){
+				if (value !== "hide" && value !== "show" && value !== "change"){
+					return;
+				}
+
+				this.options.valueLabels = value;
+
+				if (value !== "hide"){
+					this._createLabels();
+					this._leftLabel("update");
+					this._rightLabel("update");
+				}else{
+					this._destroyLabels();
+				}
+			}
+		},
+
+		_setFormatterOption: function(key, value){
+			if (key === "formatter" && value !== null && typeof value === "function"){
+				this.options.formatter = value;
+				
+				if (this.options.valueLabels !== "hide"){
+					this._destroyLabels();
+					this._createLabels();
+				}
+			}
+		},
+
+		_setArrowsOption: function(key, value){
+			if (key === "arrows" && (value === true || value === false) && value !== this.options.arrows){
+				if (value === true){
+					this.element
+						.removeClass("ui-rangeSlider-noArrow")
+						.addClass("ui-rangeSlider-withArrows");
+					this.arrows.left.css("display", "block");
+					this.arrows.right.css("display", "block");
+					this.options.arrows = true;
+				}else if (value === false){
+					this.element
+						.addClass("ui-rangeSlider-noArrow")
+						.removeClass("ui-rangeSlider-withArrows");
+					this.arrows.left.css("display", "none");
+					this.arrows.right.css("display", "none");
+					this.options.arrows = false;
+				}
+
+				this._initWidth();
+			}
 		},
 
 		_setLabelsDurations: function(key, value){
-			if (parseInt(value, 10) !== value) return;
+			if (key === "durationIn" || key === "durationOut" || key === "delayOut"){
+				if (parseInt(value, 10) !== value) return;
 
-			if (this.labels.left !== null){
-				this._leftLabel("option", key, value);
+				if (this.labels.left !== null){
+					this._leftLabel("option", key, value);
+				}
+
+				if (this.labels.right !== null){
+					this._rightLabel("option", key, value);
+				}
+
+				this.options[key] = value;
+			}
+		},
+
+		_createElements: function(){
+			if (this.element.css("position") !== "absolute"){
+				this.element.css("position", "relative");
 			}
 
-			if (this.labels.right !== null){
-				this._rightLabel("option", key, value);
-			}
+			this.element.addClass("ui-rangeSlider");
 
-			this.options[key] = value;
+			this.container = $("<div class='ui-rangeSlider-container' />")
+				.css("position", "absolute")
+				.appendTo(this.element);
+			
+			this.innerBar = $("<div class='ui-rangeSlider-innerBar' />")
+				.css("position", "absolute")
+				.css("top", 0)
+				.css("left", 0);
+
+			this._createHandles();
+
+			this._createBar();
+
+			this.container.prepend(this.innerBar);
+
+			this._createArrows();
+
+			if (this.options.valueLabels !== "hide"){
+				this._createLabels();
+			}else{
+				this._destroyLabels();
+			}
 		},
 
 		_createHandle: function(options){
@@ -221,6 +230,22 @@
 				[this._handleType()](options)
 				.bind("sliderDrag", $.proxy(this._changing, this))
 				.bind("stop", $.proxy(this._changed, this));
+		},
+
+		_createHandles: function(){
+			this.leftHandle = this._createHandle({
+					isLeft: true,
+					bounds: this.options.bounds,
+					value: this._values.min,
+					step: this.options.step
+			}).appendTo(this.container);
+	
+			this.rightHandle = this._createHandle({
+				isLeft: false,
+				bounds: this.options.bounds,
+				value: this._values.max,
+				step: this.options.step
+			}).appendTo(this.container);
 		},
 		
 		_createBar: function(){
@@ -242,6 +267,19 @@
 			this.options.range = this._bar("option", "range");
 			this.options.wheelMode = this._bar("option", "wheelMode");
 			this.options.wheelSpeed = this._bar("option", "wheelSpeed");
+		},
+
+		_createArrows: function(){
+			this.arrows.left = this._createArrow("left");
+			this.arrows.right = this._createArrow("right");
+
+			if (!this.options.arrows){
+				this.arrows.left.css("display", "none");
+				this.arrows.right.css("display", "none");
+				this.element.addClass("ui-rangeSlider-noArrow");
+			}else{
+				this.element.addClass("ui-rangeSlider-withArrows");
+			}
 		},
 
 		_createArrow: function(whichOne){
@@ -321,7 +359,7 @@
 			}, 1);
 		},
 
-		_changing: function(event, ui){
+		_changing: function(){
 			if(this._updateValues()){
 				this._trigger("valuesChanging");
 				this._valuesChanged = true;
@@ -393,7 +431,7 @@
 			};
 		},
 
-		_getLabelRefreshParameters: function(label, handle){
+		_getLabelRefreshParameters: function(){
 			return {
 				formatter: this._getFormatter(),
 				show: this.options.valueLabels,

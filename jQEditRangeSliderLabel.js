@@ -81,7 +81,7 @@
 		}
 		},
 
-		_onChange: function(e){
+		_onChange: function(){
 			var value = this._returnCheckedValue(this._input.val());
 
 			if (value !== false){
