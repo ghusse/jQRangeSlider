@@ -41,7 +41,7 @@
 		},
 
 		_setOption: function(key, value){
-			if (key === "isLeft" && (value === true || value === false) && value != this.options.isLeft){
+			if (key === "isLeft" && (value === true || value === false) && value !== this.options.isLeft){
 				this.options.isLeft = value;
 
 				this.element
@@ -66,13 +66,15 @@
 		},
 
 		_checkRange: function(range){
-			return range === false ||
-				((typeof range.min === "undefined" || range.min === false || parseFloat(range.min) === range.min)
-					&& (typeof range.max === "undefined" || range.max === false || parseFloat(range.max) === range.max));
+			return range === false || (!this._isValidValue(range.min) && !this._isValidValue(range.max));
+		},
+
+		_isValidValue: function(value){
+			return typeof value !== "undefined" && value !== false && parseFloat(value) === value;
 		},
 
 		_checkStep: function(step){
-			return (step === false || parseFloat(step) == step);
+			return (step === false || parseFloat(step) === step);
 		},
 
 		_initElement: function(){
@@ -181,7 +183,7 @@
 		},
 
 		_getPositionForValue: function(value){
-			if (this.cache.parent.offset == null){
+			if (this.cache.parent.offset === null){
 				return 0;
 			}
 
@@ -202,7 +204,7 @@
 		},
 
 		_getRawValueForPositionAndBounds: function(position, min, max){
-			var parentPosition =  this.cache.parent.offset == null ? 0 : this.cache.parent.offset.left,
+			var parentPosition =  this.cache.parent.offset === null ? 0 : this.cache.parent.offset.left,
 					availableWidth = this.cache.parent.width - this.cache.width.outer,
 					ratio = (position - parentPosition) / availableWidth;
 
@@ -214,7 +216,7 @@
 		 */
 
 		value: function(value){
-			if (typeof value != "undefined"){
+			if (typeof value !== "undefined"){
 				this._cache();
 
 				value = this._constraintValue(value);
@@ -230,7 +232,7 @@
 			var value = this._constraintValue(this._value),
 				position = this._getPositionForValue(value);
 
-			if (value != this._value){
+			if (value !== this._value){
 				this._triggerMouseEvent("updating");
 				this._position(value);
 				this._triggerMouseEvent("update");
@@ -242,7 +244,7 @@
 		},
 
 		position: function(position){
-			if (typeof position != "undefined"){
+			if (typeof position !== "undefined"){
 				this._cache();
 				
 				position = this._constraintPosition(position);
@@ -275,7 +277,7 @@
 		moveRight: function(quantity){
 			var previous;
 
-			if (this.options.step == false){
+			if (this.options.step === false){
 				previous = this._left;
 				this.position(this._left + quantity);
 
@@ -293,7 +295,7 @@
 		},
 
 		stepRatio: function(){
-			if (this.options.step == false){
+			if (this.options.step === false){
 				return 1;
 			}else{
 				var steps = (this.options.bounds.max - this.options.bounds.min) / this.options.step;
@@ -301,4 +303,4 @@
 			}
 		}
 	});
- })(jQuery);
+ }(jQuery));

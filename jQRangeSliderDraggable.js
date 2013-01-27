@@ -26,8 +26,8 @@
 		},
 
 		_setOption: function(key, value){
-			if (key == "containment"){
-				if (value === null || $(value).length == 0){
+			if (key === "containment"){
+				if (value === null || $(value).length === 0){
 					this.options.containment = null
 				}else{
 					this.options.containment = $(value);
@@ -127,10 +127,10 @@
 			if (this.options.parent !== null){
 				var container = this.element.parent();
 
- 			this.cache.parent = {
- 				offset: container.offset(),
- 				width: container.width()
- 			}
+				this.cache.parent = {
+					offset: container.offset(),
+					width: container.width()
+				}
 			}else{
 				this.cache.parent = null;
 			}
@@ -161,4 +161,4 @@
 		}
 	});
 
-})(jQuery);
+}(jQuery));
