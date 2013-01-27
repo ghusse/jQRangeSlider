@@ -63,7 +63,7 @@
 		},
 
 		_setRangeOption: function(value){
-			if (typeof value != "object" || value === null){
+			if (typeof value !== "object" || value === null){
 				value = false;
 			}
 
@@ -113,7 +113,7 @@
 		},
 
 		_setLeftRange: function(){
-			if (this.options.range == false){
+			if (this.options.range === false){
 				return false;
 			}
 
@@ -262,7 +262,7 @@
 			this._cacheIfNecessary();
 
 			if (this._switchedValues()){
-				this._switchHandles(),
+				this._switchHandles();
 				this._onDragLeftHandle(event, ui);
 				return;
 			}
@@ -518,4 +518,4 @@
 
 	});
 
-})(jQuery);
+}(jQuery));

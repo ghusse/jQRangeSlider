@@ -536,7 +536,7 @@
 		},
 
 		_isValidValue: function(value){
-			return typeof value !== "undefined" && parseFloat(value) == value;
+			return typeof value !== "undefined" && parseFloat(value) === value;
 		},
 
 		_setBounds: function(min, max){
