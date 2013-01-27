@@ -1,0 +1,21 @@
+{
+	"asi": true,
+	"bitwise": true,
+	"eqeqeq": true,
+	"camelcase": true,
+	"curly": false,
+	"forin": true,
+	"immed": true,
+	"latedef": true,
+	"newcap": true,
+	"noarg": true,
+	"noempty": true,
+	"undef": true,
+	"unused": true,
+	"strict": true,
+	"maxdepth": 3,
+  "maxstatements": 15,
+  "maxparams": 4,
+  "maxcomplexity": 7,
+  "jquery": true
+}
