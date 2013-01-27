@@ -29,7 +29,7 @@ var equalEpsilon, deepEqualEpsilon;
 
 		if (typeof expected === "number"){
 			return equal(actual, expected, epsilon);
-		} else if (typeof expected == "object"){
+		} else if (typeof expected === "object"){
 			for(var name in expected){
 				if (!equiv(actual[name], expected[name], epsilon)){
 					return false;
@@ -56,5 +56,5 @@ var equalEpsilon, deepEqualEpsilon;
 		QUnit.push(equiv(actual, expected, epsilon), actual, expected, message);
 	}
 
-})();
+}());
 
