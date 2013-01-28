@@ -1,9 +1,18 @@
 {
-	"name": "jQRangeSlider",
-	"version": "4.2.9-1",
-	"scripts": { "test": "make test" },
-	"devDependencies": {
-		"jshint": "0.9.1",
-		"connect": "2.1.3"
-	}
+  "name": "jQRangeSlider",
+  "version": "4.2.9-1",
+  "scripts": {
+    "test": "make test"
+  },
+  "devDependencies": {
+    "jshint": "0.9.1",
+    "connect": "2.1.3",
+    "grunt-contrib-concat": "~0.1.1",
+    "grunt-contrib-uglify": "~0.1.1rc6",
+    "grunt-contrib-mincss": "~0.4.0rc7",
+    "grunt": "~0.4.0rc7",
+    "grunt-contrib-clean": "~0.4.0rc6",
+    "grunt-contrib-copy": "~0.4.0rc7",
+    "grunt-contrib-compress": "~0.4.0rc7"
+  }
 }
