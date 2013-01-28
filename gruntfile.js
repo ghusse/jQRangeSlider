@@ -16,7 +16,7 @@ var dateFiles = [
 
 var editFiles = [
     "jQEditRangeSlider.js"
-    , "jQEditRangeSliderLabel"
+    , "jQEditRangeSliderLabel.js"
   ];
 
 info = JSON.parse(fs.readFileSync("jQRangeSlider.jquery.json"));
@@ -68,7 +68,7 @@ module.exports = function(grunt) {
       },
       lib:{
         files: [
-          {src: ["lib/*"], dest: "dest/"}
+          {src: ["jquery-*.js", "jquery.mousewheel*", "jquery*.txt"], dest: "dest/lib/", expand: true, cwd: 'lib/'}
         ]
       },
       doc: {
@@ -88,7 +88,7 @@ module.exports = function(grunt) {
     compress:{
       package:{
         options:{
-          archive: "jQRangeSlider-" + info.version + ".zip",
+          archive: "packages/jQRangeSlider-" + info.version + ".zip",
           level: 9
         },
         files: [
