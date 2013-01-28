@@ -70,7 +70,7 @@
 		},
 
 		_isValidValue: function(value){
-			return typeof value !== "undefined" && value !== false && parseFloat(value) === value;
+			return typeof value !== "undefined" && value !== false && parseFloat(value) !== value;
 		},
 
 		_checkStep: function(step){
