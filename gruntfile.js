@@ -19,7 +19,9 @@ var editFiles = [
     , "jQEditRangeSliderLabel.js"
   ];
 
-info = JSON.parse(fs.readFileSync("jQRangeSlider.jquery.json"));
+var info = JSON.parse(fs.readFileSync("jQRangeSlider.jquery.json")),
+  jshintConfig = JSON.parse(fs.readFileSync(".jshintconfig")),
+  jshintConfigTests = JSON.parse(fs.readFileSync("tests/.jshintconfig"));
 
 module.exports = function(grunt) {
   grunt.initConfig({
@@ -95,6 +97,14 @@ module.exports = function(grunt) {
           {src: ["**"], dest: "jQRangeSlider-" + info.version, expand: true, cwd: 'dest/'}
         ]
       }
+    },
+    jshint:{
+      options: jshintConfig,
+      use_defaults: ["jQ*.js"],
+      with_overrides: {
+        options: jshintConfigTests,
+        files: {src: ["tests/unit/*"]}
+      }
     }
   });
  
@@ -105,6 +115,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-compress');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
 
   grunt.registerTask("modifyDemo", "Modify demo.", function(){
     var file="dest/demo/index.html",
