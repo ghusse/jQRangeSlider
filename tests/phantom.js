@@ -66,7 +66,9 @@ page.open(phantom.args[0], function(status){
         try {
           failed = el.getElementsByClassName('failed')[0].innerHTML
           console.log("Failed: " + failed)
+          return failed;
         } catch (e) { }
+        
         return 10000
       });
       phantom.exit((parseInt(failedNum, 10) > 0) ? 1 : 0)
