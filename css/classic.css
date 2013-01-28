@@ -44,12 +44,12 @@
 }
 
 .ui-rangeSlider-arrow.ui-rangeSlider-leftArrow{
-	background-image: url('icons/resultset_previous.png');
+	background-image: url('icons-classic/resultset_previous.png');
 	background-position:center left;
 }
 
 .ui-rangeSlider-arrow.ui-rangeSlider-rightArrow{
-	background-image: url('icons/resultset_next.png');
+	background-image: url('icons-classic/resultset_next.png');
 	background-position:center right;
 }
 
@@ -71,7 +71,7 @@
 
 .ui-rangeSlider-label{
 	margin:0 2px 2px;
-	background-image:url('icons/label.png');
+	background-image:url('icons-classic/label.png');
 	background-position:bottom center;
 	background-repeat:no-repeat;
   white-space: nowrap;
