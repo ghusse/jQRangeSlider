@@ -1,3 +1,5 @@
+var FILE_ENCODING = "utf-8";
+
 var fs = require("fs");
 
 var coreFiles = ["jQRangeSliderMouseTouch.js"
@@ -104,5 +106,17 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-compress');
 
-  grunt.registerTask("default", ["clean", "uglify", "copy", "mincss", "compress"]);
+  grunt.registerTask("modifyDemo", "Modify demo.", function(){
+    var file="dest/demo/index.html",
+      content = fs.readFileSync(file, FILE_ENCODING);
+
+    content = content.replace(/<\!-- *Debug[\s\S]*\/Debug *-->/gi, "");
+    content = content.replace(/<\!-- *Minified --><\!--/gi, "");
+    content = content.replace(/--><\!-- *\/Minified *-->/gi, "");
+
+    fs.writeFileSync(file, content, FILE_ENCODING);
+    grunt.log.writeln('Demo modified');
+  })
+
+  grunt.registerTask("default", ["clean", "uglify", "copy", "modifyDemo", "mincss", "compress"]);
 };
