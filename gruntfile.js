@@ -105,6 +105,21 @@ module.exports = function(grunt) {
         options: jshintConfigTests,
         files: {src: ["tests/unit/*"]}
       }
+    },
+    qunit: {
+      all: {
+        options: {
+          urls: ['http://localhost:8000/tests/index.html']
+        }
+      }
+    },
+    connect:{
+      server:{
+        options:{
+          port: 8000,
+          base: "."
+        }
+      }
     }
   });
  
@@ -116,6 +131,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-compress');
   grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-connect');
+  grunt.loadNpmTasks('grunt-contrib-qunit');
 
   grunt.registerTask("modifyDemo", "Modify demo.", function(){
     var file="dest/demo/index.html",
@@ -129,5 +146,11 @@ module.exports = function(grunt) {
     grunt.log.writeln('Demo modified');
   })
 
+  grunt.event.on('qunit.spawn', function (url) {
+    grunt.log.ok("Running test: " + url);
+  });
+
   grunt.registerTask("default", ["clean", "uglify", "copy", "modifyDemo", "mincss", "compress"]);
+  grunt.registerTask('test', ['connect', 'qunit']);
+  grunt.registerTask('ci', ["jshint", "test"]);
 };

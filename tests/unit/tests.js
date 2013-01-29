@@ -26,6 +26,7 @@ var el = null;
 	var defaultCtorTest = new TestCase(
 		"Default ctor",
 		function(){
+			el = $("#test")
 			el.rangeSlider();
 		},
 		function() {
@@ -33,34 +34,34 @@ var el = null;
 			deepEqualEpsilon(el.rangeSlider("option", "bounds"), { min:0, max:100 }, 1e-3, "Default bounds should be 0-100");
 			deepEqualEpsilon(el.rangeSlider("option", "bounds"), { min:0, max:100 }, 1e-3, "Default bounds should be 0-100");
 			deepEqualEpsilon(el.rangeSlider("option", "defaultValues"), {min:20, max:50}, 1e-3, "Default values should be 20-50");
-			same(el.rangeSlider("option", "wheelMode"), null, "Default wheel mode should be empty");
-			same(el.rangeSlider("option", "wheelSpeed"), 4, "Default wheel mode should be empty");
+			deepEqual(el.rangeSlider("option", "wheelMode"), null, "Default wheel mode should be empty");
+			deepEqual(el.rangeSlider("option", "wheelSpeed"), 4, "Default wheel mode should be empty");
 			ok(el.rangeSlider("option", "arrows"), "Arrows should be activated by default");
-			same(el.rangeSlider("option", "valueLabels"), "show", "Value labels should be activated on value 'show' by default");
-			same(el.rangeSlider("option", "formatter"), null, "Default formatter should be used (null value)");
-			same(el.rangeSlider("option", "durationIn"), 0, "Default duration for showing labels is 0ms");
-			same(el.rangeSlider("option", "durationOut"), 400, "Default duration for hiding labels is 400ms");
-			same(el.rangeSlider("option", "delayOut"), 200, "Default delay before hiding labels is 200ms");
+			deepEqual(el.rangeSlider("option", "valueLabels"), "show", "Value labels should be activated on value 'show' by default");
+			deepEqual(el.rangeSlider("option", "formatter"), null, "Default formatter should be used (null value)");
+			deepEqual(el.rangeSlider("option", "durationIn"), 0, "Default duration for showing labels is 0ms");
+			deepEqual(el.rangeSlider("option", "durationOut"), 400, "Default duration for hiding labels is 400ms");
+			deepEqual(el.rangeSlider("option", "delayOut"), 200, "Default delay before hiding labels is 200ms");
 			deepEqual(el.rangeSlider("option", "range"), {min:false, max:false}, "Default constraints on range");
 			
 			// Created elements
-			same($(".ui-rangeSlider-handle.ui-rangeSlider-leftHandle").length, 1, "Left handle should have been created");
-			same($(".ui-rangeSlider-handle.ui-rangeSlider-rightHandle").length, 1, "Right handle should have been created");
-			same($(".ui-rangeSlider-label.ui-rangeSlider-leftLabel").length, 1, "Left label should have been created");
-			same($(".ui-rangeSlider-label.ui-rangeSlider-rightLabel").length, 1, "Right label should have been created");
+			deepEqual($(".ui-rangeSlider-handle.ui-rangeSlider-leftHandle").length, 1, "Left handle should have been created");
+			deepEqual($(".ui-rangeSlider-handle.ui-rangeSlider-rightHandle").length, 1, "Right handle should have been created");
+			deepEqual($(".ui-rangeSlider-label.ui-rangeSlider-leftLabel").length, 1, "Left label should have been created");
+			deepEqual($(".ui-rangeSlider-label.ui-rangeSlider-rightLabel").length, 1, "Right label should have been created");
 			
 			// Arrows
-			same($(".ui-rangeSlider-arrow.ui-rangeSlider-leftArrow").length, 1, "Left arrow should have been created");
-			same($(".ui-rangeSlider-arrow.ui-rangeSlider-rightArrow").length, 1, "Right arrow should have been created");
-			same($(".ui-rangeSlider-arrow.ui-rangeSlider-leftArrow").css("display"), "block", "Left arrow should have been created");
-			same($(".ui-rangeSlider-arrow.ui-rangeSlider-rightArrow").css("display"), "block", "Arrows should be visible");
+			deepEqual($(".ui-rangeSlider-arrow.ui-rangeSlider-leftArrow").length, 1, "Left arrow should have been created");
+			deepEqual($(".ui-rangeSlider-arrow.ui-rangeSlider-rightArrow").length, 1, "Right arrow should have been created");
+			deepEqual($(".ui-rangeSlider-arrow.ui-rangeSlider-leftArrow").css("display"), "block", "Left arrow should have been created");
+			deepEqual($(".ui-rangeSlider-arrow.ui-rangeSlider-rightArrow").css("display"), "block", "Arrows should be visible");
 			ok(el.hasClass("ui-rangeSlider-withArrows"), "ui-rangeSlider-withArrows should be applied to the parent element");
 			
 			// Bars
-			same($(".ui-rangeSlider-innerBar").length, 1, "The inner bar should have been created");
-			same($(".ui-rangeSlider-bar").length, 1, "The bar should have been created");
+			deepEqual($(".ui-rangeSlider-innerBar").length, 1, "The inner bar should have been created");
+			deepEqual($(".ui-rangeSlider-bar").length, 1, "The bar should have been created");
 			
-			same($(".ui-rangeSlider-container").outerWidth(true), el.innerWidth(), "Container");
+			deepEqual($(".ui-rangeSlider-container").outerWidth(true), el.innerWidth(), "Container");
 			
 			// Values
 			equalEpsilon(this.min(), 20, 1e-3, "Values should be equal to the default values");
@@ -84,8 +85,8 @@ var destroyTest = new TestCase(
 		el.rangeSlider("destroy");
 	},
 	function(){	
-		same(el.children().length, 0, "Parent element should be empty");
-		same(el.attr("class"), "", "Class attribute on parent element should be empty");
+		deepEqual(el.children().length, 0, "Parent element should be empty");
+		deepEqual(el.attr("class"), "", "Class attribute on parent element should be empty");
 	}
 );
 
@@ -116,12 +117,12 @@ var customCtorTest = new TestCase(
 		var defaultValues = el.rangeSlider("option", "defaultValues");
 		var values = el.rangeSlider("values");
 		
-		same(bounds.min, this.bounds.min, "Bounds min value should have been correctly set");
-		same(bounds.max, this.bounds.max, "Bounds max value should have been correctly set");
-		same(defaultValues.min, this.defaultValues.min, "Default min value should have been correctly set");
-		same(defaultValues.max, this.defaultValues.max, "Default max value should have been correctly set");
-		same(values.min, this.defaultValues.min, "Min value should have been correctly set");
-		same(values.max, this.defaultValues.max, "Max value should have been correctly set");
+		deepEqual(bounds.min, this.bounds.min, "Bounds min value should have been correctly set");
+		deepEqual(bounds.max, this.bounds.max, "Bounds max value should have been correctly set");
+		deepEqual(defaultValues.min, this.defaultValues.min, "Default min value should have been correctly set");
+		deepEqual(defaultValues.max, this.defaultValues.max, "Default max value should have been correctly set");
+		deepEqual(values.min, this.defaultValues.min, "Min value should have been correctly set");
+		deepEqual(values.max, this.defaultValues.max, "Max value should have been correctly set");
 	}
 );
 
@@ -131,8 +132,8 @@ var hideLabelsTest = new TestCase(
 		el.rangeSlider("option", "valueLabels", "hide");
 	},
 	function(){
-		same($(".ui-rangeSlider-label").length, 0, "Value labels should have been detached");
-		same(el.rangeSlider("option", "valueLabels"), "hide", "Option value should be 'hidden'");
+		deepEqual($(".ui-rangeSlider-label").length, 0, "Value labels should have been detached");
+		deepEqual(el.rangeSlider("option", "valueLabels"), "hide", "Option value should be 'hidden'");
 	}
 );
 
@@ -142,8 +143,8 @@ var showLabelsTest = new TestCase(
 		el.rangeSlider("option", "valueLabels", "show");
 	},
 	function(){
-		same($(".ui-rangeSlider-label").length, 2, "Value labels should have been detached");
-		same(el.rangeSlider("option", "valueLabels"), "show", "Option value should be 'hidden'");
+		deepEqual($(".ui-rangeSlider-label").length, 2, "Value labels should have been detached");
+		deepEqual(el.rangeSlider("option", "valueLabels"), "show", "Option value should be 'hidden'");
 	}
 );
 
@@ -158,10 +159,10 @@ var changeBoundsTest = new TestCase(
 	function(){
 		var bounds = { min:30, max:40 };
 		
-		same(el.rangeSlider("option", "bounds").min, bounds.min, "Bounds setter should have worked");
-		same(el.rangeSlider("option", "bounds").max, bounds.max, "Bounds setter should have worked");
-		same(this.min(), bounds.min, "As the old values were outside the new bounds, values should have been updated");
-		same(this.max(), bounds.max, "As the old values were outside the new bounds, values should have been updated");
+		deepEqual(el.rangeSlider("option", "bounds").min, bounds.min, "Bounds setter should have worked");
+		deepEqual(el.rangeSlider("option", "bounds").max, bounds.max, "Bounds setter should have worked");
+		deepEqual(this.min(), bounds.min, "As the old values were outside the new bounds, values should have been updated");
+		deepEqual(this.max(), bounds.max, "As the old values were outside the new bounds, values should have been updated");
 		
 		this.assertDifferentPositions();
 	}
@@ -179,7 +180,7 @@ var wheelModeZoomTest = new TestCase(
 		this.getValues();
 		$(".ui-rangeSlider-bar").trigger("mousewheel", [-10, 0, -10]);
 
-		same(el.rangeSlider("option", "wheelMode"), "zoom", "Wheelmode setter should have worked");
+		deepEqual(el.rangeSlider("option", "wheelMode"), "zoom", "Wheelmode setter should have worked");
 		ok($(".ui-rangeSlider-leftHandle").offset().left > this.minHandlerPos, "Left handle should have been moved");
 		ok($(".ui-rangeSlider-rightHandle").offset().left < this.maxHandlerPos, "Right handle should have been moved");
 		ok($(".ui-rangeSlider-leftLabel").offset().left > this.minLabelPos, "Left label should have been moved");
@@ -195,7 +196,7 @@ function scrollAssert(){
 	this.getPositions();
 	el.find(".ui-rangeSlider-container").trigger("mousewheel", [-10, 0, -10]);
 
-	same(el.rangeSlider("option", "wheelMode"), "scroll", "Wheelmode setter should have worked");
+	deepEqual(el.rangeSlider("option", "wheelMode"), "scroll", "Wheelmode setter should have worked");
 	
 	ok($(".ui-rangeSlider-leftHandle").offset().left > this.minHandlerPos, "Left handle should have been moved");
 	ok($(".ui-rangeSlider-rightHandle").offset().left > this.maxHandlerPos, "Right handle should have been moved");
@@ -204,7 +205,7 @@ function scrollAssert(){
 	
 	ok(this.min() > this.values.min, "Scroll should have worked");
 	ok(this.max() > this.values.max, "Scroll should have worked");
-	equalEpsilon(this.min() - this.values.min, this.max() - this.values.max, 1e-3, "Scrolling must add or remove the same value on both ends");
+	equalEpsilon(this.min() - this.values.min, this.max() - this.values.max, 1e-3, "Scrolling must add or remove the deepEqual value on both ends");
 
 }
 
@@ -239,10 +240,10 @@ var wheelModeSetterTest = new TestCase(
 	function(){},
 	function(){
 		el.rangeSlider("option", "wheelMode", "badValue");
-		same(el.rangeSlider("option", "wheelMode"), "scroll", "Wheelmode setter with a bad value should not have worked");
+		deepEqual(el.rangeSlider("option", "wheelMode"), "scroll", "Wheelmode setter with a bad value should not have worked");
 		
 		el.rangeSlider("option", "wheelMode", null);
-		same(el.rangeSlider("option", "wheelMode"), null, "Null wheelmode should disable mouse wheel");
+		deepEqual(el.rangeSlider("option", "wheelMode"), null, "Null wheelmode should disable mouse wheel");
 	}
 );
 
@@ -251,13 +252,13 @@ var wheelSpeedSetterTest = new TestCase(
 	function(){},
 	function(){
 		el.rangeSlider("option", "wheelSpeed", 2);
-		same(el.rangeSlider("option", "wheelSpeed"), 2, "Wheelspeed setter should have worked");	
+		deepEqual(el.rangeSlider("option", "wheelSpeed"), 2, "Wheelspeed setter should have worked");	
 		
 		el.rangeSlider("option", "wheelSpeed", null);
-		same(el.rangeSlider("option", "wheelSpeed"), 2, "Wheelspeed setter should not have worked");	
+		deepEqual(el.rangeSlider("option", "wheelSpeed"), 2, "Wheelspeed setter should not have worked");	
 
 		el.rangeSlider("option", "wheelSpeed", "badValue");
-		same(el.rangeSlider("option", "wheelSpeed"), 2, "Wheelspeed setter should not have worked");	
+		deepEqual(el.rangeSlider("option", "wheelSpeed"), 2, "Wheelspeed setter should not have worked");	
 	}
 );
 
@@ -300,8 +301,8 @@ var noArrowsSetterTest = new TestCase(
 		
 		var arrows = el.find(".ui-rangeSlider-arrow");
 		ok(arrows.length, 2, "2 arrows should be present");
-		same($(arrows[0]).css("display"), "none", "Arrows should not be displayed");
-		same($(arrows[1]).css("display"), "none", "Arrows should not be displayed");
+		deepEqual($(arrows[0]).css("display"), "none", "Arrows should not be displayed");
+		deepEqual($(arrows[1]).css("display"), "none", "Arrows should not be displayed");
 	}
 );
 
@@ -379,8 +380,8 @@ var boundsSetter = new TestCase(
 		deepEqual(this.result, this.bounds, "Should return the new value");
 		deepEqual(el.rangeSlider("bounds"), this.bounds, "Should return the value");
 		
-		same(el.rangeSlider("min"), this.bounds.min, "Min value should have been changed");
-		same(el.rangeSlider("max"), this.bounds.max, "Max value should have been changed");
+		deepEqual(el.rangeSlider("min"), this.bounds.min, "Min value should have been changed");
+		deepEqual(el.rangeSlider("max"), this.bounds.max, "Max value should have been changed");
 	}
 );
 

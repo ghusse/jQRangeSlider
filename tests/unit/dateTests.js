@@ -33,7 +33,7 @@
 			
 			ok(bounds.min instanceof Date, "Bounds min value should be a date");
 			ok(bounds.max instanceof Date, "Bounds max value should be a date");
-			same(bounds.min.toLocaleString(), new Date(2010,0,1).toLocaleString(), "Bounds min value should have been set to 2010-1-1");
+			deepEqual(bounds.min.toLocaleString(), new Date(2010,0,1).toLocaleString(), "Bounds min value should have been set to 2010-1-1");
 			
 			ok(defaultValues.min instanceof Date, "Default min value should be a date");
 			ok(defaultValues.max instanceof Date, "Default max value should be a date");
@@ -52,8 +52,8 @@
 			el.dateRangeSlider("destroy");
 		},
 		function(){
-			same(el.children().length, 0, "Parent element should have no children");
-			same(el.attr("class"), "", "Class attribute on parent element should be empty");
+			deepEqual(el.children().length, 0, "Parent element should have no children");
+			deepEqual(el.attr("class"), "", "Class attribute on parent element should be empty");
 		}
 	);
 
@@ -110,8 +110,8 @@
 			ok(this.value !== null, "Formatter should have been called");
 			ok(this.value instanceof Date, "Formatter should have received a date as argument");
 			
-			same(defaultValues.min.toLocaleString(), this.defaultValues.min.toLocaleString(), "Default values should have been correctly set");
-			same(bounds.min.toLocaleString(), this.bounds.min.toLocaleString(), "Default values should have been correctly set");
+			deepEqual(defaultValues.min.toLocaleString(), this.defaultValues.min.toLocaleString(), "Default values should have been correctly set");
+			deepEqual(bounds.min.toLocaleString(), this.bounds.min.toLocaleString(), "Default values should have been correctly set");
 		}
 	);
 
@@ -126,8 +126,8 @@
 			this.testResults = function(){
 				ok(this.result.min instanceof Date, "Returned values should be dates");
 				ok(this.result.max instanceof Date, "Returned values should be dates");
-				same(this.result.min.toLocaleString(), this.values.min.toLocaleString(), "Minimum value should have been correctly set and returned");
-				same(this.result.max.toLocaleString(), this.values.max.toLocaleString(), "Minimum value should have been correctly set and returned");
+				deepEqual(this.result.min.toLocaleString(), this.values.min.toLocaleString(), "Minimum value should have been correctly set and returned");
+				deepEqual(this.result.max.toLocaleString(), this.values.max.toLocaleString(), "Minimum value should have been correctly set and returned");
 			}
 			
 			this.testResults();
@@ -148,11 +148,11 @@
 		function(){
 			ok(this.minResult instanceof Date, "Returned value should be a date");
 			ok(this.maxResult instanceof Date, "Returned value should be a date");
-			same(this.minResult.toLocaleString(), this.min.toLocaleString(), "Min method should have returned the value");
-			same(this.maxResult.toLocaleString(), this.max.toLocaleString(), "Max method should have returned the value");
+			deepEqual(this.minResult.toLocaleString(), this.min.toLocaleString(), "Min method should have returned the value");
+			deepEqual(this.maxResult.toLocaleString(), this.max.toLocaleString(), "Max method should have returned the value");
 			
-			same(el.dateRangeSlider("min").toLocaleString(), this.min.toLocaleString(), "Min getter should return the new value");
-			same(el.dateRangeSlider("max").toLocaleString(), this.max.toLocaleString(), "Max getter should return the new value");
+			deepEqual(el.dateRangeSlider("min").toLocaleString(), this.min.toLocaleString(), "Min getter should return the new value");
+			deepEqual(el.dateRangeSlider("max").toLocaleString(), this.max.toLocaleString(), "Max getter should return the new value");
 		}
 	);
 

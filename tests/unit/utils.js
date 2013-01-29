@@ -12,6 +12,8 @@ var testRunner,
 (function(){
  "use strict";
 
+	QUnit.config.reorder = false;
+
 	TestCase= function(_name, _setup, _check, _tearDown){
 		this.name = _name;
 		this.setup = _setup;
@@ -53,63 +55,33 @@ var testRunner,
 		this.index = 0;
 		
 		this.launch = function(){
-			module(this.module);
-			this.next();
-		}
-		
-		this.next = function(){
-			if (this.tests.length > this.index){
-				var testCase = this.tests[this.index],
-					success = true;
-
-				if (testCase.setup){
-					success = this.launchSetup(testCase);
-				}
-
-				if (success){
-					setTimeout($.proxy(this.check, this), testCase.delay);
-				}else{
-					this.index++;
-					this.next();
-				}
+			for (var i = 0; i< this.tests.length; i++){
+				this.launchTest(this.tests[i]);
 			}
 		}
 
-		this.launchSetup = function(testCase){
-			try{
-				testCase.setup();
-			}catch(e){
-				module(testCase.module);
-				test(testCase.name, function(){
+		this.launchTest = function (test) {
+			if (this.module !== test.module){
+				QUnit.module(test.module);
+				this.module = test.module;
+			}
+
+			QUnit.test(test.name, function(){
+				try{
+					test.setup();
+				}catch(e){
 					ok(false, e.message);
-				});
-
-				return false;
-			}
-
-			return true;
-		}
-		
-		this.check = function(){
-			var testCase = this.tests[this.index];
-			if (testCase.check){
-				if (this.module !== testCase.module){
-					module(testCase.module);
-					this.module = testCase.module;
 				}
-				
-				test(testCase.name, function(){
-					testCase.check();
-				});
-			}
-			
-			if (testCase.tearDown){
-				testCase.tearDown();
-			}
-			
-			this.index++;
-			this.next();
-		},
+				QUnit.stop();
+
+				setTimeout(function(){
+					if (test.check) test.check();
+					if (test.tearDown) test.tearDown();
+					ok(true, "Passed");
+					QUnit.start();
+				}, test.delay);
+			});
+		}
 		
 		this.add = function(module, tests){
 			if (tests instanceof Array){
@@ -124,9 +96,4 @@ var testRunner,
 	}
 
 	testRunner = new TestRunner();
-	$(document).ready(
-		function(){
-			testRunner.launch();
-		}
-	);
 }());
