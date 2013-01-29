@@ -124,7 +124,6 @@ module.exports = function(grunt) {
   });
  
   // loading the required tasks
-  grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-mincss');
   grunt.loadNpmTasks('grunt-contrib-clean');
