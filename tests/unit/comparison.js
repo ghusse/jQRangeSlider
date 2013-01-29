@@ -5,8 +5,7 @@
  * Dual licensed under the MIT or GPL Version 2 licenses.
  *
  */
-var equalEpsilon, deepEqualEpsilon;
-
+ 
 (function(){
 	"use strict";
 
@@ -52,11 +51,11 @@ var equalEpsilon, deepEqualEpsilon;
 		return true;
 	}
 
-	equalEpsilon = function(actual, expected, epsilon, message){
+	QUnit.equalEpsilon = function(actual, expected, epsilon, message){
 		QUnit.push(equal(actual, expected, epsilon), actual, expected, message );
 	}
 
-	deepEqualEpsilon = function(actual, expected, epsilon, message){
+	QUnit.deepEqualEpsilon = function(actual, expected, epsilon, message){
 		QUnit.push(equiv(actual, expected, epsilon), actual, expected, message);
 	}
 

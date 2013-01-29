@@ -23,14 +23,8 @@
   "validthis": true,
   "globals": {
   	"QUnit": true,
-  	"ok": true,
-  	"deepEqual": true,
   	"el": true,
   	"TestCase": true,
-  	"equal": true,
-  	"testRunner": true,
-  	"deepEqualEpsilon": true,
-  	"equalEpsilon": true,
-  	"notEqual": true
+  	"testRunner": true
   }
 }

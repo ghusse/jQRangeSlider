@@ -34,10 +34,10 @@ var testRunner,
 		}
 		
 		this.assertDifferentPositions = function(){
-			notEqual($(".ui-rangeSlider-leftHandle").offset().left, this.minHandlerPos, "Left handle should have been moved");
-			notEqual($(".ui-rangeSlider-rightHandle").offset().left, this.maxHandlerPos, "Right handle should have been moved");
-			notEqual($(".ui-rangeSlider-leftLabel").offset().left, this.minLabelPos, "Left label should have been moved");
-			notEqual($(".ui-rangeSlider-rightLabel").offset().left, this.maxLabelPos, "Right label should have been moved");
+			QUnit.notEqual($(".ui-rangeSlider-leftHandle").offset().left, this.minHandlerPos, "Left handle should have been moved");
+			QUnit.notEqual($(".ui-rangeSlider-rightHandle").offset().left, this.maxHandlerPos, "Right handle should have been moved");
+			QUnit.notEqual($(".ui-rangeSlider-leftLabel").offset().left, this.minLabelPos, "Left label should have been moved");
+			QUnit.notEqual($(".ui-rangeSlider-rightLabel").offset().left, this.maxLabelPos, "Right label should have been moved");
 		}
 		
 		this.min = function(){
@@ -70,14 +70,14 @@ var testRunner,
 				try{
 					test.setup();
 				}catch(e){
-					ok(false, e.message);
+					QUnit.ok(false, e.message);
 				}
 				QUnit.stop();
 
 				setTimeout(function(){
 					if (test.check) test.check();
 					if (test.tearDown) test.tearDown();
-					ok(true, "Passed");
+					QUnit.ok(true, "Passed");
 					QUnit.start();
 				}, test.delay);
 			});

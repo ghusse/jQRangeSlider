@@ -26,9 +26,9 @@
 			this.delay=500;
 		},
 		function(){
-			ok(!isNaN(this.value), "Value should not be NaN");
-			ok(this.value instanceof Date, "Returned values should be dates");
-			ok(!isNaN(el.dateRangeSlider("min")), "Returned value should not be NaN");
+			QUnit.ok(!isNaN(this.value), "Value should not be NaN");
+			QUnit.ok(this.value instanceof Date, "Returned values should be dates");
+			QUnit.ok(!isNaN(el.dateRangeSlider("min")), "Returned value should not be NaN");
 		}, 
 		function(){
 			el.dateRangeSlider("destroy");

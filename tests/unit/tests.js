@@ -31,41 +31,41 @@ var el = null;
 		},
 		function() {
 			// Default values tests
-			deepEqualEpsilon(el.rangeSlider("option", "bounds"), { min:0, max:100 }, 1e-3, "Default bounds should be 0-100");
-			deepEqualEpsilon(el.rangeSlider("option", "bounds"), { min:0, max:100 }, 1e-3, "Default bounds should be 0-100");
-			deepEqualEpsilon(el.rangeSlider("option", "defaultValues"), {min:20, max:50}, 1e-3, "Default values should be 20-50");
-			deepEqual(el.rangeSlider("option", "wheelMode"), null, "Default wheel mode should be empty");
-			deepEqual(el.rangeSlider("option", "wheelSpeed"), 4, "Default wheel mode should be empty");
-			ok(el.rangeSlider("option", "arrows"), "Arrows should be activated by default");
-			deepEqual(el.rangeSlider("option", "valueLabels"), "show", "Value labels should be activated on value 'show' by default");
-			deepEqual(el.rangeSlider("option", "formatter"), null, "Default formatter should be used (null value)");
-			deepEqual(el.rangeSlider("option", "durationIn"), 0, "Default duration for showing labels is 0ms");
-			deepEqual(el.rangeSlider("option", "durationOut"), 400, "Default duration for hiding labels is 400ms");
-			deepEqual(el.rangeSlider("option", "delayOut"), 200, "Default delay before hiding labels is 200ms");
-			deepEqual(el.rangeSlider("option", "range"), {min:false, max:false}, "Default constraints on range");
+			QUnit.deepEqualEpsilon(el.rangeSlider("option", "bounds"), { min:0, max:100 }, 1e-3, "Default bounds should be 0-100");
+			QUnit.deepEqualEpsilon(el.rangeSlider("option", "bounds"), { min:0, max:100 }, 1e-3, "Default bounds should be 0-100");
+			QUnit.deepEqualEpsilon(el.rangeSlider("option", "defaultValues"), {min:20, max:50}, 1e-3, "Default values should be 20-50");
+			QUnit.deepEqual(el.rangeSlider("option", "wheelMode"), null, "Default wheel mode should be empty");
+			QUnit.deepEqual(el.rangeSlider("option", "wheelSpeed"), 4, "Default wheel mode should be empty");
+			QUnit.ok(el.rangeSlider("option", "arrows"), "Arrows should be activated by default");
+			QUnit.deepEqual(el.rangeSlider("option", "valueLabels"), "show", "Value labels should be activated on value 'show' by default");
+			QUnit.deepEqual(el.rangeSlider("option", "formatter"), null, "Default formatter should be used (null value)");
+			QUnit.deepEqual(el.rangeSlider("option", "durationIn"), 0, "Default duration for showing labels is 0ms");
+			QUnit.deepEqual(el.rangeSlider("option", "durationOut"), 400, "Default duration for hiding labels is 400ms");
+			QUnit.deepEqual(el.rangeSlider("option", "delayOut"), 200, "Default delay before hiding labels is 200ms");
+			QUnit.deepEqual(el.rangeSlider("option", "range"), {min:false, max:false}, "Default constraints on range");
 			
 			// Created elements
-			deepEqual($(".ui-rangeSlider-handle.ui-rangeSlider-leftHandle").length, 1, "Left handle should have been created");
-			deepEqual($(".ui-rangeSlider-handle.ui-rangeSlider-rightHandle").length, 1, "Right handle should have been created");
-			deepEqual($(".ui-rangeSlider-label.ui-rangeSlider-leftLabel").length, 1, "Left label should have been created");
-			deepEqual($(".ui-rangeSlider-label.ui-rangeSlider-rightLabel").length, 1, "Right label should have been created");
+			QUnit.deepEqual($(".ui-rangeSlider-handle.ui-rangeSlider-leftHandle").length, 1, "Left handle should have been created");
+			QUnit.deepEqual($(".ui-rangeSlider-handle.ui-rangeSlider-rightHandle").length, 1, "Right handle should have been created");
+			QUnit.deepEqual($(".ui-rangeSlider-label.ui-rangeSlider-leftLabel").length, 1, "Left label should have been created");
+			QUnit.deepEqual($(".ui-rangeSlider-label.ui-rangeSlider-rightLabel").length, 1, "Right label should have been created");
 			
 			// Arrows
-			deepEqual($(".ui-rangeSlider-arrow.ui-rangeSlider-leftArrow").length, 1, "Left arrow should have been created");
-			deepEqual($(".ui-rangeSlider-arrow.ui-rangeSlider-rightArrow").length, 1, "Right arrow should have been created");
-			deepEqual($(".ui-rangeSlider-arrow.ui-rangeSlider-leftArrow").css("display"), "block", "Left arrow should have been created");
-			deepEqual($(".ui-rangeSlider-arrow.ui-rangeSlider-rightArrow").css("display"), "block", "Arrows should be visible");
-			ok(el.hasClass("ui-rangeSlider-withArrows"), "ui-rangeSlider-withArrows should be applied to the parent element");
+			QUnit.deepEqual($(".ui-rangeSlider-arrow.ui-rangeSlider-leftArrow").length, 1, "Left arrow should have been created");
+			QUnit.deepEqual($(".ui-rangeSlider-arrow.ui-rangeSlider-rightArrow").length, 1, "Right arrow should have been created");
+			QUnit.deepEqual($(".ui-rangeSlider-arrow.ui-rangeSlider-leftArrow").css("display"), "block", "Left arrow should have been created");
+			QUnit.deepEqual($(".ui-rangeSlider-arrow.ui-rangeSlider-rightArrow").css("display"), "block", "Arrows should be visible");
+			QUnit.ok(el.hasClass("ui-rangeSlider-withArrows"), "ui-rangeSlider-withArrows should be applied to the parent element");
 			
 			// Bars
-			deepEqual($(".ui-rangeSlider-innerBar").length, 1, "The inner bar should have been created");
-			deepEqual($(".ui-rangeSlider-bar").length, 1, "The bar should have been created");
+			QUnit.deepEqual($(".ui-rangeSlider-innerBar").length, 1, "The inner bar should have been created");
+			QUnit.deepEqual($(".ui-rangeSlider-bar").length, 1, "The bar should have been created");
 			
-			deepEqual($(".ui-rangeSlider-container").outerWidth(true), el.innerWidth(), "Container");
+			QUnit.deepEqual($(".ui-rangeSlider-container").outerWidth(true), el.innerWidth(), "Container");
 			
 			// Values
-			equalEpsilon(this.min(), 20, 1e-3, "Values should be equal to the default values");
-			equalEpsilon(this.max(), 50, 1e-3, "Values should be equal to the default values");
+			QUnit.equalEpsilon(this.min(), 20, 1e-3, "Values should be equal to the default values");
+			QUnit.equalEpsilon(this.max(), 50, 1e-3, "Values should be equal to the default values");
 			
 		}
 	);
@@ -85,8 +85,8 @@ var destroyTest = new TestCase(
 		el.rangeSlider("destroy");
 	},
 	function(){	
-		deepEqual(el.children().length, 0, "Parent element should be empty");
-		deepEqual(el.attr("class"), "", "Class attribute on parent element should be empty");
+		QUnit.deepEqual(el.children().length, 0, "Parent element should be empty");
+		QUnit.deepEqual(el.attr("class"), "", "Class attribute on parent element should be empty");
 	}
 );
 
@@ -117,12 +117,12 @@ var customCtorTest = new TestCase(
 		var defaultValues = el.rangeSlider("option", "defaultValues");
 		var values = el.rangeSlider("values");
 		
-		deepEqual(bounds.min, this.bounds.min, "Bounds min value should have been correctly set");
-		deepEqual(bounds.max, this.bounds.max, "Bounds max value should have been correctly set");
-		deepEqual(defaultValues.min, this.defaultValues.min, "Default min value should have been correctly set");
-		deepEqual(defaultValues.max, this.defaultValues.max, "Default max value should have been correctly set");
-		deepEqual(values.min, this.defaultValues.min, "Min value should have been correctly set");
-		deepEqual(values.max, this.defaultValues.max, "Max value should have been correctly set");
+		QUnit.deepEqual(bounds.min, this.bounds.min, "Bounds min value should have been correctly set");
+		QUnit.deepEqual(bounds.max, this.bounds.max, "Bounds max value should have been correctly set");
+		QUnit.deepEqual(defaultValues.min, this.defaultValues.min, "Default min value should have been correctly set");
+		QUnit.deepEqual(defaultValues.max, this.defaultValues.max, "Default max value should have been correctly set");
+		QUnit.deepEqual(values.min, this.defaultValues.min, "Min value should have been correctly set");
+		QUnit.deepEqual(values.max, this.defaultValues.max, "Max value should have been correctly set");
 	}
 );
 
@@ -132,8 +132,8 @@ var hideLabelsTest = new TestCase(
 		el.rangeSlider("option", "valueLabels", "hide");
 	},
 	function(){
-		deepEqual($(".ui-rangeSlider-label").length, 0, "Value labels should have been detached");
-		deepEqual(el.rangeSlider("option", "valueLabels"), "hide", "Option value should be 'hidden'");
+		QUnit.deepEqual($(".ui-rangeSlider-label").length, 0, "Value labels should have been detached");
+		QUnit.deepEqual(el.rangeSlider("option", "valueLabels"), "hide", "Option value should be 'hidden'");
 	}
 );
 
@@ -143,8 +143,8 @@ var showLabelsTest = new TestCase(
 		el.rangeSlider("option", "valueLabels", "show");
 	},
 	function(){
-		deepEqual($(".ui-rangeSlider-label").length, 2, "Value labels should have been detached");
-		deepEqual(el.rangeSlider("option", "valueLabels"), "show", "Option value should be 'hidden'");
+		QUnit.deepEqual($(".ui-rangeSlider-label").length, 2, "Value labels should have been detached");
+		QUnit.deepEqual(el.rangeSlider("option", "valueLabels"), "show", "Option value should be 'hidden'");
 	}
 );
 
@@ -159,10 +159,10 @@ var changeBoundsTest = new TestCase(
 	function(){
 		var bounds = { min:30, max:40 };
 		
-		deepEqual(el.rangeSlider("option", "bounds").min, bounds.min, "Bounds setter should have worked");
-		deepEqual(el.rangeSlider("option", "bounds").max, bounds.max, "Bounds setter should have worked");
-		deepEqual(this.min(), bounds.min, "As the old values were outside the new bounds, values should have been updated");
-		deepEqual(this.max(), bounds.max, "As the old values were outside the new bounds, values should have been updated");
+		QUnit.deepEqual(el.rangeSlider("option", "bounds").min, bounds.min, "Bounds setter should have worked");
+		QUnit.deepEqual(el.rangeSlider("option", "bounds").max, bounds.max, "Bounds setter should have worked");
+		QUnit.deepEqual(this.min(), bounds.min, "As the old values were outside the new bounds, values should have been updated");
+		QUnit.deepEqual(this.max(), bounds.max, "As the old values were outside the new bounds, values should have been updated");
 		
 		this.assertDifferentPositions();
 	}
@@ -180,14 +180,14 @@ var wheelModeZoomTest = new TestCase(
 		this.getValues();
 		$(".ui-rangeSlider-bar").trigger("mousewheel", [-10, 0, -10]);
 
-		deepEqual(el.rangeSlider("option", "wheelMode"), "zoom", "Wheelmode setter should have worked");
-		ok($(".ui-rangeSlider-leftHandle").offset().left > this.minHandlerPos, "Left handle should have been moved");
-		ok($(".ui-rangeSlider-rightHandle").offset().left < this.maxHandlerPos, "Right handle should have been moved");
-		ok($(".ui-rangeSlider-leftLabel").offset().left > this.minLabelPos, "Left label should have been moved");
-		ok($(".ui-rangeSlider-rightLabel").offset().left < this.maxLabelPos, "Right label should have been moved");
+		QUnit.deepEqual(el.rangeSlider("option", "wheelMode"), "zoom", "Wheelmode setter should have worked");
+		QUnit.ok($(".ui-rangeSlider-leftHandle").offset().left > this.minHandlerPos, "Left handle should have been moved");
+		QUnit.ok($(".ui-rangeSlider-rightHandle").offset().left < this.maxHandlerPos, "Right handle should have been moved");
+		QUnit.ok($(".ui-rangeSlider-leftLabel").offset().left > this.minLabelPos, "Left label should have been moved");
+		QUnit.ok($(".ui-rangeSlider-rightLabel").offset().left < this.maxLabelPos, "Right label should have been moved");
 		
-		ok(this.min() > this.values.min, "Zoom should have worked");
-		ok(this.max() < this.values.max, "Zoom should have worked");
+		QUnit.ok(this.min() > this.values.min, "Zoom should have worked");
+		QUnit.ok(this.max() < this.values.max, "Zoom should have worked");
 	}
 );
 
@@ -196,16 +196,16 @@ function scrollAssert(){
 	this.getPositions();
 	el.find(".ui-rangeSlider-container").trigger("mousewheel", [-10, 0, -10]);
 
-	deepEqual(el.rangeSlider("option", "wheelMode"), "scroll", "Wheelmode setter should have worked");
+	QUnit.deepEqual(el.rangeSlider("option", "wheelMode"), "scroll", "Wheelmode setter should have worked");
 	
-	ok($(".ui-rangeSlider-leftHandle").offset().left > this.minHandlerPos, "Left handle should have been moved");
-	ok($(".ui-rangeSlider-rightHandle").offset().left > this.maxHandlerPos, "Right handle should have been moved");
-	ok($(".ui-rangeSlider-leftLabel").offset().left > this.minLabelPos, "Left label should have been moved");
-	ok($(".ui-rangeSlider-rightLabel").offset().left > this.maxLabelPos, "Right label should have been moved");
+	QUnit.ok($(".ui-rangeSlider-leftHandle").offset().left > this.minHandlerPos, "Left handle should have been moved");
+	QUnit.ok($(".ui-rangeSlider-rightHandle").offset().left > this.maxHandlerPos, "Right handle should have been moved");
+	QUnit.ok($(".ui-rangeSlider-leftLabel").offset().left > this.minLabelPos, "Left label should have been moved");
+	QUnit.ok($(".ui-rangeSlider-rightLabel").offset().left > this.maxLabelPos, "Right label should have been moved");
 	
-	ok(this.min() > this.values.min, "Scroll should have worked");
-	ok(this.max() > this.values.max, "Scroll should have worked");
-	equalEpsilon(this.min() - this.values.min, this.max() - this.values.max, 1e-3, "Scrolling must add or remove the deepEqual value on both ends");
+	QUnit.ok(this.min() > this.values.min, "Scroll should have worked");
+	QUnit.ok(this.max() > this.values.max, "Scroll should have worked");
+	QUnit.equalEpsilon(this.min() - this.values.min, this.max() - this.values.max, 1e-3, "Scrolling must add or remove the deepEqual value on both ends");
 
 }
 
@@ -240,10 +240,10 @@ var wheelModeSetterTest = new TestCase(
 	function(){},
 	function(){
 		el.rangeSlider("option", "wheelMode", "badValue");
-		deepEqual(el.rangeSlider("option", "wheelMode"), "scroll", "Wheelmode setter with a bad value should not have worked");
+		QUnit.deepEqual(el.rangeSlider("option", "wheelMode"), "scroll", "Wheelmode setter with a bad value should not have worked");
 		
 		el.rangeSlider("option", "wheelMode", null);
-		deepEqual(el.rangeSlider("option", "wheelMode"), null, "Null wheelmode should disable mouse wheel");
+		QUnit.deepEqual(el.rangeSlider("option", "wheelMode"), null, "Null wheelmode should disable mouse wheel");
 	}
 );
 
@@ -252,13 +252,13 @@ var wheelSpeedSetterTest = new TestCase(
 	function(){},
 	function(){
 		el.rangeSlider("option", "wheelSpeed", 2);
-		deepEqual(el.rangeSlider("option", "wheelSpeed"), 2, "Wheelspeed setter should have worked");	
+		QUnit.deepEqual(el.rangeSlider("option", "wheelSpeed"), 2, "Wheelspeed setter should have worked");	
 		
 		el.rangeSlider("option", "wheelSpeed", null);
-		deepEqual(el.rangeSlider("option", "wheelSpeed"), 2, "Wheelspeed setter should not have worked");	
+		QUnit.deepEqual(el.rangeSlider("option", "wheelSpeed"), 2, "Wheelspeed setter should not have worked");	
 
 		el.rangeSlider("option", "wheelSpeed", "badValue");
-		deepEqual(el.rangeSlider("option", "wheelSpeed"), 2, "Wheelspeed setter should not have worked");	
+		QUnit.deepEqual(el.rangeSlider("option", "wheelSpeed"), 2, "Wheelspeed setter should not have worked");	
 	}
 );
 
@@ -268,22 +268,22 @@ var rangeSetterTest = new TestCase(
 	function(){
 		var def = false;
 		el.rangeSlider("option", "range", null);
-		deepEqual(el.rangeSlider("option", "range"), def, "Default value should be an object");
+		QUnit.deepEqual(el.rangeSlider("option", "range"), def, "Default value should be an object");
 		
 		el.rangeSlider("option", "range", false);
-		deepEqual(el.rangeSlider("option", "range"), def, "Default value should be an object");
+		QUnit.deepEqual(el.rangeSlider("option", "range"), def, "Default value should be an object");
 		
 		el.rangeSlider("option", "range", {min: 3});
-		deepEqual(el.rangeSlider("option", "range"), {min: 3, max: false}, "Default value for max value should be false");
+		QUnit.deepEqual(el.rangeSlider("option", "range"), {min: 3, max: false}, "Default value for max value should be false");
 		
 		el.rangeSlider("option", "range", {min: 3, max: 4});
-		deepEqual(el.rangeSlider("option", "range"), {min: 3, max: 4}, "Setter should work");
+		QUnit.deepEqual(el.rangeSlider("option", "range"), {min: 3, max: 4}, "Setter should work");
 		
 		el.rangeSlider("option", "range", {min: false});
-		deepEqual(el.rangeSlider("option", "range"), {min: false, max: 4}, "Setter should only change sent values");
+		QUnit.deepEqual(el.rangeSlider("option", "range"), {min: false, max: 4}, "Setter should only change sent values");
 		
 		el.rangeSlider("option", "range", false);
-		deepEqual(el.rangeSlider("option", "range"), def, "Range deactivation should work");
+		QUnit.deepEqual(el.rangeSlider("option", "range"), def, "Range deactivation should work");
 	}
 );
 
@@ -296,13 +296,13 @@ var noArrowsSetterTest = new TestCase(
 		el.rangeSlider("option", "arrows", false);
 	},
 	function(){
-		ok(!el.hasClass("ui-rangeSlider-withArrows"), "The parent element should not have the class withArrows");
-		ok(el.hasClass("ui-rangeSlider-noArrow"), "The parent element should have the class noArrows");
+		QUnit.ok(!el.hasClass("ui-rangeSlider-withArrows"), "The parent element should not have the class withArrows");
+		QUnit.ok(el.hasClass("ui-rangeSlider-noArrow"), "The parent element should have the class noArrows");
 		
 		var arrows = el.find(".ui-rangeSlider-arrow");
-		ok(arrows.length, 2, "2 arrows should be present");
-		deepEqual($(arrows[0]).css("display"), "none", "Arrows should not be displayed");
-		deepEqual($(arrows[1]).css("display"), "none", "Arrows should not be displayed");
+		QUnit.ok(arrows.length, 2, "2 arrows should be present");
+		QUnit.deepEqual($(arrows[0]).css("display"), "none", "Arrows should not be displayed");
+		QUnit.deepEqual($(arrows[1]).css("display"), "none", "Arrows should not be displayed");
 	}
 );
 
@@ -316,7 +316,7 @@ var arrowsScrollingMouseUpTest = new TestCase(
 	},
 	function(){
 		// mouseup on another element than the clicked arrow should stop scrolling
-		ok(this.max() !== el.rangeSlider("option", "bounds").max, "mouseup on another element than the clicked arrow should stop scrolling");
+		QUnit.ok(this.max() !== el.rangeSlider("option", "bounds").max, "mouseup on another element than the clicked arrow should stop scrolling");
 	}
 );
 
@@ -329,12 +329,12 @@ var valuesSetter = new TestCase(
 		this.previousResult = el.rangeSlider("values", 21, 22);
 	},
 	function(){
-		equalEpsilon(this.previousResult.min, 21, 1e-6, "Method should have returned the good min value");
-		equalEpsilon(this.previousResult.max, 22, 1e-6, "Method should have returned the good max value");
+		QUnit.equalEpsilon(this.previousResult.min, 21, 1e-6, "Method should have returned the good min value");
+		QUnit.equalEpsilon(this.previousResult.max, 22, 1e-6, "Method should have returned the good max value");
 		
 		var values = el.rangeSlider("values");
-		equalEpsilon(values.min, 21, 1e-6, "Min value should have been set");
-		equalEpsilon(values.max, 22, 1e-6, "Max value should have been set");
+		QUnit.equalEpsilon(values.min, 21, 1e-6, "Min value should have been set");
+		QUnit.equalEpsilon(values.max, 22, 1e-6, "Max value should have been set");
 	}
 );
 
@@ -347,7 +347,7 @@ var changeValuesTest = new TestCase(
 	function(){
 		var values = {min: 20, max: 50};
 
-		deepEqualEpsilon(el.rangeSlider("values"), values, 1e-3, "Values should be correct");
+		QUnit.deepEqualEpsilon(el.rangeSlider("values"), values, 1e-3, "Values should be correct");
 	}
 );
 
@@ -361,11 +361,11 @@ var minMaxSetter = new TestCase(
 		this.maxResult = el.rangeSlider("max", this.max);
 	},
 	function(){
-		equalEpsilon(this.minResult, this.min, 1e-3, "Min setter should return the new value");
-		equalEpsilon(this.maxResult, this.max, 1e-3, "Max setter should return the new value");
+		QUnit.equalEpsilon(this.minResult, this.min, 1e-3, "Min setter should return the new value");
+		QUnit.equalEpsilon(this.maxResult, this.max, 1e-3, "Max setter should return the new value");
 		
-		equalEpsilon(el.rangeSlider("min"), this.min, 1e-3, "Min getter should return the new value");
-		equalEpsilon(el.rangeSlider("max"), this.max, 1e-3, "Max getter should return the new value");
+		QUnit.equalEpsilon(el.rangeSlider("min"), this.min, 1e-3, "Min getter should return the new value");
+		QUnit.equalEpsilon(el.rangeSlider("max"), this.max, 1e-3, "Max getter should return the new value");
 	}
 );
 
@@ -377,11 +377,11 @@ var boundsSetter = new TestCase(
 		this.delay = 500;
 	},
 	function(){
-		deepEqual(this.result, this.bounds, "Should return the new value");
-		deepEqual(el.rangeSlider("bounds"), this.bounds, "Should return the value");
+		QUnit.deepEqual(this.result, this.bounds, "Should return the new value");
+		QUnit.deepEqual(el.rangeSlider("bounds"), this.bounds, "Should return the value");
 		
-		deepEqual(el.rangeSlider("min"), this.bounds.min, "Min value should have been changed");
-		deepEqual(el.rangeSlider("max"), this.bounds.max, "Max value should have been changed");
+		QUnit.deepEqual(el.rangeSlider("min"), this.bounds.min, "Min value should have been changed");
+		QUnit.deepEqual(el.rangeSlider("max"), this.bounds.max, "Max value should have been changed");
 	}
 );
 
@@ -392,8 +392,8 @@ var zoomInTest = new TestCase(
 		el.rangeSlider("zoomIn", 2);
 	},
 	function(){
-		ok(this.min() > this.values.min, "Min value should have been increased");
-		ok(this.max() < this.values.max, "Min value should have been decreased");
+		QUnit.ok(this.min() > this.values.min, "Min value should have been increased");
+		QUnit.ok(this.max() < this.values.max, "Min value should have been decreased");
 	}
 );
 
@@ -404,8 +404,8 @@ var zoomOutTest = new TestCase(
 		el.rangeSlider("zoomOut", 2);
 	},
 	function(){
-		ok(this.min() < this.values.min, "Min value should have been decreased");
-		ok(this.max() > this.values.max, "Min value should have been increased");
+		QUnit.ok(this.min() < this.values.min, "Min value should have been decreased");
+		QUnit.ok(this.max() > this.values.max, "Min value should have been increased");
 	}
 );
 
@@ -417,8 +417,8 @@ var scrollLeftTest = new TestCase(
 		el.rangeSlider("scrollLeft", 2);
 	},
 	function(){
-		ok(this.min() < this.values.min, "Min value should have been decreased");
-		ok(this.max() < this.values.max, "Min value should have been decreased");
+		QUnit.ok(this.min() < this.values.min, "Min value should have been decreased");
+		QUnit.ok(this.max() < this.values.max, "Min value should have been decreased");
 	}
 );
 
@@ -430,8 +430,8 @@ var scrollRightTest = new TestCase(
 		el.rangeSlider("scrollRight", 2);
 	},
 	function(){
-		ok(this.min() > this.values.min, "Min value should have been increased");
-		ok(this.max() > this.values.max, "Min value should have been increased");
+		QUnit.ok(this.min() > this.values.min, "Min value should have been increased");
+		QUnit.ok(this.max() > this.values.max, "Min value should have been increased");
 	}
 );
 
@@ -450,7 +450,7 @@ var issue12 = new TestCase(
 		this.delay = 100;
 	},
 	function(){
-		equal(this.min(), 100, "Both values should be 100");
+		QUnit.equal(this.min(), 100, "Both values should be 100");
 	}
 )
 
@@ -468,7 +468,7 @@ var rangeLimitMax = new TestCase(
 			dy: 0
 		});
 		
-		equal(this.max(), 50);
+		QUnit.equal(this.max(), 50);
 	}
 );
 
@@ -486,7 +486,7 @@ var rangeLimitMaxWithMinAndMax = new TestCase(
 			dy: 0
 		});
 		
-		equal(this.max(), 50);
+		QUnit.equal(this.max(), 50);
 	}
 );
 
@@ -505,7 +505,7 @@ var rangeLimitMin = new TestCase(
 			dy: 0
 		});
 		
-		equal(this.max(), 50);
+		QUnit.equal(this.max(), 50);
 	}
 );
 
@@ -523,7 +523,7 @@ var rangeLimitMinWithMinAndMax = new TestCase(
 			dy: 0
 		});
 		
-		equal(this.max(), 50);
+		QUnit.equal(this.max(), 50);
 	}
 );
 

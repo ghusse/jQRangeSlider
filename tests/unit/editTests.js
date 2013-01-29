@@ -24,12 +24,12 @@
 			el.editRangeSlider();
 		},
 		function(){
-			ok(el.hasClass("ui-editRangeSlider"), "ui-editRangeSlider class should have been added " + el.attr("class"));
+			QUnit.ok(el.hasClass("ui-editRangeSlider"), "ui-editRangeSlider class should have been added " + el.attr("class"));
 
 			var inputs = el.find(".ui-rangeSlider-label input.ui-editRangeSlider-inputValue");
 
-			equal(inputs.length, 2, "Input should have been created");
-			equal(inputs.attr("type"), "text", "Default type is text");
+			QUnit.equal(inputs.length, 2, "Input should have been created");
+			QUnit.equal(inputs.attr("type"), "text", "Default type is text");
 		}
 	);
 
@@ -39,7 +39,7 @@
 			el.editRangeSlider("destroy");
 		},
 		function(){
-			equal(el.attr("class"), "", "Class should be empty after destroy");
+			QUnit.equal(el.attr("class"), "", "Class should be empty after destroy");
 		}
 	);
 
@@ -58,7 +58,7 @@
 			});
 		},
 		function(){
-			equal(el.find("input").attr("type"), "number", "Input type should have been modified");
+			QUnit.equal(el.find("input").attr("type"), "number", "Input type should have been modified");
 		}
 	);
 
@@ -73,8 +73,8 @@
 
 	function testInputType(type){
 		el.editRangeSlider("option", "type", type);
-		equal(el.editRangeSlider("option", "type"), type, "Type option should have been set");
-		equal(el.find("input").attr("type"), type, "Type should be used by inputs");
+		QUnit.equal(el.editRangeSlider("option", "type"), type, "Type option should have been set");
+		QUnit.equal(el.find("input").attr("type"), type, "Type should be used by inputs");
 	}
 
 	var setInvalidType = new TestCase(
@@ -83,8 +83,8 @@
 			el.editRangeSlider("option", "type", "date");
 		},
 		function(){
-			ok(el.editRangeSlider("option", "type") !== "date", "Invalid input type should not be set");
-			ok(el.find("input").attr("type") !== "date", "Invalid input type");
+			QUnit.ok(el.editRangeSlider("option", "type") !== "date", "Invalid input type should not be set");
+			QUnit.ok(el.find("input").attr("type") !== "date", "Invalid input type");
 		}
 	);
 
@@ -100,7 +100,7 @@
 			this.type = "editRangeSlider";
 		},
 		function(){
-			ok(this.min() === 40 || this.max() === 40, "Entered value should have been set");
+			QUnit.ok(this.min() === 40 || this.max() === 40, "Entered value should have been set");
 		}
 	);
 
@@ -116,7 +116,7 @@
 		},
 
 		function(){
-			ok(this.min() === 40 || this.max() === 40, "Value should have been set " + this.min() + " " + this.max());
+			QUnit.ok(this.min() === 40 || this.max() === 40, "Value should have been set " + this.min() + " " + this.max());
 		}
 	);
 
@@ -131,7 +131,7 @@
 			this.type = "editRangeSlider";
 		},
 		function(){
-			ok(this.min() !== 40 || this.max() !== 40, "Value should not have been set")
+			QUnit.ok(this.min() !== 40 || this.max() !== 40, "Value should not have been set")
 		}
 	);
 
@@ -145,7 +145,7 @@
 			this.type = "editRangeSlider";
 		},
 		function(){
-			ok(this.min() === 40 || this.max() === 40, "Value should have been set")
+			QUnit.ok(this.min() === 40 || this.max() === 40, "Value should have been set")
 		}
 	);
 	
@@ -154,8 +154,8 @@
 		function(){
 		},
 		function(){ 
-			equal(el.find(".ui-rangeSlider-leftLabel input").attr("name"), "testleft");
-			equal(el.find(".ui-rangeSlider-rightLabel input").attr("name"), "testright");
+			QUnit.equal(el.find(".ui-rangeSlider-leftLabel input").attr("name"), "testleft");
+			QUnit.equal(el.find(".ui-rangeSlider-rightLabel input").attr("name"), "testright");
 		}
 	);
 
@@ -170,9 +170,9 @@
 		function(){
 			var input = el.find("input");
 
-			equal(2, input.length, "Should have found 2 inputs");
-			equal("number", input.attr("type"), "Should be number input");
-			equal("5", input.attr("step"), "Step should be propagated to inputs");
+			QUnit.equal(2, input.length, "Should have found 2 inputs");
+			QUnit.equal("number", input.attr("type"), "Should be number input");
+			QUnit.equal("5", input.attr("step"), "Step should be propagated to inputs");
 		}
 	);
 
@@ -187,13 +187,13 @@
 		function(){
 			var input = el.find("input");
 
-			equal(input.length, 2, "Should have found 2 inputs");
-			equal("number", input.attr("type"), "Should be number input");
-			equal(input.attr("step"), '10', "Step should be propagated to inputs");
+			QUnit.equal(input.length, 2, "Should have found 2 inputs");
+			QUnit.equal("number", input.attr("type"), "Should be number input");
+			QUnit.equal(input.attr("step"), '10', "Step should be propagated to inputs");
 
 			el.editRangeSlider("option", "step", false);
 			input = el.find("input");
-			equal(input.attr("step"), "any", "Step should be propagated to inputs");
+			QUnit.equal(input.attr("step"), "any", "Step should be propagated to inputs");
 		}
 	);
 

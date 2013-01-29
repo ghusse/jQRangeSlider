@@ -31,18 +31,18 @@
 			var defaultValues = el.dateRangeSlider("option", "defaultValues");
 			var values = el.dateRangeSlider("values");
 			
-			ok(bounds.min instanceof Date, "Bounds min value should be a date");
-			ok(bounds.max instanceof Date, "Bounds max value should be a date");
-			deepEqual(bounds.min.toLocaleString(), new Date(2010,0,1).toLocaleString(), "Bounds min value should have been set to 2010-1-1");
+			QUnit.ok(bounds.min instanceof Date, "Bounds min value should be a date");
+			QUnit.ok(bounds.max instanceof Date, "Bounds max value should be a date");
+			QUnit.deepEqual(bounds.min.toLocaleString(), new Date(2010,0,1).toLocaleString(), "Bounds min value should have been set to 2010-1-1");
 			
-			ok(defaultValues.min instanceof Date, "Default min value should be a date");
-			ok(defaultValues.max instanceof Date, "Default max value should be a date");
-			ok(values.min instanceof Date, "Min value should be a date");
-			ok(values.max instanceof Date, "Min value should be a date");
-			deepEqual(values, defaultValues, "Default values should be equal to the defaultValues value");
-			ok(el.dateRangeSlider("min") instanceof Date, "Min should return a date");
+			QUnit.ok(defaultValues.min instanceof Date, "Default min value should be a date");
+			QUnit.ok(defaultValues.max instanceof Date, "Default max value should be a date");
+			QUnit.ok(values.min instanceof Date, "Min value should be a date");
+			QUnit.ok(values.max instanceof Date, "Min value should be a date");
+			QUnit.deepEqual(values, defaultValues, "Default values should be equal to the defaultValues value");
+			QUnit.ok(el.dateRangeSlider("min") instanceof Date, "Min should return a date");
 
-			ok(el.is(".ui-dateRangeSlider", "ui-dateRangeSlider class should have been added"));
+			QUnit.ok(el.is(".ui-dateRangeSlider", "ui-dateRangeSlider class should have been added"));
 		}
 	);
 
@@ -52,8 +52,8 @@
 			el.dateRangeSlider("destroy");
 		},
 		function(){
-			deepEqual(el.children().length, 0, "Parent element should have no children");
-			deepEqual(el.attr("class"), "", "Class attribute on parent element should be empty");
+			QUnit.deepEqual(el.children().length, 0, "Parent element should have no children");
+			QUnit.deepEqual(el.attr("class"), "", "Class attribute on parent element should be empty");
 		}
 	);
 
@@ -74,11 +74,11 @@
 		},
 		function(){
 			var bounds = el.dateRangeSlider("option", "bounds");
-			ok(bounds.min instanceof Date, "Bounds min value should be a date");
-			ok(bounds.max instanceof Date, "Bounds max value should be a date");
+			QUnit.ok(bounds.min instanceof Date, "Bounds min value should be a date");
+			QUnit.ok(bounds.max instanceof Date, "Bounds max value should be a date");
 			
-			equal(bounds.min.toLocaleString(), this.bounds.min.toLocaleString(), "Bounds min value should have been correctly set");
-			equal(bounds.max.toLocaleString(), this.bounds.max.toLocaleString(), "Bounds min value should have been correctly set");
+			QUnit.equal(bounds.min.toLocaleString(), this.bounds.min.toLocaleString(), "Bounds min value should have been correctly set");
+			QUnit.equal(bounds.max.toLocaleString(), this.bounds.max.toLocaleString(), "Bounds min value should have been correctly set");
 		}
 	);
 
@@ -103,15 +103,15 @@
 		function(){
 			var bounds = el.dateRangeSlider("option", "bounds");
 			var defaultValues = el.dateRangeSlider("option", "defaultValues");
-			ok(bounds.min instanceof Date, "Bounds min value should be a date");
-			ok(bounds.max instanceof Date, "Bounds max value should be a date");
-			ok(defaultValues.min instanceof Date, "Default min value should be a date");
-			ok(defaultValues.max instanceof Date, "Default max value should be a date");
-			ok(this.value !== null, "Formatter should have been called");
-			ok(this.value instanceof Date, "Formatter should have received a date as argument");
+			QUnit.ok(bounds.min instanceof Date, "Bounds min value should be a date");
+			QUnit.ok(bounds.max instanceof Date, "Bounds max value should be a date");
+			QUnit.ok(defaultValues.min instanceof Date, "Default min value should be a date");
+			QUnit.ok(defaultValues.max instanceof Date, "Default max value should be a date");
+			QUnit.ok(this.value !== null, "Formatter should have been called");
+			QUnit.ok(this.value instanceof Date, "Formatter should have received a date as argument");
 			
-			deepEqual(defaultValues.min.toLocaleString(), this.defaultValues.min.toLocaleString(), "Default values should have been correctly set");
-			deepEqual(bounds.min.toLocaleString(), this.bounds.min.toLocaleString(), "Default values should have been correctly set");
+			QUnit.deepEqual(defaultValues.min.toLocaleString(), this.defaultValues.min.toLocaleString(), "Default values should have been correctly set");
+			QUnit.deepEqual(bounds.min.toLocaleString(), this.bounds.min.toLocaleString(), "Default values should have been correctly set");
 		}
 	);
 
@@ -124,10 +124,10 @@
 		},
 		function(){
 			this.testResults = function(){
-				ok(this.result.min instanceof Date, "Returned values should be dates");
-				ok(this.result.max instanceof Date, "Returned values should be dates");
-				deepEqual(this.result.min.toLocaleString(), this.values.min.toLocaleString(), "Minimum value should have been correctly set and returned");
-				deepEqual(this.result.max.toLocaleString(), this.values.max.toLocaleString(), "Minimum value should have been correctly set and returned");
+				QUnit.ok(this.result.min instanceof Date, "Returned values should be dates");
+				QUnit.ok(this.result.max instanceof Date, "Returned values should be dates");
+				QUnit.deepEqual(this.result.min.toLocaleString(), this.values.min.toLocaleString(), "Minimum value should have been correctly set and returned");
+				QUnit.deepEqual(this.result.max.toLocaleString(), this.values.max.toLocaleString(), "Minimum value should have been correctly set and returned");
 			}
 			
 			this.testResults();
@@ -146,13 +146,13 @@
 			this.maxResult = el.dateRangeSlider("max", this.max);
 		},
 		function(){
-			ok(this.minResult instanceof Date, "Returned value should be a date");
-			ok(this.maxResult instanceof Date, "Returned value should be a date");
-			deepEqual(this.minResult.toLocaleString(), this.min.toLocaleString(), "Min method should have returned the value");
-			deepEqual(this.maxResult.toLocaleString(), this.max.toLocaleString(), "Max method should have returned the value");
+			QUnit.ok(this.minResult instanceof Date, "Returned value should be a date");
+			QUnit.ok(this.maxResult instanceof Date, "Returned value should be a date");
+			QUnit.deepEqual(this.minResult.toLocaleString(), this.min.toLocaleString(), "Min method should have returned the value");
+			QUnit.deepEqual(this.maxResult.toLocaleString(), this.max.toLocaleString(), "Max method should have returned the value");
 			
-			deepEqual(el.dateRangeSlider("min").toLocaleString(), this.min.toLocaleString(), "Min getter should return the new value");
-			deepEqual(el.dateRangeSlider("max").toLocaleString(), this.max.toLocaleString(), "Max getter should return the new value");
+			QUnit.deepEqual(el.dateRangeSlider("min").toLocaleString(), this.min.toLocaleString(), "Min getter should return the new value");
+			QUnit.deepEqual(el.dateRangeSlider("max").toLocaleString(), this.max.toLocaleString(), "Max getter should return the new value");
 		}
 	);
 
@@ -164,11 +164,11 @@
 
 			var b = {min: new Date(2010, 5, 1), max: new Date(2010, 6, 1)};
 			
-			deepEqual(el.dateRangeSlider("bounds", b.min, b.max), b, "Should return the new value");
-			deepEqual(el.dateRangeSlider("bounds"), b, "Should return the new value");
+			QUnit.deepEqual(el.dateRangeSlider("bounds", b.min, b.max), b, "Should return the new value");
+			QUnit.deepEqual(el.dateRangeSlider("bounds"), b, "Should return the new value");
 			
-			equal(el.dateRangeSlider("min").toLocaleString(), b.min.toLocaleString());
-			equal(el.dateRangeSlider("max").toLocaleString(), b.max.toLocaleString());
+			QUnit.equal(el.dateRangeSlider("min").toLocaleString(), b.min.toLocaleString());
+			QUnit.equal(el.dateRangeSlider("max").toLocaleString(), b.max.toLocaleString());
 		}
 	);
 		
