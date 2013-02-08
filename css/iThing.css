@@ -158,3 +158,30 @@
   font-size:15px;
 }
 
+.ui-rangeSlider .ui-ruler-scale{
+  position:absolute;
+  top:0;
+  left:0;
+  bottom:0;
+  right:0;
+}
+
+.ui-rangeSlider .ui-ruler-scale0 .ui-ruler-step-inner{
+  color:white;
+  margin-top:1px;
+  border-left: 1px solid white;
+  height:29px;
+  padding-left:2px;
+  position:relative;
+}
+
+.ui-rangeSlider .ui-ruler-scale0 .ui-ruler-step-label{
+  position:absolute;
+  bottom: 6px;
+}
+
+.ui-rangeSlider .ui-ruler-scale1 .ui-ruler-step-inner{
+  border-left:1px solid white;
+  margin-top: 25px;
+  height: 5px;
+}
