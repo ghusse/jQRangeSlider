@@ -611,6 +611,7 @@
 			this._initWidth();
 			this._leftHandle("update");
 			this._rightHandle("update");
+			this._bar("update");
 		},
 
 		destroy: function(){
