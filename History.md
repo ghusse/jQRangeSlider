@@ -1,5 +1,7 @@
 jQRangeSlider
 -------------
+* 4.2.10: 2013-02-08
+	* Fixed #79: Bar not correctly updated after window resizing, with auto margin on container
 * 4.2.9: 2013-01-17
 	* Technical release: modified manifest to appear in plugins.jquery.com
 * 4.2.8: 2013-01-16
