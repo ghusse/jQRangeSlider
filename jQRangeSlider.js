@@ -23,7 +23,8 @@
 			durationOut: 400,
 			delayOut: 200,
 			range: {min: false, max: false},
-			step: false
+			step: false,
+			rulers: false
 		},
 
 		_values: null,
@@ -39,6 +40,7 @@
 		labels: null,
 		changing: {min:false, max:false},
 		changed: {min:false, max:false},
+		ruler: null,
 
 		_create: function(){
 			this._values = {
@@ -87,6 +89,7 @@
 			this._setBoundsOption(key, value);
 			this._setRangeOption(key, value);
 			this._setStepOption(key, value);
+			this._setRulersOption(key, value);
 		},
 
 		_validProperty: function(object, name, defaultValue){
@@ -103,6 +106,18 @@
 				this._leftHandle("option", "step", value);
 				this._rightHandle("option", "step", value);
 				this._changed(true);
+			}
+		},
+
+		_setRulersOption: function(key, value){
+			if (key === "rulers"){
+				if (value === false || value === null){
+					this.options.rulers = false;
+					this._destroyRuler();
+				}else if (value instanceof Array){
+					this.options.rulers = value;
+					this._updateRuler();
+				}
 			}
 		},
 
@@ -211,11 +226,8 @@
 				.css("left", 0);
 
 			this._createHandles();
-
 			this._createBar();
-
 			this.container.prepend(this.innerBar);
-
 			this._createArrows();
 
 			if (this.options.valueLabels !== "hide"){
@@ -223,6 +235,8 @@
 			}else{
 				this._destroyLabels();
 			}
+
+			this._updateRuler();
 		},
 
 		_createHandle: function(options){
@@ -539,6 +553,39 @@
 		},
 
 		/*
+		 * Ruler
+		 */
+		_createRuler: function(){
+			this.ruler = $("<div class='ui-rangeSlider-ruler' />").appendTo(this.innerBar);
+		},
+
+		_destroyRuler: function(){
+			if (this.ruler !== null){
+				this.ruler.ruler("destroy");
+				this.ruler.remove();
+				this.ruler = null;
+			}
+		},
+
+		_updateRuler: function(){
+			this._destroyRuler();
+
+			if (this.options.rulers === false){
+				return;
+			}
+
+			if (this.ruler === null){
+				this._createRuler();
+			}
+
+			this.ruler.ruler({
+				min: this.options.bounds.min,
+				max: this.options.bounds.max,
+				scales: this.options.rulers
+			});
+		},
+
+		/*
 		 * Public methods
 		 */
 		values: function(min, max){
@@ -567,6 +614,7 @@
 			if (this._isValidValue(min) && this._isValidValue(max) && min < max){
 				
 				this._setBounds(min, max);
+				this._updateRuler();
 				this._changed(true);
 			}
 			

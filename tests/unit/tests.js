@@ -23,6 +23,10 @@ var el = null;
 		null
 	);
 
+	function initEl(){
+		el = $("#test");
+	}
+
 	var defaultCtorTest = new TestCase(
 		"Default ctor",
 		function(){
@@ -43,6 +47,7 @@ var el = null;
 			QUnit.deepEqual(el.rangeSlider("option", "durationOut"), 400, "Default duration for hiding labels is 400ms");
 			QUnit.deepEqual(el.rangeSlider("option", "delayOut"), 200, "Default delay before hiding labels is 200ms");
 			QUnit.deepEqual(el.rangeSlider("option", "range"), {min:false, max:false}, "Default constraints on range");
+			QUnit.equal(el.rangeSlider("option", "rulers"), false, "Default option for rulers");
 			
 			// Created elements
 			QUnit.deepEqual($(".ui-rangeSlider-handle.ui-rangeSlider-leftHandle").length, 1, "Left handle should have been created");
@@ -527,6 +532,68 @@ var rangeLimitMinWithMinAndMax = new TestCase(
 	}
 );
 
+var rulerTest = new TestCase(
+	"Rulers option setter",
+	function(){
+		initEl();
+		el.rangeSlider();
+		el.rangeSlider("option", "rulers", [{}]);
+	},
+	function(){
+		var option = el.rangeSlider("option", "rulers"),
+			container = el.find(".ui-rangeSlider-ruler"),
+			scale = container.find(".ui-ruler-scale"),
+			steps = scale.find(".ui-ruler-step");
+
+		QUnit.notEqual(option, false, "Option should have been set");
+		QUnit.deepEqual(option.length, 1, "Should return an array");
+		QUnit.equal(container.length, 1, "One scale container should have been created");
+		QUnit.equal(scale.length, 1, "One scale should have been created");
+		QUnit.equal(steps.length, 100, "Steps should have been created");
+
+		el.rangeSlider("destroy");
+		el.empty();
+	}
+);
+
+var rulerInCtor = new TestCase(
+	"Set ruler option in constructor",
+	function(){
+		initEl();
+		el.rangeSlider({
+			rulers: [{}]
+		});
+	},
+	function(){
+		QUnit.equal(el.find(".ui-ruler-step").length, 100, "Steps should have been created");
+		el.rangeSlider("destroy");
+		el.empty();
+	}
+);
+
+var updateRulerTest = new TestCase(
+	"Update ruler when setting bounds",
+	function(){
+		initEl();
+		el.rangeSlider({
+			rulers: [{}]
+		});
+	},
+	function(){
+		var steps = el.find(".ui-ruler-step");
+		QUnit.equal(steps.length, 100, "100 steps should have been created");
+
+		el.rangeSlider({
+			bounds: {min: 0, max: 50}
+		});
+
+		QUnit.equal(el.find(".ui-ruler-step").length, 50, "Ruler should have been updated");
+
+		el.rangeSlider("destroy");
+		el.empty();
+	}
+);
+
 testRunner.add("jQRangeSlider", [setUp,
 			defaultCtorTest, hideLabelsTest, showLabelsTest, changeBoundsTest,
 			wheelModeZoomTest, wheelModeScrollTest, wheelModeSetterTest, wheelSpeedSetterTest, rangeSetterTest,
@@ -540,7 +607,8 @@ testRunner.add("jQRangeSlider", [setUp,
 			zoomInTest, zoomOutTest, scrollLeftTest, scrollRightTest,
 			issue12,
 			rangeLimitMax, rangeLimitMaxWithMinAndMax, rangeLimitMin, rangeLimitMinWithMinAndMax,
-			destroyTest]);
+			destroyTest,
+			rulerTest, rulerInCtor, updateRulerTest]);
 
 }());
 
