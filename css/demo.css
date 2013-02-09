@@ -28,3 +28,8 @@ input.ui-editRangeSlider-inputValue{
 	width: 3em;
 	height: auto;
 }
+
+.ui-rangeSlider .ui-ruler-scale0 .ui-ruler-tick-label{
+	bottom:0 !important;
+	font-size: 12px;
+}
