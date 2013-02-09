@@ -63,15 +63,15 @@
 		},
 		function(){
 			var scale = ruled.find(".ui-ruler-scale"),
-				step = scale.find(".ui-ruler-step"),
-				label = step.find(".ui-ruler-step-label");
+				tick = scale.find(".ui-ruler-tick"),
+				label = tick.find(".ui-ruler-tick-label");
 
 			QUnit.equal(scale.length, 1, "Should have created one scale");
-			QUnit.equal(step.length, 1, "Should have created one step");
+			QUnit.equal(tick.length, 1, "Should have created one tick");
 			QUnit.equal(label.length, 1, "Should have created one label");
 			QUnit.equal(label.text(), "0", "Label text should be correct");
 			QUnit.ok(scale.hasClass("ui-ruler-scale0"), "Class should have been initialized for first ruler");
-			QUnit.ok(step.attr("style") && step.attr("style").indexOf("width: 100%") >= 0, "Width should be 100%: " + step.attr("style"));
+			QUnit.ok(tick.attr("style") && tick.attr("style").indexOf("width: 100%") >= 0, "Width should be 100%: " + tick.attr("style"));
 
 			ruled.ruler("destroy");
 			ruled.detach();
@@ -98,20 +98,20 @@
 		},
 		function(){
 			var scale = ruled.find(".ui-ruler-scale"),
-				step = scale.find(".ui-ruler-step"),
-				stepStyle = step.attr("style");
+				tick = scale.find(".ui-ruler-tick"),
+				tickStyle = tick.attr("style");
 
-			QUnit.equal(step.length, 1, "Step should have been created");
-			QUnit.ok(stepStyle.indexOf("width: 50%") >= 0, "Width should be 50% " + stepStyle);
-			QUnit.ok(stepStyle.indexOf("margin-left: 50%") >= 0, "Margin-left should be 50% " + stepStyle);
+			QUnit.equal(tick.length, 1, "Tick should have been created");
+			QUnit.ok(tickStyle.indexOf("width: 50%") >= 0, "Width should be 50% " + tickStyle);
+			QUnit.ok(tickStyle.indexOf("margin-left: 50%") >= 0, "Margin-left should be 50% " + tickStyle);
 
 			ruled.ruler("destroy");
 			ruled.detach();
 		}
 	);
 
-	var lastStep = new TestCase(
-		"Last step should have been generated",
+	var lasttick = new TestCase(
+		"Last tick should have been generated",
 		function(){
 			ruled = $("<div />").appendTo(el());
 
@@ -123,17 +123,17 @@
 		},
 		function(){
 			var scale = ruled.find(".ui-ruler-scale"),
-				step = scale.find(".ui-ruler-step"),
-				stepStyle = scale.find(".ui-ruler-step:last").attr("style");
+				tick = scale.find(".ui-ruler-tick"),
+				tickStyle = scale.find(".ui-ruler-tick:last").attr("style");
 
-			QUnit.equal(step.length, 3, "Last step should have been created");
-			QUnit.ok(stepStyle.indexOf("width: 20%") >= 0, "Last step should be shrinked: " + stepStyle);
+			QUnit.equal(tick.length, 3, "Last tick should have been created");
+			QUnit.ok(tickStyle.indexOf("width: 20%") >= 0, "Last tick should be shrinked: " + tickStyle);
 
 			ruled.remove();
 		}
 	);
 
-	var stepStop = new TestCase(
+	var tickStop = new TestCase(
 		"tests test stop",
 		function(){
 			ruled = $("<div />").appendTo(el());
@@ -152,9 +152,9 @@
 		},
 		function(){
 			var scaleStop = ruled.find(".ui-ruler-scale"),
-				steps = scaleStop.find(".ui-ruler-step");
+				ticks = scaleStop.find(".ui-ruler-tick");
 
-			QUnit.equal(steps.length, 3, "Should have stopped on false");
+			QUnit.equal(ticks.length, 3, "Should have stopped on false");
 
 			ruled.remove();
 		});
@@ -173,9 +173,9 @@
 		},
 		function(){
 			var scale = ruled.find(".ui-ruler-scale"),
-				steps = scale.find(".ui-ruler-step");
+				ticks = scale.find(".ui-ruler-tick");
 			
-			QUnit.equal(steps.length, 5, "Ruler should have been regenerated");
+			QUnit.equal(ticks.length, 5, "Ruler should have been regenerated");
 
 			ruled.remove();
 		});
@@ -194,9 +194,9 @@
 		},
 		function(){
 			var scale = ruled.find(".ui-ruler-scale"),
-				steps = scale.find(".ui-ruler-step");
+				ticks = scale.find(".ui-ruler-tick");
 			
-			QUnit.equal(steps.length, 6, "Ruler should have been regenerated");
+			QUnit.equal(ticks.length, 6, "Ruler should have been regenerated");
 
 			ruled.remove();
 		});
@@ -240,14 +240,14 @@
 			}); 
 		},
 		function(){
-			var steps = ruled.find(".ui-ruler-step"),
-				lastStep = ruled.find(".ui-ruler-step:last"),
-				style = steps.attr("style"),
-				lastStyle = lastStep.attr("style");
+			var ticks = ruled.find(".ui-ruler-tick"),
+				lasttick = ruled.find(".ui-ruler-tick:last"),
+				style = ticks.attr("style"),
+				lastStyle = lasttick.attr("style");
 
-			QUnit.equal(steps.length, 3, "Steps should have been created, even with dates");
-			QUnit.ok(style.indexOf("width: 40%") >= 0, "Steps should have been correctly dimensionned: " + style);
-			QUnit.ok(lastStyle.indexOf("width: 20%") >= 0, "Last step should have been correctly shrinked: " + lastStyle);
+			QUnit.equal(ticks.length, 3, "ticks should have been created, even with dates");
+			QUnit.ok(style.indexOf("width: 40%") >= 0, "ticks should have been correctly dimensionned: " + style);
+			QUnit.ok(lastStyle.indexOf("width: 20%") >= 0, "Last tick should have been correctly shrinked: " + lastStyle);
 
 			ruled.remove();
 		});
@@ -255,8 +255,8 @@
 	testRunner.add("ruler", [ctorTest, dtorTest,
 		ctorWithOneScale,
 		scaleStartingAfter,
-		lastStep,
-		stepStop,
+		lasttick,
+		tickStop,
 		setMinOption, setMaxOption, setScalesOption,
 		dateRuler]);
 }());

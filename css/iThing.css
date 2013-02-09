@@ -166,7 +166,7 @@
   right:0;
 }
 
-.ui-rangeSlider .ui-ruler-scale0 .ui-ruler-step-inner{
+.ui-rangeSlider .ui-ruler-scale0 .ui-ruler-tick-inner{
   color:white;
   margin-top:1px;
   border-left: 1px solid white;
@@ -175,12 +175,12 @@
   position:relative;
 }
 
-.ui-rangeSlider .ui-ruler-scale0 .ui-ruler-step-label{
+.ui-rangeSlider .ui-ruler-scale0 .ui-ruler-tick-label{
   position:absolute;
   bottom: 6px;
 }
 
-.ui-rangeSlider .ui-ruler-scale1 .ui-ruler-step-inner{
+.ui-rangeSlider .ui-ruler-scale1 .ui-ruler-tick-inner{
   border-left:1px solid white;
   margin-top: 25px;
   height: 5px;

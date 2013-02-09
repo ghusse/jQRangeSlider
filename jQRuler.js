@@ -16,8 +16,8 @@
 		next: function(value){
 			return value + 1;
 		},
-		label: function(step){
-			return Math.round(step);
+		label: function(tick){
+			return Math.round(tick);
 		},
 		stop: function(){
 			return false;
@@ -77,27 +77,27 @@
 
 			container.addClass("ui-ruler-scale" + index);
 
-			this._createSteps(container, options);
+			this._createTicks(container, options);
 		},
 
-		_createSteps: function(container, scaleOptions){
+		_createTicks: function(container, scaleOptions){
 			var start,
 				end = scaleOptions.first(this.options.min, this.options.max),
 				difference = this.options.max - this.options.min,
 				first = true,
-				width, step;
+				width, tick;
 
 			do{
 				start = end;
 				end = scaleOptions.next(start);
 				
 				width = (Math.min(end, this.options.max) - Math.max(start, this.options.min)) / difference;
-				step = this._createStep(start, end, scaleOptions);
-				container.append(step);
-				step.css("width", 100 * width + "%");
+				tick = this._createTick(start, end, scaleOptions);
+				container.append(tick);
+				tick.css("width", 100 * width + "%");
 
 				if (first && start > this.options.min){
-					step.css("margin-left", 100 * (start - this.options.min) / difference + "%");
+					tick.css("margin-left", 100 * (start - this.options.min) / difference + "%");
 				}
 
 				first = false;
@@ -109,10 +109,10 @@
 			return scaleOptions.stop(value) || value >= this.options.max;
 		},
 
-		_createStep: function(start, end, scaleOptions){
-			var container = $("<div class='ui-ruler-step' style='display:inline-block' />"),
-				inner = $("<div class='ui-ruler-step-inner' />").appendTo(container),
-				label = $("<span class='ui-ruler-step-label' />").appendTo(inner);
+		_createTick: function(start, end, scaleOptions){
+			var container = $("<div class='ui-ruler-tick' style='display:inline-block' />"),
+				inner = $("<div class='ui-ruler-tick-inner' />").appendTo(container),
+				label = $("<span class='ui-ruler-tick-label' />").appendTo(inner);
 
 			label.text(scaleOptions.label(start, end));
 

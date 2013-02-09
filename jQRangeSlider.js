@@ -24,7 +24,7 @@
 			delayOut: 200,
 			range: {min: false, max: false},
 			step: false,
-			rulers: false
+			scales: false
 		},
 
 		_values: null,
@@ -89,7 +89,7 @@
 			this._setBoundsOption(key, value);
 			this._setRangeOption(key, value);
 			this._setStepOption(key, value);
-			this._setRulersOption(key, value);
+			this._setScalesOption(key, value);
 		},
 
 		_validProperty: function(object, name, defaultValue){
@@ -109,13 +109,13 @@
 			}
 		},
 
-		_setRulersOption: function(key, value){
-			if (key === "rulers"){
+		_setScalesOption: function(key, value){
+			if (key === "scales"){
 				if (value === false || value === null){
-					this.options.rulers = false;
+					this.options.scales = false;
 					this._destroyRuler();
 				}else if (value instanceof Array){
-					this.options.rulers = value;
+					this.options.scales = value;
 					this._updateRuler();
 				}
 			}
@@ -570,7 +570,7 @@
 		_updateRuler: function(){
 			this._destroyRuler();
 
-			if (this.options.rulers === false || !$.fn.ruler){
+			if (this.options.scales === false || !$.fn.ruler){
 				return;
 			}
 
@@ -581,7 +581,7 @@
 			this.ruler.ruler({
 				min: this.options.bounds.min,
 				max: this.options.bounds.max,
-				scales: this.options.rulers
+				scales: this.options.scales
 			});
 		},
 
