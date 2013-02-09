@@ -1,6 +1,6 @@
 {
 	"name": "jQRangeSlider",
-	"version": "4.2.10",
+	"version": "5.0",
 	"title": "jQRangeSlider",
 	"description": "A javascript slider selector that supports dates",
 	"author": {
@@ -22,7 +22,6 @@
 		"jquery": ">=1.3",
 		"jquery-ui-core": ">=1.7",
 		"jquery-ui-widget": ">=1.7",
-		"jquery-ui-draggable": ">=1.7",
 		"jquery-mousewheel": ">=3.0.6"
 	},
 	"homepage": "http://ghusse.github.com/jQRangeSlider/",

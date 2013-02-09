@@ -1,6 +1,6 @@
 {
   "name": "jQRangeSlider",
-  "version": "4.2.9-1",
+  "version": "5.0",
   "scripts": {
     "test": "grunt ci --verbose"
   },

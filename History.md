@@ -1,5 +1,8 @@
 jQRangeSlider
 -------------
+* 5.0:
+ * Scales
+ * New element in handles, can be used for styling. ui-range-slider-handle-inner
 * 4.2.10: 2013-02-08
 	* Fixed #79: Bar not correctly updated after window resizing, with auto margin on container
 * 4.2.9: 2013-01-17
