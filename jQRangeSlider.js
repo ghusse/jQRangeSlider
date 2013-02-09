@@ -560,7 +560,7 @@
 		},
 
 		_destroyRuler: function(){
-			if (this.ruler !== null){
+			if (this.ruler !== null && $.fn.ruler){
 				this.ruler.ruler("destroy");
 				this.ruler.remove();
 				this.ruler = null;
@@ -570,7 +570,7 @@
 		_updateRuler: function(){
 			this._destroyRuler();
 
-			if (this.options.rulers === false){
+			if (this.options.rulers === false || !$.fn.ruler){
 				return;
 			}
 

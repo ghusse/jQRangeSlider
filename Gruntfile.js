@@ -9,6 +9,8 @@ var coreFiles = ["jQRangeSliderMouseTouch.js"
   , "jQRangeSliderBar.js"
   , "jQRangeSliderLabel.js"];
 
+var rulerFiles = ["jQRuler.js"];
+
 var dateFiles = [
     "jQDateRangeSlider.js"
     , "jQDateRangeSliderHandle.js"
@@ -41,9 +43,19 @@ module.exports = function(grunt) {
           'dest/jQRangeSlider-min.js': coreFiles
         }
       },
+      basicRuler: {
+        files: {
+          'dest/jQRangeSlider-withRuler-min.js': coreFiles.concat(rulerFiles)
+        }
+      },
       date: {
         files: {
           'dest/jQDateRangeSlider-min.js': coreFiles.concat(dateFiles)
+        }
+      },
+      dateRuler: {
+        files: {
+          'dest/jQDateRangeSlider-withRuler-min.js': coreFiles.concat(dateFiles).concat(rulerFiles)
         }
       },
       edit: {
@@ -51,9 +63,19 @@ module.exports = function(grunt) {
           'dest/jQEditRangeSlider-min.js': coreFiles.concat(editFiles)
         }
       },
+      editRuler: {
+        files: {
+          'dest/jQEditRangeSlider-withRuler-min.js': coreFiles.concat(editFiles).concat(rulerFiles)
+        }
+      },
       all: {
         files: {
           'dest/jQAllRangeSliders-min.js': coreFiles.concat(dateFiles).concat(editFiles)
+        }
+      },
+      allRuler: {
+        files: {
+          'dest/jQAllRangeSliders-withRuler-min.js': coreFiles.concat(dateFiles).concat(editFiles).concat(rulerFiles)
         }
       }
     },
