@@ -37,6 +37,8 @@
 				.toggleClass("ui-rangeSlider-leftHandle", this.options.isLeft)
 				.toggleClass("ui-rangeSlider-rightHandle", !this.options.isLeft);
 
+			this.element.append("<div class='ui-rangeSlider-handle-inner' />");
+
 			this._value = this.options.value;
 		},
 
