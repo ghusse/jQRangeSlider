@@ -59,6 +59,7 @@
             <li><a href="#durationOptions">Duration in/out</a></li>
             <li><a href="#formatterOption">Formatter</a></li>
             <li><a href="#rangeOption">Range</a></li>
+            <li><a href="#scalesOption">Scales</a></li>
             <li><a href="#stepOption">Step</a></li>
             <li><a href="#typeOption">Type (edit slider)</a></li>
             <li><a href="#valueLabelsOption">Value labels</a></li>
@@ -545,6 +546,99 @@ $("#rangeExample").rangeSlider({range: {min: false}});</code></pre></dd>
           <li>minutes</li>
           <li>seconds</li>
         </ul>
+
+        <!--
+          Scales
+        -->
+
+        <h2 id="scalesOption">Scales</h2>
+
+        <p>The option <code>scales</code> lets you add a ruler with multiple scales to the slider background.</p>
+
+        <div class="alert alert-info">
+          <strong>Info</strong>: In order to use this option, you have to use a file suffixed by <strong>-withRuler-min.js</strong>. This option is not supported with standard files.
+        </div>
+
+        <div class="example">
+          <div class="sliderContainer">
+            <div id="rulersExample"></div>
+          </div>
+
+          <dl>
+            <dt>Basic slider example</dt>
+            <dd><pre class="prettyprint linenums"><code class="language-js">$("#rulersExample").rangeSlider({
+  scales: [
+  // Primary scale
+  {
+    first: function(val){ return val; },
+    next: function(val){ return val + 10; },
+    stop: function(val){ return false; },
+    label: function(val){ return val; }
+  },
+  // Secondary scale
+  {
+    first: function(val){ return val; },
+    next: function(val){
+      if (val % 10 === 9){
+        return val + 2;
+      }
+
+      return val + 1;
+    },
+    stop: function(val){ return false; },
+    label: function(){ return null; }
+  }]
+});</code></pre>
+            </dd>
+          </dl>
+
+          <div class="sliderContainer">
+            <div id="dateRulersExample"></div>
+          </div>
+
+          <dl>
+            <dt>Date slider example</dt>
+            <dd><pre class="prettyprint linenums"><code class="language-js">var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
+  $("#dateRulersExample").dateRangeSlider({
+    bounds: {min: new Date(2012, 0, 1), max: new Date(2012, 11, 31, 12, 59, 59)},
+    defaultValues: {min: new Date(2012, 1, 10), max: new Date(2012, 4, 22)},
+    scales: [{
+      first: function(value){ return value; },
+      end: function(value) {return value; },
+      next: function(value){
+        var next = new Date(value);
+
+        return new Date(next.setMonth(value.getMonth() + 1));
+      },
+      label: function(value){
+        return months[value.getMonth()];
+      }
+    }]
+  });</code></pre></dd>
+          </dl>
+        </div>
+
+        <p>The option <code>scales</code> requires an <strong>array of objects</strong>. Each object represents the configuration of one level.</p>
+
+        <p>Scale configuration object can contain 4 functions:</p>
+
+        <dl>
+          <dt>The function <code>first(min, max)</code> [optional]</dt>
+          <dd>Must return the ruler <strong>first value</strong>.</dd>
+          <dd>It gives you a way to make the ruler start after the slider minimum. By default, this method returns the slider minimum value.</dd>
+          
+          <dt>The function <code>next(value)</code></dt>
+          <dd>Must return <strong>the next value</strong>. This method is <strong>required</strong>.</dd>
+          <dd>Be sure to return a valid date object when using scales with date sliders.</dd>
+          
+          <dt>The function <code>label(value, nextValue):string</code> [optional]</dt>
+          <dd>Must return the <strong>displayed text</strong>, for a given interval.</dd>
+          <dd>You can return an empty string or <code>null</code> if you don't want labels to be displayed. By default, this method returns <code>value.toString()</code>.</dd>
+          
+          <dt>The method <code>stop(value):boolean</code> [optional]</dt>
+          <dd>Return true to stop the scale generating ticks from a given value.</dd>
+          <dd>This method returns false by default.</dd>
+        </dl>
 
         <!--
           Step  
@@ -1059,6 +1153,8 @@ $("#dateSlider").dateRangeSlider("zoomOut", 42);
   <script src="stable/jQEditRangeSliderLabel.js"></script>
   <script src="stable/jQEditRangeSlider.js"></script>
 
+  <script src="stable/jQRuler.js"></script>
+
   <script>
   //<!--
      $(document).ready(function(){
@@ -1098,6 +1194,44 @@ $("#dateSlider").dateRangeSlider("zoomOut", 42);
       $("#hiddenSlider").rangeSlider();
       $("#scrollExample, #zoomExample").rangeSlider();
       $('#destroyExample').rangeSlider();
+
+      $("#rulersExample").rangeSlider({
+        rulers: [{
+          first: function(val){return val;},
+          next: function(val){return val + 10},
+          stop: function(val){return false;},
+          label: function(val){return val;}
+        },{
+          first: function(val){ return val;},
+          next: function(val){
+            if (val % 10 === 9){
+              return val + 2;
+            }
+
+            return val + 1;
+          },
+          stop: function(val){ return false;},
+          label: function(){return null}
+        }]
+      });
+
+      var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
+      $("#dateRulersExample").dateRangeSlider({
+        bounds: {min: new Date(2012, 0, 1), max: new Date(2012, 11, 31, 12, 59, 59)},
+        defaultValues: {min: new Date(2012, 1, 10), max: new Date(2012, 4, 22)},
+        rulers: [{
+          first: function(value){ return value; },
+          end: function(value) {return value; },
+          next: function(value){
+            var next = new Date(value);
+
+            return new Date(next.setMonth(value.getMonth() + 1));
+          },
+          label: function(value){
+            return months[value.getMonth()];
+          }
+        }]
+      });
   //-->
   </script>
 </body>
