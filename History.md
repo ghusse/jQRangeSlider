@@ -1,8 +1,8 @@
 jQRangeSlider
 -------------
 * 5.0: 2013-02-09
- * Scales
- * New element in handles, can be used for styling. ui-range-slider-handle-inner
+	* Scales
+	* New element in handles, can be used for styling. ui-range-slider-handle-inner
 * 4.2.10: 2013-02-08
 	* Fixed #79: Bar not correctly updated after window resizing, with auto margin on container
 * 4.2.9: 2013-01-17
@@ -25,7 +25,7 @@ jQRangeSlider
 * 4.2.2: 2012-11-08
 	* Fixed #46: Labels swap when they are very close
 	* Fixed #45: Access to a property of a null object
-	# Fixed #49: UserValuesChanged event fired when changing values programmatically
+	* Fixed #49: UserValuesChanged event fired when changing values programmatically
 * 4.2.1: 2012-10-04
 	* Fixed wheelmode setter in constructor
 	* Documentation update
