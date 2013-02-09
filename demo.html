@@ -89,12 +89,28 @@
   <script src="stable/jQEditRangeSliderLabel.js"></script>
   <script src="stable/jQEditRangeSlider.js"></script>
 
+  <script src="stable/jQRuler.js"></script>
+
   <script>
   //<!--
   (function($){
+    var Months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
     $(document).ready(function(){
       $("#slider").rangeSlider();
-      $("#dateSlider").dateRangeSlider();
+      $("#dateSlider").dateRangeSlider({
+        bounds: {min: new Date(2012, 0, 1), max: new Date(2012, 11, 31, 12, 59, 59)},
+        defaultValues: {min: new Date(2012, 1, 10), max: new Date(2012, 4, 22)},
+        scales: [{
+          next: function(val){
+            var next = new Date(val);
+            return new Date(next.setMonth(next.getMonth() + 1));
+          },
+          label: function(val){
+            return Months[val.getMonth()];
+          }
+        }]
+      });
       $("#editSlider").editRangeSlider();
     });
   })(jQuery);
