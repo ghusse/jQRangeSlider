@@ -1,6 +1,6 @@
 jQRangeSlider
 -------------
-* 5.0:
+* 5.0: 2013-02-09
  * Scales
  * New element in handles, can be used for styling. ui-range-slider-handle-inner
 * 4.2.10: 2013-02-08
