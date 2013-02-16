@@ -480,7 +480,7 @@ $("#dateSlider").dateRangeSlider(
             <dt>Date slider</dt>
             <dd><pre class="prettyprint linenums"><code class="language-js">$("#formatterExample").dateRangeSlider({
   formatter:function(val){
-        var days = val.getDay(),
+        var days = val.getDate(),
           month = val.getMonth() + 1,
           year = val.getYear();
 
