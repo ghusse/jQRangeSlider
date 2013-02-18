@@ -32,3 +32,8 @@
 .ui-rangeSlider-label-value{
 	letter-spacing: normal;
 }
+
+.thumbnail{
+  border-color:transparent;
+  box-shadow: none;
+}
