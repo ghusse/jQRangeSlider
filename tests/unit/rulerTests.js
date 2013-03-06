@@ -17,6 +17,23 @@
 		}
 	};
 
+	var formattedScale = {
+		first: function(min){
+			return Math.floor(min / 10) * 10;
+		},
+		next: function(previous){
+			return previous + 10;
+		},
+		format: function(tick, startValue, endValue){
+			if (startValue % (2 * 10)) {
+				tick.addClass("formatterTestClass");
+			}
+		},
+		label: function(value){
+			return value;
+		}
+	};
+
 	var el = function(){return $("#test") };
 
 	var ctorTest = new TestCase(
@@ -72,6 +89,34 @@
 			QUnit.equal(label.text(), "0", "Label text should be correct");
 			QUnit.ok(scale.hasClass("ui-ruler-scale0"), "Class should have been initialized for first ruler");
 			QUnit.ok(tick.attr("style") && tick.attr("style").indexOf("width: 100%") >= 0, "Width should be 100%: " + tick.attr("style"));
+
+			ruled.ruler("destroy");
+			ruled.detach();
+		}
+	);
+
+	var formattedScaleWith4Ticks = new TestCase(
+		"Formatting ticks with one scale of 4 ticks",
+		function(){
+			ruled = $("<div />").appendTo(el());
+			ruled.ruler({
+				min: 0,
+				max: 40,
+				scales: [formattedScale]
+			});
+		},
+		function(){
+			var scale = ruled.find(".ui-ruler-scale"),
+				tick = scale.find(".ui-ruler-tick"),
+				label = tick.find(".ui-ruler-tick-label"),
+				formattedTick = scale.find(".formatterTestClass");
+
+			QUnit.equal(scale.length, 1, "Should have created one scale");
+			QUnit.equal(tick.length, 4, "Should have created four ticks");
+			QUnit.equal(label.length, 4, "Should have created four labels");
+			QUnit.equal(formattedTick.length, 2, "Should have created two labels");
+			QUnit.ok(scale.hasClass("ui-ruler-scale0"), "Class should have been initialized for first ruler");
+			QUnit.ok($(tick[0]).attr("style") && $(tick[0]).attr("style").indexOf("width: 25%") >= 0, "Width should be 25%: " + $(tick[0]).attr("style"));
 
 			ruled.ruler("destroy");
 			ruled.detach();
@@ -254,6 +299,7 @@
 
 	testRunner.add("ruler", [ctorTest, dtorTest,
 		ctorWithOneScale,
+		formattedScaleWith4Ticks,
 		scaleStartingAfter,
 		lasttick,
 		tickStop,
