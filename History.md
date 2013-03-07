@@ -1,5 +1,7 @@
 jQRangeSlider
 -------------
+* 5.0.1: 2013-03-07
+	* Fixed #90 dateRangeSlider displayed outside of the innerbar when setting the range
 * 5.0: 2013-02-09
 	* Scales
 	* New element in handles, can be used for styling. ui-range-slider-handle-inner
