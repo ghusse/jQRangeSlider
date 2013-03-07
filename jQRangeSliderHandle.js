@@ -39,7 +39,7 @@
 
 			this.element.append("<div class='ui-rangeSlider-handle-inner' />");
 
-			this._value = this.options.value;
+			this._value = this._constraintValue(this.options.value);
 		},
 
 		_setOption: function(key, value){
@@ -171,6 +171,9 @@
 				if (max !== false){
 					value = Math.min(value, this._round(max));
 				}
+
+				value = Math.min(value, this._bounds().max);
+				value = Math.max(value, this._bounds().min);
 			}
 
 			return value;
@@ -185,7 +188,7 @@
 		},
 
 		_getPositionForValue: function(value){
-			if (this.cache.parent.offset === null){
+			if (!this.cache || !this.cache.parent || this.cache.parent.offset === null){
 				return 0;
 			}
 

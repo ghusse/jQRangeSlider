@@ -9,6 +9,10 @@
 (function(){
 	"use strict";
 
+	function init(){
+		el = $("#test");
+	}
+
 	var issue1 = new TestCase(
 		"Issue 1: bounds setting",
 		function(){
@@ -34,6 +38,30 @@
 			el.dateRangeSlider("destroy");
 		}
 	);
+
+	var issue90 = new TestCase(
+		"Issue 90: range and bounds",
+		function(){
+			init();
+			this.bounds = {
+				min: new Date(2016, 0, 1),
+				max: new Date(2017, 0, 1)
+			};
+
+			el.dateRangeSlider({
+				bounds: this.bounds,
+				range: {min: {months: 1}}
+			});
+		},
+		function(){
+			var values = el.dateRangeSlider("values");
+			QUnit.ok(values.min >= this.bounds.min && values.min <= this.bounds.max, "Min value should be between bounds " + values.min);
+			QUnit.ok(values.max >= this.bounds.min && values.max <= this.bounds.max, "Max value should be between bounds " + values.max);
+		},
+		function(){
+			el.dateRangeSlider("destroy");
+		}
+	);
 	 
-	testRunner.add("Issues", [issue1]);
+	testRunner.add("Issues", [issue1, issue90]);
 }());

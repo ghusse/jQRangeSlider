@@ -15,8 +15,8 @@
 		_boundsValues: {},
 
 		_create: function(){
-			$.ui.rangeSliderHandle.prototype._create.apply(this);
 			this._createBoundsValues();
+			$.ui.rangeSliderHandle.prototype._create.apply(this);
 		},
 
 		_getValueForPosition: function(position){
