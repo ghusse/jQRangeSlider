@@ -16,7 +16,7 @@
 		next: function(value){
 			return value + 1;
 		},
-		format: function (tick, startValue, endValue) {
+		format: function () {
 			return;
 		},
 		label: function(tick){
