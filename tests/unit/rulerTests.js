@@ -25,7 +25,7 @@
 			return previous + 10;
 		},
 		format: function(tick, startValue, endValue){
-			if (startValue % (2 * 10) && !(endValue % (2 * 10))) {
+			if (startValue % (2 * 10) && endValue > 0) {
 				tick.addClass("formatterTestClass");
 			}
 		},
