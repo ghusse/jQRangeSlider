@@ -483,7 +483,7 @@ $("#dateSlider").dateRangeSlider(
   formatter:function(val){
         var days = val.getDate(),
           month = val.getMonth() + 1,
-          year = val.getYear();
+          year = val.getFullYear();
 
         return days + "/" + month + "/" + year;
       }});
