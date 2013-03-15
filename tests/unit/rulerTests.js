@@ -2,6 +2,7 @@
 
 (function(){
 	"use strict";
+	/*jshint maxstatements: 350*/
 
 	var ruled;
 
