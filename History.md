@@ -1,5 +1,7 @@
 jQRangeSlider
 -------------
+* 5.0.2: 2013-03-17
+	* Fixed #93 (theming with scales): ticks and handle values desynchronized on the right
 * 5.0.1: 2013-03-07
 	* Fixed #90 dateRangeSlider displayed outside of the innerbar when setting the range
 * 5.0: 2013-02-09
