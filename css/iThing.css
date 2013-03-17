@@ -163,7 +163,8 @@
   top:0;
   left:0;
   bottom:0;
-  right:0;
+  /* Handle width */
+  right:10px;
 }
 
 .ui-rangeSlider .ui-ruler-scale0 .ui-ruler-tick-inner{
