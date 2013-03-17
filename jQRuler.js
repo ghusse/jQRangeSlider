@@ -16,6 +16,9 @@
 		next: function(value){
 			return value + 1;
 		},
+		format: function () {
+			return;
+		},
 		label: function(tick){
 			return Math.round(tick);
 		},
@@ -115,6 +118,7 @@
 				label = $("<span class='ui-ruler-tick-label' />").appendTo(inner);
 
 			label.text(scaleOptions.label(start, end));
+			scaleOptions.format(container, start, end);
 
 			return container;
 		}
