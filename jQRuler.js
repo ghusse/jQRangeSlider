@@ -33,7 +33,6 @@
 
 		_create: function(){
 			this.element.addClass("ui-ruler");
-			this.element.css("position", "relative");
 
 			this._createScales();
 		},
@@ -86,19 +85,20 @@
 				end = scaleOptions.first(this.options.min, this.options.max),
 				difference = this.options.max - this.options.min,
 				first = true,
-				width, left, tick;
+				width, tick;
 
 			do{
 				start = end;
 				end = scaleOptions.next(start);
 				
 				width = (Math.min(end, this.options.max) - Math.max(start, this.options.min)) / difference;
-				left = (Math.max(start, this.options.min) - this.options.min) / difference
 				tick = this._createTick(start, end, scaleOptions);
 				container.append(tick);
-
 				tick.css("width", 100 * width + "%");
-				tick.css("left", 100 * left + "%");
+
+				if (first && start > this.options.min){
+					tick.css("margin-left", 100 * (start - this.options.min) / difference + "%");
+				}
 
 				first = false;
 
@@ -110,7 +110,7 @@
 		},
 
 		_createTick: function(start, end, scaleOptions){
-			var container = $("<div class='ui-ruler-tick' style='position:absolute' />"),
+			var container = $("<div class='ui-ruler-tick' style='display:inline-block' />"),
 				inner = $("<div class='ui-ruler-tick-inner' />").appendTo(container),
 				label = $("<span class='ui-ruler-tick-label' />").appendTo(inner);
 

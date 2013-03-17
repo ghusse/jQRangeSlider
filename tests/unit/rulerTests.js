@@ -103,31 +103,10 @@
 
 			QUnit.equal(tick.length, 1, "Tick should have been created");
 			QUnit.ok(tickStyle.indexOf("width: 50%") >= 0, "Width should be 50% " + tickStyle);
-			QUnit.ok(tickStyle.indexOf("left: 50%") >= 0, "Left position should be 50% " + tickStyle);
+			QUnit.ok(tickStyle.indexOf("margin-left: 50%") >= 0, "Margin-left should be 50% " + tickStyle);
 
 			ruled.ruler("destroy");
 			ruled.detach();
-		}
-	);
-
-	var tickPosition = new TestCase(
-		"Ticks left position",
-		function(){
-			ruled = $("<div />").appendTo(el());
-
-			ruled.ruler({
-				min: 0,
-				max: 20,
-				scales: [scale]
-			});
-		},
-		function(){
-			var secondTick = ruled.find(".ui-ruler-tick:last"),
-				secondStyle = secondTick.attr("style");
-
-			QUnit.ok(secondStyle.indexOf("left: 50%") >= 0, "Tick should be positionned: " + secondStyle);
-
-			ruled.remove();
 		}
 	);
 
@@ -276,7 +255,6 @@
 	testRunner.add("ruler", [ctorTest, dtorTest,
 		ctorWithOneScale,
 		scaleStartingAfter,
-		tickPosition,
 		lasttick,
 		tickStop,
 		setMinOption, setMaxOption, setScalesOption,
