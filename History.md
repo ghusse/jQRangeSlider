@@ -1,5 +1,7 @@
 jQRangeSlider
 -------------
+* 5.1: 2013-03-23
+	* Ticks formatting, with a new callback function: format
 * 5.0.2: 2013-03-17
 	* Fixed #93 (theming with scales): ticks and handle values desynchronized on the right
 * 5.0.1: 2013-03-07
