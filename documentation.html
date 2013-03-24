@@ -580,7 +580,10 @@ $("#rangeExample").rangeSlider({range: {min: false}});</code></pre></dd>
     first: function(val){ return val; },
     next: function(val){ return val + 10; },
     stop: function(val){ return false; },
-    label: function(val){ return val; }
+    label: function(val){ return val; },
+    format: function(tickContainer, tickStart, tickEnd){ 
+      tickContainer.addClass("myCustomClass");
+    }
   },
   // Secondary scale
   {
@@ -619,6 +622,9 @@ $("#rangeExample").rangeSlider({range: {min: false}});</code></pre></dd>
       },
       label: function(value){
         return months[value.getMonth()];
+      },
+      format: function(tickContainer, tickStart, tickEnd){
+        tickContainer.addClass("myCustomClass");
       }
     }]
   });</code></pre></dd>
@@ -627,7 +633,7 @@ $("#rangeExample").rangeSlider({range: {min: false}});</code></pre></dd>
 
         <p>The option <code>scales</code> requires an <strong>array of objects</strong>. Each object represents the configuration of one level.</p>
 
-        <p>Scale configuration object can contain 4 functions:</p>
+        <p>Scale configuration object can contain 5 functions:</p>
 
         <dl>
           <dt>The function <code>first(min, max)</code> [optional]</dt>
@@ -645,6 +651,9 @@ $("#rangeExample").rangeSlider({range: {min: false}});</code></pre></dd>
           <dt>The method <code>stop(value):boolean</code> [optional]</dt>
           <dd>Return true to stop the scale generating ticks from a given value.</dd>
           <dd>This method returns false by default.</dd>
+
+          <dt>The function <code>format(tickContainer, tickStartValue, tickEndValue)</code> [optional]</dt>
+          <dd>Can be used to customise the tick container DOM element. First argument is passed as a jQuery object.</dd>
         </dl>
 
         <!--
