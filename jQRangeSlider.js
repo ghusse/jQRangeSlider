@@ -369,7 +369,7 @@
 				that.element.trigger(eventName, {
 						label: that.element,
 						values: that.values(),
-						handle: that._lastHandle ? that._lastHandle : null
+						lastHandle: that._lastHandle ? that._lastHandle : null
 					});
 			}, 1);
 		},

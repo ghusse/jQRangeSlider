@@ -339,7 +339,7 @@
 		},
 
 		_returnValues: function(data){
-			return "min:" + data.values.min + " max:" + data.values.max + " handle:" + data.handle;
+			return "min:" + data.values.min + " max:" + data.values.max + " lastHandle:" + data.lastHandle;
 		}
 
 	});
