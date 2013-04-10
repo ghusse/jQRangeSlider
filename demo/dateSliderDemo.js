@@ -137,7 +137,7 @@
 
 		_returnValues: function(data){
 			try{
-				return "min:" + this._format(data.values.min) + " max:" + this._format(data.values.max);	
+				return "min:" + this._format(data.values.min) + " max:" + this._format(data.values.max) + " handle:" + data.handle;	
 			} catch (e){
 				return e;
 			}
