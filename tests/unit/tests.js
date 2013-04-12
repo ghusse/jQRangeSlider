@@ -440,6 +440,26 @@ var scrollRightTest = new TestCase(
 	}
 );
 
+var handleRightTest = new TestCase(
+	"Handle right",
+	function(){
+		el.rangeSlider("values", 12, 13);
+	},
+	function(){
+		$(el).on('valuesChanging', function(e,data) {
+			$(el).off('valuesChanging');
+			QUnit.equal(data.lastHandle,'right', "Last Handle should be right");
+		})
+
+		var rightHandle = el.find(".ui-rangeSlider-rightHandle");
+		
+		rightHandle.simulate("drag", {
+			dx: el.find(".ui-rangeSlider-container").innerWidth() - rightHandle.position().left - rightHandle.outerWidth(true),
+			dy: 0
+		});
+	}
+);
+
 var issue12 = new TestCase(
 	"Issue 12",
 	function(){
