@@ -403,6 +403,15 @@
 			this._values.min = this._min(left, right);
 			this._values.max = this._max(left, right);
 
+			this._updateLastValues();
+
+			return changing;
+		},
+
+		_updateLastValues: function() {
+			var left = this._leftHandle("value"),
+				right = this._rightHandle("value");
+
 			if (this._lastValues) {
 				if (this._lastValues.min !== left && this._lastValues.max === right) {
 					this._lastHandle = 'left';
@@ -416,7 +425,6 @@
 			}
 			
 			this._lastValues = {min: this._values.min, max: this._values.max};
-			return changing;
 		},
 
 		_min: function(value1, value2){
