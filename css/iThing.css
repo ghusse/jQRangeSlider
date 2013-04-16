@@ -168,6 +168,10 @@
   right:10px;
 }
 
+.ui-rangeSlider .ui-ruler-tick { 
+  float: left; 
+}
+
 .ui-rangeSlider .ui-ruler-scale0 .ui-ruler-tick-inner{
   color:white;
   margin-top:1px;
