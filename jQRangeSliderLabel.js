@@ -208,6 +208,8 @@
 			}else{
 				setTimeout($.proxy(this.AfterInit, this), 1000);
 			}
+
+			$(window).resize($.proxy(this.onWindowResize, this));
 		}
 
 		this.AfterInit = function () {
@@ -378,6 +380,10 @@
 
 		this.onHandleStop = function(){
 			this.HideIfNeeded();
+		}
+
+		this.onWindowResize = function(){
+				this.cache = null;
 		}
 
 		this.UpdateHandlePosition = function(ui){
