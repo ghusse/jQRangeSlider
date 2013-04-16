@@ -91,6 +91,7 @@
   width: 110%;
   height: 100%;
   left: -10px;
+  overflow: hidden;
 }
 
 .ui-rangeSlider-bar{
