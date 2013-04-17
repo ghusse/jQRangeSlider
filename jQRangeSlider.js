@@ -670,18 +670,19 @@
 		destroy: function(){
 			this.element.removeClass("ui-rangeSlider-withArrows")
 			.removeClass("ui-rangeSlider-noArrow");
-			this.bar.detach();
-			this.leftHandle.detach();
-			this.rightHandle.detach();
-			this.innerBar.detach();
-			this.container.detach();
-			this.arrows.left.detach();
-			this.arrows.right.detach();
+			this.innerBar.remove();
+			this.bar.remove();
+			this.leftHandle.remove();
+			this.rightHandle.remove();
+			this.container.remove();
+			this.arrows.left.remove();
+			this.arrows.right.remove();
 			this.element.removeClass("ui-rangeSlider");
 			this._destroyLabels();
 			delete this.options;
 
 			$(window).unbind("resize", this._resizeProxy);
+			delete this._resizeProxy;
 
 			$.Widget.prototype.destroy.apply(this, arguments);
 		}

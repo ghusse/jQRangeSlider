@@ -70,7 +70,7 @@
 		},
 
 		_destroyInput: function(){
-			this._input.detach();
+			this._input.remove();
 			this._input = null;
 		},
 
