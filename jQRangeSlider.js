@@ -473,6 +473,7 @@
 
 		_destroyLabel: function(label){
 			if (label !== null){
+				label[this._labelType()]("destroy");
 				label.remove();
 				label = null;
 			}
@@ -671,14 +672,28 @@
 			this.element.removeClass("ui-rangeSlider-withArrows")
 			.removeClass("ui-rangeSlider-noArrow");
 			this.innerBar.remove();
+			
+			this._bar("destroy");
 			this.bar.remove();
+			this.bar = null;
+
+			this._leftHandle("destroy");
 			this.leftHandle.remove();
+			this.leftHandle = null;
+
+			this._rightHandle("destroy");
 			this.rightHandle.remove();
+			this.rightHandle = null;
+
+			this._destroyRuler();
+			this._destroyLabels();
+
 			this.container.remove();
+			this.container = null;
+
 			this.arrows.left.remove();
 			this.arrows.right.remove();
 			this.element.removeClass("ui-rangeSlider");
-			this._destroyLabels();
 			delete this.options;
 
 			$(window).unbind("resize", this._resizeProxy);

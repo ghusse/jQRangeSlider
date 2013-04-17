@@ -18,16 +18,22 @@
 			this._mouseDownEvent = false;
 
 			this.element.bind('touchstart.' + this.widgetName, function(event) {
-			return that._touchStart(event);
-		});
+				return that._touchStart(event);
+			});
 		},
 
 		_mouseDestroy: function(){
 			$(document)
 				.unbind('touchmove.' + this.widgetName, this._touchMoveDelegate)
-			.unbind('touchend.' + this.widgetName, this._touchEndDelegate);
+				.unbind('touchend.' + this.widgetName, this._touchEndDelegate);
 			
 			$.ui.mouse.prototype._mouseDestroy.apply(this);
+		},
+
+		destroy: function(){
+			this._mouseDestroy();
+			
+			$.ui.mouse.prototype.destroy.apply(this);
 		},
 
 		_touchStart: function(event){

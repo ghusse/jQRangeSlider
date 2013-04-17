@@ -41,15 +41,25 @@
 			this._toggleClass();
 
 			this.options.handle
-				.bind("moving", $.proxy(this._onMoving, this))
-				.bind("update", $.proxy(this._onUpdate, this))
-				.bind("switch", $.proxy(this._onSwitch, this));
+				.bind("moving.label", $.proxy(this._onMoving, this))
+				.bind("update.label", $.proxy(this._onUpdate, this))
+				.bind("switch.label", $.proxy(this._onSwitch, this));
 
 			if (this.options.show !== "show"){
 				this.element.hide();
 			}
 
 			this._mouseInit();
+		},
+
+		destroy: function(){
+			this.options.handle.unbind(".label");
+			
+			if (this._positionner) {
+				this._positionner.Destroy();
+			}
+
+			$.ui.rangeSliderMouseTouch.prototype.destroy.apply(this);
 		},
 
 		_createElements: function(){
@@ -209,7 +219,18 @@
 				setTimeout($.proxy(this.AfterInit, this), 1000);
 			}
 
-			$(window).resize($.proxy(this.onWindowResize, this));
+			this._resizeProxy = $.proxy(this.onWindowResize, this);
+
+			$(window).resize(this._resizeProxy);
+		}
+
+		this.Destroy = function(){
+			if (this._resizeProxy){
+				$(window).unbind("resize", this._resizeProxy);
+				this._resizeProxy = null;
+			}
+			
+			this.cache = null;
 		}
 
 		this.AfterInit = function () {

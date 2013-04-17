@@ -17,7 +17,15 @@
 		},
 
 		_create: function(){
+			$.ui.rangeSliderMouseTouch.prototype._create.apply(this);
+
 			setTimeout($.proxy(this._initElement, this), 10);
+		},
+
+		destroy: function(){
+			this.cache = null;
+			
+			$.ui.rangeSliderMouseTouch.prototype.destroy.apply(this);
 		},
 
 		_initElement: function(){

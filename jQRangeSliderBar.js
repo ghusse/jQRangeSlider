@@ -37,19 +37,26 @@
 				.addClass("ui-rangeSlider-bar");
 
 			this.options.leftHandle
-				.bind("initialize", $.proxy(this._onInitialized, this))
-				.bind("mousestart", $.proxy(this._cache, this))
-				.bind("stop", $.proxy(this._onHandleStop, this));
+				.bind("initialize.bar", $.proxy(this._onInitialized, this))
+				.bind("mousestart.bar", $.proxy(this._cache, this))
+				.bind("stop.bar", $.proxy(this._onHandleStop, this));
 
 			this.options.rightHandle
-				.bind("initialize", $.proxy(this._onInitialized, this))
-				.bind("mousestart", $.proxy(this._cache, this))
-				.bind("stop", $.proxy(this._onHandleStop, this));
+				.bind("initialize.bar", $.proxy(this._onInitialized, this))
+				.bind("mousestart.bar", $.proxy(this._cache, this))
+				.bind("stop.bar", $.proxy(this._onHandleStop, this));
 
 			this._bindHandles();
 
 			this._values = this.options.values;
 			this._setWheelModeOption(this.options.wheelMode);
+		},
+
+		destroy: function(){
+			this.options.leftHandle.unbind(".bar");
+			this.options.rightHandle.unbind(".bar");
+
+			$.ui.rangeSliderDraggable.prototype.destroy.apply(this);
 		},
 
 		_setOption: function(key, value){

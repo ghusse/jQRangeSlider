@@ -42,6 +42,12 @@
 			this._value = this._constraintValue(this.options.value);
 		},
 
+		destroy: function(){
+			this.element.empty();	
+
+			$.ui.rangeSliderDraggable.prototype.destroy.apply(this);			
+		},
+
 		_setOption: function(key, value){
 			if (key === "isLeft" && (value === true || value === false) && value !== this.options.isLeft){
 				this.options.isLeft = value;
