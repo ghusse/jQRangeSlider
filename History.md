@@ -1,6 +1,12 @@
 jQRangeSlider
 -------------
-* 5.1: 2013-03-23
+* 5.1.1: 2013-03-17
+	* Fixed #100: Inconsistent parameter type passed to the next method of scales.
+	* Fixed #102: valuesChanged event triggered even if values are identical
+	* Fixed #103: CSS bug related to IE7 and scale ticks
+	* Fixed #104: Resizing the window breaks label position
+	* Fixed #105: Tick appear outside of its container
+* 5.1.0: 2013-03-23
 	* Ticks formatting, with a new callback function: format
 * 5.0.2: 2013-03-17
 	* Fixed #93 (theming with scales): ticks and handle values desynchronized on the right
