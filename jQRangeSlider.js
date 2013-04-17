@@ -563,6 +563,14 @@
 			this.ruler = $("<div class='ui-rangeSlider-ruler' />").appendTo(this.innerBar);
 		},
 
+		_setRulerParameters: function(){
+			this.ruler.ruler({
+				min: this.options.bounds.min,
+				max: this.options.bounds.max,
+				scales: this.options.scales
+			});
+		},
+
 		_destroyRuler: function(){
 			if (this.ruler !== null && $.fn.ruler){
 				this.ruler.ruler("destroy");
@@ -578,15 +586,8 @@
 				return;
 			}
 
-			if (this.ruler === null){
-				this._createRuler();
-			}
-
-			this.ruler.ruler({
-				min: this.options.bounds.min,
-				max: this.options.bounds.max,
-				scales: this.options.scales
-			});
+			this._createRuler();
+			this._setRulerParameters();			
 		},
 
 		/*

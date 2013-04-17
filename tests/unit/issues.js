@@ -98,11 +98,39 @@
 			el.dateRangeSlider("destroy");
 		}
 	);
+
+	var issue100 = new TestCase(
+		"Issue 100: scales parameter should be consistent",
+		function(){
+			init();
+
+			el.dateRangeSlider({
+				scales: [
+					{
+						next: function(previous){
+							QUnit.ok(previous instanceof Date, "Previous value should be a date: " + previous);
+
+							var next = new Date(previous);
+
+							return new Date(next.setMonth(new Date(previous).getMonth() + 1));
+						}
+					}
+				]
+			});
+		},
+		function(){
+			el.dateRangeSlider("bounds", new Date(2012, 0, 1), new Date(2012, 11, 31, 12, 59, 59));
+		},
+		function(){
+			el.dateRangeSlider("destroy");
+		}
+	);
 	 
 	testRunner.add("Issues", 
 			[	
 				issue1, 
 				issue90,
+				issue100,
 				issue102
 			]
 	);

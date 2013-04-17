@@ -12,8 +12,8 @@
 	
 	$.widget("ui.dateRangeSlider", $.ui.rangeSlider, {
 		options: {
-			bounds: {min: new Date(2010,0,1), max: new Date(2012,0,1)},
-			defaultValues: {min: new Date(2010,1,11), max: new Date(2011,1,11)}
+			bounds: {min: new Date(2010,0,1).valueOf(), max: new Date(2012,0,1).valueOf()},
+			defaultValues: {min: new Date(2010,1,11).valueOf(), max: new Date(2011,1,11).valueOf()}
 		},
 
 		_create: function(){
@@ -32,6 +32,14 @@
 				min: this.options.defaultValues.min.valueOf(),
 				max: this.options.defaultValues.max.valueOf()
 			};
+		},
+
+		_setRulerParameters: function(){
+			this.ruler.ruler({
+				min: new Date(this.options.bounds.min),
+				max: new Date(this.options.bounds.max),
+				scales: this.options.scales
+			});
 		},
 
 		_setOption: function(key, value){
