@@ -43,10 +43,7 @@
 		ruler: null,
 
 		_create: function(){
-			this._values = {
-				min: this.options.defaultValues.min,
-				max: this.options.defaultValues.max
-			};
+			this._setDefaultValues();
 
 			this.labels = {left: null, right:null, leftDisplayed:true, rightDisplayed:true};
 			this.arrows = {left:null, right:null};
@@ -59,6 +56,13 @@
 
 			setTimeout($.proxy(this.resize, this), 1);
 			setTimeout($.proxy(this._initValues, this), 1);
+		},
+
+		_setDefaultValues: function(){
+			this._values = {
+				min: this.options.defaultValues.min,
+				max: this.options.defaultValues.max
+			};
 		},
 
 		_bindResize: function(){

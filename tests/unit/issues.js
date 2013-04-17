@@ -62,6 +62,48 @@
 			el.dateRangeSlider("destroy");
 		}
 	);
+
+	var issue102 = new TestCase(
+		"Issue 102: valuesChanged fired even if values did not change (dateSlider)",
+		function(){
+			init();
+			this.bounds = {
+				min: new Date(2016, 0, 1),
+				max: new Date(2017, 0, 1)
+			};
+
+			this.values = {
+				min: new Date(2016, 1, 1),
+				max: new Date(2016, 2, 1)
+			};
+
+			el.dateRangeSlider({
+				bounds: this.bounds,
+				defaultValues: this.values
+			});
+
+			this.triggered = false;
+			var that = this;
+
+			el.bind("valuesChanged", function(){
+				that.triggered = true;
+			});
+
+			el.dateRangeSlider("values", new Date(this.values.min.valueOf()), new Date(this.values.max.valueOf()));
+		},
+		function(){
+			QUnit.ok(!this.triggered, "Values did not change, event should not have been fired");
+		},
+		function(){
+			el.dateRangeSlider("destroy");
+		}
+	);
 	 
-	testRunner.add("Issues", [issue1, issue90]);
+	testRunner.add("Issues", 
+			[	
+				issue1, 
+				issue90,
+				issue102
+			]
+	);
 }());

@@ -27,6 +27,13 @@
 			$.ui.rangeSlider.prototype.destroy.apply(this);
 		},
 
+		_setDefaultValues: function(){
+			this._values = {
+				min: this.options.defaultValues.min.valueOf(),
+				max: this.options.defaultValues.max.valueOf()
+			};
+		},
+
 		_setOption: function(key, value){
 			if ((key === "defaultValues" || key === "bounds") && typeof value !== "undefined" && value !== null && this._isValidDate(value.min) && this._isValidDate(value.max)){
 				$.ui.rangeSlider.prototype._setOption.apply(this, [key, {min:value.min.valueOf(), max:value.max.valueOf()}]);
