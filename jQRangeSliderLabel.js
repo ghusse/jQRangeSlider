@@ -54,9 +54,15 @@
 
 		destroy: function(){
 			this.options.handle.unbind(".label");
-			
+			this.options.handle = null;
+
+			this._valueContainer = null;
+			this._innerElement = null;
+			this.element.empty();
+
 			if (this._positionner) {
 				this._positionner.Destroy();
+				this._positionner = null;
 			}
 
 			$.ui.rangeSliderMouseTouch.prototype.destroy.apply(this);
@@ -228,9 +234,20 @@
 			if (this._resizeProxy){
 				$(window).unbind("resize", this._resizeProxy);
 				this._resizeProxy = null;
+
+				this.handle1.unbind(".positionner");
+				this.handle1 = null;
+
+				this.handle2.unbind(".positionner");
+				this.handle2 = null;
+
+				this.label1 = null;
+				this.label2 = null;
+				this.left = null;
+				this.right = null;
 			}
 			
-			this.cache = null;
+			this.cache = null;			
 		}
 
 		this.AfterInit = function () {
@@ -298,10 +315,10 @@
 		}
 
 		this.BindHandle = function(handle){
-			handle.bind("updating", $.proxy(this.onHandleUpdating, this));
-			handle.bind("update", $.proxy(this.onHandleUpdated, this));
-			handle.bind("moving", $.proxy(this.onHandleMoving, this));
-			handle.bind("stop", $.proxy(this.onHandleStop, this));
+			handle.bind("updating.positionner", $.proxy(this.onHandleUpdating, this));
+			handle.bind("update.positionner", $.proxy(this.onHandleUpdated, this));
+			handle.bind("moving.positionner", $.proxy(this.onHandleMoving, this));
+			handle.bind("stop.positionner", $.proxy(this.onHandleStop, this));
 		}
 
 		this.PositionLabels = function(){

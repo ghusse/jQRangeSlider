@@ -55,6 +55,7 @@
 		destroy: function(){
 			this.options.leftHandle.unbind(".bar");
 			this.options.rightHandle.unbind(".bar");
+			this.options = null;
 
 			$.ui.rangeSliderDraggable.prototype.destroy.apply(this);
 		},

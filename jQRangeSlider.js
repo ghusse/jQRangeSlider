@@ -671,35 +671,44 @@
 		destroy: function(){
 			this.element.removeClass("ui-rangeSlider-withArrows")
 			.removeClass("ui-rangeSlider-noArrow");
-			this.innerBar.remove();
+
+			this._destroyWidgets();
+			this._destroyElements();
 			
-			this._bar("destroy");
-			this.bar.remove();
-			this.bar = null;
+			this.element.removeClass("ui-rangeSlider");
+			this.options = null;
 
-			this._leftHandle("destroy");
-			this.leftHandle.remove();
-			this.leftHandle = null;
+			$(window).unbind("resize", this._resizeProxy);
+			this._resizeProxy = null;
 
-			this._rightHandle("destroy");
-			this.rightHandle.remove();
-			this.rightHandle = null;
+			$.Widget.prototype.destroy.apply(this, arguments);
+		},
+
+		_destroyWidget: function(name){
+			this["_" + name]("destroy");
+			this[name].remove();
+			this[name] = null;
+		},
+
+		_destroyWidgets: function(){
+			this._destroyWidget("bar");
+			this._destroyWidget("leftHandle");
+			this._destroyWidget("rightHandle");
 
 			this._destroyRuler();
 			this._destroyLabels();
+		},
 
+		_destroyElements: function(){
 			this.container.remove();
 			this.container = null;
 
+			this.innerBar.remove();
+			this.innerBar = null;
+
 			this.arrows.left.remove();
 			this.arrows.right.remove();
-			this.element.removeClass("ui-rangeSlider");
-			delete this.options;
-
-			$(window).unbind("resize", this._resizeProxy);
-			delete this._resizeProxy;
-
-			$.Widget.prototype.destroy.apply(this, arguments);
+			this.arrows = null;
 		}
 	});
 }(jQuery));

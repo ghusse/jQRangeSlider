@@ -122,7 +122,9 @@
 			el.dateRangeSlider("bounds", new Date(2012, 0, 1), new Date(2012, 11, 31, 12, 59, 59));
 		},
 		function(){
-			el.dateRangeSlider("destroy");
+			setTimeout(function(){
+				el.dateRangeSlider("destroy");
+			}, 1);
 		}
 	);
 	 
