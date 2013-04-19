@@ -680,6 +680,7 @@
 
 			$(window).unbind("resize", this._resizeProxy);
 			this._resizeProxy = null;
+			this._bindResize = null;
 
 			$.Widget.prototype.destroy.apply(this, arguments);
 		},
