@@ -440,17 +440,36 @@ var scrollRightTest = new TestCase(
 	}
 );
 
+var handleLeftTest = new TestCase(
+	"Handle left",
+	function(){
+		$(el).off('valuesChanging')
+		$(el).on('valuesChanging', function(e,data) {
+			$(el).off('valuesChanging');
+			QUnit.equal(data.lastHandle,'left', "Last Handle should be left");
+		})
+	},
+	function(){
+		var leftHandle = el.find(".ui-rangeSlider-leftHandle");
+		
+		leftHandle.simulate("drag", {
+			dx: el.find(".ui-rangeSlider-container").innerWidth() - leftHandle.position().left,
+			dy: 0
+		});
+	}
+);
+
+
 var handleRightTest = new TestCase(
 	"Handle right",
 	function(){
-		el.rangeSlider("values", 12, 13);
-	},
-	function(){
+		$(el).off('valuesChanging')
 		$(el).on('valuesChanging', function(e,data) {
 			$(el).off('valuesChanging');
 			QUnit.equal(data.lastHandle,'right', "Last Handle should be right");
 		})
-
+	},
+	function(){
 		var rightHandle = el.find(".ui-rangeSlider-rightHandle");
 		
 		rightHandle.simulate("drag", {
@@ -625,7 +644,7 @@ testRunner.add("jQRangeSlider", [setUp,
 			defaultCtorTest,
 			valuesSetter, changeValuesTest, minMaxSetter, boundsSetter,
 			zoomInTest, zoomOutTest, scrollLeftTest, scrollRightTest,
-			handleRightTest,
+			handleLeftTest, handleRightTest,
 			issue12,
 			rangeLimitMax, rangeLimitMaxWithMinAndMax, rangeLimitMin, rangeLimitMinWithMinAndMax,
 			destroyTest,
