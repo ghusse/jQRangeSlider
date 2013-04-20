@@ -34,6 +34,8 @@
 			this._mouseDestroy();
 			
 			$.ui.mouse.prototype.destroy.apply(this);
+
+			this._mouseInit = null;
 		},
 
 		_touchStart: function(event){

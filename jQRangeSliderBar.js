@@ -37,14 +37,14 @@
 				.addClass("ui-rangeSlider-bar");
 
 			this.options.leftHandle
-				.bind("initialize.bar", $.proxy(this._onInitialized, this))
-				.bind("mousestart.bar", $.proxy(this._cache, this))
-				.bind("stop.bar", $.proxy(this._onHandleStop, this));
+				.bind("initialize", $.proxy(this._onInitialized, this))
+				.bind("mousestart", $.proxy(this._cache, this))
+				.bind("stop", $.proxy(this._onHandleStop, this));
 
 			this.options.rightHandle
-				.bind("initialize.bar", $.proxy(this._onInitialized, this))
-				.bind("mousestart.bar", $.proxy(this._cache, this))
-				.bind("stop.bar", $.proxy(this._onHandleStop, this));
+				.bind("initialize", $.proxy(this._onInitialized, this))
+				.bind("mousestart", $.proxy(this._cache, this))
+				.bind("stop", $.proxy(this._onHandleStop, this));
 
 			this._bindHandles();
 

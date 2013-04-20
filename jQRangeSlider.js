@@ -553,6 +553,7 @@
 
 		_stopScroll: function(){
 			$(document).unbind("mouseup touchend", this._stopScrollHandle);
+			this._stopScrollHandle = null;
 			this._bar("stopScroll");
 			clearTimeout(this._scrollTimeout);
 		},

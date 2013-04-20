@@ -19,13 +19,19 @@
 		_create: function(){
 			$.ui.rangeSliderMouseTouch.prototype._create.apply(this);
 
-			setTimeout($.proxy(this._initElement, this), 10);
+			setTimeout($.proxy(this._initElementIfNotDestroyed, this), 10);
 		},
 
 		destroy: function(){
 			this.cache = null;
 			
 			$.ui.rangeSliderMouseTouch.prototype.destroy.apply(this);
+		},
+
+		_initElementIfNotDestroyed: function(){
+			if (this._mouseInit){
+				this._initElement();
+			}
 		},
 
 		_initElement: function(){
