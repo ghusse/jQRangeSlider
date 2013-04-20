@@ -443,19 +443,18 @@ var scrollRightTest = new TestCase(
 var handleLeftTest = new TestCase(
 	"Handle left",
 	function(){
-		$(el).off('valuesChanging')
+		var self = this;
 		$(el).on('valuesChanging', function(e,data) {
-			$(el).off('valuesChanging');
-			QUnit.equal(data.lastHandle,'left', "Last Handle should be left");
+			self.leftResult = data.lastHandle;
 		})
-	},
-	function(){
 		var leftHandle = el.find(".ui-rangeSlider-leftHandle");
-		
 		leftHandle.simulate("drag", {
 			dx: el.find(".ui-rangeSlider-container").innerWidth() - leftHandle.position().left,
 			dy: 0
 		});
+	},
+	function(){
+		QUnit.equal(this.leftResult,'left', "Last Handle should be left");
 	}
 );
 
@@ -463,19 +462,19 @@ var handleLeftTest = new TestCase(
 var handleRightTest = new TestCase(
 	"Handle right",
 	function(){
-		$(el).off('valuesChanging')
+		var self = this;
 		$(el).on('valuesChanging', function(e,data) {
-			$(el).off('valuesChanging');
-			QUnit.equal(data.lastHandle,'right', "Last Handle should be right");
+			self.rightResult = data.lastHandle;
 		})
-	},
-	function(){
 		var rightHandle = el.find(".ui-rangeSlider-rightHandle");
 		
 		rightHandle.simulate("drag", {
 			dx: el.find(".ui-rangeSlider-container").innerWidth() - rightHandle.position().left - rightHandle.outerWidth(true),
 			dy: 0
 		});
+	},
+	function(){
+		QUnit.equal(this.rightResult,'right', "Last Handle should be right");
 	}
 );
 
