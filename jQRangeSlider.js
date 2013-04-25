@@ -85,7 +85,7 @@
 		},
 
 		_setOption: function(key, value) {
-			this._setWheelOption(key, value);		
+			this._setWheelOption(key, value);
 			this._setArrowsOption(key, value);
 			this._setLabelsOption(key, value);
 			this._setLabelsDurations(key, value);
@@ -94,6 +94,7 @@
 			this._setRangeOption(key, value);
 			this._setStepOption(key, value);
 			this._setScalesOption(key, value);
+			this._setLimitsOption(key, value);
 		},
 
 		_validProperty: function(object, name, defaultValue){
@@ -167,7 +168,7 @@
 		_setFormatterOption: function(key, value){
 			if (key === "formatter" && value !== null && typeof value === "function"){
 				this.options.formatter = value;
-				
+
 				if (this.options.valueLabels !== "hide"){
 					this._destroyLabels();
 					this._createLabels();
@@ -213,6 +214,28 @@
 			}
 		},
 
+		_setLimits: function(min, max){
+			if (!this.options.limits)
+				this.options.limits = {};
+
+			if ((typeof(min) === "number") || null || false)
+				this.options.limits.min = min;
+
+			if ((typeof(max) === "number") || null || false)
+				this.options.limits.max = max;
+
+			this._leftHandle("option", "limits", this.options.limits);
+			this._rightHandle("option", "limits", this.options.limits);
+			this._bar("option", "limits", this.options.limits);
+		},
+
+		_setLimitsOption: function(key, value){
+			if (key === "limits" && typeof value.min !== "undefined" && typeof value.max !== "undefined")
+			{
+				this._setLimits(value.min, value.max);
+			}
+		},
+
 		_createElements: function(){
 			if (this.element.css("position") !== "absolute"){
 				this.element.css("position", "relative");
@@ -223,7 +246,7 @@
 			this.container = $("<div class='ui-rangeSlider-container' />")
 				.css("position", "absolute")
 				.appendTo(this.element);
-			
+
 			this.innerBar = $("<div class='ui-rangeSlider-innerBar' />")
 				.css("position", "absolute")
 				.css("top", 0)
@@ -251,36 +274,50 @@
 		},
 
 		_createHandles: function(){
-			this.leftHandle = this._createHandle({
-					isLeft: true,
-					bounds: this.options.bounds,
-					value: this._values.min,
-					step: this.options.step
-			}).appendTo(this.container);
-	
-			this.rightHandle = this._createHandle({
+			var leftHandleParams = {
+				isLeft: true,
+				bounds: this.options.bounds,
+				value: this._values.min,
+				step: this.options.step
+			};
+
+			if (this.options.limits)
+				leftHandleParams.limits = this.options.limits;
+
+			var rightHandleParams = {
 				isLeft: false,
 				bounds: this.options.bounds,
 				value: this._values.max,
 				step: this.options.step
-			}).appendTo(this.container);
+			};
+
+			if (this.options.limits)
+				rightHandleParams.limits = this.options.limits;
+
+			this.leftHandle = this._createHandle(leftHandleParams).appendTo(this.container);
+			this.rightHandle = this._createHandle(rightHandleParams).appendTo(this.container);
 		},
-		
+
 		_createBar: function(){
 			this.bar = $("<div />")
 				.prependTo(this.container)
 				.bind("sliderDrag scroll zoom", $.proxy(this._changing, this))
 				.bind("stop", $.proxy(this._changed, this));
-			
-			this._bar({
-					leftHandle: this.leftHandle,
-					rightHandle: this.rightHandle,
-					values: {min: this._values.min, max: this._values.max},
-					type: this._handleType(),
-					range: this.options.range,
-					wheelMode: this.options.wheelMode,
-					wheelSpeed: this.options.wheelSpeed
-				});
+
+			var barParams = {
+				leftHandle: this.leftHandle,
+				rightHandle: this.rightHandle,
+				values: {min: this._values.min, max: this._values.max},
+				type: this._handleType(),
+				range: this.options.range,
+				wheelMode: this.options.wheelMode,
+				wheelSpeed: this.options.wheelSpeed
+			};
+
+			if (this.options.limits)
+				barParams.limits = this.options.limits;
+
+			this._bar(barParams);
 
 			this.options.range = this._bar("option", "range");
 			this.options.wheelMode = this._bar("option", "wheelMode");
@@ -359,10 +396,10 @@
 		},
 
 		_getValue: function(position, handle){
-			if (handle === this.rightHandle){	
+			if (handle === this.rightHandle){
 				position = position - handle.outerWidth();
 			}
-			
+
 			return position * (this.options.bounds.max - this.options.bounds.min) / (this.container.innerWidth() - handle.outerWidth(true)) + this.options.bounds.min;
 		},
 
@@ -389,7 +426,7 @@
 				this._trigger("valuesChanged");
 
 				if (isAutomatic !== true){
-					this._trigger("userValuesChanged");					
+					this._trigger("userValuesChanged");
 				}
 
 				this._valuesChanged = false;
@@ -520,11 +557,11 @@
 			this._scrollTimeout = setTimeout(function(){
 				if (timesBeforeSpeedingUp === 0){
 					if (timeout > minTimeout){
-						timeout = Math.max(minTimeout, timeout / 1.5);	
+						timeout = Math.max(minTimeout, timeout / 1.5);
 					} else {
 						quantity = Math.min(maxQuantity, quantity * 2);
 					}
-					
+
 					timesBeforeSpeedingUp = 5;
 				}
 
@@ -589,7 +626,7 @@
 			}
 
 			this._createRuler();
-			this._setRulerParameters();			
+			this._setRulerParameters();
 		},
 
 		/*
@@ -616,16 +653,21 @@
 
 			return this._values.max;
 		},
-		
+
 		bounds: function(min, max){
 			if (this._isValidValue(min) && this._isValidValue(max) && min < max){
-				
+
 				this._setBounds(min, max);
 				this._updateRuler();
 				this._changed(true);
 			}
-			
+
 			return this.options.bounds;
+		},
+
+		limits: function(min, max){
+			this._setLimits(min, max);
+			return this.options.limits;
 		},
 
 		_isValidValue: function(value){
@@ -658,7 +700,7 @@
 			this._bar("scrollRight", quantity);
 			this._bar("stopScroll");
 		},
-		
+
 		/**
 		 * Resize
 		 */
@@ -675,7 +717,7 @@
 
 			this._destroyWidgets();
 			this._destroyElements();
-			
+
 			this.element.removeClass("ui-rangeSlider");
 			this.options = null;
 

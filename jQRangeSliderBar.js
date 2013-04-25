@@ -67,6 +67,8 @@
 				this._setWheelSpeedOption(value);
 			} else if (key === "wheelMode"){
 				this._setWheelModeOption(value);
+			} else if (key === "limits"){
+				this._setLimitsOption(value);
 			}
 		},
 
@@ -109,6 +111,40 @@
 
 				this._bindMouseWheel(value);
 				this.options.wheelMode = value;
+			}
+		},
+
+		_setLimits: function(min, max)
+		{
+			if (((min instanceof Date) || (typeof(min) === "number") || (min === null) || (min === false))
+				&& ((max instanceof Date) || (typeof(max) === "number") || (max === null) || (max === false))
+			)
+			{
+				if (min instanceof Date)
+					min = min.getTime();
+
+				if (max instanceof Date)
+					max = max.getTime();
+
+				if (min && max && (min > max))
+					return;
+
+				if (!this.options.limits)
+					this.options.limits = {};
+
+				if (min)
+					this.options.limits.min = min;
+
+				if (min)
+					this.options.limits.max = max;
+			}
+		},
+
+		_setLimitsOption: function(value)
+		{
+			if (typeof value.min !== "undefined" && typeof value.max !== "undefined")
+			{
+				this._setLimits(value.min, value.max);
 			}
 		},
 
@@ -231,6 +267,33 @@
 			$.ui.rangeSliderDraggable.prototype._mouseStart.apply(this, [event]);
 
 			this._deactivateRange();
+		},
+
+		_mouseDrag: function(event)
+		{
+			var position = event.pageX - this.cache.click.left;
+
+			if (!position)
+				return false;
+
+			var limits = this.options.limits;
+			if (limits)
+			{
+				var max = limits.max;
+				var min = limits.min;
+				if ((position > 0) && max && (this._values.max >= max))
+					return false;
+				else if ((position < 0) && min && (this._values.min <= min))
+					return false;
+			}
+
+			position = this._constraintPosition(position + this.cache.initialOffset.left);
+
+			this._applyPosition(position);
+
+			this._triggerMouseEvent("sliderDrag");
+
+			return false;
 		},
 
 		_mouseStop: function(event){

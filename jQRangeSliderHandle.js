@@ -43,9 +43,9 @@
 		},
 
 		destroy: function(){
-			this.element.empty();	
+			this.element.empty();
 
-			$.ui.rangeSliderDraggable.prototype.destroy.apply(this);			
+			$.ui.rangeSliderDraggable.prototype.destroy.apply(this);
 		},
 
 		_setOption: function(key, value){
@@ -68,6 +68,9 @@
 			}else if (key === "range" && this._checkRange(value)){
 				this.options.range = value;
 				this.update();
+			}else if (key === "limits"){
+				this.options.limits = value;
+				this.update();
 			}
 
 			$.ui.rangeSliderDraggable.prototype._setOption.apply(this, [key, value]);
@@ -87,7 +90,7 @@
 
 		_initElement: function(){
 			$.ui.rangeSliderDraggable.prototype._initElement.apply(this);
-			
+
 			if (this.cache.parent.width === 0 || this.cache.parent.width === null){
 				setTimeout($.proxy(this._initElementIfNotDestroyed, this), 500);
 			}else{
@@ -163,7 +166,7 @@
 		_constraintValue: function(value){
 			value = Math.min(value, this._bounds().max);
 			value = Math.max(value, this._bounds().min);
-		
+
 			value = this._round(value);
 
 			if (this.options.range !== false){
@@ -180,6 +183,15 @@
 
 				value = Math.min(value, this._bounds().max);
 				value = Math.max(value, this._bounds().min);
+			}
+
+			var limits = this.options.limits;
+			if (limits)
+			{
+				if (this.options.isLeft && (typeof(limits.min) === "number"))
+					value = Math.max(value, limits.min);
+				else if (typeof(limits.max) === "number")
+					value = Math.min(value, limits.max);
 			}
 
 			return value;
@@ -257,7 +269,7 @@
 		position: function(position){
 			if (typeof position !== "undefined"){
 				this._cache();
-				
+
 				position = this._constraintPosition(position);
 				this._applyPosition(position);
 			}
@@ -294,7 +306,7 @@
 
 				return this._left - previous;
 			}
-			
+
 			previous = this._value;
 			this.value(this.add(previous, this.multiplyStep(this.options.step, quantity)));
 
