@@ -67,8 +67,6 @@
 				this._setWheelSpeedOption(value);
 			} else if (key === "wheelMode"){
 				this._setWheelModeOption(value);
-			} else if (key === "limits"){
-				this._setLimitsOption(value);
 			}
 		},
 
@@ -111,38 +109,6 @@
 
 				this._bindMouseWheel(value);
 				this.options.wheelMode = value;
-			}
-		},
-
-		_setLimits: function(min, max){
-			if (((min instanceof Date) || (typeof(min) === "number") || (min === null) || (min === false))
-				&& ((max instanceof Date) || (typeof(max) === "number") || (max === null) || (max === false))
-			)
-			{
-				if (min instanceof Date)
-					min = min.getTime();
-
-				if (max instanceof Date)
-					max = max.getTime();
-
-				if (min && max && (min > max))
-					return;
-
-				if (!this.options.limits)
-					this.options.limits = {};
-
-				if (min)
-					this.options.limits.min = min;
-
-				if (min)
-					this.options.limits.max = max;
-			}
-		},
-
-		_setLimitsOption: function(value){
-			if (typeof value.min !== "undefined" && typeof value.max !== "undefined")
-			{
-				this._setLimits(value.min, value.max);
 			}
 		},
 
@@ -267,33 +233,6 @@
 			this._deactivateRange();
 		},
 
-		_mouseDrag: function(event)
-		{
-			var position = event.pageX - this.cache.click.left;
-
-			if (!position)
-				return false;
-
-			var limits = this.options.limits;
-			if (limits)
-			{
-				var max = limits.max;
-				var min = limits.min;
-				if ((position > 0) && max && (this._values.max >= max))
-					return false;
-				else if ((position < 0) && min && (this._values.min <= min))
-					return false;
-			}
-
-			position = this._constraintPosition(position + this.cache.initialOffset.left);
-
-			this._applyPosition(position);
-
-			this._triggerMouseEvent("sliderDrag");
-
-			return false;
-		},
-
 		_mouseStop: function(event){
 			$.ui.rangeSliderDraggable.prototype._mouseStop.apply(this, [event]);
 
@@ -393,14 +332,19 @@
 
 		_constraintPosition: function(left){
 			var position = {},
-				right;
+				right, constrainedRight;
 
 			position.left = $.ui.rangeSliderDraggable.prototype._constraintPosition.apply(this, [left]);
-
 			position.left = this._leftHandle("position", position.left);
 
-			right = this._rightHandle("position", position.left + this.cache.width.outer - this.cache.rightHandle.width);
-			position.width = right - position.left + this.cache.rightHandle.width;
+			right = position.left + this.cache.width.outer - this.cache.rightHandle.width;
+			constrainedRight = this._rightHandle("position", right);
+
+			if (constrainedRight !== right){
+				position.left = this._leftHandle("position", position.left + constrainedRight - right);	
+			}
+			
+			position.width = constrainedRight - position.left + this.cache.rightHandle.width;
 
 			return position;
 		},
