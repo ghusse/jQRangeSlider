@@ -67,8 +67,6 @@
 				this._setWheelSpeedOption(value);
 			} else if (key === "wheelMode"){
 				this._setWheelModeOption(value);
-			} else if (key === "limits"){
-				this._setLimitsOption(value);
 			}
 		},
 
@@ -111,40 +109,6 @@
 
 				this._bindMouseWheel(value);
 				this.options.wheelMode = value;
-			}
-		},
-
-		_setLimits: function(min, max)
-		{
-			if (((min instanceof Date) || (typeof(min) === "number") || (min === null) || (min === false))
-				&& ((max instanceof Date) || (typeof(max) === "number") || (max === null) || (max === false))
-			)
-			{
-				if (min instanceof Date)
-					min = min.getTime();
-
-				if (max instanceof Date)
-					max = max.getTime();
-
-				if (min && max && (min > max))
-					return;
-
-				if (!this.options.limits)
-					this.options.limits = {};
-
-				if (min)
-					this.options.limits.min = min;
-
-				if (min)
-					this.options.limits.max = max;
-			}
-		},
-
-		_setLimitsOption: function(value)
-		{
-			if (typeof value.min !== "undefined" && typeof value.max !== "undefined")
-			{
-				this._setLimits(value.min, value.max);
 			}
 		},
 

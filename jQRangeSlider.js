@@ -314,9 +314,6 @@
 				wheelSpeed: this.options.wheelSpeed
 			};
 
-			if (this.options.limits)
-				barParams.limits = this.options.limits;
-
 			this._bar(barParams);
 
 			this.options.range = this._bar("option", "range");
