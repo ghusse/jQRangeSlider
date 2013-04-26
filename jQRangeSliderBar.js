@@ -114,8 +114,7 @@
 			}
 		},
 
-		_setLimits: function(min, max)
-		{
+		_setLimits: function(min, max){
 			if (((min instanceof Date) || (typeof(min) === "number") || (min === null) || (min === false))
 				&& ((max instanceof Date) || (typeof(max) === "number") || (max === null) || (max === false))
 			)
@@ -140,8 +139,7 @@
 			}
 		},
 
-		_setLimitsOption: function(value)
-		{
+		_setLimitsOption: function(value){
 			if (typeof value.min !== "undefined" && typeof value.max !== "undefined")
 			{
 				this._setLimits(value.min, value.max);

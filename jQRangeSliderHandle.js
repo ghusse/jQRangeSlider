@@ -123,7 +123,7 @@
 					left: this._parsePixels(parent, "paddingLeft")
 				},
 				width: parent.width()
-			}
+			};
 		},
 
 		_position: function(value){

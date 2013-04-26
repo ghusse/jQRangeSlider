@@ -17,17 +17,8 @@
 		},
 
 		_create: function(){
-			var limits = this.options.limits;
-			if (limits)
-			{
-				if (limits.min instanceof Date)
-					limits.min = limits.min.getTime();
-
-				if (limits.max instanceof Date)
-					limits.max = limits.max.getTime();
-			}
-
 			$.ui.rangeSlider.prototype._create.apply(this);
+			this._normalizeLimits();
 
 			this.element.addClass("ui-dateRangeSlider");
 		},
@@ -50,6 +41,19 @@
 				max: new Date(this.options.bounds.max),
 				scales: this.options.scales
 			});
+		},
+
+		_normalizeLimits: function()
+		{
+			var limits = this.options.limits;
+			if (limits)
+			{
+				if (limits.min instanceof Date)
+					limits.min = limits.min.getTime();
+
+				if (limits.max instanceof Date)
+					limits.max = limits.max.getTime();
+			}
 		},
 
 		_setLimits: function(min, max)

@@ -230,7 +230,7 @@
 		},
 
 		_setLimitsOption: function(key, value){
-			if (key === "limits" && typeof value.min !== "undefined" && typeof value.max !== "undefined")
+			if (key === "limits" && ((typeof(value.min) !== "undefined") || (typeof value.max !== "undefined")))
 			{
 				this._setLimits(value.min, value.max);
 			}
@@ -281,9 +281,6 @@
 				step: this.options.step
 			};
 
-			if (this.options.limits)
-				leftHandleParams.limits = this.options.limits;
-
 			var rightHandleParams = {
 				isLeft: false,
 				bounds: this.options.bounds,
@@ -291,8 +288,12 @@
 				step: this.options.step
 			};
 
-			if (this.options.limits)
-				rightHandleParams.limits = this.options.limits;
+			var limits = this.options.limits;
+			if (limits)
+			{
+				leftHandleParams.limits = limits;
+				rightHandleParams.limits = limits;
+			}
 
 			this.leftHandle = this._createHandle(leftHandleParams).appendTo(this.container);
 			this.rightHandle = this._createHandle(rightHandleParams).appendTo(this.container);
