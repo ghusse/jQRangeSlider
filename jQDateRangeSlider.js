@@ -17,8 +17,8 @@
 		},
 
 		_create: function(){
-			$.ui.rangeSlider.prototype._create.apply(this);
 			this._normalizeLimits();
+			$.ui.rangeSlider.prototype._create.apply(this);
 
 			this.element.addClass("ui-dateRangeSlider");
 		},
@@ -60,18 +60,11 @@
 		{
 			if (((min instanceof Date) || (min === null) || (min === false))
 				&& ((max instanceof Date) || (max === null) || (max === false))
+				&& (min > max)
 			)
 			{
-				if (min instanceof Date)
-					min = min.getTime();
-
-				if (max instanceof Date)
-					max = max.getTime();
-
-				if (min && max && (min > max))
-					return;
-
 				$.ui.rangeSlider.prototype._setLimits.apply(this, [min, max]);
+				this._normalizeLimits();
 			}
 		},
 
@@ -114,7 +107,7 @@
 			return (function(formatter){
 				return function(value){
 					return formatter(new Date(value));
-				}
+				};
 			}(formatter));
 		},
 
