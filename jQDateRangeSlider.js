@@ -17,7 +17,6 @@
 		},
 
 		_create: function(){
-			this._normalizeLimits();
 			$.ui.rangeSlider.prototype._create.apply(this);
 
 			this.element.addClass("ui-dateRangeSlider");
@@ -63,12 +62,6 @@
 				&& (min > max)
 			)
 			{
-				if (min instanceof Date)
-					min = min.getTime();
-
-				if (max instanceof Date)
-					max = max.getTime();
-
 				$.ui.rangeSlider.prototype._setLimits.apply(this, [min, max]);
 			}
 		},

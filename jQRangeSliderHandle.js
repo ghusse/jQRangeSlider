@@ -188,9 +188,9 @@
 			var limits = this.options.limits;
 			if (limits)
 			{
-				if (this.options.isLeft && (typeof(limits.min) === "number"))
+				if (this.options.isLeft && (typeof(limits.min) !== "undefined"))
 					value = Math.max(value, limits.min);
-				else if (typeof(limits.max) === "number")
+				else if (typeof(limits.max) !== "undefined")
 					value = Math.min(value, limits.max);
 			}
 
