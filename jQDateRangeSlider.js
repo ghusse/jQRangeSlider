@@ -63,8 +63,13 @@
 				&& (min > max)
 			)
 			{
+				if (min instanceof Date)
+					min = min.getTime();
+
+				if (max instanceof Date)
+					max = max.getTime();
+
 				$.ui.rangeSlider.prototype._setLimits.apply(this, [min, max]);
-				this._normalizeLimits();
 			}
 		},
 
