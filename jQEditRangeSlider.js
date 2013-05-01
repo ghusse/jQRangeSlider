@@ -29,7 +29,7 @@
 		},
 
 		_setOption: function(key, value){
-			if (key === "type" || key === "step"){
+			if (key === "type" || key === "step"){
 				this._setLabelOption(key, value);
 			}	
 
