@@ -123,11 +123,12 @@
 				padding: {
 					left: this._parsePixels(parent, "paddingLeft")
 				},
-				width: parent.width() >> 0
+				width: parent.width()
 			};
 
-			this.cache.parent.offset.left = this.cache.parent.offset.left >> 0;
-			this.cache.parent.offset.top  = this.cache.parent.offset.top >> 0;
+			this.cache.parent.offset.left = Math.round(this.cache.parent.offset.left);
+			this.cache.parent.offset.top  = Math.round(this.cache.parent.offset.top);
+			this.cache.parent.width = Math.round(this.cache.parent.width);
 		},
 
 		_position: function(value){
@@ -223,7 +224,6 @@
 			//Round the position to avoid differences between the offset returned
 			//by the browsers and the ones based on event.pageX
 			return Math.round(ratio * availableWidth + parentPosition);
-			return ratio * availableWidth + parentPosition;
 		},
 
 		_getValueForPosition: function(position){
