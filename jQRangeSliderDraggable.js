@@ -42,7 +42,7 @@
 		_setOption: function(key, value){
 			if (key === "containment"){
 				if (value === null || $(value).length === 0){
-					this.options.containment = null
+					this.options.containment = null;
 				}else{
 					this.options.containment = $(value);
 				}
@@ -56,11 +56,18 @@
 		_mouseStart: function(event){
 			this._cache();
 			this.cache.click = {
-					left: event.pageX,
-					top: event.pageY
+				left: event.pageX,
+				top: event.pageY
 			};
 
 			this.cache.initialOffset = this.element.offset();
+
+			//Round the position to avoid differences between the offset returned
+			//by the browsers and the ones based on event.pageX
+			this.cache.click.left = Math.round(this.cache.click.left);
+			this.cache.click.top = Math.round(this.cache.click.top);
+			this.cache.initialOffset.left = Math.round(this.cache.initialOffset.left);
+			this.cache.initialOffset.top = Math.round(this.cache.initialOffset.top);
 
 			this._triggerMouseEvent("mousestart");
 
@@ -69,6 +76,10 @@
 
 		_mouseDrag: function(event){
 			var position = event.pageX - this.cache.click.left;
+
+			//Round the position to avoid differences between the offset returned
+			//by the browsers and the ones based on event.pageX
+			position = Math.round(position);
 
 			if (!position)
 				return false;
@@ -97,6 +108,10 @@
 				position = Math.max(position, this.cache.parent.offset.left);
 			}
 
+			//Round the position to avoid differences between the offset returned
+			//by the browsers and the ones based on event.pageX
+			position = Math.round(position);
+
 			return position;
 		},
 
@@ -104,7 +119,7 @@
 			var offset = {
 				top: this.cache.offset.top,
 				left: position
-			}
+			};
 
 			this.element.offset({left:position});
 
@@ -129,6 +144,11 @@
 			this._cacheDimensions();
 
 			this.cache.offset = this.element.offset();
+
+			//Round the position to avoid differences between the offset returned
+			//by the browsers and the ones based on event.pageX
+			this.cache.offset.left = Math.round(this.cache.offset.left);
+			this.cache.offset.top = Math.round(this.cache.offset.top);
 		},
 
 		_cacheMargins: function(){
@@ -144,20 +164,28 @@
 			if (this.options.parent !== null){
 				var container = this.element.parent();
 
+				//Round the position to avoid differences between the offset returned
+				//by the browsers and the ones based on event.pageX
 				this.cache.parent = {
 					offset: container.offset(),
 					width: container.width()
-				}
+				};
+
+				this.cache.parent.width = Math.round(this.cache.parent.width);
+				this.cache.parent.offset.left = Math.round(this.cache.parent.offset.left);
+				this.cache.parent.offset.top = Math.round(this.cache.parent.offset.top);
 			}else{
 				this.cache.parent = null;
 			}
 		},
 
 		_cacheDimensions: function(){
+			//Round the position to avoid differences between the offset returned
+			//by the browsers and the ones based on event.pageX
 			this.cache.width = {
-				outer: this.element.outerWidth(),
-				inner: this.element.width()
-			}
+				outer: Math.round(this.element.outerWidth()),
+				inner: Math.round(this.element.width())
+			};
 		},
 
 		_parsePixels: function(element, string){

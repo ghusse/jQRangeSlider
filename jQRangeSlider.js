@@ -14,6 +14,7 @@
 		options: {
 			bounds: {min:0, max:100},
 			defaultValues: {min:20, max:50},
+			limits: {min: false, max: false},
 			wheelMode: null,
 			wheelSpeed: 4,
 			arrows: true,
@@ -218,10 +219,10 @@
 			if (!this.options.limits)
 				this.options.limits = {};
 
-			if ((typeof(min) === "number") || null || false)
+			if ((typeof(min) === "number") || (min === false))
 				this.options.limits.min = min;
 
-			if ((typeof(max) === "number") || null || false)
+			if ((typeof(max) === "number") || (max === false))
 				this.options.limits.max = max;
 
 			this._leftHandle("option", "limits", this.options.limits);
@@ -398,7 +399,9 @@
 				position = position - handle.outerWidth();
 			}
 
-			return position * (this.options.bounds.max - this.options.bounds.min) / (this.container.innerWidth() - handle.outerWidth(true)) + this.options.bounds.min;
+			//Round the position to avoid differences between the offset returned
+			//by the browsers and the ones based on event.pageX
+			return Math.round(position * (this.options.bounds.max - this.options.bounds.min) / (this.container.innerWidth() - handle.outerWidth(true)) + this.options.bounds.min);
 		},
 
 		_trigger: function(eventName){
@@ -680,7 +683,7 @@
 		},
 
 		zoomIn: function(quantity){
-			this._bar("zoomIn", quantity)
+			this._bar("zoomIn", quantity);
 		},
 
 		zoomOut: function(quantity){

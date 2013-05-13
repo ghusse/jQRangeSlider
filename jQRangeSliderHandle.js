@@ -19,6 +19,7 @@
 		options: {
 			isLeft: true,
 			bounds: {min:0, max:100},
+			limits: {min: false, max: false},
 			range: false,
 			value: 0,
 			step: false
@@ -122,8 +123,11 @@
 				padding: {
 					left: this._parsePixels(parent, "paddingLeft")
 				},
-				width: parent.width()
+				width: parent.width() >> 0
 			};
+
+			this.cache.parent.offset.left = this.cache.parent.offset.left >> 0;
+			this.cache.parent.offset.top  = this.cache.parent.offset.top >> 0;
 		},
 
 		_position: function(value){
@@ -188,9 +192,9 @@
 			var limits = this.options.limits;
 			if (limits)
 			{
-				if (this.options.isLeft && (typeof(limits.min) !== "undefined"))
+				if (this.options.isLeft && (limits.min || (limits.min === 0)))
 					value = Math.max(value, limits.min);
-				else if (typeof(limits.max) !== "undefined")
+				else if (limits.max || (limits.max === 0))
 					value = Math.min(value, limits.max);
 			}
 
@@ -216,17 +220,27 @@
 				availableWidth = this.cache.parent.width - this.cache.width.outer,
 				parentPosition = this.cache.parent.offset.left;
 
-
+			//Round the position to avoid differences between the offset returned
+			//by the browsers and the ones based on event.pageX
+			return Math.round(ratio * availableWidth + parentPosition);
 			return ratio * availableWidth + parentPosition;
 		},
 
 		_getValueForPosition: function(position){
+			//Round the position to avoid differences between the offset returned
+			//by the browsers and the ones based on event.pageX
+			position = Math.round(position);
+
 			var raw = this._getRawValueForPositionAndBounds(position, this.options.bounds.min, this.options.bounds.max);
 
 			return this._constraintValue(raw);
 		},
 
 		_getRawValueForPositionAndBounds: function(position, min, max){
+			//Round the position to avoid differences between the offset returned
+			//by the browsers and the ones based on event.pageX
+			position = Math.round(position);
+
 			var parentPosition =  this.cache.parent.offset === null ? 0 : this.cache.parent.offset.left,
 					availableWidth = this.cache.parent.width - this.cache.width.outer,
 					ratio = (position - parentPosition) / availableWidth;

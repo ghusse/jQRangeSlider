@@ -42,27 +42,14 @@
 			});
 		},
 
-		_normalizeLimits: function()
-		{
-			var limits = this.options.limits;
-			if (limits)
-			{
-				if (limits.min instanceof Date)
-					limits.min = limits.min.getTime();
-
-				if (limits.max instanceof Date)
-					limits.max = limits.max.getTime();
-			}
-		},
-
 		_setLimits: function(min, max)
 		{
-			if (((min instanceof Date) || (min === null) || (min === false))
-				&& ((max instanceof Date) || (max === null) || (max === false))
-				&& (min > max)
-			)
+			if (((min instanceof Date) || (min === false)) || ((max instanceof Date) || (max === false)))
 			{
-				$.ui.rangeSlider.prototype._setLimits.apply(this, [min, max]);
+				if ((min instanceof Date) && (max instanceof Date) && (min < max))
+					return;
+
+				$.ui.rangeSlider.prototype._setLimits.apply(this, [min.valueOf(), max.valueOf()]);
 			}
 		},
 
