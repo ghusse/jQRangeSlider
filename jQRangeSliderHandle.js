@@ -19,6 +19,7 @@
 		options: {
 			isLeft: true,
 			bounds: {min:0, max:100},
+			limits: {min: false, max: false},
 			range: false,
 			value: 0,
 			step: false
@@ -43,9 +44,9 @@
 		},
 
 		destroy: function(){
-			this.element.empty();	
+			this.element.empty();
 
-			$.ui.rangeSliderDraggable.prototype.destroy.apply(this);			
+			$.ui.rangeSliderDraggable.prototype.destroy.apply(this);
 		},
 
 		_setOption: function(key, value){
@@ -68,6 +69,9 @@
 			}else if (key === "range" && this._checkRange(value)){
 				this.options.range = value;
 				this.update();
+			}else if (key === "limits"){
+				this.options.limits = value;
+				this.update();
 			}
 
 			$.ui.rangeSliderDraggable.prototype._setOption.apply(this, [key, value]);
@@ -87,7 +91,7 @@
 
 		_initElement: function(){
 			$.ui.rangeSliderDraggable.prototype._initElement.apply(this);
-			
+
 			if (this.cache.parent.width === 0 || this.cache.parent.width === null){
 				setTimeout($.proxy(this._initElementIfNotDestroyed, this), 500);
 			}else{
@@ -120,7 +124,7 @@
 					left: this._parsePixels(parent, "paddingLeft")
 				},
 				width: parent.width()
-			}
+			};
 		},
 
 		_position: function(value){
@@ -163,7 +167,7 @@
 		_constraintValue: function(value){
 			value = Math.min(value, this._bounds().max);
 			value = Math.max(value, this._bounds().min);
-		
+
 			value = this._round(value);
 
 			if (this.options.range !== false){
@@ -180,6 +184,15 @@
 
 				value = Math.min(value, this._bounds().max);
 				value = Math.max(value, this._bounds().min);
+			}
+
+			var limits = this.options.limits;
+			if (limits)
+			{
+				if (this.options.isLeft && (limits.min || (limits.min === 0)))
+					value = Math.max(value, limits.min);
+				else if (limits.max || (limits.max === 0))
+					value = Math.min(value, limits.max);
 			}
 
 			return value;
@@ -203,7 +216,6 @@
 			var ratio = (value - this.options.bounds.min) / (this.options.bounds.max - this.options.bounds.min),
 				availableWidth = this.cache.parent.width - this.cache.width.outer,
 				parentPosition = this.cache.parent.offset.left;
-
 
 			return ratio * availableWidth + parentPosition;
 		},
@@ -257,8 +269,15 @@
 		position: function(position){
 			if (typeof position !== "undefined"){
 				this._cache();
-				
+
+				//There might be a slight difference between the positions,
+				//so if this difference is lower than 0.005 we consider it null.
+				var oldPos = position;
 				position = this._constraintPosition(position);
+				var diff = Math.abs(position - oldPos);
+				if (diff < 0.005)
+					return this._left;
+
 				this._applyPosition(position);
 			}
 
@@ -294,7 +313,7 @@
 
 				return this._left - previous;
 			}
-			
+
 			previous = this._value;
 			this.value(this.add(previous, this.multiplyStep(this.options.step, quantity)));
 

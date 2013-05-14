@@ -332,14 +332,19 @@
 
 		_constraintPosition: function(left){
 			var position = {},
-				right;
+				right, constrainedRight;
 
 			position.left = $.ui.rangeSliderDraggable.prototype._constraintPosition.apply(this, [left]);
-
 			position.left = this._leftHandle("position", position.left);
 
-			right = this._rightHandle("position", position.left + this.cache.width.outer - this.cache.rightHandle.width);
-			position.width = right - position.left + this.cache.rightHandle.width;
+			right = position.left + this.cache.width.outer - this.cache.rightHandle.width;
+			constrainedRight = this._rightHandle("position", right);
+
+			if (constrainedRight !== right){
+				position.left = this._leftHandle("position", position.left + constrainedRight - right);
+			}
+
+			position.width = constrainedRight - position.left + this.cache.rightHandle.width;
 
 			return position;
 		},

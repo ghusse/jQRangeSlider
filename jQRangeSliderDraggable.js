@@ -24,7 +24,7 @@
 
 		destroy: function(){
 			this.cache = null;
-			
+
 			$.ui.rangeSliderMouseTouch.prototype.destroy.apply(this);
 		},
 
@@ -42,7 +42,7 @@
 		_setOption: function(key, value){
 			if (key === "containment"){
 				if (value === null || $(value).length === 0){
-					this.options.containment = null
+					this.options.containment = null;
 				}else{
 					this.options.containment = $(value);
 				}
@@ -56,8 +56,8 @@
 		_mouseStart: function(event){
 			this._cache();
 			this.cache.click = {
-					left: event.pageX,
-					top: event.pageY
+				left: event.pageX,
+				top: event.pageY
 			};
 
 			this.cache.initialOffset = this.element.offset();
@@ -69,6 +69,9 @@
 
 		_mouseDrag: function(event){
 			var position = event.pageX - this.cache.click.left;
+
+			if (!position)
+				return false;
 
 			position = this._constraintPosition(position + this.cache.initialOffset.left);
 
@@ -89,7 +92,7 @@
 
 		_constraintPosition: function(position){
 			if (this.element.parent().length !== 0 && this.cache.parent.offset !== null){
-				position = Math.min(position, 
+				position = Math.min(position,
 					this.cache.parent.offset.left + this.cache.parent.width - this.cache.width.outer);
 				position = Math.max(position, this.cache.parent.offset.left);
 			}
@@ -101,7 +104,7 @@
 			var offset = {
 				top: this.cache.offset.top,
 				left: position
-			}
+			};
 
 			this.element.offset({left:position});
 
@@ -144,7 +147,7 @@
 				this.cache.parent = {
 					offset: container.offset(),
 					width: container.width()
-				}
+				};
 			}else{
 				this.cache.parent = null;
 			}
@@ -154,11 +157,11 @@
 			this.cache.width = {
 				outer: this.element.outerWidth(),
 				inner: this.element.width()
-			}
+			};
 		},
 
 		_parsePixels: function(element, string){
-			return parseInt(element.css(string), 10) || 0;
+			return parseFloat(element.css(string), 10) || 0;
 		},
 
 		_triggerMouseEvent: function(event){

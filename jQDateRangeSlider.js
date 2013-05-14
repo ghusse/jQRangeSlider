@@ -9,7 +9,7 @@
 
 (function ($, undefined) {
 	"use strict";
-	
+
 	$.widget("ui.dateRangeSlider", $.ui.rangeSlider, {
 		options: {
 			bounds: {min: new Date(2010,0,1).valueOf(), max: new Date(2012,0,1).valueOf()},
@@ -42,8 +42,19 @@
 			});
 		},
 
+		_setLimits: function(min, max)
+		{
+			if (((min instanceof Date) || (min === false)) || ((max instanceof Date) || (max === false)))
+			{
+				if ((min instanceof Date) && (max instanceof Date) && (min < max))
+					return;
+
+				$.ui.rangeSlider.prototype._setLimits.apply(this, [min.valueOf(), max.valueOf()]);
+			}
+		},
+
 		_setOption: function(key, value){
-			if ((key === "defaultValues" || key === "bounds") && typeof value !== "undefined" && value !== null && this._isValidDate(value.min) && this._isValidDate(value.max)){
+			if ((key === "defaultValues" || key === "bounds" || key === "limits") && typeof value !== "undefined" && value !== null && this._isValidDate(value.min) && this._isValidDate(value.max)){
 				$.ui.rangeSlider.prototype._setOption.apply(this, [key, {min:value.min.valueOf(), max:value.max.valueOf()}]);
 			}else{
 				$.ui.rangeSlider.prototype._setOption.apply(this, this._toArray(arguments));
@@ -55,7 +66,7 @@
 		},
 
 		option: function(key){
-			if (key === "bounds" || key === "defaultValues"){
+			if (key === "bounds" || key === "defaultValues" || key === "limits"){
 				var result = $.ui.rangeSlider.prototype.option.apply(this, arguments);
 
 				return {min:new Date(result.min), max:new Date(result.max)};
@@ -81,13 +92,13 @@
 			return (function(formatter){
 				return function(value){
 					return formatter(new Date(value));
-				}
+				};
 			}(formatter));
 		},
 
 		values: function(min, max){
 			var values = null;
-			
+
 			if (this._isValidDate(min) && this._isValidDate(max))
 			{
 				values = $.ui.rangeSlider.prototype.values.apply(this, [min.valueOf(), max.valueOf()]);
@@ -113,16 +124,16 @@
 
 			return new Date($.ui.rangeSlider.prototype.max.apply(this));
 		},
-		
+
 		bounds: function(min, max){
 			var result;
-			
+
 			if (this._isValidDate(min) && this._isValidDate(max)) {
 				result = $.ui.rangeSlider.prototype.bounds.apply(this, [min.valueOf(), max.valueOf()]);
 			} else {
 				result = $.ui.rangeSlider.prototype.bounds.apply(this, this._toArray(arguments));
 			}
-			
+
 			return {min: new Date(result.min), max: new Date(result.max)};
 		},
 
