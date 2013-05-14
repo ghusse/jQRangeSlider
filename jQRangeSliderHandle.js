@@ -125,10 +125,6 @@
 				},
 				width: parent.width()
 			};
-
-			this.cache.parent.offset.left = Math.round(this.cache.parent.offset.left);
-			this.cache.parent.offset.top  = Math.round(this.cache.parent.offset.top);
-			this.cache.parent.width = Math.round(this.cache.parent.width);
 		},
 
 		_position: function(value){
@@ -221,26 +217,16 @@
 				availableWidth = this.cache.parent.width - this.cache.width.outer,
 				parentPosition = this.cache.parent.offset.left;
 
-			//Round the position to avoid differences between the offset returned
-			//by the browsers and the ones based on event.pageX
-			return Math.round(ratio * availableWidth + parentPosition);
+			return ratio * availableWidth + parentPosition;
 		},
 
 		_getValueForPosition: function(position){
-			//Round the position to avoid differences between the offset returned
-			//by the browsers and the ones based on event.pageX
-			position = Math.round(position);
-
 			var raw = this._getRawValueForPositionAndBounds(position, this.options.bounds.min, this.options.bounds.max);
 
 			return this._constraintValue(raw);
 		},
 
 		_getRawValueForPositionAndBounds: function(position, min, max){
-			//Round the position to avoid differences between the offset returned
-			//by the browsers and the ones based on event.pageX
-			position = Math.round(position);
-
 			var parentPosition =  this.cache.parent.offset === null ? 0 : this.cache.parent.offset.left,
 					availableWidth = this.cache.parent.width - this.cache.width.outer,
 					ratio = (position - parentPosition) / availableWidth;
@@ -284,7 +270,14 @@
 			if (typeof position !== "undefined"){
 				this._cache();
 
+				//There might be a slight difference between the positions,
+				//so if this difference is lower than 0.005 we consider it null.
+				var oldPos = position;
 				position = this._constraintPosition(position);
+				var diff = Math.abs(position - oldPos);
+				if (diff < 0.005)
+					return this._left;
+
 				this._applyPosition(position);
 			}
 

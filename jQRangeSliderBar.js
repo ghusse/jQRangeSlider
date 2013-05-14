@@ -187,10 +187,6 @@
 			var left = this._leftHandle("position"),
 				right = this._rightHandle("position") + this.options.rightHandle.width();
 
-			//Round the position to avoid differences between the offset returned
-			//by the browsers and the ones based on event.pageX
-			right = Math.round(right);
-
 			this.element.offset({
 				left: left
 			});
@@ -229,13 +225,6 @@
 
 			this.cache.leftHandle = {};
 			this.cache.leftHandle.offset = this.options.leftHandle.offset();
-
-			//Round the position to avoid differences between the offset returned
-			//by the browsers and the ones based on event.pageX
-			this.cache.rightHandle.offset.left = Math.round(this.cache.rightHandle.offset.left);
-			this.cache.rightHandle.offset.top = Math.round(this.cache.rightHandle.offset.top);
-			this.cache.leftHandle.offset.left = Math.round(this.cache.leftHandle.offset.left);
-			this.cache.leftHandle.offset.top = Math.round(this.cache.leftHandle.offset.top);
 		},
 
 		_mouseStart: function(event){
@@ -274,12 +263,6 @@
 			this.cache.offset.left = ui.offset.left;
 			this.cache.leftHandle.offset = ui.offset;
 
-			//Round the position to avoid differences between the offset returned
-			//by the browsers and the ones based on event.pageX
-			this.cache.offset.left = Math.round(this.cache.offset.left);
-			this.cache.leftHandle.offset.left = Math.round(this.cache.leftHandle.offset.left);
-			this.cache.leftHandle.offset.top = Math.round(this.cache.leftHandle.offset.top);
-
 			this._positionBar();
 		},
 
@@ -294,12 +277,6 @@
 
 			this._values.max = ui.value;
 			this.cache.rightHandle.offset = ui.offset;
-
-			//Round the position to avoid differences between the offset returned
-			//by the browsers and the ones based on event.pageX
-			this.cache.offset.left = Math.round(this.cache.offset.left);
-			this.cache.leftHandle.offset.left = Math.round(this.cache.leftHandle.offset.left);
-			this.cache.leftHandle.offset.top = Math.round(this.cache.leftHandle.offset.top);
 
 			this._positionBar();
 		},
@@ -367,15 +344,7 @@
 				position.left = this._leftHandle("position", position.left + constrainedRight - right);
 			}
 
-			//Round the position to avoid differences between the offset returned
-			//by the browsers and the ones based on event.pageX
-			position.left = Math.round(position.left);
-
 			position.width = constrainedRight - position.left + this.cache.rightHandle.width;
-
-			//Round the position to avoid differences between the offset returned
-			//by the browsers and the ones based on event.pageX
-			position.width = Math.round(position.width);
 
 			return position;
 		},

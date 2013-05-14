@@ -399,9 +399,7 @@
 				position = position - handle.outerWidth();
 			}
 
-			//Round the position to avoid differences between the offset returned
-			//by the browsers and the ones based on event.pageX
-			return Math.round(position * (this.options.bounds.max - this.options.bounds.min) / (this.container.innerWidth() - handle.outerWidth(true)) + this.options.bounds.min);
+			return position * (this.options.bounds.max - this.options.bounds.min) / (this.container.innerWidth() - handle.outerWidth(true)) + this.options.bounds.min;
 		},
 
 		_trigger: function(eventName){
@@ -441,8 +439,8 @@
 				max = this._max(left, right),
 				changing = (min !== this._values.min || max !== this._values.max);
 
-			this._values.min = this._min(left, right);
-			this._values.max = this._max(left, right);
+			this._values.min = min;
+			this._values.max = max;
 
 			return changing;
 		},
