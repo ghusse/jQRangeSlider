@@ -1,5 +1,8 @@
 jQRangeSlider
 -------------
+* 5.2.0: 2013-06-28
+	* Fixed #108: Memory leaks when calling destroy
+	* Styling improvement: setting correct height to the slider element.
 * 5.1.1: 2013-03-17
 	* Fixed #100: Inconsistent parameter type passed to the next method of scales.
 	* Fixed #102: valuesChanged event triggered even if values are identical
