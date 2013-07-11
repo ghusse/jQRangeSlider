@@ -24,7 +24,8 @@
 			delayOut: 200,
 			range: {min: false, max: false},
 			step: false,
-			scales: false
+			scales: false,
+			enabled: true
 		},
 
 		_values: null,
@@ -94,6 +95,7 @@
 			this._setRangeOption(key, value);
 			this._setStepOption(key, value);
 			this._setScalesOption(key, value);
+			this._setEnabledOption(key, value);
 		},
 
 		_validProperty: function(object, name, defaultValue){
@@ -213,6 +215,12 @@
 			}
 		},
 
+		_setEnabledOption: function(key, value){
+			if (key === "enabled"){
+				this.toggle(value);
+			}
+		},
+
 		_createElements: function(){
 			if (this.element.css("position") !== "absolute"){
 				this.element.css("position", "relative");
@@ -241,6 +249,8 @@
 			}
 
 			this._updateRuler();
+
+			if (!this.options.enabled) this._toggle(this.options.enabled);
 		},
 
 		_createHandle: function(options){
@@ -501,6 +511,8 @@
 		},
 
 		_scrollRightClick: function(e){
+			if (!this.options.enabled) return false;
+
 			e.preventDefault();
 			this._bar("startScroll");
 			this._bindStopScroll();
@@ -509,6 +521,8 @@
 		},
 
 		_continueScrolling: function(action, timeout, quantity, timesBeforeSpeedingUp){
+			if (!this.options.enabled) return false;
+
 			this._bar(action, quantity);
 			timesBeforeSpeedingUp = timesBeforeSpeedingUp || 5;
 			timesBeforeSpeedingUp--;
@@ -533,6 +547,8 @@
 		},
 
 		_scrollLeftClick: function(e){
+			if (!this.options.enabled) return false;
+
 			e.preventDefault();
 
 			this._bar("startScroll");
@@ -669,6 +685,41 @@
 			this._bar("update");
 		},
 
+		/*
+		 * Enable / disable
+		 */
+		enable: function(){
+			this.toggle(true);
+		},
+
+		disable: function(){
+			this.toggle(false);
+		},
+
+		toggle: function(enabled){
+			if (enabled === undefined) enabled = !this.options.enabled;
+
+			if (this.options.enabled !== enabled){
+				this._toggle(enabled);
+			}
+		},
+
+		_toggle: function(enabled){
+			this.options.enabled = enabled;
+			this.element.toggleClass("ui-rangeSlider-disabled", !enabled);
+
+			var action = enabled ? "enable" : "disable";
+
+			this._bar(action);
+			this._leftHandle(action);
+			this._rightHandle(action);
+			this._leftLabel(action);
+			this._rightLabel(action);
+		},
+
+		/*
+		 * Destroy
+		 */
 		destroy: function(){
 			this.element.removeClass("ui-rangeSlider-withArrows")
 			.removeClass("ui-rangeSlider-noArrow");

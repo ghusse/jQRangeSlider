@@ -48,6 +48,7 @@ var el = null;
 			QUnit.deepEqual(el.rangeSlider("option", "delayOut"), 200, "Default delay before hiding labels is 200ms");
 			QUnit.deepEqual(el.rangeSlider("option", "range"), {min:false, max:false}, "Default constraints on range");
 			QUnit.equal(el.rangeSlider("option", "scales"), false, "Default option for scales");
+			QUnit.equal(el.rangeSlider("option", "enabled"), true, "Default option value for enabled status");
 			
 			// Created elements
 			QUnit.deepEqual($(".ui-rangeSlider-handle.ui-rangeSlider-leftHandle").length, 1, "Left handle should have been created");
@@ -71,7 +72,6 @@ var el = null;
 			// Values
 			QUnit.equalEpsilon(this.min(), 20, 1e-3, "Values should be equal to the default values");
 			QUnit.equalEpsilon(this.max(), 50, 1e-3, "Values should be equal to the default values");
-			
 		}
 	);
 
@@ -594,6 +594,77 @@ var updateRulerTest = new TestCase(
 	}
 );
 
+function assertIsDisabledAndDestroy(){
+	QUnit.ok(!el.rangeSlider("option", "enabled"), "RangeSlider is disabled");
+	QUnit.ok(el.hasClass("ui-rangeSlider-disabled"), "Disabled class added");
+
+	el.rangeSlider("destroy");
+	el.empty();
+}
+
+function assertIsEnabledAndDestroy(){
+	QUnit.ok(el.rangeSlider("option", "enabled"), "RangeSlider is disabled");
+	QUnit.ok(!el.hasClass("ui-rangeSlider-disabled"), "Disabled class added");
+
+	el.rangeSlider("destroy");
+	el.empty();
+}
+
+var disableInCtorTest = new TestCase(
+	"Disable in constructor test",
+	function(){
+		initEl();
+		el.rangeSlider({
+			enabled: false
+		});
+	},
+	assertIsDisabledAndDestroy
+);
+
+var disableWithFunctions = new TestCase(
+	"Disable slider with functions",
+	function(){
+		initEl();
+		el.rangeSlider();
+		el.rangeSlider("disable");
+	},
+	assertIsDisabledAndDestroy
+);
+
+var disableWithOption = new TestCase(
+	"Disable slider with option",
+	function(){
+		initEl();
+		el.rangeSlider();
+		el.rangeSlider("option", "enabled", false);
+	},
+	assertIsDisabledAndDestroy
+);
+
+var enableWithFunction = new TestCase(
+	"Enable with functions",
+	function(){
+		initEl();
+		el.rangeSlider({
+			enabled: false
+		});
+		el.rangeSlider("enable");
+	},
+	assertIsEnabledAndDestroy
+);
+
+var enableWithOption = new TestCase(
+	"Enable slider with option",
+	function(){
+		initEl();
+		el.rangeSlider({
+			enabled: false
+		});
+		el.rangeSlider("option", "enabled", true);
+	},
+	assertIsEnabledAndDestroy
+);
+
 testRunner.add("jQRangeSlider", [setUp,
 			defaultCtorTest, hideLabelsTest, showLabelsTest, changeBoundsTest,
 			wheelModeZoomTest, wheelModeScrollTest, wheelModeSetterTest, wheelSpeedSetterTest, rangeSetterTest,
@@ -608,7 +679,8 @@ testRunner.add("jQRangeSlider", [setUp,
 			issue12,
 			rangeLimitMax, rangeLimitMaxWithMinAndMax, rangeLimitMin, rangeLimitMinWithMinAndMax,
 			destroyTest,
-			rulerTest, rulerInCtor, updateRulerTest]);
+			rulerTest, rulerInCtor, updateRulerTest,
+			disableInCtorTest, disableWithFunctions, disableWithOption, enableWithFunction, enableWithOption]);
 
 }());
 

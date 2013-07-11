@@ -108,27 +108,39 @@
 		return floatValue;
 	},
 
-		_setTypeOption: function(value){
-			if ((value === "text" || value === "number") && this.options.type !== value){
-				this._destroyInput();
-				this.options.type = value;
-				this._createInput();
-			}
-		},
-
-		_setStepOption: function(value){
-			this.options.step = value;
-
-			if (this.options.type === "number"){
-				this._input.attr("step", value !== false ? value : "any");
-			}
-		},
-
-		_displayText: function(text){
-			this._input.val(text);
-			this._text = text;
+	_setTypeOption: function(value){
+		if ((value === "text" || value === "number") && this.options.type !== value){
+			this._destroyInput();
+			this.options.type = value;
+			this._createInput();
 		}
+	},
 
-	});
+	_setStepOption: function(value){
+		this.options.step = value;
+
+		if (this.options.type === "number"){
+			this._input.attr("step", value !== false ? value : "any");
+		}
+	},
+
+	_displayText: function(text){
+		this._input.val(text);
+		this._text = text;
+	},
+
+	enable: function(){
+		$.ui.rangeSliderLabel.prototype.enable.apply(this);
+
+		this._input.attr("disabled", null);
+	},
+
+	disable: function(){
+		$.ui.rangeSliderLabel.prototype.disable.apply(this);
+
+		this._input.attr("disabled", "disabled");
+	}
+
+});
 
 }(jQuery));

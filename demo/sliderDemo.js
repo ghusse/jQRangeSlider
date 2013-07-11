@@ -102,6 +102,7 @@
 			this._createWheelSpeedOption();
 			this._createArrowsOption();
 			this._createLabelsOption();
+			this._createEnabledOption();
 		},
 
 		_createBoundsOptions: function(){
@@ -271,6 +272,21 @@
 			var checked = $(e.target).is(":checked");
 
 			this._setOption("arrows", checked);
+		},
+
+		_createEnabledOption: function(){
+			this._createDT("Enabled");
+
+			var label = $("<label>Enabled</label>"),
+				input = $("<input type='checkbox' name='enabled' checked='checked' />").prependTo(label);
+		
+			this._createDD(label);
+			input.click($.proxy(this._onEnabledClick, this));
+		},
+
+		_onEnabledClick: function(e){
+			var checked = $(e.target).is(":checked");
+			this._setOption("enabled", checked);
 		},
 
 		_createLabelsOption: function(){

@@ -11,6 +11,7 @@
 	"use strict";
 
 	$.widget("ui.rangeSliderMouseTouch", $.ui.mouse, {
+		enabled: true,
 
 		_mouseInit: function(){
 			var that = this;
@@ -30,6 +31,14 @@
 			$.ui.mouse.prototype._mouseDestroy.apply(this);
 		},
 
+		enable: function(){
+			this.enabled = true;
+		},
+
+		disable: function(){
+			this.enabled = false;
+		},
+
 		destroy: function(){
 			this._mouseDestroy();
 			
@@ -39,6 +48,8 @@
 		},
 
 		_touchStart: function(event){
+			if (!this.enabled) return false;
+
 			event.which = 1;
 			event.preventDefault();
 
@@ -63,6 +74,12 @@
 				.bind('touchmove.' + this.widgetName, this._touchMoveDelegate)
 				.bind('touchend.' + this.widgetName, this._touchEndDelegate);
 			}
+		},
+
+		_mouseDown: function(event){
+			if (!this.enabled) return false;
+
+			return $.ui.mouse.prototype._mouseDown.apply(this, [event]);
 		},
 
 		_touchEnd: function(event){
