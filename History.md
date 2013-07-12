@@ -1,5 +1,7 @@
 jQRangeSlider
 -------------
+* 5.3.0: 2013-07-12
+	* Fixed #54: Add enabled option, enable/disable function to allow read-only sliders
 * 5.2.0: 2013-06-28
 	* Fixed #108: Memory leaks when calling destroy
 	* Styling improvement: setting correct height to the slider element.
