@@ -20,7 +20,7 @@ var testRunner,
 		this.check = _check;
 		this.tearDown = _tearDown;
 		this.delay = 100;
-		this.type = "rangeSlider",
+		this.type = "rangeSlider";
 
 		this.getPositions = function(){
 			this.minHandlerPos = $(".ui-rangeSlider-leftHandle").offset().left;

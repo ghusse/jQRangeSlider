@@ -198,7 +198,6 @@
 	});
 
 	function LabelPositioner(label1, label2, type, options){
-		/* jshint, i love you, but it is a constructor*/
 		/*jshint maxstatements:40 */
 
 		this.label1 = label1;
