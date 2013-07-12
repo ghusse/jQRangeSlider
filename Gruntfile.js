@@ -101,7 +101,7 @@ module.exports = function(grunt) {
         ]
       }
     },
-    mincss: {
+    cssmin: {
       compress: {
         files: {
           "dest/css/iThing-min.css": ["css/iThing.css"],
@@ -147,7 +147,7 @@ module.exports = function(grunt) {
  
   // loading the required tasks
   grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-mincss');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-compress');
@@ -171,7 +171,7 @@ module.exports = function(grunt) {
     grunt.log.ok("Running test: " + url);
   });
 
-  grunt.registerTask("default", ["clean", "uglify", "copy", "modifyDemo", "mincss", "compress"]);
+  grunt.registerTask("default", ["clean", "uglify", "copy", "modifyDemo", "cssmin", "compress"]);
   grunt.registerTask('test', ['connect', 'qunit']);
   grunt.registerTask('ci', ["jshint", "test"]);
 };
