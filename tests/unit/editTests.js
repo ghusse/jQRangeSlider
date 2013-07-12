@@ -197,6 +197,23 @@
 		}
 	);
 
+	var disabledTest = new TestCase(
+		"Test disabled state",
+		function(){
+			el = $("#test");
+			el.editRangeSlider({
+				enabled: false
+			});
+		},
+		function(){
+			QUnit.ok(el.find(".ui-rangeSlider-leftLabel input").is(":disabled"), "Input should be disabled");
+			QUnit.ok(el.find(".ui-rangeSlider-rightLabel input").is(":disabled"), "Input should be disabled");
+
+			el.editRangeSlider("destroy");
+			el.empty();
+		}
+	);
+
 
 	testRunner.add("jQEditRangeSlider", [
 		editSetup,
@@ -210,6 +227,8 @@
 		destroy,
 		stepNumberCtor, stepNumberSetter,
 
-		destroyTest
+		destroyTest,
+
+		disabledTest
 	]);
 })();
