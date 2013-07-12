@@ -721,8 +721,7 @@
 		 * Destroy
 		 */
 		destroy: function(){
-			this.element.removeClass("ui-rangeSlider-withArrows")
-			.removeClass("ui-rangeSlider-noArrow");
+			this.element.removeClass("ui-rangeSlider-withArrows ui-rangeSlider-noArrow ui-rangeSlider-disabled");
 
 			this._destroyWidgets();
 			this._destroyElements();

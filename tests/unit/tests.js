@@ -665,6 +665,73 @@ var enableWithOption = new TestCase(
 	assertIsEnabledAndDestroy
 );
 
+function assertSameValuesAndDestroy(){
+	var values = el.rangeSlider("values");
+
+	QUnit.equalEpsilon(values.min, 20, 1e-6, "Min value should not have changed");
+	QUnit.equalEpsilon(values.max, 50, 1e-6, "Max value should not have changed");
+
+	el.rangeSlider("destroy");
+	el.empty();
+}
+
+function setupDisabledDragTest(selector){
+	initEl();
+	el.rangeSlider({
+		enabled: false
+	});
+
+	setTimeout(function(){
+		el.find(selector).simulate("drag", {
+			dx: 20,
+			dy: 0
+		});
+	}, 100);
+}
+
+var barDragDisabled = new TestCase(
+	"Check that the slider is really disabled",
+	function(){
+		setupDisabledDragTest(".ui-rangeSlider-bar");
+		this.delay = 500;
+	},
+	assertSameValuesAndDestroy
+);
+
+var handleDragDisabled = new TestCase(
+	"Check that handles are disabled",
+	function(){
+		setupDisabledDragTest(".ui-rangeSlider-leftHandle");
+		this.delay = 500;
+	},
+	assertSameValuesAndDestroy
+);
+
+var labelDragDisabled = new TestCase(
+	"Check that labels are disabled",
+	function(){
+		setupDisabledDragTest(".ui-rangeSlider-leftLabel");
+		this.delay = 500;
+	},
+	assertSameValuesAndDestroy
+);
+
+var arrowClickDisabled = new TestCase(
+	"Check that arrows are disabled",
+	function(){
+		initEl();
+		el.rangeSlider({
+			enabled: false
+		});
+		this.delay = 500;
+		setTimeout(function(){
+			el.find(".ui-rangeSlider-leftArrow").mousedown();
+			el.find(".ui-rangeSlider-leftArrow").mouseup();
+		}, 100);
+	},
+	assertSameValuesAndDestroy
+);
+
 testRunner.add("jQRangeSlider", [setUp,
 			defaultCtorTest, hideLabelsTest, showLabelsTest, changeBoundsTest,
 			wheelModeZoomTest, wheelModeScrollTest, wheelModeSetterTest, wheelSpeedSetterTest, rangeSetterTest,
@@ -680,7 +747,8 @@ testRunner.add("jQRangeSlider", [setUp,
 			rangeLimitMax, rangeLimitMaxWithMinAndMax, rangeLimitMin, rangeLimitMinWithMinAndMax,
 			destroyTest,
 			rulerTest, rulerInCtor, updateRulerTest,
-			disableInCtorTest, disableWithFunctions, disableWithOption, enableWithFunction, enableWithOption]);
+			disableInCtorTest, disableWithFunctions, disableWithOption, enableWithFunction, enableWithOption,
+			barDragDisabled, handleDragDisabled, labelDragDisabled, arrowClickDisabled]);
 
 }());
 
