@@ -58,6 +58,7 @@
             <li><a href="#defaultValuesOption">Default values</a></li>
             <li><a href="#delayOption">Delay out</a></li>
             <li><a href="#durationOptions">Duration in/out</a></li>
+            <li><a href="#enabledOption">Enabled</a></li>
             <li><a href="#formatterOption">Formatter</a></li>
             <li><a href="#rangeOption">Range</a></li>
             <li><a href="#scalesOption">Scales</a></li>
@@ -82,6 +83,7 @@
               <li class="divider"></li>
               <li><a href="#boundsMethod">Bounds</a></li>
               <li><a href="#destroyMethod">Destroy</a></li>
+              <li><a href="#enableDisableMethods">Enable / disable</a></li>
               <li><a href="#minMaxMethods">Min / max</a></li>
               <li><a href="#resizeMethod">Resize</a></li>
               <li><a href="#scrollMethods">Scroll left/right</a></li>
@@ -438,16 +440,49 @@ $("#dateSlider").dateRangeSlider(
   durationOut: 1000
 });</code></pre></dd>
             <dt>Edit slider</dt>
-            <dd><pre class="prettyprint linenums"><code class="language-js">$("#defaultValuesExample").editRangeSlider({
+            <dd><pre class="prettyprint linenums"><code class="language-js">$("#durationExample").editRangeSlider({
   valueLabels:"change",
   durationIn: 1000,
   durationOut: 1000
 });</code></pre></dd>
             <dt>Date slider</dt>
-            <dd><pre class="prettyprint linenums"><code class="language-js">$("#defaultValuesExample").dateRangeSlider({
+            <dd><pre class="prettyprint linenums"><code class="language-js">$("#durationExample").dateRangeSlider({
   valueLabels:"change",
   durationIn: 1000,
   durationOut: 1000
+});</code></pre></dd>
+          </dl>
+        </div>
+
+        <!--
+          Enabled
+        -->
+
+        <h2 id="enabledOption">Enabled</h2>
+
+        <p>The option <code>enabled</code> allows you to configure a <strong>read-only</strong> slider.</p>
+
+        <div class="alert alert-warning">
+          <strong>Warning</strong>: This option block all user input, but do not block modifications in javascript. Please make sure your code is correctly reacting to the disabled state.</code>.
+        </div>
+
+        <div class="example">
+          <div class="sliderContainer">
+            <div id="disabledExample"></div>
+          </div>
+          
+          <dl>
+            <dt>Basic slider (example above)</dt>
+            <dd><pre class="prettyprint linenums"><code class="language-js">$("#disabledExample").rangeSlider({
+  enabled: false
+});</code></pre></dd>
+            <dt>Edit slider</dt>
+            <dd><pre class="prettyprint linenums"><code class="language-js">$("#disabledExample").editRangeSlider({
+  enabled: false
+});</code></pre></dd>
+            <dt>Date slider</dt>
+            <dd><pre class="prettyprint linenums"><code class="language-js">$("#disabledExample").dateRangeSlider({
+  enabled: false
 });</code></pre></dd>
           </dl>
         </div>
@@ -977,16 +1012,40 @@ $("#dateSlider").dateRangeSlider("bounds", new Date(2012, 0, 1), new Date(2012, 
             <p><a href="#" onClick="$('#destroyExample').rangeSlider('destroy');return false;" class="btn">Destroy</a> <a href="#" onClick="$('#destroyExample').rangeSlider();return false;" class="btn">Re-create</a></p>
 
             <dl>
-            <dt>Basic slider</dt>
-            <dd><pre class="prettyprint linenums"><code class="language-js">$("#slider").rangeSlider("destroy");
-</code></pre></dd>
-            <dt>Edit slider</dt>
-            <dd><pre class="prettyprint linenums"><code class="language-js">$("#slider").editRangeSlider("destroy");
-</code></pre></dd>
-            <dt>Date slider</dt>
-            <dd><pre class="prettyprint linenums"><code class="language-js">$("#slider").dateRangeSlider("destroy");
-</code></pre></dd>
-          </dl>
+              <dt>Basic slider</dt>
+              <dd><pre class="prettyprint linenums"><code class="language-js">$("#slider").rangeSlider("destroy");
+  </code></pre></dd>
+              <dt>Edit slider</dt>
+              <dd><pre class="prettyprint linenums"><code class="language-js">$("#slider").editRangeSlider("destroy");
+  </code></pre></dd>
+              <dt>Date slider</dt>
+              <dd><pre class="prettyprint linenums"><code class="language-js">$("#slider").dateRangeSlider("destroy");
+  </code></pre></dd>
+            </dl>
+          </div>
+
+          <h2 id="enableDisableMethods">Enable / disable</h2>
+
+          <p>The methods <code>enable</code> and <code>disable</code> lets you enable or disable a slider. When a slider is diabled, user can't modify its values.</p>
+
+          <div class="example">
+            <div class="sliderContainer"><div id="disableMethodExample"></div></div>
+            <p>
+              <a href="#" onClick="$('#disableMethodExample').rangeSlider('disable');return false;" class="btn">Disable</a>
+              <a href="#" onClick="$('#disableMethodExample').rangeSlider('enable');return false;" class="btn">Enable</a>
+            </p>
+
+            <dl>
+              <dt>Basic slider</dt>
+              <dd><pre class="prettyprint linenums"><code class="language-js">$("#slider").rangeSlider("disable");
+$("#slider").rangeSlider("enable");</code></pre></dd>
+              <dt>Edit slider</dt>
+              <dd><pre class="prettyprint linenums"><code class="language-js">$("#slider").editRangeSlider("disable");
+$("#slider").editRangeSlider("enable");</code></pre></dd>
+              <dt>Date slider</dt>
+              <dd><pre class="prettyprint linenums"><code class="language-js">$("#slider").dateRangeSlider("disable");
+$("#slider").dateRangeSlider("enable");</code></pre></dd>
+            </dl>
           </div>
 
 
@@ -1207,9 +1266,14 @@ $("#dateSlider").dateRangeSlider("zoomOut", 42);
         delayOut: 4000
       });
 
+      $("#disabledExample").rangeSlider({
+        enabled: false
+      });
+
       $("#hiddenSlider").rangeSlider();
       $("#scrollExample, #zoomExample").rangeSlider();
       $('#destroyExample').rangeSlider();
+      $("#disableMethodExample").rangeSlider();
 
       $("#rulersExample").rangeSlider({
         scales: [{
