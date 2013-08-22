@@ -2,23 +2,18 @@
   position: relative;
 }
 
-#slider{
-  display: block;
-  width: 250px;
-  position: absolute;
-  right: 0;
-  bottom: 20px;
-}
-
 #slider .ui-rangeSlider-label{
   font-weight: normal;
+}
+
+#sliderContainer{
+  padding-top: 15px;
 }
 
 .hero-unit .buttons{
 	text-align: center;
 	margin-top: 40px;
 }
-
 
 .thumbnails p{
 	height: 90px;

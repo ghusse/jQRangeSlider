@@ -11,42 +11,37 @@
   <link href="stable/css/iThing.css" rel="stylesheet" media="screen">
   <link rel="icon" type="image/png" href="favicon.png" />
   <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
-
-	<script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-20560239-1']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-</script>
-
 </head>
 
 <body data-spy="scroll" data-target="#tableOfContent" data-offset="60">
-  <nav class="navbar navbar-inverse navbar-fixed-top">
-  	<div class="navbar-inner">
-  		<a class="brand" href="index.html" onClick="_gaq.push(['_trackEvent', 'Home', 'MenubarBrand']);">jQRangeSlider</a>
-			<ul class="nav">
-				<li><a href="index.html" onClick="_gaq.push(['_trackEvent', 'Home', 'Menubar']);"><i class="icon icon-white icon-home"></i> Home</a></li>
-				<li><a href="demo.html" onClick="_gaq.push(['_trackEvent', 'Demo', 'Menubar']);"><i class="icon icon-white icon-play"></i> Demo</a></li>
-				<li class="active"><a href="documentation.html"><i class="icon icon-white icon-book"></i> Documentation</a></li>
-        <li><a href="technicalDemo.html"  onClick="_gaq.push(['_trackEvent', 'TechnicalDocumentation', 'Menubar']);"><i class="icon icon-white icon-fast-forward"></i> Technical demo</a></li>
-         <li><a href="javascript:UserVoice.showPopupWidget();"><i class="icon icon-white icon-question-sign"></i> Support</a></li>
-			</ul>
+  <nav class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">jQRangeSlider</a>
+    </div>
 
-      <ul class="pull-right nav">
-        <li><a href="download.html" onClick="_gaq.push(['_trackEvent', 'Download', 'Menubar']);">Download <i class="icon icon-white icon-download-alt"></i></a></li>
+    <div class="collapse navbar-collapse navbar-ex1-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html"><i class="glyphicon glyphicon-white glyphicon-home"></i> Home</a></li>
+        <li><a href="demo.html" onClick="_gaq.push(['_trackEvent', 'Demo', 'Menubar']);"><i class="glyphicon glyphicon-white glyphicon-play"></i> Demo</a></li>
+        <li class="active"><a href="documentation.html" onClick="_gaq.push(['_trackEvent', 'Documentation', 'Menubar']);"><i class="glyphicon glyphicon-white glyphicon-book"></i> Documentation</a></li>
+        <li><a href="technicalDemo.html" onClick="_gaq.push(['_trackEvent', 'TechnicalDocumentation', 'Menubar']);"><i class="glyphicon glyphicon-white glyphicon-fast-forward"></i> Technical demo</a></li>
+        <li><a href="javascript:UserVoice.showPopupWidget();"><i class="glyphicon glyphicon-white glyphicon-question-sign"></i> Support</a></li>
       </ul>
-  	</div>
+      <ul class="navbar-right nav navbar-nav">
+        <li><a href="download.html" onClick="_gaq.push(['_trackEvent', 'Download', 'Menubar']);"><i class="glyphicon glyphicon-white glyphicon-download-alt"></i> Download</a></li>
+      </ul>
+    </div>    
   </nav>
 
   <div class="container">
     <div class="row">
-      <nav id="tableOfContent" class="span3">
+      <nav id="tableOfContent" class="col-md-3">
         <ul class="nav nav-list" data-spy="affix">
           <li><a href="#quickStart">Quick start</a></li>
           <li class="nav-header"><span class="trigger" data-toggle="collapse" data-target="#optionsDetails"><i class="icon icon-generic"></i>Options</span>
@@ -94,7 +89,7 @@
         </ul>
       </nav>
       
-      <article class="span9">
+      <article class="col-md-9">
         <section id="quickStart">
           <div class="page-header">
             <h1>Quick start</h1>
@@ -1207,11 +1202,11 @@ $("#dateSlider").dateRangeSlider("zoomOut", 42);
     </div>
   </div>
 
-  <script src="stable/lib/jquery-1.7.1.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
   <script src="lib/bootstrap/js/bootstrap.min.js"></script>
   <script src="lib/prettify/prettify.js"></script>
 
-  <script src="stable/lib/jquery-1.7.1.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
   <script src="stable/demo/lib/jquery-ui/js/jquery-ui-1.8.16.custom.min.js"></script>
   <script src="stable/lib/jquery.mousewheel.min.js"></script>
   
@@ -1313,6 +1308,18 @@ $("#dateSlider").dateRangeSlider("zoomOut", 42);
         }]
       });
   //-->
+  </script>
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-20560239-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
   </script>
 
   <script type="text/javascript">
