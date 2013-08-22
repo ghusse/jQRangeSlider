@@ -253,6 +253,10 @@
 		_onDragLeftHandle: function(event, ui){
 			this._cacheIfNecessary();
 
+			if (ui.element[0] !== this.options.leftHandle[0]){
+				return;
+			}
+
 			if (this._switchedValues()){
 				this._switchHandles();
 				this._onDragRightHandle(event, ui);
@@ -268,6 +272,10 @@
 
 		_onDragRightHandle: function(event, ui){
 			this._cacheIfNecessary();
+
+			if (ui.element[0] !== this.options.rightHandle[0]){
+				return;
+			}
 
 			if (this._switchedValues()){
 				this._switchHandles();
