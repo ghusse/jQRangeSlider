@@ -9,6 +9,14 @@
   padding-top: 40px;
 }
 
+.ui-rangeSlider,
+.ui-rangeSlider-container,
+.ui-rangeSlider-arrow{
+  -webkit-box-sizing:content-box;
+     -moz-box-sizing:content-box;
+          box-sizing:content-box;
+}
+
 .ui-rangeSlider-withArrows .ui-rangeSlider-container{
   margin: 0 15px;
 }
