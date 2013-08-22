@@ -80,8 +80,8 @@
 			}
 
 			if (value !== false){
-				var min = typeof value.min === "undefined" ? this.options.range.min || false : value.min,
-					max = typeof value.max === "undefined" ? this.options.range.max || false : value.max;
+				var min = valueOrFalse(value.min, this.options.range.min),
+					max = valueOrFalse(value.max, this.options.range.max);
 
 				this.options.range = {
 					min: min,
@@ -531,7 +531,14 @@
 			this._cache();
 			this._positionBar();
 		}
-
 	});
+
+	function valueOrFalse(value, defaultValue){
+		if (typeof value === "undefined"){
+			return defaultValue || false;
+		}
+
+		return value;
+	}
 
 }(jQuery));
