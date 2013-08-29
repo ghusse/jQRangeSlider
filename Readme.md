@@ -18,6 +18,7 @@ Dependencies
 + jQuery
 + jQuery UI core
 + jQuery UI widget
++ jQuery UI mouse
 + jQuery Mousewheel plugin by Brandon Aaron (optional, needed for scrolling or zooming)
 
 
