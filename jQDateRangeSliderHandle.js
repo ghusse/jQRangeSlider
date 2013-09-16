@@ -61,15 +61,21 @@
 			var minDate = new Date(this.options.bounds.min),
 				maxDate = new Date(this.options.bounds.max),
 				stepDate = minDate,
-				i = 0;
+				i = 0,
+				previous = new Date();
 
 			this._steps = [];
 
-			while (stepDate <= maxDate){
+			while (stepDate <= maxDate && (i === 1 || previous.valueOf() !== stepDate.valueOf())){
+				previous = stepDate;
 				this._steps.push(stepDate.valueOf());
 
 				stepDate = this._addStep(minDate, i, this.options.step);
 				i++;
+			}
+
+			if (previous.valueOf() === stepDate.valueOf()){
+				this._steps = false;
 			}
 		},
 
@@ -82,6 +88,7 @@
 
 			result = this._addThing(result, "FullYear", factor, step.years);
 			result = this._addThing(result, "Month", factor, step.months);
+			result = this._addThing(result, "Date", factor, step.weeks * 7);
 			result = this._addThing(result, "Date", factor, step.days);
 			result = this._addThing(result, "Hours", factor, step.hours);
 			result = this._addThing(result, "Minutes", factor, step.minutes);
