@@ -362,6 +362,10 @@
 		 */
 
 		_mouseWheelZoom: function(event, delta, deltaX, deltaY){
+			if (!this.enabled){
+				return false;
+			}
+
 			var middle = this._values.min + (this._values.max - this._values.min) / 2,
 				leftRange = {},
 				rightRange = {};
@@ -391,6 +395,10 @@
 		},
 
 		_mouseWheelScroll: function(event, delta, deltaX, deltaY){
+			if (!this.enabled){
+				return false;
+			}
+
 			if (this._wheelTimeout === false){
 				this.startScroll();
 			} else {
