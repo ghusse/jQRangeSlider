@@ -1,5 +1,9 @@
 jQRangeSlider
 -------------
+* 5.4.0: 2013-09-16
+	* Fixed #128: Using the mouse wheel changes the values, even if slider is disabled
+	* Fixed #130: Labels don't disappear when values changed in code
+	* Fixed #133: Step in weeks breaks the slider
 * 5.3.0: 2013-07-12
 	* Fixed #54: Add enabled option, enable/disable function to allow read-only sliders
 * 5.2.0: 2013-06-28
