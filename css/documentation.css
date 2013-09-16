@@ -26,9 +26,14 @@ input[type=number]{
 	height: auto;
 }
 
+@media (max-width: 992px){
+	#tableOfContent ul.affix{
+		display: none;
+	}
+}
+
 #tableOfContent>.nav{
-	top:90px;
-	position: fixed;
+	margin-top: 50px;
 }
 
 #tableOfContent ul ul{
@@ -56,16 +61,6 @@ input[type=number]{
 	padding: 3px 15px;
 	font-weight: bold;
 	font-size: 1.1em;
-}
-
-#tableOfContent span.trigger i.icon-generic{
-	background-position: -313px -119px;
-	background-image:url("../lib/bootstrap/img/glyphicons-halflings.png");
-	opacity: .5;
-}
-
-#tableOfContent span.trigger.collapsed i.icon-generic{
-	background-position: -456px -72px;
 }
 
 #tableOfContent li a:hover{
