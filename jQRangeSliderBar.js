@@ -362,6 +362,7 @@
 		 */
 
 		_mouseWheelZoom: function(event, delta, deltaX, deltaY){
+			/*jshint maxstatements:17*/
 			if (!this.enabled){
 				return false;
 			}
