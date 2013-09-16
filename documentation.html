@@ -42,10 +42,10 @@
   <div class="container">
     <div class="row">
       <nav id="tableOfContent" class="col-md-3">
-        <ul class="nav nav-list" data-spy="affix">
+        <ul class="nav nav-list hiddenprint" data-spy="affix">
           <li><a href="#quickStart">Quick start</a></li>
-          <li class="nav-header"><span class="trigger" data-toggle="collapse" data-target="#optionsDetails"><i class="icon icon-generic"></i>Options</span>
-            <ul id="optionsDetails" class="collapse in">
+          <li class="nav-header"><span class="trigger collapsed" data-toggle="collapse" data-target="#optionsDetails"><i class="icon icon-generic"></i>Options</span>
+            <ul id="optionsDetails" class="collapse out nav">
             <li><a href="#optionsUsage">Get and set options</a></li>
             <li class="divider"></li>
             <li><a href="#arrowsOption">Arrows</a></li>
@@ -1229,6 +1229,16 @@ $("#dateSlider").dateRangeSlider("zoomOut", 42);
   //<!--
      $(document).ready(function(){
       prettyPrint();
+
+      $('body').on('activate.bs.scrollspy', function (e) {
+        $(e.target).parents("ul:first").collapse("show");
+        $("#tableOfContent").find("ul.in").each(function(i, element){
+          var $ul = $(element);
+          if ($ul.find("li.active").length === 0){
+            $ul.collapse("hide");
+          }
+        });
+      });
 
       $("#basicSliderExample").rangeSlider();
       $("#editSliderExample").editRangeSlider();

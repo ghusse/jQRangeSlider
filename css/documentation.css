@@ -7,11 +7,6 @@
 	-webkit-border-radius: 4px;
 }
 
-h1, h2{
-	padding-top: 45px;
-	margin-top: -35px;
-}
-
 pre.afterExample{
 	margin-top: 20px;
 }
@@ -31,9 +26,15 @@ input[type=number]{
 	height: auto;
 }
 
+#tableOfContent>.nav{
+	top:90px;
+	position: fixed;
+}
+
 #tableOfContent ul ul{
 	list-style-type: none;
 	margin: 0;
+	padding: 0;
 }
 
 #tableOfContent li a{
@@ -43,7 +44,6 @@ input[type=number]{
 	font-weight: normal;
 	text-transform: none;
 	font-size: 14px;
-	margin-left: -10px;
 }
 
 #tableOfContent li.nav-header{
@@ -53,7 +53,9 @@ input[type=number]{
 
 #tableOfContent li.nav-header span.trigger{
 	display: block;
-	margin-left: -10px;
+	padding: 3px 15px;
+	font-weight: bold;
+	font-size: 1.1em;
 }
 
 #tableOfContent span.trigger i.icon-generic{
@@ -71,8 +73,9 @@ input[type=number]{
 	background-color: #EEE;
 }
 
-#tableOfContent li.active a,
-#tableOfContent li.active a:hover{
+#tableOfContent li li.active a,
+#tableOfContent li li.active a:hover{
 	background-color: #08C;
 	color:white;
 }
+
