@@ -394,7 +394,25 @@
 			}
 		},
 
+		_deactivateLabels: function(){
+			if (this.options.valueLabels === "change"){
+				this._leftLabel("option", "show", "hide");
+				this._rightLabel("option", "show", "hide");
+			}
+		},
+
+		_reactivateLabels: function(){
+			if (this.options.valueLabels === "change"){
+				this._leftLabel("option", "show", "change");
+				this._rightLabel("option", "show", "change");
+			}
+		},
+
 		_changed: function(isAutomatic){
+			if (isAutomatic === true){
+				this._deactivateLabels();
+			}
+
 			if (this._updateValues() || this._valuesChanged){
 				this._trigger("valuesChanged");
 
@@ -403,6 +421,10 @@
 				}
 
 				this._valuesChanged = false;
+			}
+
+			if (isAutomatic === true){
+				this._reactivateLabels();
 			}
 		},
 
@@ -612,10 +634,15 @@
 		 * Public methods
 		 */
 		values: function(min, max){
-			var val = this._bar("values", min, max);
+			var val;
 
-			if (typeof min !== "undefined" && typeof max !== "undefined"){
+			if (typeof min !== "undefined" && typeof max !== "undefined"){
+				this._deactivateLabels();
+				val = this._bar("values", min, max);
 				this._changed(true);
+				this._reactivateLabels();
+			}else{
+				val = this._bar("values", min, max);
 			}
 
 			return val;
