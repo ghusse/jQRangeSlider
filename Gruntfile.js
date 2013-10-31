@@ -92,7 +92,7 @@ module.exports = function(grunt) {
       },
       lib:{
         files: [
-          {src: ["jquery-*.js", "jquery.mousewheel*", "jquery*.txt"], dest: "dest/lib/", expand: true, cwd: 'lib/'}
+          {src: ["jquery.mousewheel*"], dest: "dest/lib/", expand: true, cwd: 'lib/'}
         ]
       },
       doc: {
