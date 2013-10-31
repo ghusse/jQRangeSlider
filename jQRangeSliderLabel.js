@@ -107,6 +107,7 @@
 
 			if (this.options.show !== "show"){
 				this.element.hide();
+				this._positionner.moving = false;
 			}else{
 				this.element.show();
 				this._display(this.options.handle[this.options.handleType]("value"));
