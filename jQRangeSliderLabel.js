@@ -27,6 +27,7 @@
 		_positionner: null,
 		_valueContainer:null,
 		_innerElement:null,
+		_value: null,
 
 		_create: function(){
 			this.options.isLeft = this._handle("option", "isLeft");
@@ -87,6 +88,11 @@
 				this._updateShowOption(value);
 			} else if (key === "durationIn" || key === "durationOut" || key === "delayOut"){
 				this._updateDurations(key, value);
+			} else if (key === "formatter"){
+				if (typeof value === "function" || value === false){
+					this.options.formatter = value;
+					this._display(this._value);
+				}
 			}
 		},
 
@@ -117,6 +123,8 @@
 			}else{
 				this._displayText(this.options.formatter(value));
 			}
+
+			this._value = value;
 		},
 
 		_displayText: function(text){

@@ -168,11 +168,9 @@
 
 		_setFormatterOption: function(key, value){
 			if (key === "formatter" && value !== null && typeof value === "function"){
-				this.options.formatter = value;
-				
 				if (this.options.valueLabels !== "hide"){
-					this._destroyLabels();
-					this._createLabels();
+					this._leftLabel("option", "formatter", value);
+					this.options.formatter = this._rightLabel("option", "formatter", value);
 				}
 			}
 		},
