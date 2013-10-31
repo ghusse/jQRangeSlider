@@ -93,10 +93,13 @@
 		function(){
 			el.editRangeSlider("values", 11, 55);
 
-			var input = $(el.find("input")[0]);
+			var input = $(el.find("input")[0]),
+				e = jQuery.Event("keyup");
 
-			input.val("40")
-				.simulate("keyup", {which: 13});
+			input.val("40");
+
+			e.which = 13;
+			input.trigger(e);
 		},
 		function(){
 			this.type = "editRangeSlider";
