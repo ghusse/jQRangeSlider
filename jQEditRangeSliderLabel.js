@@ -76,9 +76,9 @@
 
 		_onKeyUp: function(e){
 			if (e.which === 13){
-			this._onChange(e);
-			return false;
-		}
+				this._onChange(e);
+				return false;
+			}
 		},
 
 		_onChange: function(){
