@@ -97,9 +97,9 @@
 
 			input.val("40")
 				.simulate("keyup", {which: 13});
-			this.type = "editRangeSlider";
 		},
 		function(){
+			this.type = "editRangeSlider";
 			QUnit.ok(this.min() === 40 || this.max() === 40, "Entered value should have been set");
 		}
 	);
@@ -112,10 +112,10 @@
 
 			var input = $(el.find("input")[0]);
 			input.val("40").focus().click();
-			this.type = "editRangeSlider";
 		},
 
 		function(){
+			this.type = "editRangeSlider";
 			QUnit.ok(this.min() === 40 || this.max() === 40, "Value should have been set " + this.min() + " " + this.max());
 		}
 	);
@@ -128,9 +128,9 @@
 			var input = $(el.find("input")[0]);
 			
 			input.blur().val("40").click();
-			this.type = "editRangeSlider";
 		},
 		function(){
+			this.type = "editRangeSlider";
 			QUnit.ok(this.min() !== 40 || this.max() !== 40, "Value should not have been set")
 		}
 	);
@@ -142,9 +142,9 @@
 
 			var input = $(el.find("input")[0]);
 			input.focus().val("40").blur();
-			this.type = "editRangeSlider";
 		},
 		function(){
+			this.type = "editRangeSlider";
 			QUnit.ok(this.min() === 40 || this.max() === 40, "Value should have been set")
 		}
 	);
