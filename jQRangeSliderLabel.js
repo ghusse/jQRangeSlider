@@ -88,7 +88,13 @@
 				this._updateShowOption(value);
 			} else if (key === "durationIn" || key === "durationOut" || key === "delayOut"){
 				this._updateDurations(key, value);
-			} else if (key === "formatter"){
+			}
+
+			this._setFormatterOption(key, value);
+		},
+
+		_setFormatterOption: function(key, value){
+			if (key === "formatter"){
 				if (typeof value === "function" || value === false){
 					this.options.formatter = value;
 					this._display(this._value);
