@@ -201,11 +201,12 @@
 			value = this._constraintValue(value);
 
 			var ratio = (value - this.options.bounds.min) / (this.options.bounds.max - this.options.bounds.min),
-				availableWidth = this.cache.parent.width - this.cache.width.outer,
-				parentPosition = this.cache.parent.offset.left;
+				availableWidth = this.cache.parent.width,
+				parentPosition = this.cache.parent.offset.left,
+				shift = this.options.isLeft ? 0 : this.cache.width.outer;
 
 
-			return ratio * availableWidth + parentPosition;
+			return ratio * availableWidth + parentPosition - shift;
 		},
 
 		_getValueForPosition: function(position){
@@ -215,8 +216,11 @@
 		},
 
 		_getRawValueForPositionAndBounds: function(position, min, max){
+
+			position += this.options.isLeft ? 0 : this.cache.width.outer;
+
 			var parentPosition =  this.cache.parent.offset === null ? 0 : this.cache.parent.offset.left,
-					availableWidth = this.cache.parent.width - this.cache.width.outer,
+					availableWidth = this.cache.parent.width,
 					ratio = (position - parentPosition) / availableWidth;
 
 			return	ratio * (max - min) + min;
