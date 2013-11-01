@@ -82,10 +82,16 @@
 		},
 
 		_onValueChange: function(event, data){
+			var changed = false;
+
 			if (data.isLeft){
-				this.min(data.value);
+				changed = this._values.min !== this.min(data.value);
 			}else{
-				this.max(data.value);
+				changed = this._values.max !== this.max(data.value);
+			}
+
+			if (changed){
+				this._trigger("userValuesChanged");
 			}
 		}
 	});

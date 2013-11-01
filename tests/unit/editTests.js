@@ -94,9 +94,15 @@
 			el.editRangeSlider("values", 11, 55);
 
 			var input = $(el.find("input")[0]),
-				e = jQuery.Event("keyup");
+				e = jQuery.Event("keyup"),
+				that = this;
 
 			input.val("40");
+
+			this.triggered = false;
+			el.bind("userValuesChanged", function(){
+				that.triggered = true;
+			});
 
 			e.which = 13;
 			input.trigger(e);
@@ -104,6 +110,7 @@
 		function(){
 			this.type = "editRangeSlider";
 			QUnit.ok(this.min() === 40 || this.max() === 40, "Entered value should have been set");
+			QUnit.ok(this.triggered, "UserValuesChanged event should have been triggered	");
 		}
 	);
 
