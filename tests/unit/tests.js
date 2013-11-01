@@ -231,11 +231,14 @@ var wheelModeConstructorTest = new TestCase(
 	"Wheel mode in constructor",
 	function(){
 		el.rangeSlider("destroy");
+	
 		el.rangeSlider({
-			wheelMode: "scroll"
+			wheelMode: "scroll",
+			defaultValues: {
+				min: 30, 
+				max: 40
+			}
 		});
-
-		el.rangeSlider("values", 30, 40);
 	},
 	scrollAssert
 );

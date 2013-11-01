@@ -221,7 +221,7 @@
 
 			var parentPosition =  this.cache.parent.offset === null ? 0 : this.cache.parent.offset.left,
 					availableWidth = this.cache.parent.width,
-					ratio = (position - parentPosition) / availableWidth;
+					ratio = availableWidth > 0 ? (position - parentPosition) / availableWidth : 0;
 
 			return	ratio * (max - min) + min;
 		},

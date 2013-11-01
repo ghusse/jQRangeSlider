@@ -331,7 +331,11 @@
 		_proxy: function(element, type, args){
 			var array = Array.prototype.slice.call(args);
 
-			return element[type].apply(element, array);
+			if (element && element[type]){
+				return element[type].apply(element, array);	
+			}
+
+			return null;
 		},
 
 		_handleType: function(){
