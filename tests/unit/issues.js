@@ -83,15 +83,15 @@
 			});
 
 			this.triggered = false;
+		},
+		function(){
 			var that = this;
-
 			el.bind("valuesChanged", function(){
 				that.triggered = true;
 			});
 
 			el.dateRangeSlider("values", new Date(this.values.min.valueOf()), new Date(this.values.max.valueOf()));
-		},
-		function(){
+
 			QUnit.ok(!this.triggered, "Values did not change, event should not have been fired");
 		},
 		function(){
