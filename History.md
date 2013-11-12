@@ -5,6 +5,7 @@ jQRangeSlider
 	* Fixed #141: userValuesChanged event not fired when user edits input value
 	* Fixed #142: Labels don't show up the first time after a programmatically value change
 	* Fixed #143: Changing formatter causes labels to disappear
+    * JQuery-UI 1.10.x now required
 * 5.4.0: 2013-09-16
 	* Fixed #128: Using the mouse wheel changes the values, even if slider is disabled
 	* Fixed #130: Labels don't disappear when values changed in code
