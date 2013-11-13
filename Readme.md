@@ -16,7 +16,7 @@ License : Dual license GPL v3 and MIT
 Dependencies
 ------------
 + jQuery
-+ jQuery UI core (1.10.x)
++ jQuery UI core (1.9 or later)
 + jQuery UI widget
 + jQuery UI mouse
 + jQuery Mousewheel plugin by Brandon Aaron (optional, needed for scrolling or zooming)
