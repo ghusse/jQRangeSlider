@@ -390,7 +390,7 @@
 			clearTimeout(this._wheelTimeout);
 			this._wheelTimeout = setTimeout($.proxy(this._wheelStop, this), 200);
 
-			this.zoomOut(deltaY * this.options.wheelSpeed);
+			this.zoomIn(deltaY * this.options.wheelSpeed);
 
 			return false;
 		},

@@ -186,13 +186,13 @@ var wheelModeZoomTest = new TestCase(
 		$(".ui-rangeSlider-bar").trigger("mousewheel", [-10, 0, -10]);
 
 		QUnit.deepEqual(el.rangeSlider("option", "wheelMode"), "zoom", "Wheelmode setter should have worked");
-		QUnit.ok($(".ui-rangeSlider-leftHandle").offset().left > this.minHandlerPos, "Left handle should have been moved");
-		QUnit.ok($(".ui-rangeSlider-rightHandle").offset().left < this.maxHandlerPos, "Right handle should have been moved");
-		QUnit.ok($(".ui-rangeSlider-leftLabel").offset().left > this.minLabelPos, "Left label should have been moved");
-		QUnit.ok($(".ui-rangeSlider-rightLabel").offset().left < this.maxLabelPos, "Right label should have been moved");
+		QUnit.ok($(".ui-rangeSlider-leftHandle").offset().left < this.minHandlerPos, "Left handle should have been moved");
+		QUnit.ok($(".ui-rangeSlider-rightHandle").offset().left > this.maxHandlerPos, "Right handle should have been moved");
+		QUnit.ok($(".ui-rangeSlider-leftLabel").offset().left < this.minLabelPos, "Left label should have been moved");
+		QUnit.ok($(".ui-rangeSlider-rightLabel").offset().left > this.maxLabelPos, "Right label should have been moved");
 		
-		QUnit.ok(this.min() > this.values.min, "Zoom should have worked");
-		QUnit.ok(this.max() < this.values.max, "Zoom should have worked");
+		QUnit.ok(this.min() < this.values.min, "Zoom should have worked");
+		QUnit.ok(this.max() > this.values.max, "Zoom should have worked");
 	}
 );
 
