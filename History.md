@@ -1,5 +1,8 @@
 jQRangeSlider
 -------------
+* 5.6.0: 2014-02-01
+	* Fixed #144: Inverted label order with small range
+	* Fixed #146: Setting values via the `min`, `max`, or `values` methods produces an invalid slider
 * 5.5.0: 2013-11-01
 	* Fixed #124: Scales and slider position don't line up
 	* Fixed #141: userValuesChanged event not fired when user edits input value
