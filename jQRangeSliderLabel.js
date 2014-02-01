@@ -143,6 +143,10 @@
 				.toggleClass("ui-rangeSlider-rightLabel", !this.options.isLeft);
 		},
 
+		_positionLabels: function(){
+			this._positionner.PositionLabels();
+		},
+
 		/*
 		 * Mouse touch redirection
 		 */
@@ -175,7 +179,7 @@
 			this.options.isLeft = isLeft;
 			
 			this._toggleClass();
-			this._positionner.PositionLabels();
+			this._positionLabels();
 		},
 
 		/*
@@ -207,7 +211,7 @@
 			this._display(this._handle("value"));
 
 			if (this.options.show === "show"){
-				this._positionner.PositionLabels();
+				this._positionLabels();
 			}
 		}
 	});
@@ -343,7 +347,14 @@
 			}
 
 			var label1Pos = this.GetRawPosition(this.cache.label1, this.cache.handle1),
-				label2Pos = this.GetRawPosition(this.cache.label2, this.cache.handle2);
+				label2Pos = this.GetRawPosition(this.cache.label2, this.cache.handle2),
+				temp;
+
+			if ((label2Pos.left - label1Pos.left) * (this.cache.handle2.value - this.cache.handle1.value) <= 0){
+				temp = label1Pos;
+				label1Pos = label2Pos;
+				label2Pos = temp;
+			}
 
 			this.ConstraintPositions(label1Pos, label2Pos);
 
@@ -450,6 +461,7 @@
 
 		this.UpdatePosition = function(element, cache){
 			cache.offset = element.offset;
+			cache.value = element.value;
 		}
 
 		this.GetRawPosition = function(labelCache, handleCache){
