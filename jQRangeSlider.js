@@ -30,6 +30,7 @@
 
 		_values: null,
 		_valuesChanged: false,
+		_initialized: false,
 
 		// Created elements
 		bar: null,
@@ -82,6 +83,7 @@
 		},
 
 		_initValues: function(){
+			this._initialized = true;
 			this.values(this._values.min, this._values.max);
 		},
 
@@ -639,6 +641,12 @@
 			var val;
 
 			if (typeof min !== "undefined" && typeof max !== "undefined"){
+				if (!this._initialized){
+					this._values.min = min;
+					this._values.max = max;
+					return this._values;
+				}
+
 				this._deactivateLabels();
 				val = this._bar("values", min, max);
 				this._changed(true);
