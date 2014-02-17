@@ -25,7 +25,8 @@
 			range: {min: false, max: false},
 			step: false,
 			scales: false,
-			enabled: true
+			enabled: true,
+			rtl: false
 		},
 
 		_values: null,
@@ -98,6 +99,7 @@
 			this._setStepOption(key, value);
 			this._setScalesOption(key, value);
 			this._setEnabledOption(key, value);
+			this._setRtlOption(key, value);
 		},
 
 		_validProperty: function(object, name, defaultValue){
@@ -221,6 +223,14 @@
 			}
 		},
 
+		_setRtlOption: function(key, value){
+			if (key === "rtl"){
+				this.options.rtl = value === true;
+				this._leftHandle("option", "rtl", this.option.rtl);
+				this._rightHandle("option", "rtl", this.option.rtl);
+			}
+		},
+
 		_createElements: function(){
 			if (this.element.css("position") !== "absolute"){
 				this.element.css("position", "relative");
@@ -264,15 +274,17 @@
 			this.leftHandle = this._createHandle({
 					isLeft: true,
 					bounds: this.options.bounds,
-					value: this._values.min,
-					step: this.options.step
+					value: this.options.rtl ? this._values.max : this.options.min,
+					step: this.options.step,
+					rtl: this.options.rtl
 			}).appendTo(this.container);
 	
 			this.rightHandle = this._createHandle({
 				isLeft: false,
 				bounds: this.options.bounds,
-				value: this._values.max,
-				step: this.options.step
+				value: this.options.rtl ? this._values.min : this.options.max,
+				step: this.options.step,
+				rtl: this.options.rtl
 			}).appendTo(this.container);
 		},
 		
@@ -289,7 +301,8 @@
 					type: this._handleType(),
 					range: this.options.range,
 					wheelMode: this.options.wheelMode,
-					wheelSpeed: this.options.wheelSpeed
+					wheelSpeed: this.options.wheelSpeed,
+					rtl: this.options.rtl
 				});
 
 			this.options.range = this._bar("option", "range");
@@ -481,7 +494,8 @@
 				show: this.options.valueLabels,
 				durationIn: this.options.durationIn,
 				durationOut: this.options.durationOut,
-				delayOut: this.options.delayOut
+				delayOut: this.options.delayOut,
+				rtl: this.options.rtl
 			};
 		},
 

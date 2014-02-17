@@ -20,7 +20,8 @@
 			durationIn: 0,
 			durationOut: 500,
 			delayOut: 500,
-			isLeft: false
+			isLeft: false,
+			rtl: false
 		},
 
 		cache: null,
@@ -88,6 +89,9 @@
 				this._updateShowOption(value);
 			} else if (key === "durationIn" || key === "durationOut" || key === "delayOut"){
 				this._updateDurations(key, value);
+			} else if (key === "rtl"){
+				this.options.rtl = value === true;
+				this._display(this._value);
 			}
 
 			this._setFormatterOption(key, value);
@@ -192,7 +196,8 @@
 				show: this.options.show,
 				durationIn: this.options.durationIn,
 				durationOut: this.options.durationOut,
-				delayOut: this.options.delayOut
+				delayOut: this.options.delayOut,
+				rtl: this.options.rtl
 			});
 
 			label[this.widgetName]("positionner", this._positionner);
@@ -348,9 +353,12 @@
 
 			var label1Pos = this.GetRawPosition(this.cache.label1, this.cache.handle1),
 				label2Pos = this.GetRawPosition(this.cache.label2, this.cache.handle2),
-				temp;
+				temp,
+				invertedLabels = (label2Pos.left - label1Pos.left) * (this.cache.handle2.value - this.cache.handle1.value) <= 0;
 
-			if ((label2Pos.left - label1Pos.left) * (this.cache.handle2.value - this.cache.handle1.value) <= 0){
+			invertedLabels = (invertedLabels ^ this.options.rtl) && this.cache.handle2.value && this.cache.handle1.value;
+
+			if (invertedLabels){
 				temp = label1Pos;
 				label1Pos = label2Pos;
 				label2Pos = temp;

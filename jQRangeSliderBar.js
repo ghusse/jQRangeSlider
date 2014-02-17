@@ -21,7 +21,8 @@
 			stop: function() {},
 			values: {min: 0, max:20},
 			wheelSpeed: 4,
-			wheelMode: null
+			wheelMode: null,
+			rtl: false
 		},
 
 		_values: {min: 0, max: 20},
@@ -67,6 +68,8 @@
 				this._setWheelSpeedOption(value);
 			} else if (key === "wheelMode"){
 				this._setWheelModeOption(value);
+			} else if (key === "rtl"){
+				this.options.rtl = value === true;
 			}
 		},
 
@@ -283,7 +286,12 @@
 				return;
 			}
 
-			this._values.max = ui.value;
+			if (this.options.rtl){
+				this._values.min = ui.value;
+			}else{
+				this._values.max = ui.value;
+			}
+			
 			this.cache.rightHandle.offset = ui.offset;
 
 			this._positionBar();
@@ -422,11 +430,11 @@
 		 */
 
 		min: function(value){
-			return this._leftHandle("value", value);
+			return this.options.rtl ? this._rightHandle("value", value): this._leftHandle("value", value);
 		},
 
 		max: function(value){
-			return this._rightHandle("value", value);
+			return this.options.rtl ? this._leftHandle("value", value): this._rightHandle("value", value);
 		},
 
 		startScroll: function(){
@@ -518,9 +526,13 @@
 				this.options.leftHandle.unbind(".bar");
 				this.options.rightHandle.unbind(".bar");
 
-				this._values.min = this._leftHandle("value", minValue);
-				this._values.max = this._rightHandle("value", maxValue);
-
+				if (this.options.rtl){
+					this._values.min = this._rightHandle("value", minValue);
+					this._values.max = this._leftHandle("value", maxValue);
+				}else{
+					this._values.min = this._leftHandle("value", minValue);
+					this._values.max = this._rightHandle("value", maxValue);
+				}
 				this._bindHandles();
 				this._reactivateRange();
 

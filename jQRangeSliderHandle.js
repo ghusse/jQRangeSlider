@@ -21,7 +21,8 @@
 			bounds: {min:0, max:100},
 			range: false,
 			value: 0,
-			step: false
+			step: false,
+			rtl: false
 		},
 
 		_value: 0,
@@ -67,6 +68,9 @@
 				this.update();
 			}else if (key === "range" && this._checkRange(value)){
 				this.options.range = value;
+				this.update();
+			}else if (key === "rtl"){
+				this.options.rtl = value === true;
 				this.update();
 			}
 
@@ -200,11 +204,18 @@
 
 			value = this._constraintValue(value);
 
-			var ratio = (value - this.options.bounds.min) / (this.options.bounds.max - this.options.bounds.min),
+			var ratio,
 				availableWidth = this.cache.parent.width,
 				parentPosition = this.cache.parent.offset.left,
 				shift = this.options.isLeft ? 0 : this.cache.width.outer;
 
+			if (!this.options.rtl){
+				ratio = (value - this.options.bounds.min);
+			}else{
+				ratio = (this.options.bounds.max - value);
+			}
+
+			ratio = ratio / (this.options.bounds.max - this.options.bounds.min);
 
 			return ratio * availableWidth + parentPosition - shift;
 		},
@@ -223,7 +234,11 @@
 					availableWidth = this.cache.parent.width,
 					ratio = availableWidth > 0 ? (position - parentPosition) / availableWidth : 0;
 
-			return	ratio * (max - min) + min;
+			if (this.options.rtl){
+				return	ratio * (min - max) + max;	
+			}
+
+			return	ratio * (max - min) + min;			
 		},
 
 		/*
