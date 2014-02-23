@@ -2,3 +2,7 @@
 .hero-unit .buttons{
 	text-align: right;
 }
+
+.hero-unit{
+	text-align: center;
+}
