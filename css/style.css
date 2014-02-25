@@ -37,20 +37,21 @@ footer a{
 	padding-top: 40px;
 }
 
-.hero-unit ul.links{
+ul.links{
 	list-style-type: none;
 	text-align: center;
 	margin: 20px 0;
+	padding: 0;
 }
 
-.hero-unit ul.links li{
+ul.links li{
 	display: inline-block;
 	font-size:14px;
 	color:#AAA;
 	margin: 0 5px;
 }
 
-.hero-unit ul.links a{
+ul.links a{
 	color:#666;
 	text-shadow: 0 0 10px rgba(255, 255, 255, .25);
 }
