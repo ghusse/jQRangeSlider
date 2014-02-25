@@ -4,11 +4,13 @@
  *        and http://cssdeck.com/item/276/pure-css-arrow-with-border-tooltip
  */
 
+.singleSlider,
 .ui-rangeSlider{
   height: 30px;
   padding-top: 40px;
 }
 
+.singleSlider,
 .ui-rangeSlider,
 .ui-rangeSlider-container,
 .ui-rangeSlider-arrow{
@@ -17,13 +19,16 @@
           box-sizing:content-box;
 }
 
-.ui-rangeSlider-withArrows .ui-rangeSlider-container{
+.ui-rangeSlider-withArrows .ui-rangeSlider-container,
+.slider-withArrows .slider-container{
   margin: 0 15px;
 }
 
 .ui-rangeSlider-withArrows .ui-rangeSlider-container,
 .ui-rangeSlider-noArrow .ui-rangeSlider-container,
-.ui-rangeSlider-arrow{
+.ui-rangeSlider-arrow,
+.slider-container,
+.slider-arrow{
   -webkit-box-shadow: inset 0px 4px 6px -2px RGBA(0,0,0,0.5);
      -moz-box-shadow: inset 0px 4px 6px -2px RGBA(0,0,0,0.5);
           box-shadow: inset 0px 4px 6px -2px RGBA(0,0,0,0.5);
@@ -37,7 +42,8 @@
           box-shadow: inset 0px 4px 6px -2px RGBA(0,0,0,0.3);
 }
 
-.ui-rangeSlider-noArrow .ui-rangeSlider-container{
+.ui-rangeSlider-noArrow .ui-rangeSlider-container,
+.slider-noArrow .slider-container{
   -moz-border-radius: 4px;
   border-radius: 4px;
   border-left: solid 1px #515862;
@@ -49,7 +55,8 @@
 }
 
 .ui-rangeSlider-container,
-.ui-rangeSlider-arrow{
+.ui-rangeSlider-arrow,
+.slider-container{
  	height: 30px;
 
   border-top: solid 1px #232a32;
@@ -64,7 +71,8 @@
 
 .ui-rangeSlider-container,
 .ui-rangeSlider-arrow,
-.ui-rangeSlider-label{
+.ui-rangeSlider-label,
+.slider-container{
   background: #67707F;
   background: -moz-linear-gradient(top, #67707F 0%, #888DA0 100%);
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#67707F), color-stop(100%,#888DA0));
@@ -148,7 +156,8 @@
   overflow: hidden;
 }
 
-.ui-rangeSlider-bar{
+.ui-rangeSlider-bar,
+.singleSlider .slider-handle{
 	background: #68a1d6;
   height: 29px;
   margin:1px 0;
@@ -171,11 +180,16 @@
           box-shadow: inset 0 2px 6px RGBA(0,0,0,0.3);
 }
 
-.ui-rangeSlider-handle{
+.ui-rangeSlider-handle,
+.slider-handle{
 	width:10px;
 	height:30px;
 	background: transparent;
 	cursor:col-resize;
+}
+
+.singleSlider .slider-handle{
+  width: 30px;
 }
 
 .ui-rangeSlider-label{
