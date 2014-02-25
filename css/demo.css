@@ -15,11 +15,18 @@
 }
 
 .sliderContainer{
-	margin-bottom: 70px;
+	margin-bottom: 35px;
 }
 
 .ui-rangeslider{
 	margin:0 40px;
+}
+
+.convinced,
+.download{
+	padding: 6px 0;
+	display: inline-block;
+	margin:0;
 }
 
 input.ui-editRangeSlider-inputValue{
@@ -31,4 +38,12 @@ input.ui-editRangeSlider-inputValue{
 .ui-rangeSlider .ui-ruler-scale0 .ui-ruler-tick-label{
 	bottom:0 !important;
 	font-size: 12px;
+}
+
+@media screen and (max-width: 991px){
+	.convinced,
+	.download{
+		display: block;
+		text-align: center;
+	}
 }

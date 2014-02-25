@@ -55,3 +55,39 @@ ul.links a{
 	color:#666;
 	text-shadow: 0 0 10px rgba(255, 255, 255, .25);
 }
+
+
+.buttonsLine{
+	margin-top: 20px;
+	margin-bottom: 40px;
+}
+
+
+.buttonsLine .buttons{
+	margin-top: 44px;
+}
+
+.buttonsLine .links{
+	margin-bottom: 0;
+}
+
+.buttonsLine .buttons,
+.buttonsLine .links{
+	text-align: right;
+}
+
+#carbonads-container{
+	margin-left: -15px;
+}
+
+@media screen and (max-width: 991px){
+	.buttonsLine,
+	.buttonsLine .buttons,
+	.buttonsLine .links{
+		text-align: center;
+	}
+
+	.buttonsLine .buttons{
+		margin-top: 20px;
+	}
+}

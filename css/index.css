@@ -10,26 +10,8 @@
   padding-top: 15px;
 }
 
-.buttonsLine{
-	margin-top: 20px;
-	margin-bottom: 40px;
-}
-
 .thumbnails p{
 	height: 90px;
-}
-
-.buttonsLine .buttons{
-	margin-top: 44px;
-}
-
-.buttonsLine .links{
-	margin-bottom: 0;
-}
-
-.buttonsLine .buttons,
-.buttonsLine .links{
-	text-align: right;
 }
 
 .thumbnail p.buttons{
@@ -44,20 +26,4 @@
 .thumbnail{
   border-color:transparent;
   box-shadow: none;
-}
-
-#carbonads-container{
-	margin-left: -15px;
-}
-
-@media screen and (max-width: 991px){
-	.buttonsLine,
-	.buttonsLine .buttons,
-	.buttonsLine .links{
-		text-align: center;
-	}
-
-	.buttonsLine .buttons{
-		margin-top: 20px;
-	}
 }
