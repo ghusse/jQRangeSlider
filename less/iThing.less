@@ -4,9 +4,17 @@
  *        and http://cssdeck.com/item/276/pure-css-arrow-with-border-tooltip
  */
 
+// Variables
+@handleWidth: 30px;
+@handleMargin: 1px;
+@height: 30px;
+@handleWidth-range: 10px;
+
+
+
 .singleSlider,
 .ui-rangeSlider{
-  height: 30px;
+  height: @height;
   padding-top: 40px;
 }
 
@@ -57,7 +65,7 @@
 .ui-rangeSlider-container,
 .ui-rangeSlider-arrow,
 .slider-container{
- 	height: 30px;
+ 	height: @height;
 
   border-top: solid 1px #232a32;
   border-bottom: solid 1px #6a7179;
@@ -156,11 +164,19 @@
   overflow: hidden;
 }
 
+.slider-inner{
+  position: absolute;
+  left: 0;
+  top:0;
+  bottom: 0;
+  right: @handleWidth;
+}
+
 .ui-rangeSlider-bar,
 .singleSlider .slider-handle{
 	background: #68a1d6;
-  height: 29px;
-  margin:1px 0;
+  height: @height - @handleMargin;
+  margin:@handleMargin 0;
   -moz-border-radius: 4px;
   border-radius: 4px;
   cursor:move;
@@ -182,14 +198,14 @@
 
 .ui-rangeSlider-handle,
 .slider-handle{
-	width:10px;
-	height:30px;
+	width:@handleWidth-range;
+	height:@height;
 	background: transparent;
 	cursor:col-resize;
 }
 
 .singleSlider .slider-handle{
-  width: 30px;
+  width: @handleWidth;
 }
 
 .ui-rangeSlider-label{

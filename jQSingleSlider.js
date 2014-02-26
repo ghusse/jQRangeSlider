@@ -32,17 +32,18 @@
 			})
 			.addClass("singleSlider slider-noArrow");
 
-		var container = $("<div class='slider-container' />")
+		var container = $("<div class='slider-container'></div>")
 				.css({
 					position: "relative"
 				}),
+			inner = $("<div class='slider-inner'></div>").appendTo(container),
 			handle = $("<div class='slider-handle' />")
 				.css({
 					position: "absolute",
 					top: 0,
 					left: 0
 				})
-				.appendTo(container);
+				.appendTo(inner);
 
 		slider.handle = handle;
 
@@ -61,9 +62,8 @@
 				$doc = $(document);
 
 			$doc.on(mouseMoveEvent, function(e){
-				var handleWidth = slider.handle.width(),
-					newClickPos = e.pageX - parentOffset.left,
-					valuePercentage = 100 * (elementPosition.left - (clickPosition - newClickPos)) / (parentWidth - handleWidth),
+				var newClickPos = e.pageX - parentOffset.left,
+					valuePercentage = 100 * (elementPosition.left - (clickPosition - newClickPos)) / parentWidth,
 					positionPercentage,
 					value, position;
 
@@ -73,9 +73,7 @@
 				value = getConstrainedValue(value, slider);
 				positionPercentage = getPositionFromValue(value, slider);
 
-				position = positionPercentage * (parentWidth - handleWidth) / parentWidth;
-
-				slider.handle.css("left", position + "%");
+				slider.handle.css("left", positionPercentage + "%");
 			});
 
 			$doc.on(mouseUpEvent, function(e){

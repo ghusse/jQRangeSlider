@@ -90,6 +90,11 @@ module.exports = function(grunt) {
           {src: ["css/**"], dest: "dest/"}
         ]
       },
+      less: {
+        files: [
+          {src: ["less/**"], dest: "dest/"}
+        ]
+      },
       lib:{
         files: [
           {src: ["jquery.mousewheel*"], dest: "dest/lib/", expand: true, cwd: 'lib/'}
@@ -104,8 +109,22 @@ module.exports = function(grunt) {
     cssmin: {
       compress: {
         files: {
-          "dest/css/iThing-min.css": ["css/iThing.css"],
           "dest/css/classic-min.css": ["css/classic.css"]
+        }
+      }
+    },
+    less: {
+      min: {
+        files: {
+          "dest/css/iThing-min.css": ["less/iThing.less"]
+        },
+        options: {
+          cleancss: true
+        },
+      },
+      plain: {
+        files: {
+          "dest/css/iThing.css": ["less/iThing.less"]
         }
       }
     },
@@ -154,6 +173,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-contrib-qunit');
+  grunt.loadNpmTasks('grunt-contrib-less');
 
   grunt.registerTask("modifyDemo", "Modify demo.", function(){
     var file="dest/demo/index.html",
@@ -171,7 +191,7 @@ module.exports = function(grunt) {
     grunt.log.ok("Running test: " + url);
   });
 
-  grunt.registerTask("default", ["clean", "uglify", "copy", "modifyDemo", "cssmin", "compress"]);
+  grunt.registerTask("default", ["clean", "uglify", "copy", "modifyDemo", "less", "cssmin", "compress"]);
   grunt.registerTask('test', ['connect', 'qunit']);
   grunt.registerTask('ci', ["jshint", "test"]);
 };
