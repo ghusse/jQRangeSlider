@@ -20,9 +20,18 @@
 		this.options = $.extend({}, defaultOptions, options);
 	};
 
+	SingleSlider.prototype.value = function(value){
+		if (typeof value === "number"){
+			setValue(value, this);
+		}
+
+		return this.options.value;
+	}
+
 	function init(slider){
 		createElements(slider);
 		bindEvents(slider);	
+		setValue(slider.options.value, slider);
 	}
 
 	function createElements(slider){
@@ -70,10 +79,7 @@
 				valuePercentage = Math.min(100, Math.max(0, valuePercentage));
 
 				value = getValueFromPercentage(valuePercentage, slider);
-				value = getConstrainedValue(value, slider);
-				positionPercentage = getPositionFromValue(value, slider);
-
-				slider.handle.css("left", positionPercentage + "%");
+				setValue(value, slider);
 			});
 
 			$doc.on(mouseUpEvent, function(e){
@@ -81,6 +87,14 @@
 				$doc.off(mouseUpEvent);
 			})
 		});
+	}
+
+	function setValue(value, slider){
+		value = getConstrainedValue(value, slider);
+		var positionPercentage = getPositionFromValue(value, slider);
+		slider.options.value = value;
+
+		slider.handle.css("left", positionPercentage + "%");
 	}
 
 	function getValueFromPercentage(percentage, slider){
@@ -102,8 +116,8 @@
 
 	function callMember(args, data){
 		if (typeof data[args[0]] === "function"){
-			var argsArray = Array.prototype.slice.call(args, 0, args.length);
-			return data.prototype[args[0]].apply(data, argsArray);
+			var argsArray = Array.prototype.slice.call(args, 1);
+			return data[args[0]].apply(data, argsArray);
 		}
 
 		return data;
