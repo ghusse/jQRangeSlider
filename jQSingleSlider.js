@@ -4,6 +4,7 @@
 	var defaultOptions = {
 		bounds: {min: 0, max: 100},
 		value: 50,
+		arrows: true,
 		percentageToValue: function(percentage){
 			return percentage * (this.bounds.max - this.bounds.min) / 100 + this.bounds.min;
 		},
@@ -39,7 +40,7 @@
 			.css({
 				position: "relative"
 			})
-			.addClass("singleSlider slider-noArrow");
+			.addClass("singleSlider");
 
 		var container = $("<div class='slider-container'></div>")
 				.css({
@@ -56,7 +57,20 @@
 
 		slider.handle = handle;
 
-		slider.element.append(container);
+		if (slider.options.arrows === true){
+			slider.arrows = {
+				left: $("<div class='slider-arrow slider-arrow-left' style='position:absolute; left: 0'><div class='slider-arrow-inner'></div></div>"),
+				right: $("<div class='slider-arrow slider-arrow-right' style='position:absolute; right: 0'><div class='slider-arrow-inner'></div></div>"),
+			};
+
+			slider.element.append(slider.arrows.left);
+			slider.element.append(container);
+			slider.element.append(slider.arrows.right);
+			slider.element.addClass("slider-withArrows");
+		}else{
+			slider.element.append(container);	
+			slider.element.addClass("slider-noArrow");
+		}	
 	}
 
 	function bindEvents(slider){

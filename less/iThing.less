@@ -7,21 +7,24 @@
 // Variables
 @handleWidth: 30px;
 @handleMargin: 1px;
+@borderWidth: 1px;
 @height: 30px;
 @handleWidth-range: 10px;
+@arrowWidth:14px;
 
 
 
 .singleSlider,
 .ui-rangeSlider{
-  height: @height;
+  height: @height + 2*@borderWidth;
   padding-top: 40px;
 }
 
 .singleSlider,
 .ui-rangeSlider,
 .ui-rangeSlider-container,
-.ui-rangeSlider-arrow{
+.ui-rangeSlider-arrow,
+.slider-arrow{
   -webkit-box-sizing:content-box;
      -moz-box-sizing:content-box;
           box-sizing:content-box;
@@ -29,7 +32,7 @@
 
 .ui-rangeSlider-withArrows .ui-rangeSlider-container,
 .slider-withArrows .slider-container{
-  margin: 0 15px;
+  margin: 0 @arrowWidth;
 }
 
 .ui-rangeSlider-withArrows .ui-rangeSlider-container,
@@ -44,7 +47,8 @@
 
 .ui-rangeSlider-disabled.ui-rangeSlider-withArrows .ui-rangeSlider-container,
 .ui-rangeSlider-disabled.ui-rangeSlider-noArrow .ui-rangeSlider-container,
-.ui-rangeSlider-disabled .ui-rangeSlider-arrow{
+.ui-rangeSlider-disabled .ui-rangeSlider-arrow,
+.slider-arrow{
   -webkit-box-shadow: inset 0px 4px 6px -2px RGBA(0,0,0,0.3);
      -moz-box-shadow: inset 0px 4px 6px -2px RGBA(0,0,0,0.3);
           box-shadow: inset 0px 4px 6px -2px RGBA(0,0,0,0.3);
@@ -64,7 +68,8 @@
 
 .ui-rangeSlider-container,
 .ui-rangeSlider-arrow,
-.slider-container{
+.slider-container,
+.slider-arrow{
  	height: @height;
 
   border-top: solid 1px #232a32;
@@ -72,7 +77,8 @@
 }
 
 .ui-rangeSlider-disabled .ui-rangeSlider-container,
-.ui-rangeSlider-disabled .ui-rangeSlider-arrow{
+.ui-rangeSlider-disabled .ui-rangeSlider-arrow,
+.slider-disabled .slider-arrow{
   border-top-color: #49576b;
   border-bottom-color: #9ca7b3;
 }
@@ -80,7 +86,8 @@
 .ui-rangeSlider-container,
 .ui-rangeSlider-arrow,
 .ui-rangeSlider-label,
-.slider-container{
+.slider-container,
+.slider-arrow{
   background: #67707F;
   background: -moz-linear-gradient(top, #67707F 0%, #888DA0 100%);
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#67707F), color-stop(100%,#888DA0));
@@ -88,36 +95,47 @@
 
 .ui-rangeSlider-disabled .ui-rangeSlider-container,
 .ui-rangeSlider-disabled .ui-rangeSlider-arrow,
-.ui-rangeSlider-disabled .ui-rangeSlider-label{
+.ui-rangeSlider-disabled .ui-rangeSlider-label,
+.slider-disabled .slider-arrow{
   background: #95a4bd;
   background: -moz-linear-gradient(top, #95a4bd 0%, #b2bbd8 100%);
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#95a4bd), color-stop(100%,#b2bbd8));
 }
 
-.ui-rangeSlider-arrow{
-  width:14px;
+.ui-rangeSlider-arrow,
+.slider-arrow{
+  width:@arrowWidth;
   cursor:pointer;
 }
 
-.ui-rangeSlider-leftArrow{
+.singleSlider .slider-arrow{
+  bottom: 0;
+}
+
+.ui-rangeSlider-leftArrow,
+.slider-arrow-left{
   border-radius:4px 0 0 4px;
   border-left: solid 1px #515862;
 }
 
-.ui-rangeSlider-disabled .ui-rangeSlider-leftArrow{
+.ui-rangeSlider-disabled .ui-rangeSlider-leftArrow,
+.slider-disabled .slider-arrow-left{
  border-left-color: #8792a2; 
 }
 
-.ui-rangeSlider-rightArrow{
+.ui-rangeSlider-rightArrow,
+.slider-arrow-right{
   border-radius:0 4px 4px 0;
   border-right: solid 1px #515862;
 }
 
-.ui-rangeSlider-disabled .ui-rangeSlider-rightArrow{
+.ui-rangeSlider-disabled .ui-rangeSlider-rightArrow,
+.ui-rangeSlider-disabled .slider-arrow-right{
  border-right-color: #8792a2; 
 }
 
-.ui-rangeSlider-arrow-inner{
+.ui-rangeSlider-arrow-inner,
+.slider-arrow-inner{
   position: absolute;
   top: 50%;
   border: 10px solid transparent;
@@ -127,13 +145,15 @@
   margin-top: -10px;
 }
 
-.ui-rangeSlider-leftArrow .ui-rangeSlider-arrow-inner{
+.ui-rangeSlider-leftArrow .ui-rangeSlider-arrow-inner,
+.slider-arrow-left .slider-arrow-inner{
   border-right:10px solid #a4a8b7;
   left: 0;
   margin-left: -8px;
 }
 
-.ui-rangeSlider-leftArrow:hover .ui-rangeSlider-arrow-inner{
+.ui-rangeSlider-leftArrow:hover .ui-rangeSlider-arrow-inner,
+.slider-arrow-left:hover .slider-arrow-inner{
   border-right:10px solid #b3b6c2;
 }
 
@@ -142,13 +162,15 @@
   border-right-color: #bbc0cf;
 }
 
-.ui-rangeSlider-rightArrow .ui-rangeSlider-arrow-inner{
+.ui-rangeSlider-rightArrow .ui-rangeSlider-arrow-inner,
+.slider-arrow-right .slider-arrow-inner{
   border-left:10px solid #a4a8b7;
   right: 0;
   margin-right: -8px;
 }
 
-.ui-rangeSlider-rightArrow:hover .ui-rangeSlider-arrow-inner{
+.ui-rangeSlider-rightArrow:hover .ui-rangeSlider-arrow-inner,
+.slider-arrow-right:hover .slider-arrow-inner{
   border-left:10px solid #b3b6c2;
 }
 
