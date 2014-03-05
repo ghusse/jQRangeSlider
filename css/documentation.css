@@ -7,6 +7,20 @@
 	-webkit-border-radius: 4px;
 }
 
+article h2{
+	padding-top: 60px;
+	margin-top: -40px;
+}
+
+article .page-header{
+	margin-bottom: -20px;
+}
+
+#quickStart {
+	padding-top: 50px;
+	margin-top: -50px;
+}
+
 pre.afterExample{
 	margin-top: 20px;
 }

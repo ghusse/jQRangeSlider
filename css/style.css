@@ -80,6 +80,17 @@ ul.links a{
 	margin-left: -15px;
 }
 
+.nav a .caret{
+    border-top-color: #999;
+    border-bottom-color: #999;
+}
+
+.nav a:hover .caret{
+    border-top-color: white;
+    border-bottom-color: white;
+}
+
+
 @media screen and (max-width: 991px){
 	.buttonsLine,
 	.buttonsLine .buttons,
