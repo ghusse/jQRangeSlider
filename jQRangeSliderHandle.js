@@ -236,7 +236,11 @@
 				availableWidth = this.cache.parent.width;
 			}
 
-			ratio = availableWidth > 0 ? (position - parentPosition) / availableWidth : 0;
+			if (availableWidth == 0){
+				return this._value;
+			}
+
+			ratio = (position - parentPosition) / availableWidth;
 
 			return	ratio * (max - min) + min;
 		},
