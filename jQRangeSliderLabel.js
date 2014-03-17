@@ -350,13 +350,11 @@
 				label2Pos = this.GetRawPosition(this.cache.label2, this.cache.handle2),
 				temp;
 
-			if ((label2Pos.left - label1Pos.left) * (this.cache.handle2.value - this.cache.handle1.value) <= 0){
-				temp = label1Pos;
-				label1Pos = label2Pos;
-				label2Pos = temp;
+			if (this.label1[type]("option", "isLeft")){
+				this.ConstraintPositions(label1Pos, label2Pos);
+			}else{
+				this.ConstraintPositions(label2Pos, label1Pos);
 			}
-
-			this.ConstraintPositions(label1Pos, label2Pos);
 
 			this.PositionLabel(this.label1, label1Pos.left, this.cache.label1);
 			this.PositionLabel(this.label2, label2Pos.left, this.cache.label2);
@@ -382,12 +380,10 @@
 		}
 
 		this.ConstraintPositions = function(pos1, pos2){
-			if (pos1.center < pos2.center && pos1.outerRight > pos2.outerLeft){
+			if ((pos1.center < pos2.center && pos1.outerRight > pos2.outerLeft)
+				|| (pos1.center > pos2.center && pos2.outerRight > pos1.outerLeft)){
 				pos1 = this.getLeftPosition(pos1, pos2);
 				pos2 = this.getRightPosition(pos1, pos2);
-			}else if (pos1.center > pos2.center && pos2.outerRight > pos1.outerLeft){
-				pos2 = this.getLeftPosition(pos2, pos1);
-				pos1 = this.getRightPosition(pos2, pos1);
 			}
 		}
 
