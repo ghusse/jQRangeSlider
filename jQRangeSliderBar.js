@@ -128,13 +128,13 @@
 			var rightValue = this._values.max,
 				leftRange = {min: false, max: false};
 
-			if ((this.options.range.min || false) !== false){
+			if (typeof this.options.range.min !== "undefined" && this.options.range.min !== false){
 				leftRange.max = this._leftHandle("substract", rightValue, this.options.range.min);
 			}else{
 				leftRange.max = false;
 			}
 
-			if ((this.options.range.max || false) !== false){
+			if (typeof this.options.range.max !== "undefined" && this.options.range.max !== false){
 				leftRange.min = this._leftHandle("substract", rightValue, this.options.range.max);
 			}else{
 				leftRange.min = false;
@@ -147,13 +147,13 @@
 			var leftValue = this._values.min,
 				rightRange = {min: false, max:false};
 
-			if ((this.options.range.min || false) !== false){
+			if (typeof this.options.range.min !== "undefined" && this.options.range.min !== false){
 				rightRange.min = this._rightHandle("add", leftValue, this.options.range.min);
 			}else {
 				rightRange.min = false;
 			}
 
-			if ((this.options.range.max || false) !== false){
+			if (typeof this.options.range.max !== "undefined" && this.options.range.max !== false){
 				rightRange.max = this._rightHandle("add", leftValue, this.options.range.max);
 			}else{
 				rightRange.max = false;
