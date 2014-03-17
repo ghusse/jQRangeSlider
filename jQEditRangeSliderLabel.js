@@ -98,10 +98,10 @@
 				}]);
 		},
 
-		_returnCheckedValue: function(val){
+	_returnCheckedValue: function(val){
 		var floatValue = parseFloat(val);
 
-		if (isNaN(floatValue) || floatValue.toString() !== val){
+		if (isNaN(floatValue) || isNaN(Number(val))){
 			return false;
 		}
 
