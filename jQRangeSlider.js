@@ -25,7 +25,8 @@
 			range: {min: false, max: false},
 			step: false,
 			scales: false,
-			enabled: true
+			enabled: true,
+			symmetricPositionning: false
 		},
 
 		_values: null,
@@ -98,6 +99,7 @@
 			this._setStepOption(key, value);
 			this._setScalesOption(key, value);
 			this._setEnabledOption(key, value);
+			this._setPositionningOption(key, value);
 		},
 
 		_validProperty: function(object, name, defaultValue){
@@ -221,6 +223,13 @@
 			}
 		},
 
+		_setPositionningOption: function(key, value){
+			if (key === "symmetricPositionning"){
+				this._rightHandle("option", key, value);
+				this.options[key] = this._leftHandle("option", key, value);
+			}
+		},
+
 		_createElements: function(){
 			if (this.element.css("position") !== "absolute"){
 				this.element.css("position", "relative");
@@ -265,14 +274,16 @@
 					isLeft: true,
 					bounds: this.options.bounds,
 					value: this._values.min,
-					step: this.options.step
+					step: this.options.step,
+					symmetricPositionning: this.options.symmetricPositionning
 			}).appendTo(this.container);
 	
 			this.rightHandle = this._createHandle({
 				isLeft: false,
 				bounds: this.options.bounds,
 				value: this._values.max,
-				step: this.options.step
+				step: this.options.step,
+				symmetricPositionning: this.options.symmetricPositionning
 			}).appendTo(this.container);
 		},
 		

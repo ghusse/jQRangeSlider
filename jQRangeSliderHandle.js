@@ -68,6 +68,9 @@
 			}else if (key === "range" && this._checkRange(value)){
 				this.options.range = value;
 				this.update();
+			}else if (key === "symmetricPositionning"){
+				this.options.symmetricPositionning = value === true;
+				this.update();
 			}
 
 			$.ui.rangeSliderDraggable.prototype._setOption.apply(this, [key, value]);
@@ -206,7 +209,11 @@
 				shift = this.options.isLeft ? 0 : this.cache.width.outer;
 
 
-			return ratio * availableWidth + parentPosition - shift;
+			if (!this.options.symmetricPositionning){
+				return ratio * availableWidth + parentPosition - shift;
+			}
+
+			return ratio * (availableWidth - 2 * this.cache.width.outer) + parentPosition + shift;
 		},
 
 		_getValueForPosition: function(position){
@@ -217,11 +224,19 @@
 
 		_getRawValueForPositionAndBounds: function(position, min, max){
 
-			position += this.options.isLeft ? 0 : this.cache.width.outer;
-
 			var parentPosition =  this.cache.parent.offset === null ? 0 : this.cache.parent.offset.left,
-					availableWidth = this.cache.parent.width,
-					ratio = availableWidth > 0 ? (position - parentPosition) / availableWidth : 0;
+					availableWidth,
+					ratio;
+
+			if (this.options.symmetricPositionning){
+				position -= this.options.isLeft ? 0 : this.cache.width.outer;	
+				availableWidth = this.cache.parent.width - 2 * this.cache.width.outer;
+			}else{
+				position += this.options.isLeft ? 0 : this.cache.width.outer;	
+				availableWidth = this.cache.parent.width;
+			}
+
+			ratio = availableWidth > 0 ? (position - parentPosition) / availableWidth : 0;
 
 			return	ratio * (max - min) + min;
 		},
