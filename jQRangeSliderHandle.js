@@ -236,7 +236,7 @@
 				availableWidth = this.cache.parent.width;
 			}
 
-			if (availableWidth == 0){
+			if (availableWidth === 0){
 				return this._value;
 			}
 
