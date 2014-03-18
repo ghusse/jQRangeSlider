@@ -1,7 +1,7 @@
 jQRangeSlider
 -------------
 * 5.7.0
-	* Ehancement #154: 
+	* Enhancement #154: 
 		* Introduced a new option "symmetricPositionning" for a different way of positionning handles
 		* Allowed minimum ranges to be 0
 	* Fixed #152: Calling resize on an hidden slider resets values
