@@ -69,6 +69,7 @@
               <li><a href="#rangeOption">Range</a></li>
               <li><a href="#scalesOption">Scales</a></li>
               <li><a href="#stepOption">Step</a></li>
+              <li><a href="#symmetricPositionningOption">Symmetric positionning</a></li>
               <li><a href="#typeOption">Type (edit slider)</a></li>
               <li><a href="#valueLabelsOption">Value labels</a></li>
               <li><a href="#wheelModeOption">Wheel mode</a></li>
@@ -587,6 +588,38 @@ $("#rangeExample").rangeSlider({range: {min: false}});</code></pre></dd>
         </ul>
 
         <!--
+          Symmetric positionning
+        -->
+
+        <h2 id="symmetricPositionningOption">Symmetric positionning</h2>
+
+        <p>The option <code>symmetricPositionning</code> changes the way handles are positionned on the slider. This option is usefull when customizing how the slider is displayed.</p>
+
+        <p>Use this option when you want to show handles and make them clearly select the range.</p>
+
+        <div class="alert alert-warning">
+          <strong>Warning</strong>: This option <strong>must</strong> be used with a minimum (possibly equal to 0) <a href="#rangeOption">range value</a>.
+        </div>
+
+        <div class="alert alert-warning">
+          <strong>Warning</strong>: This option <strong>must not</strong> be used with a scale. Positionning in this case does not corresponds to a possible scale.
+        </div>
+
+        <div class="example">
+          <div class="sliderContainer">
+            <div id="symmetricExample"></div>
+          </div>
+
+          <dl>
+            <dt>Basic slider (example above)</dt>
+            <dd><pre class="prettyprint linenums"><code class="language-js">$("#symmetricExample").rangeSlider({
+  symmetricPositionning: true,
+  range: {min: 0}  
+});</code></pre></dd>
+          </dl>
+        </div>
+
+        <!--
           Type  
         -->
 
@@ -763,6 +796,12 @@ $("#typeExample").editRangeSlider({type: "number"});</code></pre></dd>
               return decimal == 0 ? value.toString() + ".0" : value.toString();
             }});
       });
+      
+      $("#symmetricExample").rangeSlider({
+        symmetricPositionning: true,
+        range: {min: 0}  
+      });
+
       $("#typeExample").editRangeSlider({type: "number"});
       $("#durationExample").rangeSlider({
         valueLabels:"change",
