@@ -1,6 +1,6 @@
 jQRangeSlider
 -------------
-* 5.7.0
+* 5.7.0: 2014-03-18
 	* Enhancement #154: 
 		* Introduced a new option "symmetricPositionning" for a different way of positionning handles
 		* Allowed minimum ranges to be 0
