@@ -43,6 +43,7 @@
         <li><a href="javascript:UserVoice.showPopupWidget();"><i class="glyphicon glyphicon-white glyphicon-question-sign"></i> Support</a></li>
       </ul>
       <ul class="navbar-right nav navbar-nav">
+        <li><a href="#" class="dontClick"><i class="glyphicon glyphicon-warning-sign"></i> Don't click here</a></li>
         <li><a href="download.html" onClick="_gaq.push(['_trackEvent', 'Download', 'Menubar']);"><i class="glyphicon glyphicon-white glyphicon-download-alt"></i> Download</a></li>
       </ul>
     </div>    
@@ -381,6 +382,22 @@ $("#dateSlider").dateRangeSlider("zoomOut", 42);
     </div>
   </div>
 
+  <div id="dontClickHereContent" style="display:none">
+    <p>If you appreciate the slider (or the joke), don't hesitate to donate to support the project. Even <strong>a small amount will help</strong>.</p>
+
+    <p class="donation">
+      <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=guillaume%40ghusse%2ecom&lc=US&item_name=jQRangeSlider&item_number=download&amount=1%2e00&currency_code=USD&no_note=0&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHostedGuest" class="btn btn-default" onClick="_gaq.push(['_trackEvent', 'Donation', 'Donate1Gotcha', 'Donate $1', 1]);"><i class="glyphicon glyphicon-thumbs-up"></i> $1</a>
+
+      <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=guillaume%40ghusse%2ecom&lc=US&item_name=jQRangeSlider&item_number=download&amount=2%2e00&currency_code=USD&no_note=0&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHostedGuest" class="btn btn-primary btn-lg" onClick="_gaq.push(['_trackEvent', 'Donation', 'Donate2Gotcha', 'Donate $2', 2]);"><i class="glyphicon glyphicon-gift"></i> $2</a>
+
+      <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=guillaume%40ghusse%2ecom&lc=US&item_name=jQRangeSlider&item_number=download&amount=5%2e00&currency_code=USD&no_note=0&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHostedGuest" class="btn btn-default" onClick="_gaq.push(['_trackEvent', 'Donation', 'Donate5Gotcha', 'Donate $5', 5]);"><i class="glyphicon glyphicon-heart"></i> $5</a>
+    </p>
+
+    <p class="donation BTC">BTC: <input value="1JnJ7g3Riq7iXhGbEepumNHShkQjabarvd"></p>
+
+    <p>Thank you (I got you)!</p>
+  </div>
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
   <script src="lib/bootstrap/js/bootstrap.min.js"></script>
   <script src="lib/prettify/prettify.js"></script>
@@ -413,6 +430,14 @@ $("#dateSlider").dateRangeSlider("zoomOut", 42);
       $("#scrollExample, #zoomExample").rangeSlider();
       $('#destroyExample').rangeSlider();
       $("#disableMethodExample").rangeSlider();
+    });
+
+     $(".dontClick").popover({
+      html: true,
+      placement: "bottom",
+      title: "Thank you for donating!",
+      container: "body",
+      content: function() { return $("#dontClickHereContent").html(); }
     });
   //-->
   </script>
