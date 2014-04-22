@@ -53,7 +53,7 @@
         <li><a href="javascript:UserVoice.showPopupWidget();"><i class="glyphicon glyphicon-white glyphicon-question-sign"></i> Support</a></li>
       </ul>
       <ul class="navbar-right nav navbar-nav">
-        <li><a href="#" class="dontClick"><i class="glyphicon glyphicon-warning-sign"></i> Don't click here</a></li>
+        <li><a href="#" class="donateMenu"><i class="glyphicon glyphicon-gift"></i> Donate</a></li>
         <li class="active"><a href="download.html" onClick="_gaq.push(['_trackEvent', 'Download', 'Menubar']);"><i class="glyphicon glyphicon-white glyphicon-download-alt"></i> Download</a></li>
       </ul>
     </div>    
@@ -100,8 +100,8 @@
     <p>Credits: <a href="http://thenounproject.com/noun/tablet/#icon-No7364" target="_blank">Tablet</a> designed by <a href="http://thenounproject.com/derrick_snider" target="_blank">Derrick Snider</a>, <a href="http://thenounproject.com/noun/tie/#icon-No3974" target="_blank">Tie</a> designed by <a href="http://thenounproject.com/prerakpatel" target="_blank">Prerak Patel</a>, <a href="http://thenounproject.com/noun/sync/#icon-No5966" target="_blank">Sync</a> designed by <a href="http://thenounproject.com/swedler" target="_blank">Steve Swedler</a>, <a href="http://thenounproject.com/noun/dove/#icon-No5214" target="_blank">Dove</a> designed by <a href="http://thenounproject.com/iconify" target="_blank">Scott Lewis</a> from The Noun Project</p>
   </footer>
 
-  <div id="dontClickHereContent" style="display:none">
-    <p>If you appreciate the slider (or the joke), don't hesitate to donate to support the project. Even <strong>a small amount will help</strong>.</p>
+  <div id="donationContent" style="display:none">
+    <p>If you appreciate the slider, don't hesitate to donate to support the project. Even <strong>a small amount will help</strong>.</p>
 
     <p class="donation">
       <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=guillaume%40ghusse%2ecom&lc=US&item_name=jQRangeSlider&item_number=download&amount=1%2e00&currency_code=USD&no_note=0&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHostedGuest" class="btn btn-default" onClick="_gaq.push(['_trackEvent', 'Donation', 'Donate1Gotcha', 'Donate $1', 1]);"><i class="glyphicon glyphicon-thumbs-up"></i> $1</a>
@@ -113,7 +113,7 @@
 
     <p class="donation BTC">BTC: <input value="13KiboB5pbjsNMRwe773ADo4rEoULcZha6"></p>
 
-    <p>Thank you (I got you)!</p>
+    <p>Thank you!</p>
   </div>
 
   <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
@@ -125,12 +125,12 @@
 
     frame.appendTo("body");
 
-    $(".dontClick").popover({
+    $(".donateMenu").popover({
       html: true,
       placement: "bottom",
       title: "Thank you for donating!",
       container: "body",
-      content: function() { return $("#dontClickHereContent").html(); }
+      content: function() { return $("#donationContent").html(); }
     });
   </script>
 
