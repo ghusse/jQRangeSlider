@@ -9,3 +9,7 @@
 /out/
 /*.2.9-1.zip
 /packages
+/dest/demo
+/dest/lib
+/dest/*.md
+/dest/*.txt
