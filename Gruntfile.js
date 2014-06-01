@@ -2,23 +2,22 @@ var FILE_ENCODING = "utf-8";
 
 var fs = require("fs");
 
-var coreFiles = ["jQRangeSliderMouseTouch.js"
-  , "jQRangeSliderDraggable.js"
-  , "jQRangeSlider.js"
-  , "jQRangeSliderHandle.js"
-  , "jQRangeSliderBar.js"
-  , "jQRangeSliderLabel.js"];
+var coreFiles = ["jQRangeSliderMouseTouch.js",
+  "jQRangeSliderDraggable.js",
+  "jQRangeSlider.js",
+  "jQRangeSliderHandle.js",
+  "jQRangeSliderBar.js",
+  "jQRangeSliderLabel.js"];
 
 var rulerFiles = ["jQRuler.js"];
 
 var dateFiles = [
-    "jQDateRangeSlider.js"
-    , "jQDateRangeSliderHandle.js"
-  ];
+    "jQDateRangeSlider.js",
+    "jQDateRangeSliderHandle.js"];
 
 var editFiles = [
-    "jQEditRangeSlider.js"
-    , "jQEditRangeSliderLabel.js"
+    "jQEditRangeSlider.js",
+    "jQEditRangeSliderLabel.js"
   ];
 
 var info = JSON.parse(fs.readFileSync("jQRangeSlider.jquery.json")),
@@ -144,7 +143,7 @@ module.exports = function(grunt) {
       }
     }
   });
- 
+
   // loading the required tasks
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
@@ -165,7 +164,7 @@ module.exports = function(grunt) {
 
     fs.writeFileSync(file, content, FILE_ENCODING);
     grunt.log.writeln('Demo modified');
-  })
+  });
 
   grunt.event.on('qunit.spawn', function (url) {
     grunt.log.ok("Running test: " + url);
