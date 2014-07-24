@@ -138,7 +138,7 @@
 			ruled.ruler({
 				min: 0,
 				max: 20,
-				scales: [shifted]
+				scales: [shifted]
 			});
 
 		},
