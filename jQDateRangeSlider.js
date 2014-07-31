@@ -36,8 +36,8 @@
 
 		_setRulerParameters: function(){
 			this.ruler.ruler({
-				min: new Date(this.options.bounds.min),
-				max: new Date(this.options.bounds.max),
+				min: new Date(this.options.bounds.min.valueOf()),
+				max: new Date(this.options.bounds.max.valueOf()),
 				scales: this.options.scales
 			});
 		},
