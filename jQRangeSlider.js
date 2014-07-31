@@ -263,8 +263,7 @@
 		},
 
 		_createHandle: function(options){
-			return $("<div />")
-				[this._handleType()](options)
+			return $("<div />")[this._handleType()](options)
 				.bind("sliderDrag", $.proxy(this._changing, this))
 				.bind("stop", $.proxy(this._changed, this));
 		},
@@ -473,8 +472,7 @@
 			if (label === null){
 				params = this._getLabelConstructorParameters(label, handle);
 				label = $("<div />")
-					.appendTo(this.element)
-					[this._labelType()](params);
+					.appendTo(this.element)[this._labelType()](params);
 			}else{
 				params = this._getLabelRefreshParameters(label, handle);
 
