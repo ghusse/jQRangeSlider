@@ -505,7 +505,7 @@
 		},
 
 		_getFormatter: function(){
-			if (this.options.formatter === false || this.options.formatter === null){
+			if (this.options.formatter === false || this.options.formatter === null){
 				return this._defaultFormatter;
 			}
 
@@ -649,7 +649,7 @@
 		values: function(min, max){
 			var val;
 
-			if (typeof min !== "undefined" && typeof max !== "undefined"){
+			if (typeof min !== "undefined" && typeof max !== "undefined"){
 				if (!this._initialized){
 					this._values.min = min;
 					this._values.max = max;
