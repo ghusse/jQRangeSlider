@@ -58,8 +58,8 @@
 				return;
 			}
 
-			var minDate = new Date(this.options.bounds.min),
-				maxDate = new Date(this.options.bounds.max),
+			var minDate = new Date(this.options.bounds.min.valueOf()),
+				maxDate = new Date(this.options.bounds.max.valueOf()),
 				stepDate = minDate,
 				i = 0,
 				previous = new Date();
