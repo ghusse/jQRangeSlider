@@ -27,7 +27,7 @@
 			$(document)
 				.unbind('touchmove.' + this.widgetName, this._touchMoveDelegate)
 				.unbind('touchend.' + this.widgetName, this._touchEndDelegate);
-			
+
 			$.ui.mouse.prototype._mouseDestroy.apply(this);
 		},
 
@@ -41,7 +41,7 @@
 
 		destroy: function(){
 			this._mouseDestroy();
-			
+
 			$.ui.mouse.prototype.destroy.apply(this);
 
 			this._mouseInit = null;
@@ -114,6 +114,8 @@
 
 			event.pageX = touch.pageX;
 			event.pageY = touch.pageY;
+
+			event.which = 1; // [~] fixes touch events for jquery-ui.1.11.x.mouse
 		}
 	});
 }(jQuery));

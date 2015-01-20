@@ -1,5 +1,7 @@
 jQRangeSlider
 -------------
+* 5.7.1: 2015-01-20
+    * Fixed #174: Touch and jquery-ui 1.11.0 (not working)
 * 5.7.0: 2014-03-18
 	* Enhancement #154: 
 		* Introduced a new option "symmetricPositionning" for a different way of positionning handles
