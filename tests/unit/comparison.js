@@ -37,13 +37,13 @@
 
 	function equivObject(actual, expected, epsilon){
 		for(var name in expected){
-			if (!equiv(actual[name], expected[name], epsilon)){
+			if (expected.hasOwnProperty(name) && !equiv(actual[name], expected[name], epsilon)){
 				return false;
 			}
 		}
 
 		for(name in actual){
-			if (!equiv(actual[name], expected[name], epsilon)){
+			if (actual.hasOwnProperty(name) &&!equiv(actual[name], expected[name], epsilon)){
 				return false;
 			}
 		}
