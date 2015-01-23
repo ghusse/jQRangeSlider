@@ -50,7 +50,7 @@
           </ul>
         </li>
         <li><a href="technicalDemo.html" onClick="_gaq.push(['_trackEvent', 'TechnicalDocumentation', 'Menubar']);"><i class="glyphicon glyphicon-white glyphicon-fast-forward"></i> Technical demo</a></li>
-        <li><a href="javascript:UserVoice.showPopupWidget();"><i class="glyphicon glyphicon-white glyphicon-question-sign"></i> Support</a></li>
+        <li><a href="javascript:return true;" data-uv-trigger><i class="glyphicon glyphicon-white glyphicon-question-sign"></i> Support</a></li>
       </ul>
       <ul class="navbar-right nav navbar-nav">
         <li><a href="#" class="donateMenu"><i class="glyphicon glyphicon-gift"></i> Donate</a></li>
@@ -75,7 +75,7 @@
       <p class="donation BTC">BTC: <input value="1JnJ7g3Riq7iXhGbEepumNHShkQjabarvd"></p>
 
       <ul class="links">
-        <li>Your download will start in seconds. If not, <a id="downloadLink" href="http://slider.ghusse.com/jQRangeSlider-5.7.0.zip" target="_blank" onClick="_gaq.push(['_trackEvent', 'Download', 'Did not work']);">click on this link</a>.</li>
+        <li>Your download will start in seconds. If not, <a id="downloadLink" href="http://slider.ghusse.com/jQRangeSlider-5.7.1.zip" target="_blank" onClick="_gaq.push(['_trackEvent', 'Download', 'Did not work']);">click on this link</a>.</li>
       </ul>
 
       </div>
@@ -134,14 +134,8 @@
     });
   </script>
 
-  <script type="text/javascript">
-    var uvOptions = {};
-    (function() {
-      var uv = document.createElement('script'); uv.type = 'text/javascript'; uv.async = true;
-      uv.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'widget.uservoice.com/ErVQzo2cC5HueTAAIUgBw.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
-    })();
-  </script>
+    <!-- UserVoice JavaScript SDK (only needed once on a page) -->
+  <script>(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='https://widget.uservoice.com/5aDfLFWPSv1z7z9HL66H0w.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})()</script>
   
 </body>
 </html>
