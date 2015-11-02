@@ -725,10 +725,12 @@
 		 * Resize
 		 */
 		resize: function(){
-			this._initWidth();
-			this._leftHandle("update");
-			this._rightHandle("update");
-			this._bar("update");
+			if (this.container){
+				this._initWidth();
+				this._leftHandle("update");
+				this._rightHandle("update");
+				this._bar("update");
+			}
 		},
 
 		/*
