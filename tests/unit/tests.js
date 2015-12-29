@@ -272,7 +272,7 @@ var wheelSpeedSetterTest = new TestCase(
 		QUnit.deepEqual(el.rangeSlider("option", "wheelSpeed"), 2, "Wheelspeed setter should not have worked");
 
 		el.rangeSlider("option", "wheelSpeed", -3);
-		QUnit.deepEqual(el.rangeSlider("option", "wheelSpeed"), -3, "Wheelspeed setter should not have worked");
+		QUnit.deepEqual(el.rangeSlider("option", "wheelSpeed"), -3, "Wheelspeed setter should have worked");
 	}
 );
 
