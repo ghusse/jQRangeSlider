@@ -35,7 +35,7 @@ var el = null;
 		},
 		function() {
 			// Default values tests
-			QUnit.deepEqualEpsilon(el.rangeSlider("option", "bounds"), { min:0, max:100 }, 1e-3, "Default bounds should be 0-100");
+			QUnit.deepEqualEpsilon(el.rangeSlider("option", "barHandles"), true, "Default option for bar handles activation");
 			QUnit.deepEqualEpsilon(el.rangeSlider("option", "bounds"), { min:0, max:100 }, 1e-3, "Default bounds should be 0-100");
 			QUnit.deepEqualEpsilon(el.rangeSlider("option", "defaultValues"), {min:20, max:50}, 1e-3, "Default values should be 20-50");
 			QUnit.deepEqual(el.rangeSlider("option", "wheelMode"), null, "Default wheel mode should be empty");
@@ -325,6 +325,20 @@ var arrowsScrollingMouseUpTest = new TestCase(
 	function(){
 		// mouseup on another element than the clicked arrow should stop scrolling
 		QUnit.ok(this.max() !== el.rangeSlider("option", "bounds").max, "mouseup on another element than the clicked arrow should stop scrolling");
+	}
+);
+
+/**
+ *  Bar handles deactivation
+ */
+var noBarHandlesTest = new TestCase(
+	"Bar handles activation property setter",
+	function(){
+		el.rangeSlider("option", "barHandles", false);
+	},
+	function(){
+		var barHandles = el.find(".ui-rangeSlider-handle");
+		QUnit.equal(barHandles.length, 0, "The bar handles should not be accessible in the UI");
 	}
 );
 
@@ -740,6 +754,7 @@ testRunner.add("jQRangeSlider", [setUp,
 			wheelModeZoomTest, wheelModeScrollTest, wheelModeSetterTest, wheelSpeedSetterTest, rangeSetterTest,
 			wheelModeConstructorTest,
 			noArrowsSetterTest, arrowsScrollingMouseUpTest,
+			noBarHandlesTest,
 			defaultSetup,
 			customCtorTest,
 			destroy,
