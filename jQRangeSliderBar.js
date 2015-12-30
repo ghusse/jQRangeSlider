@@ -96,7 +96,7 @@
 		},
 
 		_setWheelSpeedOption: function(value){
-			if (typeof value === "number" && value > 0){
+			if (typeof value === "number" && value !== 0){
 				this.options.wheelSpeed = value;
 			}
 		},
