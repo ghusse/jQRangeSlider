@@ -98,6 +98,8 @@
 		},
 
 		_applyPosition: function(position){
+			this._cacheIfNecessary();
+			
 			var offset = {
 				top: this.cache.offset.top,
 				left: position
