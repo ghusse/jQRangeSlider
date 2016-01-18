@@ -1,9 +1,14 @@
 jQRangeSlider
 -------------
+* 5.7.2: 2016-01-18
+  * Fixed #194: IE8: 'this.cache.click.left' is null or not an object
+  * Fixed #206: Negative wheelSpeed not accepted
+  * Fixed #202: Prevent destroyed slider from running its resize handler
+  * Fixed #199: Use svg instead of png to get better image quality
 * 5.7.1: 2015-01-23
     * Fixed #174: Touch and jquery-ui 1.11.0 (not working)
 * 5.7.0: 2014-03-18
-	* Enhancement #154: 
+	* Enhancement #154:
 		* Introduced a new option "symmetricPositionning" for a different way of positionning handles
 		* Allowed minimum ranges to be 0
 	* Fixed #152: Calling resize on an hidden slider resets values
@@ -118,12 +123,12 @@ jQRangeSlider
 	* Issue #6: CSS fix
 * 2.1.1: 2011-05-20
   * Integrated Google Closure compiler and script for generating minified version of jQRangeSlider
-* 2.1: 2011-03-28 
+* 2.1: 2011-03-28
   * Changed helpers name to labels (API change)
   * Labels replaced inside the top level parent element
 * 2.0.2: 2011-03-23 bugfix
 * 2.0.1: 2011-03-17 bugfix
-* 2.0: 2011-03-14 
+* 2.0: 2011-03-14
 	* Value helpers
 	* New events: min/maxValueChanging and min/maxValueChanged
 	* Bugfixes

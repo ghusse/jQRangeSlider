@@ -1,6 +1,6 @@
 {
   "name": "jQRangeSlider",
-  "version": "5.7.1",
+  "version": "5.7.2",
   "scripts": {
     "test": "grunt ci --verbose"
   },
@@ -15,5 +15,8 @@
     "grunt-contrib-uglify": ">= 0.4.x",
     "grunt-contrib-compress": ">= 0.8.0",
     "grunt-contrib-qunit": ">= 0.5.2"
+  },
+  "dependencies": {
+    "grunt": "^0.4.5"
   }
 }
