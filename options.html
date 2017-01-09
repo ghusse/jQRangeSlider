@@ -61,6 +61,7 @@
               <li><a href="#optionsUsage">Get and set options</a></li>
               <li class="divider"></li>
               <li><a href="#arrowsOption">Arrows</a></li>
+              <li><a href="#barHandlesOption">Bar handles</a></li>
               <li><a href="#boundsOption">Bounds</a></li>
               <li><a href="#defaultValuesOption">Default values</a></li>
               <li><a href="#delayOption">Delay out</a></li>
@@ -182,6 +183,34 @@ $("#dateSlider").dateRangeSlider(
             <dd><pre class="prettyprint linenums"><code class="language-js">$("#arrowsExample").editRangeSlider({arrows:false});</code></pre></dd>
             <dt>Date slider</dt>
             <dd><pre class="prettyprint linenums"><code class="language-js">$("#arrowsExample").dateRangeSlider({arrows:false});</code></pre></dd>
+          </dl>
+        </div>
+
+        <!--
+          Bar handles
+        -->
+
+        <h2 id="barHandlesOption">Bar handles</h2>
+
+        <p>The option <code>barHandles</code> lets you remove sliding handles on both sides of the range bar.</p>
+        <p>This allows the bar to always be draggable even when the date range is small.</p>
+
+        <div class="alert alert-info">
+          <strong>Info</strong>: By default, bar handles are activated.
+        </div>
+
+        <div class="example">
+          <div class="sliderContainer">
+            <div id="barHandlesExample"></div>
+          </div>
+
+          <dl>
+            <dt>Basic slider (example above)</dt>
+            <dd><pre class="prettyprint linenums"><code class="language-js">$("#barHandlesExample").rangeSlider({barHandles:false});</code></pre></dd>
+            <dt>Edit slider</dt>
+            <dd><pre class="prettyprint linenums"><code class="language-js">$("#barHandlesExample").editRangeSlider({barHandles:false});</code></pre></dd>
+            <dt>Date slider</dt>
+            <dd><pre class="prettyprint linenums"><code class="language-js">$("#barHandlesExample").dateRangeSlider({barHandles:false});</code></pre></dd>
           </dl>
         </div>
 
@@ -817,6 +846,7 @@ $("#typeExample").editRangeSlider({type: "number"});</code></pre></dd>
       $("#wheelModeExample").rangeSlider({wheelMode: "zoom"});
       $("#wheelSpeedExample").rangeSlider({wheelMode: "scroll", wheelSpeed: 30});
       $("#arrowsExample").rangeSlider({arrows:false});
+      $("#barHandlesExample").rangeSlider({barHandles:false});
       $("#valueLabelsExample").rangeSlider({valueLabels: "change"});
       $("#formatterExample").rangeSlider({
         formatter:function(val){
