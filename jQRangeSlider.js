@@ -22,6 +22,7 @@
 			durationIn: 0,
 			durationOut: 400,
 			delayOut: 200,
+			barHandles: true,
 			range: {min: false, max: false},
 			step: false,
 			scales: false,
@@ -100,6 +101,7 @@
 			this._setScalesOption(key, value);
 			this._setEnabledOption(key, value);
 			this._setPositionningOption(key, value);
+			this._setBarHandlesOption(key, value);
 		},
 
 		_validProperty: function(object, name, defaultValue){
@@ -201,6 +203,14 @@
 			}
 		},
 
+		_setBarHandlesOption: function(key, value){
+
+			if (key === "barHandles" && (value === true || value === false) && value !== this.options.barHandles){
+				this._rightHandle("option", key, value);
+				this.options[key] = this._leftHandle("option", key, value);
+			}
+		},
+
 		_setLabelsDurations: function(key, value){
 			if (key === "durationIn" || key === "durationOut" || key === "delayOut"){
 				if (parseInt(value, 10) !== value) return;
@@ -271,6 +281,7 @@
 		_createHandles: function(){
 			this.leftHandle = this._createHandle({
 					isLeft: true,
+					barHandles: this.options.barHandles,
 					bounds: this.options.bounds,
 					value: this._values.min,
 					step: this.options.step,
@@ -279,6 +290,7 @@
 	
 			this.rightHandle = this._createHandle({
 				isLeft: false,
+				barHandles: this.options.barHandles,
 				bounds: this.options.bounds,
 				value: this._values.max,
 				step: this.options.step,

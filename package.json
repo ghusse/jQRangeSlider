@@ -2,6 +2,7 @@
   "name": "jQRangeSlider",
   "version": "5.7.2",
   "scripts": {
+    "grunt": "grunt",
     "test": "grunt ci --verbose"
   },
   "devDependencies": {

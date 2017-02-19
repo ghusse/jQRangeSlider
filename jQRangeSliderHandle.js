@@ -30,10 +30,14 @@
 		_create: function(){
 			$.ui.rangeSliderDraggable.prototype._create.apply(this);
 
+			if (this.options.barHandles){
+				this.element
+					.addClass("ui-rangeSlider-handle")
+			}
+
 			this.element
 				.css("position", "absolute")
 				.css("top", 0)
-				.addClass("ui-rangeSlider-handle")
 				.toggleClass("ui-rangeSlider-leftHandle", this.options.isLeft)
 				.toggleClass("ui-rangeSlider-rightHandle", !this.options.isLeft);
 
@@ -72,6 +76,8 @@
 				this.options.symmetricPositionning = value === true;
 				this.update();
 			}
+
+			this._setBarHandlesOption(key, value);
 
 			$.ui.rangeSliderDraggable.prototype._setOption.apply(this, [key, value]);
 		},
@@ -243,6 +249,16 @@
 			ratio = (position - parentPosition) / availableWidth;
 
 			return	ratio * (max - min) + min;
+		},
+
+		_setBarHandlesOption: function(key, value){
+			if (key === "barHandles" && (value === true || value === false)){
+				this.options.barHandles = value === true;
+				this.update();
+
+				var action = value ? 'addClass' : 'removeClass';
+				this.element[action]("ui-rangeSlider-handle")
+			}
 		},
 
 		/*
