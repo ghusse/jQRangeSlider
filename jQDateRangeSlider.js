@@ -79,8 +79,8 @@
 			}
 
 			return (function(formatter){
-				return function(value){
-					return formatter(new Date(value));
+				return function(value, isLeft){
+					return formatter(new Date(value), isLeft);
 				};
 			}(formatter));
 		},

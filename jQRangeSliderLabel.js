@@ -128,7 +128,7 @@
 			if (this.options.formatter === false){
 				this._displayText(Math.round(value));
 			}else{
-				this._displayText(this.options.formatter(value));
+				this._displayText(this.options.formatter(value, this.options.isLeft));
 			}
 
 			this._value = value;
