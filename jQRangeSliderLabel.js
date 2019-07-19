@@ -8,8 +8,8 @@
  */
 
 (function($, undefined){
-	
-	"use strict";
+	//jshint latedef: nofunc
+	"use strict"; 
 
 	$.widget("ui.rangeSliderLabel", $.ui.rangeSliderMouseTouch, {
 		options: {
