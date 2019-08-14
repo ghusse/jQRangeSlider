@@ -1,0 +1,4 @@
+[submodule "stable"]
+	path = stable
+	url = ./
+	branch = master
