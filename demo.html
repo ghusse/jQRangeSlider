@@ -1,27 +1,28 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<meta charset="utf-8"/>
-	<title>jQRangeSlider - Demo</title>
+  <meta charset="utf-8" />
+  <title>jQRangeSlider - Demo</title>
   <meta name="viewport" content="width=980" />
-	<link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+  <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
   <link href="css/style.css" rel="stylesheet" media="screen">
-	<link href="css/demo.css" rel="stylesheet" media="screen">
+  <link href="css/demo.css" rel="stylesheet" media="screen">
   <link href="stable/css/iThing.css" rel="stylesheet" media="screen">
   <link rel="icon" type="image/png" href="favicon.png" />
   <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
 
   <script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-20560239-1']);
-  _gaq.push(['_trackPageview']);
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-20560239-1']);
+    _gaq.push(['_trackPageview']);
 
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-</script>
+    (function () {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
 
 </head>
 
@@ -40,10 +41,12 @@
     <div class="collapse navbar-collapse navbar-ex1-collapse">
       <ul class="nav navbar-nav">
         <li><a href="index.html"><i class="glyphicon glyphicon-white glyphicon-home"></i> Home</a></li>
-        <li class="active"><a href="demo.html" onClick="_gaq.push(['_trackEvent', 'Demo', 'Menubar']);"><i class="glyphicon glyphicon-white glyphicon-play"></i> Demo</a></li>
+        <li class="active"><a href="demo.html" onClick="_gaq.push(['_trackEvent', 'Demo', 'Menubar']);"><i
+              class="glyphicon glyphicon-white glyphicon-play"></i> Demo</a></li>
         <li>
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-white glyphicon-book"></i> Documentation <b class="caret"></b></a>
-          
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
+              class="glyphicon glyphicon-white glyphicon-book"></i> Documentation <b class="caret"></b></a>
+
           <ul class="dropdown-menu">
             <li><a href="documentation.html">Quick start</a></li>
             <li><a href="options.html">Options</a></li>
@@ -51,51 +54,76 @@
             <li><a href="methods.html">Methods</a></li>
           </ul>
         </li>
-        <li><a href="technicalDemo.html" onClick="_gaq.push(['_trackEvent', 'TechnicalDocumentation', 'Menubar']);"><i class="glyphicon glyphicon-white glyphicon-fast-forward"></i> Technical demo</a></li>
-        <li><a href="javascript:return true;" data-uv-trigger><i class="glyphicon glyphicon-white glyphicon-question-sign"></i> Support</a></li>
+        <li><a href="technicalDemo.html" onClick="_gaq.push(['_trackEvent', 'TechnicalDocumentation', 'Menubar']);"><i
+              class="glyphicon glyphicon-white glyphicon-fast-forward"></i> Technical demo</a></li>
       </ul>
       <ul class="navbar-right nav navbar-nav">
         <li><a href="#" class="donateMenu"><i class="glyphicon glyphicon-gift"></i> Donate</a></li>
-        <li><a href="download.html" onClick="_gaq.push(['_trackEvent', 'Download', 'Menubar']);"><i class="glyphicon glyphicon-white glyphicon-download-alt"></i> Download</a></li>
+        <li><a href="download.html" onClick="_gaq.push(['_trackEvent', 'Download', 'Menubar']);"><i
+              class="glyphicon glyphicon-white glyphicon-download-alt"></i> Download</a></li>
       </ul>
-    </div>    
+    </div>
   </nav>
 
   <div class="container">
     <div class="hero-unit">
       <h1>Try jQRangeSlider!</h1>
-      <div class="sliderContainer"><div id="slider"></div></div>
-      <div class="sliderContainer"><div id="dateSlider"></div></div>
-      <div class="sliderContainer"><div id="editSlider"></div></div>
+      <div class="sliderContainer">
+        <div id="slider"></div>
+      </div>
+      <div class="sliderContainer">
+        <div id="dateSlider"></div>
+      </div>
+      <div class="sliderContainer">
+        <div id="editSlider"></div>
+      </div>
     </div>
   </div>
 
-    <div class="container buttonsLine">
-      <div class="col-md-6 col-xs-12">
-        <div id="carbonads-container" style="display:inline-block"><div class="carbonad"><div id="azcarbon"></div><script type="text/javascript">var z = document.createElement("script"); z.type = "text/javascript"; z.async = true; z.src = "http://engine.carbonads.com/z/58252/azcarbon_2_1_0_HORIZ"; var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(z, s);</script></div></div>
-      </div>
-
-      <div class="col-md-6 col-xs-12 buttons">
-        <p class="convinced">Convinced?</p>
-        <p class="download"><a class="btn btn-large btn-primary" href="download.html" onClick="_gaq.push(['_trackEvent', 'Download', 'Download-DemoConvinced']);">Download jQRangeSlider <i class="icon icon-white icon-download-alt"></i></a></p>
+  <div class="container buttonsLine">
+    <div class="col-md-6 col-xs-12">
+      <div id="carbonads-container" style="display:inline-block">
+        <div class="carbonad">
+          <div id="azcarbon"></div>
+          <script
+            type="text/javascript">var z = document.createElement("script"); z.type = "text/javascript"; z.async = true; z.src = "http://engine.carbonads.com/z/58252/azcarbon_2_1_0_HORIZ"; var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(z, s);</script>
+        </div>
       </div>
     </div>
+
+    <div class="col-md-6 col-xs-12 buttons">
+      <p class="convinced">Convinced?</p>
+      <p class="download"><a class="btn btn-large btn-primary" href="download.html"
+          onClick="_gaq.push(['_trackEvent', 'Download', 'Download-DemoConvinced']);">Download jQRangeSlider <i
+            class="icon icon-white icon-download-alt"></i></a></p>
+    </div>
+  </div>
 
   <div class="container">
     <div class="row">
       <div class="col-md-4 col-xs-12">
         <h3>Need more?</h3>
-        <p>If you want to test different options, you can try the <a href="technicalDemo.html" onClick="_gaq.push(['_trackEvent', 'TechnicalDemo', 'Demo-TechnicalDemoLink']);">technical demo</a>.</p>
-        <p class="buttons"><a href="technicalDemo.html" class="btn btn-small btn-default" onClick="_gaq.push(['_trackEvent', 'TechnicalDemo', 'Demo-TechnicalDemoButton']);">Try the technical demo <i class="icon icon-fast-forward"></i></a></p>
+        <p>If you want to test different options, you can try the <a href="technicalDemo.html"
+            onClick="_gaq.push(['_trackEvent', 'TechnicalDemo', 'Demo-TechnicalDemoLink']);">technical demo</a>.</p>
+        <p class="buttons"><a href="technicalDemo.html" class="btn btn-small btn-default"
+            onClick="_gaq.push(['_trackEvent', 'TechnicalDemo', 'Demo-TechnicalDemoButton']);">Try the technical demo <i
+              class="icon icon-fast-forward"></i></a></p>
       </div>
 
       <div class="col-md-4 col-xs-12">
         <h3>Play with sliders.</h3>
-        <p>If you want to go further and test different options, you can use jsFiddle with these 3 pre-configured <strong>js fiddles</strong>.</p>
+        <p>If you want to go further and test different options, you can use jsFiddle with these 3 pre-configured
+          <strong>js fiddles</strong>.</p>
         <p class="buttons">
-          <a class="btn btn-small btn-default" href="http://jsfiddle.net/ghusse/zrbCj/" onClick="_gaq.push(['_trackEvent', 'Fiddle', 'Demo-BasicFiddleButton']);">Basic <i class="icon-chevron-right"></i></a>
-          <a class="btn btn-small btn-default" href="http://jsfiddle.net/ghusse/vM844/" onClick="_gaq.push(['_trackEvent', 'Fiddle', 'Demo-DateFiddleButton']);">Date <i class="icon-chevron-right"></i></a>
-          <a class="btn btn-small btn-default" href="http://jsfiddle.net/ghusse/WQgwL/" onClick="_gaq.push(['_trackEvent', 'Fiddle', 'Demo-EditFiddleButton']);">Edit <i class="icon-chevron-right"></i></a>
+          <a class="btn btn-small btn-default" href="http://jsfiddle.net/ghusse/zrbCj/"
+            onClick="_gaq.push(['_trackEvent', 'Fiddle', 'Demo-BasicFiddleButton']);">Basic <i
+              class="icon-chevron-right"></i></a>
+          <a class="btn btn-small btn-default" href="http://jsfiddle.net/ghusse/vM844/"
+            onClick="_gaq.push(['_trackEvent', 'Fiddle', 'Demo-DateFiddleButton']);">Date <i
+              class="icon-chevron-right"></i></a>
+          <a class="btn btn-small btn-default" href="http://jsfiddle.net/ghusse/WQgwL/"
+            onClick="_gaq.push(['_trackEvent', 'Fiddle', 'Demo-EditFiddleButton']);">Edit <i
+              class="icon-chevron-right"></i></a>
         </p>
       </div>
     </div>
@@ -106,14 +134,22 @@
   </footer>
 
   <div id="donationContent" style="display:none">
-    <p>If you appreciate the slider, don't hesitate to donate to support the project. Even <strong>a small amount will help</strong>.</p>
+    <p>If you appreciate the slider, don't hesitate to donate to support the project. Even <strong>a small amount will
+        help</strong>.</p>
 
     <p class="donation">
-      <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=guillaume%40ghusse%2ecom&amp;lc=US&amp;item_name=jQRangeSlider&amp;item_number=download&amp;amount=1%2e00&amp;currency_code=USD&amp;no_note=0&amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHostedGuest" class="btn btn-default" onClick="_gaq.push(['_trackEvent', 'Donation', 'Donate1Gotcha', 'Donate $1', 1]);"><i class="glyphicon glyphicon-thumbs-up"></i> $1</a>
+      <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=guillaume%40ghusse%2ecom&amp;lc=US&amp;item_name=jQRangeSlider&amp;item_number=download&amp;amount=1%2e00&amp;currency_code=USD&amp;no_note=0&amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHostedGuest"
+        class="btn btn-default" onClick="_gaq.push(['_trackEvent', 'Donation', 'Donate1Gotcha', 'Donate $1', 1]);"><i
+          class="glyphicon glyphicon-thumbs-up"></i> $1</a>
 
-      <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=guillaume%40ghusse%2ecom&amp;lc=US&amp;item_name=jQRangeSlider&amp;item_number=download&amp;amount=2%2e00&amp;currency_code=USD&amp;no_note=0&amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHostedGuest" class="btn btn-primary btn-lg" onClick="_gaq.push(['_trackEvent', 'Donation', 'Donate2Gotcha', 'Donate $2', 2]);"><i class="glyphicon glyphicon-gift"></i> $2</a>
+      <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=guillaume%40ghusse%2ecom&amp;lc=US&amp;item_name=jQRangeSlider&amp;item_number=download&amp;amount=2%2e00&amp;currency_code=USD&amp;no_note=0&amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHostedGuest"
+        class="btn btn-primary btn-lg"
+        onClick="_gaq.push(['_trackEvent', 'Donation', 'Donate2Gotcha', 'Donate $2', 2]);"><i
+          class="glyphicon glyphicon-gift"></i> $2</a>
 
-      <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=guillaume%40ghusse%2ecom&amp;lc=US&amp;item_name=jQRangeSlider&amp;item_number=download&amp;amount=5%2e00&amp;currency_code=USD&amp;no_note=0&amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHostedGuest" class="btn btn-default" onClick="_gaq.push(['_trackEvent', 'Donation', 'Donate5Gotcha', 'Donate $5', 5]);"><i class="glyphicon glyphicon-heart"></i> $5</a>
+      <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=guillaume%40ghusse%2ecom&amp;lc=US&amp;item_name=jQRangeSlider&amp;item_number=download&amp;amount=5%2e00&amp;currency_code=USD&amp;no_note=0&amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHostedGuest"
+        class="btn btn-default" onClick="_gaq.push(['_trackEvent', 'Donation', 'Donate5Gotcha', 'Donate $5', 5]);"><i
+          class="glyphicon glyphicon-heart"></i> $5</a>
     </p>
 
     <p class="donation BTC">BTC: <input value="1JnJ7g3Riq7iXhGbEepumNHShkQjabarvd"></p>
@@ -123,9 +159,9 @@
 
   <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
   <script src="lib/bootstrap/js/bootstrap.min.js"></script>
-  
+
   <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
-  
+
   <script src="stable/jQRangeSliderMouseTouch.js"></script>
   <script src="stable/jQRangeSliderDraggable.js"></script>
   <script src="stable/jQRangeSliderHandle.js"></script>
@@ -135,47 +171,45 @@
 
   <script src="stable/jQDateRangeSliderHandle.js"></script>
   <script src="stable/jQDateRangeSlider.js"></script>
-  
+
   <script src="stable/jQEditRangeSliderLabel.js"></script>
   <script src="stable/jQEditRangeSlider.js"></script>
 
   <script src="stable/jQRuler.js"></script>
 
   <script>
-  //<!--
-  (function($){
-    var Months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    //<!--
+    (function ($) {
+      var Months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-    $(document).ready(function(){
-      $("#slider").rangeSlider();
-      $("#dateSlider").dateRangeSlider({
-        bounds: {min: new Date(2012, 0, 1), max: new Date(2012, 11, 31, 12, 59, 59)},
-        defaultValues: {min: new Date(2012, 1, 10), max: new Date(2012, 4, 22)},
-        scales: [{
-          next: function(val){
-            var next = new Date(val);
-            return new Date(next.setMonth(next.getMonth() + 1));
-          },
-          label: function(val){
-            return Months[val.getMonth()];
-          }
-        }]
+      $(document).ready(function () {
+        $("#slider").rangeSlider();
+        $("#dateSlider").dateRangeSlider({
+          bounds: { min: new Date(2012, 0, 1), max: new Date(2012, 11, 31, 12, 59, 59) },
+          defaultValues: { min: new Date(2012, 1, 10), max: new Date(2012, 4, 22) },
+          scales: [{
+            next: function (val) {
+              var next = new Date(val);
+              return new Date(next.setMonth(next.getMonth() + 1));
+            },
+            label: function (val) {
+              return Months[val.getMonth()];
+            }
+          }]
+        });
+        $("#editSlider").editRangeSlider();
       });
-      $("#editSlider").editRangeSlider();
-    });
-  })(jQuery);
+    })(jQuery);
 
-  $(".donateMenu").popover({
+    $(".donateMenu").popover({
       html: true,
       placement: "bottom",
       title: "Thank you for donating!",
       container: "body",
-      content: function() { return $("#donationContent").html(); }
+      content: function () { return $("#donationContent").html(); }
     });
   //-->
   </script>
-
-    <!-- UserVoice JavaScript SDK (only needed once on a page) -->
-  <script>(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='https://widget.uservoice.com/5aDfLFWPSv1z7z9HL66H0w.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})()</script>
 </body>
+
 </html>
