@@ -1,0 +1,4 @@
+[submodule "stable"]
+	path = stable
+	url = git@github.com:ghusse/jQRangeSlider.git
+	branch = master
