@@ -10,6 +10,14 @@
 (function($, undefined){
 	"use strict";
 
+	function valueOrFalse(value, defaultValue){
+		if (typeof value === "undefined"){
+			return defaultValue || false;
+		}
+
+		return value;
+	}
+
 	$.widget("ui.rangeSliderBar", $.ui.rangeSliderDraggable, {
 		options: {
 			leftHandle: null,
@@ -541,13 +549,5 @@
 			this._positionBar();
 		}
 	});
-
-	function valueOrFalse(value, defaultValue){
-		if (typeof value === "undefined"){
-			return defaultValue || false;
-		}
-
-		return value;
-	}
 
 }(jQuery));

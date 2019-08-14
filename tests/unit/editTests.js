@@ -62,6 +62,12 @@
 		}
 	);
 
+	function testInputType(type){
+		el.editRangeSlider("option", "type", type);
+		QUnit.equal(el.editRangeSlider("option", "type"), type, "Type option should have been set");
+		QUnit.equal(el.find("input").attr("type"), type, "Type should be used by inputs");
+	}
+
 	var setType = new TestCase(
 		"Input type setter",
 		function(){},
@@ -70,12 +76,6 @@
 			testInputType("number");
 		}
 	);
-
-	function testInputType(type){
-		el.editRangeSlider("option", "type", type);
-		QUnit.equal(el.editRangeSlider("option", "type"), type, "Type option should have been set");
-		QUnit.equal(el.find("input").attr("type"), type, "Type should be used by inputs");
-	}
 
 	var setInvalidType = new TestCase(
 		"Invalid input type",

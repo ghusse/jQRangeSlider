@@ -8,8 +8,8 @@
  */
 
 (function($, undefined){
-	
-	"use strict";
+	//jshint latedef: nofunc
+	"use strict"; 
 
 	$.widget("ui.rangeSliderLabel", $.ui.rangeSliderMouseTouch, {
 		options: {
@@ -128,7 +128,7 @@
 			if (this.options.formatter === false){
 				this._displayText(Math.round(value));
 			}else{
-				this._displayText(this.options.formatter(value));
+				this._displayText(this.options.formatter(value, this.options.isLeft));
 			}
 
 			this._value = value;
@@ -349,14 +349,18 @@
 			var label1Pos = this.GetRawPosition(this.cache.label1, this.cache.handle1),
 				label2Pos = this.GetRawPosition(this.cache.label2, this.cache.handle2);
 
-			if (this.label1[type]("option", "isLeft")){
-				this.ConstraintPositions(label1Pos, label2Pos);
-			}else{
-				this.ConstraintPositions(label2Pos, label1Pos);
+			if (this.label1[0].innerText === this.label2[0].innerText) {
+				this.PositionLabel(this.label1, (label1Pos.left+label2Pos.left)/2, this.cache.label1);
+				this.PositionLabel(this.label2, (label1Pos.left+label2Pos.left)/2, this.cache.label2);
+			} else {
+				if (this.label1[type]("option", "isLeft")) {
+					this.ConstraintPositions(label1Pos, label2Pos);
+				} else {
+					this.ConstraintPositions(label2Pos, label1Pos);
+				}
+				this.PositionLabel(this.label1, label1Pos.left, this.cache.label1);
+				this.PositionLabel(this.label2, label2Pos.left, this.cache.label2);
 			}
-
-			this.PositionLabel(this.label1, label1Pos.left, this.cache.label1);
-			this.PositionLabel(this.label2, label2Pos.left, this.cache.label2);
 		}
 
 		this.PositionLabel = function(label, leftOffset, cache){
