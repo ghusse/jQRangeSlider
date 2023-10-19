@@ -2,8 +2,8 @@ jQRangeSlider, jQDateRangeSlider & jQEditRangeSlider [![Build Status](https://tr
 ====================================================
 A javascript slider selector that supports dates and touch devices
 
-* [Home page](http://ghusse.github.io/jQRangeSlider/)
-* [Documentation](http://ghusse.github.io/jQRangeSlider/documentation.html)
+* [Home page](https://ghusse.github.io/jQRangeSlider/)
+* [Documentation](https://ghusse.github.io/jQRangeSlider/documentation.html)
 * [Github](https://github.io/ghusse/jQRangeSlider/)
 
 License
