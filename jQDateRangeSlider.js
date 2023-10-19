@@ -75,7 +75,7 @@
 			var formatter = this.options.formatter;
 
 			if (this.options.formatter === false || this.options.formatter === null){
-				formatter = this._defaultFormatter;
+				formatter = this._defaultFormatter.bind(this);
 			}
 
 			return (function(formatter){

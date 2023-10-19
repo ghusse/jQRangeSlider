@@ -508,7 +508,7 @@
 
 		_getFormatter: function(){
 			if (this.options.formatter === false || this.options.formatter === null){
-				return this._defaultFormatter;
+				return this._defaultFormatter.bind(this);
 			}
 
 			return this.options.formatter;
