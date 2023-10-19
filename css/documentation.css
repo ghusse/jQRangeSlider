@@ -70,11 +70,6 @@ input[type=number]{
 	font-size: 13px;
 }
 
-#carbonads-container{
-	margin-left: 15px;
-	margin-top: 15px;
-}
-
 #tableOfContent li.nav-header span.trigger{
 	display: block;
 	padding: 3px 15px;
