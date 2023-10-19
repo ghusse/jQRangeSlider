@@ -17,7 +17,7 @@
 		},
 
 		_create: function(){
-			$.ui.rangeSlider.prototype._create.apply(this);
+			this._super();
 
 			this.element.addClass("ui-editRangeSlider");
 		},
@@ -25,7 +25,7 @@
 		destroy: function(){
 			this.element.removeClass("ui-editRangeSlider");
 
-			$.ui.rangeSlider.prototype.destroy.apply(this);
+			this._super();
 		},
 
 		_setOption: function(key, value){
@@ -37,7 +37,7 @@
 				this.options[key] = this.labels.left === null ? value : this._leftLabel("option", key);
 			}
 
-			$.ui.rangeSlider.prototype._setOption.apply(this, [key, value]);
+			this._super(label,handle);
 		},
 
 		_setLabelOption: function(key, value){
@@ -52,7 +52,7 @@
 		},
 
 		_createLabel: function(label, handle){
-			var result = $.ui.rangeSlider.prototype._createLabel.apply(this, [label, handle]);
+			var result = this._super(label,handle);
 			
 			if (label === null){
 				result.bind("valueChange", $.proxy(this._onValueChange, this));
@@ -70,13 +70,13 @@
 		},
 
 		_getLabelConstructorParameters: function(label, handle){
-			var parameters = $.ui.rangeSlider.prototype._getLabelConstructorParameters.apply(this, [label, handle]);
+			var parameters = this._super(label,handle);
 
 			return this._addPropertiesToParameter(parameters);
 		},
 
 		_getLabelRefreshParameters: function(label, handle){
-			var parameters = $.ui.rangeSlider.prototype._getLabelRefreshParameters.apply(this, [label, handle]);
+			var parameters = this._super(label,handle);
 
 			return this._addPropertiesToParameter(parameters);
 		},

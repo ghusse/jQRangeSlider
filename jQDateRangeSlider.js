@@ -17,14 +17,14 @@
 		},
 
 		_create: function(){
-			$.ui.rangeSlider.prototype._create.apply(this);
+			this._super();
 
 			this.element.addClass("ui-dateRangeSlider");
 		},
 
 		destroy: function(){
 			this.element.removeClass("ui-dateRangeSlider");
-			$.ui.rangeSlider.prototype.destroy.apply(this);
+			this._super();
 		},
 
 		_setDefaultValues: function(){
@@ -44,9 +44,9 @@
 
 		_setOption: function(key, value){
 			if ((key === "defaultValues" || key === "bounds") && typeof value !== "undefined" && value !== null && this._isValidDate(value.min) && this._isValidDate(value.max)){
-				$.ui.rangeSlider.prototype._setOption.apply(this, [key, {min:value.min.valueOf(), max:value.max.valueOf()}]);
+				this._super(key, {min:value.min.valueOf(), max:value.max.valueOf()});
 			}else{
-				$.ui.rangeSlider.prototype._setOption.apply(this, this._toArray(arguments));
+				this._super.apply(this, this._toArray(arguments));
 			}
 		},
 
@@ -56,12 +56,12 @@
 
 		option: function(key){
 			if (key === "bounds" || key === "defaultValues"){
-				var result = $.ui.rangeSlider.prototype.option.apply(this, arguments);
+				var result = this._super.apply(this, this._toArray(arguments));
 
 				return {min:new Date(result.min), max:new Date(result.max)};
 			}
 
-			return $.ui.rangeSlider.prototype.option.apply(this, this._toArray(arguments));
+			return  this._super.apply(this, this._toArray(arguments));
 		},
 
 		_defaultFormatter: function(value){
@@ -90,9 +90,9 @@
 
 			if (this._isValidDate(min) && this._isValidDate(max))
 			{
-				values = $.ui.rangeSlider.prototype.values.apply(this, [min.valueOf(), max.valueOf()]);
+				values = this._super(min.valueOf(), max.valueOf());
 			}else{
-				values = $.ui.rangeSlider.prototype.values.apply(this, this._toArray(arguments));
+				values = this._super.apply(this, this._toArray(arguments));
 			}
 
 			return {min: new Date(values.min), max: new Date(values.max)};
@@ -100,27 +100,27 @@
 
 		min: function(min){
 			if (this._isValidDate(min)){
-				return new Date($.ui.rangeSlider.prototype.min.apply(this, [min.valueOf()]));
+				return new Date(this._super(min.valueOf()));
 			}
 
-			return new Date($.ui.rangeSlider.prototype.min.apply(this));
+			return new Date(this._super());
 		},
 
 		max: function(max){
 			if (this._isValidDate(max)){
-				return new Date($.ui.rangeSlider.prototype.max.apply(this, [max.valueOf()]));
+				return new Date(this._super(max.valueOf()));
 			}
 
-			return new Date($.ui.rangeSlider.prototype.max.apply(this));
+			return new Date(this._super());
 		},
 
 		bounds: function(min, max){
 			var result;
 
 			if (this._isValidDate(min) && this._isValidDate(max)) {
-				result = $.ui.rangeSlider.prototype.bounds.apply(this, [min.valueOf(), max.valueOf()]);
+				result = this._super(min.valueOf(), max.valueOf());
 			} else {
-				result = $.ui.rangeSlider.prototype.bounds.apply(this, this._toArray(arguments));
+				result = this._super.apply(this, this._toArray(arguments));
 			}
 
 			return {min: new Date(result.min), max: new Date(result.max)};

@@ -21,7 +21,7 @@
 		_text: "",
 
 		_create: function(){
-			$.ui.rangeSliderLabel.prototype._create.apply(this);
+			this._super();
 
 			this._createInput();
 		},
@@ -33,7 +33,7 @@
 				this._setStepOption(value);
 			}
 
-			$.ui.rangeSliderLabel.prototype._setOption.apply(this, [key, value]);
+			this._super(key, value);
 		},
 
 		_createInput: function(){
@@ -64,7 +64,7 @@
 		},
 
 		_onSwitch: function(event, isLeft){
-			$.ui.rangeSliderLabel.prototype._onSwitch.apply(this, [event, isLeft]);
+			this._super(event, isLeft);
 
 			this._setInputName();
 		},
@@ -130,13 +130,13 @@
 	},
 
 	enable: function(){
-		$.ui.rangeSliderLabel.prototype.enable.apply(this);
+		this._super();
 
 		this._input.attr("disabled", null);
 	},
 
 	disable: function(){
-		$.ui.rangeSliderLabel.prototype.disable.apply(this);
+		this._super();
 
 		this._input.attr("disabled", "disabled");
 	}

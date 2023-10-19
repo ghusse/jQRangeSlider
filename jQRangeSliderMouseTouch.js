@@ -15,7 +15,7 @@
 
 		_mouseInit: function(){
 			var that = this;
-			$.ui.mouse.prototype._mouseInit.apply(this);
+			this._super();
 			this._mouseDownEvent = false;
 
 			this.element.bind('touchstart.' + this.widgetName, function(event) {
@@ -28,7 +28,7 @@
 				.unbind('touchmove.' + this.widgetName, this._touchMoveDelegate)
 				.unbind('touchend.' + this.widgetName, this._touchEndDelegate);
 
-			$.ui.mouse.prototype._mouseDestroy.apply(this);
+				this._super();
 		},
 
 		enable: function(){
@@ -42,7 +42,7 @@
 		destroy: function(){
 			this._mouseDestroy();
 
-			$.ui.mouse.prototype.destroy.apply(this);
+			this._super();
 
 			this._mouseInit = null;
 		},
@@ -79,7 +79,7 @@
 		_mouseDown: function(event){
 			if (!this.enabled) return false;
 
-			return $.ui.mouse.prototype._mouseDown.apply(this, [event]);
+			return this._super(event);
 		},
 
 		_touchEnd: function(event){

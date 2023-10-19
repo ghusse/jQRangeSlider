@@ -9,7 +9,7 @@
 		_name: "dateRangeSlider",
 
 		_createInputs: function(){
-			$.ui.sliderDemo.prototype._createInputs.apply(this, []);
+			this._super();
 
 			this._addPicker(this._elements.minInput);
 			this._addPicker(this._elements.maxInput);

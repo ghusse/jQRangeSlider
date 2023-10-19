@@ -7,7 +7,7 @@
 		_name: "editRangeSlider",
 
 		_createOptions: function(){
-			$.ui.sliderDemo.prototype._createOptions.apply(this);
+			this._super();
 
 			this._createInputTypeOption();
 		},

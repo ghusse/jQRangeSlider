@@ -43,6 +43,7 @@
 		destroy: function(){
 			this.element.removeClass("ui-ruler");
 			this.element.empty();
+			this._super();
 		},
 
 		_regenerate: function(){

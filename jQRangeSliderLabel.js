@@ -66,7 +66,7 @@
 				this._positionner = null;
 			}
 
-			$.ui.rangeSliderMouseTouch.prototype.destroy.apply(this);
+			this._super();
 		},
 
 		_createElements: function(){

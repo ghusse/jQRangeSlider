@@ -46,6 +46,8 @@
 		ruler: null,
 
 		_create: function(){
+			this._super();
+
 			this._setDefaultValues();
 
 			this.labels = {left: null, right:null, leftDisplayed:true, rightDisplayed:true};
@@ -781,7 +783,7 @@
 			this._resizeProxy = null;
 			this._bindResize = null;
 
-			$.Widget.prototype.destroy.apply(this, arguments);
+			this._super();
 		},
 
 		_destroyWidget: function(name){

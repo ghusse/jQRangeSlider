@@ -16,7 +16,7 @@
 
 		_create: function(){
 			this._createBoundsValues();
-			$.ui.rangeSliderHandle.prototype._create.apply(this);
+			this._super();
 		},
 
 		_getValueForPosition: function(position){
@@ -34,7 +34,7 @@
 				return;
 			}
 
-			$.ui.rangeSliderHandle.prototype._setOption.apply(this, [key, value]);
+			this._super(key, value);
 
 			if (key === "bounds"){
 				this._createBoundsValues();
@@ -147,7 +147,7 @@
 		update: function(){
 			this._createBoundsValues();
 			this._createSteps();
-			$.ui.rangeSliderHandle.prototype.update.apply(this);
+			this._super();
 		},
 
 		add: function(date, step){

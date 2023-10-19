@@ -23,6 +23,7 @@
 
 		destroy: function(){
 			this.element.empty();
+			this._super();
 		},
 
 		_setOption: function(name, value){

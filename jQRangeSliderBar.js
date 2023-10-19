@@ -37,7 +37,7 @@
 		_wheelTimeout: false,
 
 		_create: function(){
-			$.ui.rangeSliderDraggable.prototype._create.apply(this);
+			this._super();
 
 			this.element
 				.css("position", "absolute")
@@ -65,7 +65,7 @@
 			this.options.rightHandle.unbind(".bar");
 			this.options = null;
 
-			$.ui.rangeSliderDraggable.prototype.destroy.apply(this);
+			this._super();
 		},
 
 		_setOption: function(key, value){
@@ -221,7 +221,7 @@
 		 */
 
 		_cache: function(){
-			$.ui.rangeSliderDraggable.prototype._cache.apply(this);
+			this._super();
 
 			this._cacheHandles();
 		},
@@ -236,13 +236,13 @@
 		},
 
 		_mouseStart: function(event){
-			$.ui.rangeSliderDraggable.prototype._mouseStart.apply(this, [event]);
+			this._super(event);
 
 			this._deactivateRange();
 		},
 
 		_mouseStop: function(event){
-			$.ui.rangeSliderDraggable.prototype._mouseStop.apply(this, [event]);
+			this._super(event);
 
 			this._cacheHandles();
 
@@ -350,7 +350,7 @@
 			var position = {},
 				right;
 
-			position.left = $.ui.rangeSliderDraggable.prototype._constraintPosition.apply(this, [left]);
+			position.left =this._super(left);
 
 			position.left = this._leftHandle("position", position.left);
 
@@ -361,7 +361,7 @@
 		},
 
 		_applyPosition: function(position){
-			$.ui.rangeSliderDraggable.prototype._applyPosition.apply(this, [position.left]);
+			this._super(position.left);
 			this.element.width(position.width);
 		},
 

@@ -28,7 +28,7 @@
 		_left: 0,
 
 		_create: function(){
-			$.ui.rangeSliderDraggable.prototype._create.apply(this);
+			this._super();
 
 			this.element
 				.css("position", "absolute")
@@ -45,7 +45,7 @@
 		destroy: function(){
 			this.element.empty();	
 
-			$.ui.rangeSliderDraggable.prototype.destroy.apply(this);			
+			this._super();
 		},
 
 		_setOption: function(key, value){
@@ -73,7 +73,7 @@
 				this.update();
 			}
 
-			$.ui.rangeSliderDraggable.prototype._setOption.apply(this, [key, value]);
+			this._super(key, value);
 		},
 
 		_checkRange: function(range){
@@ -89,7 +89,7 @@
 		},
 
 		_initElement: function(){
-			$.ui.rangeSliderDraggable.prototype._initElement.apply(this);
+			this._super();
 			
 			if (this.cache.parent.width === 0 || this.cache.parent.width === null){
 				setTimeout($.proxy(this._initElementIfNotDestroyed, this), 500);
@@ -108,7 +108,7 @@
 		 */
 
 		_cache: function(){
-			$.ui.rangeSliderDraggable.prototype._cache.apply(this);
+			this._super();
 
 			this._cacheParent();
 		},
@@ -139,7 +139,7 @@
 		},
 
 		_applyPosition: function(left){
-			$.ui.rangeSliderDraggable.prototype._applyPosition.apply(this, [left]);
+			this._super(left);
 
 			this._left = left;
 			this._setValue(this._getValueForPosition(left));
@@ -147,7 +147,7 @@
 		},
 
 		_prepareEventData: function(){
-			var data = $.ui.rangeSliderDraggable.prototype._prepareEventData.apply(this);
+			var data = this._super();
 
 			data.value = this._value;
 
