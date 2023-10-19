@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <meta charset="utf-8" />
+  <title>jQRangeSlider: jQuery plugin for range sliders</title>
+  <meta name="viewport" content="width=980" />
+  <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+  <link href="css/style.css" rel="stylesheet" media="screen">
+  <link href="css/index.css" rel="stylesheet" media="screen">
+  <link href="stable/css/iThing.css" rel="stylesheet" media="screen">
+  <link rel="glyphicon" type="image/png" href="favglyphicon.png" />
+  <link rel="shortcut glyphicon" type="image/x-glyphicon" href="favglyphicon.ico" />
+</head>
+
+<body>
+  <nav class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">jQRangeSlider</a>
+    </div>
+
+    <div class="collapse navbar-collapse navbar-ex1-collapse">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="index.html"><i class="glyphicon glyphicon-white glyphicon-home"></i> Home</a></li>
+        <li><a href="demo.html" onClick="_gaq.push(['_trackEvent', 'Demo', 'Menubar']);"><i
+              class="glyphicon glyphicon-white glyphicon-play"></i> Demo</a></li>
+        <li>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
+              class="glyphicon glyphicon-white glyphicon-book"></i> Documentation <b class="caret"></b></a>
+
+          <ul class="dropdown-menu">
+            <li><a href="documentation.html">Quick start</a></li>
+            <li><a href="options.html">Options</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="methods.html">Methods</a></li>
+          </ul>
+        </li>
+        <li><a href="technicalDemo.html" onClick="_gaq.push(['_trackEvent', 'TechnicalDocumentation', 'Menubar']);"><i
+              class="glyphicon glyphicon-white glyphicon-fast-forward"></i> Technical demo</a></li>
+      </ul>
+      <ul class="navbar-right nav navbar-nav">
+        <li><a href="#" class="donateMenu"><i class="glyphicon glyphicon-gift"></i> Donate</a></li>
+        <li><a href="download.html" onClick="_gaq.push(['_trackEvent', 'Download', 'Menubar']);"><i
+              class="glyphicon glyphicon-white glyphicon-download-alt"></i> Download</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container hero-unit">
+    <div class="row">
+      <div class="col-md-7 col-xs-12">
+        <h1>jQRangeSlider</h1>
+        <p>A powerful slider for selecting value ranges, supporting dates and more.</p>
+      </div>
+      <div class="col-md-5 col-xs-12" id="sliderContainer">
+        <div id="slider"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container buttonsLine">
+    <div class="col-md-6 col-xs-12 buttons">
+      <p>
+        <a class="btn btn-primary btn-large" href="download.html"
+          onClick="_gaq.push(['_trackEvent', 'Download', 'Download-IndexHero']);">Download jQRangeSlider <i
+            class="glyphicon glyphicon-white glyphicon-download-alt"></i></a></p>
+      <ul class="links">
+        <li><a href="https://github.com/ghusse/jQRangeSlider"
+            onClick="_gaq.push(['_trackEvent', 'Github', 'IndexHero']);">Github</a></li>
+        <li><a href="https://github.com/ghusse/jQRangeSlider/issues"
+            onClick="_gaq.push(['_trackEvent', 'Issues', 'IndexHero']);">Issues</a></li>
+        <li><a href="https://twitter.com/jQRangeSlider"
+            onClick="_gaq.push(['_trackEvent', 'Twitter', 'IndexHero']);">Twitter</a></li>
+        <li>Version 5.7.2</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="thumbnail">
+          <img src="images/calendar.png" alt="" />
+          <div class="caption">
+            <h3>Select dates</h3>
+            <p>jQRangeSlider supports both <strong>numerical values</strong> and <strong>date and time</strong>.
+              Selecting a time frame has never been so easy.</p>
+
+            <p class="buttons"><a class="btn" href="documentation.html#dateSliderQuickStart"
+                onClick="_gaq.push(['_trackEvent', 'LearnDates', 'IndexButtons']);">Learn how <i
+                  class="glyphicon glyphicon-chevron-right"></i></a></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="thumbnail">
+          <img src="images/tablet.png" alt="" />
+          <div class="caption">
+            <h3> Touch devices</h3>
+            <p>jQRangeSlider supports touch devices: tested with <strong>iOS</strong> and <strong>Android</strong>. User
+              can select a range simply by touching and swiping on his tablet or phone.</p>
+
+            <p class="buttons"><a class="btn" href="demo.html"
+                onClick="_gaq.push(['_trackEvent', 'Demo', 'TouchDemo-IndexButtons']);">Try demo <i
+                  class="glyphicon glyphicon-chevron-right"></i></a></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="thumbnail">
+          <img src="images/steps.png" alt="" />
+          <div class="caption">
+            <h3>Steps</h3>
+            <p>jQRangeSlider supports <strong>steps</strong> for both <strong>numerical</strong> and <strong>date
+                values</strong>. Select values 5 by 5 or month by month, simply by changing an option.</p>
+
+            <p class="buttons"><a class="btn" href="documentation.html#stepOption"
+                onClick="_gaq.push(['_trackEvent', 'LearnSteps', 'IndexButtons']);">Learn how <i
+                  class="glyphicon glyphicon-chevron-right"></i></a></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="thumbnail">
+          <img src="images/tie.png" alt="" />
+          <div class="caption">
+            <h3>Adapt to your style</h3>
+            <p>jQRangeSlider comes by default with <strong>two themes</strong> to demonstrate its ability to be
+              restyled. You can customize it as you want: <strong>nothing is hard coded.</strong>.</p>
+
+            <p class="buttons"><a class="btn" href="technicalDemo.html"
+                onClick="_gaq.push(['_trackEvent', 'TechnicalDemo', 'StyleIndexButtons']);">Try themes <i
+                  class="glyphicon glyphicon-chevron-right"></i></a></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="thumbnail">
+          <img src="images/refresh.png" alt="" />
+          <div class="caption">
+            <h3>Real time refresh</h3>
+            <p>jQRangeSlider exposes <strong>events</strong> you can use for refreshing your UI. You can also interact
+              with it through javascript <strong>methods</strong>.</p>
+
+            <p class="buttons"><a class="btn" href="documentation.html#bindingEvents"
+                onClick="_gaq.push(['_trackEvent', 'Documentation', 'LearnEvents-IndexButtons']);">Learn how <i
+                  class="glyphicon glyphicon-chevron-right"></i></a></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="thumbnail">
+          <img src="images/dove.png" alt="" />
+          <div class="caption">
+            <h3>GPL + MIT</h3>
+            <p>jQRangeSlider is <strong>open source</strong> published under dual license GPL and MIT. You can use it in
+              both open source and <strong>commercial software</strong>.</p>
+            <p class="buttons"><a class="btn" href="https://github.com/ghusse/jQRangeSlider"
+                onClick="_gaq.push(['_trackEvent', 'Github', 'IndexButton']);">Fork and contribute <i
+                  class="glyphicon glyphicon-chevron-right"></i></a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="container">
+    <p>Thanks to <a href="https://twitter.github.com/bootstrap">twitter bootstrap</a> for its awesome CSS framework.</p>
+
+    <p>Credits: <a href="https://thenounproject.com/noun/tablet/#glyphicon-No7364" target="_blank">Tablet</a> designed by
+      <a href="https://thenounproject.com/derrick_snider" target="_blank">Derrick Snider</a>, <a
+        href="https://thenounproject.com/noun/tie/#glyphicon-No3974" target="_blank">Tie</a> designed by <a
+        href="https://thenounproject.com/prerakpatel" target="_blank">Prerak Patel</a>, <a
+        href="https://thenounproject.com/noun/sync/#glyphicon-No5966" target="_blank">Sync</a> designed by <a
+        href="https://thenounproject.com/swedler" target="_blank">Steve Swedler</a>, <a
+        href="https://thenounproject.com/noun/dove/#glyphicon-No5214" target="_blank">Dove</a> designed by <a
+        href="https://thenounproject.com/glyphiconify" target="_blank">Scott Lewis</a> from The Noun Project</p>
+  </footer>
+
+  <div id="donationContent" style="display:none">
+    <p>If you appreciate the slider, don't hesitate to donate to support the project. Even <strong>a small amount will
+        help</strong>.</p>
+
+    <p class="donation">
+      <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=guillaume%40ghusse%2ecom&amp;lc=US&amp;item_name=jQRangeSlider&amp;item_number=download&amp;amount=10%2e00&amp;currency_code=USD&amp;no_note=0&amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHostedGuest"
+        class="btn btn-default" onClick="_gaq.push(['_trackEvent', 'Donation', 'Donate10Gotcha', 'Donate $10', 10]);"><i
+          class="glyphicon glyphicon-thumbs-up"></i> $10</a>
+
+      <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=guillaume%40ghusse%2ecom&amp;lc=US&amp;item_name=jQRangeSlider&amp;item_number=download&amp;amount=20%2e00&amp;currency_code=USD&amp;no_note=0&amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHostedGuest"
+        class="btn btn-primary btn-lg"
+        onClick="_gaq.push(['_trackEvent', 'Donation', 'Donate20Gotcha', 'Donate $20', 20]);"><i
+          class="glyphicon glyphicon-gift"></i> $20</a>
+
+      <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=guillaume%40ghusse%2ecom&amp;lc=US&amp;item_name=jQRangeSlider&amp;item_number=download&amp;amount=50%2e00&amp;currency_code=USD&amp;no_note=0&amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHostedGuest"
+        class="btn btn-default" onClick="_gaq.push(['_trackEvent', 'Donation', 'Donate50Gotcha', 'Donate $50', 50]);"><i
+          class="glyphicon glyphicon-heart"></i> $50</a>
+    </p>
+
+    <p class="donation BTC">BTC: <input value="18HvbEBJ22HdzNdgDqWKLfHxYrVoGCiSMt"></p>
+
+    <p>Thank you!</p>
+  </div>
+
+
+  <script src="demo.min.js"></script>
+  <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+  <script>
+    //<!--
+    var min = new Date(2012, 0, 1),
+      max = new Date(2013, 11, 31);
+
+    $("#slider").dateRangeSlider({
+      bounds: { min: min, max: max },
+      defaultValues: {
+        min: new Date(2012, 4, 22),
+        max: new Date(2013, 4, 22)
+      }
+    });
+
+    $(".donateMenu").popover({
+      html: true,
+      placement: "bottom",
+      title: "Thank you for donating!",
+      container: "body",
+      content: function () { return $("#donationContent").html(); }
+    });
+  //-->
+  </script>
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-20560239-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function () {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+</body>
+
+</html>

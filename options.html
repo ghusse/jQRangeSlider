@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>jQRangeSlider - Documentation - Options</title>
+  <meta name="viewport" content="width=980" />
+  <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+  <link href="lib/prettify/prettify.css" rel="stylesheet" media="screen">
+  <link href="css/style.css" rel="stylesheet" media="screen">
+  <link href="css/documentation.css" rel="stylesheet" media="screen">
+  <link href="stable/css/iThing.css" rel="stylesheet" media="screen">
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+</head>
+
+<body data-spy="scroll" data-target="#tableOfContent" data-offset="60">
+  <nav class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">jQRangeSlider</a>
+    </div>
+
+    <div class="collapse navbar-collapse navbar-ex1-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html"><i class="glyphicon glyphicon-white glyphicon-home"></i> Home</a></li>
+        <li><a href="demo.html" onClick="_gaq.push(['_trackEvent', 'Demo', 'Menubar']);"><i
+              class="glyphicon glyphicon-white glyphicon-play"></i> Demo</a></li>
+        <li class="active">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
+              class="glyphicon glyphicon-white glyphicon-book"></i> Documentation <b class="caret"></b></a>
+
+          <ul class="dropdown-menu">
+            <li><a href="documentation.html">Quick start</a></li>
+            <li><a href="options.html">Options</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="methods.html">Methods</a></li>
+          </ul>
+        </li>
+        <li><a href="technicalDemo.html" onClick="_gaq.push(['_trackEvent', 'TechnicalDocumentation', 'Menubar']);"><i
+              class="glyphicon glyphicon-white glyphicon-fast-forward"></i> Technical demo</a></li>
+      </ul>
+      <ul class="navbar-right nav navbar-nav">
+        <li><a href="#" class="donateMenu"><i class="glyphicon glyphicon-gift"></i> Donate</a></li>
+        <li><a href="download.html" onClick="_gaq.push(['_trackEvent', 'Download', 'Menubar']);"><i
+              class="glyphicon glyphicon-white glyphicon-download-alt"></i> Download</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="row">
+      <nav id="tableOfContent" class="col-md-3">
+        <div class="navcontainer" data-spy="affix">
+
+          <ul class="nav nav-list hiddenprint">
+            <li><a href="documentation.html#quickStart">Quick start</a></li>
+            <li class="nav-header"><span class="trigger" data-toggle="collapse"
+                data-target="#optionsDetails">Options</span>
+              <ul id="optionsDetails" class="documentation.html in nav">
+                <li><a href="#optionsUsage">Get and set options</a></li>
+                <li class="divider"></li>
+                <li><a href="#arrowsOption">Arrows</a></li>
+                <li><a href="#boundsOption">Bounds</a></li>
+                <li><a href="#defaultValuesOption">Default values</a></li>
+                <li><a href="#delayOption">Delay out</a></li>
+                <li><a href="#durationOptions">Duration in/out</a></li>
+                <li><a href="#enabledOption">Enabled</a></li>
+                <li><a href="#formatterOption">Formatter</a></li>
+                <li><a href="#rangeOption">Range</a></li>
+                <li><a href="#scalesOption">Scales</a></li>
+                <li><a href="#stepOption">Step</a></li>
+                <li><a href="#symmetricPositionningOption">Symmetric positionning</a></li>
+                <li><a href="#typeOption">Type (edit slider)</a></li>
+                <li><a href="#valueLabelsOption">Value labels</a></li>
+                <li><a href="#wheelModeOption">Wheel mode</a></li>
+                <li><a href="#wheelSpeedOption">Wheel speed</a></li>
+              </ul>
+            </li>
+            <li class="nav-header"><span class="trigger collapsed" data-toggle="collapse"
+                data-target="#eventsDetails">Events</span>
+              <ul id="eventsDetails" class="collapse out">
+                <li><a href="events.html#bindingEvents">Binding events</a></li>
+                <li class="divider"></li>
+                <li><a href="events.html#valuesChangingEvent">Values changing</a></li>
+                <li><a href="events.html#valuesChangedEvent">Values changed</a></li>
+                <li><a href="events.html#userValuesChangedEvent">User values changed</a></li>
+              </ul>
+            </li>
+            <li class="nav-header"><span class="trigger collapsed" data-toggle="collapse"
+                data-target="#methodsDetails">Methods</span>
+              <ul id="methodsDetails" class="collapse out">
+                <li><a href="methods.html#executingMethods">Executing methods</a></li>
+                <li class="divider"></li>
+                <li><a href="methods.html#boundsMethod">Bounds</a></li>
+                <li><a href="methods.html#destroyMethod">Destroy</a></li>
+                <li><a href="methods.html#enableDisableMethods">Enable / disable</a></li>
+                <li><a href="methods.html#minMaxMethods">Min / max</a></li>
+                <li><a href="methods.html#resizeMethod">Resize</a></li>
+                <li><a href="methods.html#scrollMethods">Scroll left/right</a></li>
+                <li><a href="methods.html#valuesMethod">Values</a></li>
+                <li><a href="methods.html#zoomMethods">Zoom in/out</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <article class="col-md-9">
+        <section id="options">
+          <div class="page-header">
+            <h1>Options</h1>
+          </div>
+
+          <h2 id="optionsUsage">Get and set options</h2>
+
+          <p>Options can be set in constructor or after initialization.</p>
+
+          <pre class="prettyprint linenums"><code class="language-js">// Set option value in constructor
+$("#slider").rangeSlider({
+  bounds: {min: 0, max: 100}
+});
+
+// Change options after slider creation
+$("#slider").rangeSlider("option", "bounds", {min: 10, max: 90});
+
+// Get option value
+var bounds = $("#slider").rangeSlider("option", "bounds");
+
+// Set date option
+$("#dateSlider").dateRangeSlider(
+  "option",
+  "bounds",
+  {
+    min: new Date(2012, 0, 1),
+    max: new Date(2012, 11, 31)  
+});
+
+// Set multiple options at once
+$("#dateSlider").dateRangeSlider(
+  "option",
+  { 
+    bounds: {
+      min: new Date(2012, 0, 1),
+      max: new Date(2012, 11, 31)  
+    },
+    enabled: false
+  }
+);
+
+</code></pre>
+
+          <div class="alert alert-warning">
+            <strong>Warning</strong>: Date range sliders need to be initialized with <strong>date objects</strong>.
+            Strings don't work.
+          </div>
+          <div class="alert alert-info">
+            <strong>Info</strong>: When creating a date object in javascript, month number starts from 0. Don't ask me
+            why.
+          </div>
+
+          <!--
+          Arrows
+        -->
+
+          <h2 id="arrowsOption">Arrows</h2>
+
+          <p>The option <code>arrows</code> lets you remove scrolling arrows on both sides of the slider.</p>
+
+          <div class="alert alert-info">
+            <strong>Info</strong>: By default, arrows are activated.
+          </div>
+
+          <div class="example">
+            <div class="sliderContainer">
+              <div id="arrowsExample"></div>
+            </div>
+
+            <dl>
+              <dt>Basic slider (example above)</dt>
+              <dd>
+                <pre
+                  class="prettyprint linenums"><code class="language-js">$("#arrowsExample").rangeSlider({arrows:false});</code></pre>
+              </dd>
+              <dt>Edit slider</dt>
+              <dd>
+                <pre
+                  class="prettyprint linenums"><code class="language-js">$("#arrowsExample").editRangeSlider({arrows:false});</code></pre>
+              </dd>
+              <dt>Date slider</dt>
+              <dd>
+                <pre
+                  class="prettyprint linenums"><code class="language-js">$("#arrowsExample").dateRangeSlider({arrows:false});</code></pre>
+              </dd>
+            </dl>
+          </div>
+
+          <!--
+          Bounds
+        -->
+
+          <h2 id="boundsOption">Bounds</h2>
+
+          <p>The option <code>bounds</code> allows you to modify min and max values of the slider.</p>
+
+          <div class="example">
+            <div class="sliderContainer">
+              <div id="boundsExample"></div>
+            </div>
+
+            <dl>
+              <dt>Basic slider (example above)</dt>
+              <dd>
+                <pre
+                  class="prettyprint linenums"><code class="language-js">$("#boundsExample").rangeSlider({bounds:{min: 10, max: 90}});</code></pre>
+              </dd>
+              <dt>Edit slider</dt>
+              <dd>
+                <pre
+                  class="prettyprint linenums"><code class="language-js">$("#boundsExample").editRangeSlider({bounds:{min: 10, max: 90}});</code></pre>
+              </dd>
+              <dt>Date slider</dt>
+              <dd>
+                <pre class="prettyprint linenums"><code class="language-js">$("#boundsExample").dateRangeSlider({
+  bounds:{
+    min: new Date(2012, 0, 1),
+    max: new Date(2012, 11, 31)
+  }});</code></pre>
+              </dd>
+            </dl>
+          </div>
+
+          <!--
+          Default values
+        -->
+
+          <h2 id="defaultValuesOption">Default values</h2>
+
+          <p>The option <code>defaultValues</code> lets you specify values selected by default on construction.</p>
+
+          <div class="alert alert-warning">
+            <strong>Warning</strong>: This option can only be used in constructor. Once the slider has been constructed,
+            it has no effect.
+          </div>
+
+          <div class="example">
+            <div class="sliderContainer">
+              <div id="defaultValuesExample"></div>
+            </div>
+
+            <dl>
+              <dt>Basic slider (example above)</dt>
+              <dd>
+                <pre
+                  class="prettyprint linenums"><code class="language-js">$("#defaultValuesExample").rangeSlider({defaultValues:{min: 10, max: 90}});</code></pre>
+              </dd>
+              <dt>Edit slider</dt>
+              <dd>
+                <pre
+                  class="prettyprint linenums"><code class="language-js">$("#defaultValuesExample").editRangeSlider({defaultValues:{min: 10, max: 90}});</code></pre>
+              </dd>
+              <dt>Date slider</dt>
+              <dd>
+                <pre class="prettyprint linenums"><code class="language-js">$("#defaultValuesExample").dateRangeSlider({
+  defaultValues:{
+    min: new Date(2012, 0, 1),
+    max: new Date(2012, 11, 31)
+  }});</code></pre>
+              </dd>
+            </dl>
+          </div>
+
+          <!--
+          Delay out
+        -->
+
+          <h2 id="delayOption">Delay out</h2>
+
+          <p>Option <code>delayOut</code> lets you specify the duration labels are shown after the user changed its
+            values..</p>
+
+          <div class="alert alert-warning">
+            <strong>Warning</strong>: This option can only be used in conjunction with
+            <code><strong>valueLabels: "change"</strong></code>.
+          </div>
+
+          <div class="example">
+            <div class="sliderContainer">
+              <div id="delayExample"></div>
+            </div>
+
+            <dl>
+              <dt>Basic slider (example above)</dt>
+              <dd>
+                <pre class="prettyprint linenums"><code class="language-js">$("#delayExample").rangeSlider({
+  valueLabels:"change",
+  delayOut: 4000
+});</code></pre>
+              </dd>
+              <dt>Edit slider</dt>
+              <dd>
+                <pre class="prettyprint linenums"><code class="language-js">$("#delayExample").editRangeSlider({
+  valueLabels:"change",
+  delayOut: 4000
+});</code></pre>
+              </dd>
+              <dt>Date slider</dt>
+              <dd>
+                <pre class="prettyprint linenums"><code class="language-js">$("#delayExample").dateRangeSlider({
+  valueLabels:"change",
+  delayOut: 4000
+});</code></pre>
+              </dd>
+            </dl>
+          </div>
+
+          <!--
+          Duration in/out
+        -->
+
+          <h2 id="durationOptions">Duration in/out</h2>
+
+          <p>Option <code>durationIn</code> lets you specify the animation length when displaying value labels.
+            Similarly, <code>durationOut</code> allows to customize the animation duration when hiding those labels.</p>
+
+          <div class="alert alert-warning">
+            <strong>Warning</strong>: This option can only be used in conjonction with
+            <code><strong>valueLabels: "change"</strong></code>.
+          </div>
+
+          <div class="example">
+            <div class="sliderContainer">
+              <div id="durationExample"></div>
+            </div>
+
+            <dl>
+              <dt>Basic slider (example above)</dt>
+              <dd>
+                <pre class="prettyprint linenums"><code class="language-js">$("#durationExample").rangeSlider({
+  valueLabels:"change",
+  durationIn: 1000,
+  durationOut: 1000
+});</code></pre>
+              </dd>
+              <dt>Edit slider</dt>
+              <dd>
+                <pre class="prettyprint linenums"><code class="language-js">$("#durationExample").editRangeSlider({
+  valueLabels:"change",
+  durationIn: 1000,
+  durationOut: 1000
+});</code></pre>
+              </dd>
+              <dt>Date slider</dt>
+              <dd>
+                <pre class="prettyprint linenums"><code class="language-js">$("#durationExample").dateRangeSlider({
+  valueLabels:"change",
+  durationIn: 1000,
+  durationOut: 1000
+});</code></pre>
+              </dd>
+            </dl>
+          </div>
+
+          <!--
+          Enabled
+        -->
+
+          <h2 id="enabledOption">Enabled</h2>
+
+          <p>The option <code>enabled</code> allows you to configure a <strong>read-only</strong> slider.</p>
+
+          <div class="alert alert-warning">
+            <strong>Warning</strong>: This option block all user input, but do not block modifications in javascript.
+            Please make sure your code is correctly reacting to the disabled state.</code>.
+          </div>
+
+          <div class="example">
+            <div class="sliderContainer">
+              <div id="disabledExample"></div>
+            </div>
+
+            <dl>
+              <dt>Basic slider (example above)</dt>
+              <dd>
+                <pre class="prettyprint linenums"><code class="language-js">$("#disabledExample").rangeSlider({
+  enabled: false
+});</code></pre>
+              </dd>
+              <dt>Edit slider</dt>
+              <dd>
+                <pre class="prettyprint linenums"><code class="language-js">$("#disabledExample").editRangeSlider({
+  enabled: false
+});</code></pre>
+              </dd>
+              <dt>Date slider</dt>
+              <dd>
+                <pre class="prettyprint linenums"><code class="language-js">$("#disabledExample").dateRangeSlider({
+  enabled: false
+});</code></pre>
+              </dd>
+            </dl>
+          </div>
+
+          <!--
+          Formatter
+        -->
+
+          <h2 id="formatterOption">Formatter</h2>
+
+          <p>The option <code>formatter</code> lets you customize displayed label text.</p>
+
+          <div class="example">
+            <div class="sliderContainer">
+              <div id="formatterExample"></div>
+            </div>
+
+            <dl>
+              <dt>Basic slider (example above)</dt>
+              <dd>
+                <pre class="prettyprint linenums"><code class="language-js">$("#formatterExample").rangeSlider({
+  formatter:function(val){
+        var value = Math.round(val * 5) / 5,
+          decimal = value - Math.round(val);
+
+        return decimal == 0 ? value.toString() + ".0" : value.toString();
+      }
+});</code></pre>
+              </dd>
+              <dt>Edit slider</dt>
+              <dd>
+                <pre class="prettyprint linenums"><code class="language-js">$("#formatterExample").editRangeSlider({
+  formatter:function(val){
+        var value = Math.round(val * 5) / 5,
+          decimal = value - Math.round(val);
+
+        return decimal == 0 ? value.toString() + ".0" : value.toString();
+      }
+});</code></pre>
+              </dd>
+              <dt>Date slider</dt>
+              <dd>
+                <pre class="prettyprint linenums"><code class="language-js">$("#formatterExample").dateRangeSlider({
+  formatter:function(val){
+        var days = val.getDate(),
+          month = val.getMonth() + 1,
+          year = val.getFullYear();
+
+        return days + "/" + month + "/" + year;
+      }
+});</code></pre>
+              </dd>
+            </dl>
+          </div>
+
+          <!--
+          Range  
+        -->
+
+          <h2 id="rangeOption">Range</h2>
+
+          <p>The option <code>range</code> lets you specify minimum and/or maximum range length. For instance, let's
+            consider you want the user to choose a range of dates during 2012. You can constraint people to choose
+            <strong>at least 1 week</strong> during this period. Similarly, you also can constraint the user to choose
+            90 days at maximum.</p>
+
+          <p>When this option is activated, the slider constraints the user input. When minimum or maximum value is
+            reached, the user cannot move an extremity further to shrink/enlarge the selected range.</p>
+
+          <div class="alert alert-info">
+            <strong>Info</strong>: This option is <strong>deactivated by default</strong>
+          </div>
+
+
+          <div class="example">
+            <div class="sliderContainer">
+              <div id="rangeExample"></div>
+            </div>
+
+            <dl>
+              <dt>Basic slider (example above)</dt>
+              <dd>
+                <pre
+                  class="prettyprint linenums"><code class="language-js">$("#rangeExample").rangeSlider({range: {min: 10, max: 40}});</code></pre>
+              </dd>
+              <dt>Edit slider</dt>
+              <dd>
+                <pre
+                  class="prettyprint linenums"><code class="language-js">$("#rangeExample").editRangeSlider({range: {min: 10, max: 40}});</code></pre>
+              </dd>
+              <dt>Date slider</dt>
+              <dd>
+                <pre class="prettyprint linenums"><code class="language-js">$("#rangeExample").dateRangeSlider({
+  range:{
+    min: {days: 2},
+    max: {days: 7}
+  }});</code></pre>
+              </dd>
+              <dt>Minimum range only</dt>
+              <dd>
+                <pre class="prettyprint linenums"><code class="language-js">$("#rangeExample").rangeSlider({range: {min: 10}});
+// Equivalent to
+$("#rangeExample").rangeSlider({range: {min: 10, max: false}});</code></pre>
+              </dd>
+              <dt>Range deactivation</dt>
+              <dd>
+                <pre class="prettyprint linenums"><code class="language-js">$("#rangeExample").rangeSlider({range: false});
+// Equivalent to
+$("#rangeExample").rangeSlider({range: {min: false, max: false}});
+
+// Deactivate minimum range only, and preserve max range
+$("#rangeExample").rangeSlider({range: {min: false}});</code></pre>
+              </dd>
+            </dl>
+          </div>
+
+          <p>Ranges in date sliders have to be set using an object, specifying at least one property in the list below.
+          </p>
+
+          <ul>
+            <li>years</li>
+            <li>months</li>
+            <li>weeks</li>
+            <li>days</li>
+            <li>hours</li>
+            <li>minutes</li>
+            <li>seconds</li>
+          </ul>
+
+          <!--
+          Scales
+        -->
+
+          <h2 id="scalesOption">Scales</h2>
+
+          <p>The option <code>scales</code> lets you add a ruler with multiple scales to the slider background.</p>
+
+          <div class="alert alert-info">
+            <strong>Info</strong>: In order to use this option, you have to use a file suffixed by
+            <strong>-withRuler-min.js</strong>. This option is not supported with standard files.
+          </div>
+
+          <div class="example">
+            <div class="sliderContainer">
+              <div id="rulersExample"></div>
+            </div>
+
+            <dl>
+              <dt>Basic slider example</dt>
+              <dd>
+                <pre class="prettyprint linenums"><code class="language-js">$("#rulersExample").rangeSlider({
+  scales: [
+  // Primary scale
+  {
+    first: function(val){ return val; },
+    next: function(val){ return val + 10; },
+    stop: function(val){ return false; },
+    label: function(val){ return val; },
+    format: function(tickContainer, tickStart, tickEnd){ 
+      tickContainer.addClass("myCustomClass");
+    }
+  },
+  // Secondary scale
+  {
+    first: function(val){ return val; },
+    next: function(val){
+      if (val % 10 === 9){
+        return val + 2;
+      }
+
+      return val + 1;
+    },
+    stop: function(val){ return false; },
+    label: function(){ return null; }
+  }]
+});</code></pre>
+              </dd>
+            </dl>
+
+            <div class="sliderContainer">
+              <div id="dateRulersExample"></div>
+            </div>
+
+            <dl>
+              <dt>Date slider example</dt>
+              <dd>
+                <pre class="prettyprint linenums"><code class="language-js">var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
+  $("#dateRulersExample").dateRangeSlider({
+    bounds: {min: new Date(2012, 0, 1), max: new Date(2012, 11, 31, 12, 59, 59)},
+    defaultValues: {min: new Date(2012, 1, 10), max: new Date(2012, 4, 22)},
+    scales: [{
+      first: function(value){ return value; },
+      end: function(value) {return value; },
+      next: function(value){
+        var next = new Date(value);
+
+        return new Date(next.setMonth(value.getMonth() + 1));
+      },
+      label: function(value){
+        return months[value.getMonth()];
+      },
+      format: function(tickContainer, tickStart, tickEnd){
+        tickContainer.addClass("myCustomClass");
+      }
+    }]
+  });</code></pre>
+              </dd>
+            </dl>
+          </div>
+
+          <p>The option <code>scales</code> requires an <strong>array of objects</strong>. Each object represents the
+            configuration of one level.</p>
+
+          <p>Scale configuration object can contain 5 functions:</p>
+
+          <dl>
+            <dt>The function <code>first(min, max)</code> [optional]</dt>
+            <dd>Must return the ruler <strong>first value</strong>.</dd>
+            <dd>It gives you a way to make the ruler start after the slider minimum. By default, this method returns the
+              slider minimum value.</dd>
+
+            <dt>The function <code>next(value)</code></dt>
+            <dd>Must return <strong>the next value</strong>. This method is <strong>required</strong>.</dd>
+            <dd>Be sure to return a valid date object when using scales with date sliders.</dd>
+
+            <dt>The function <code>label(value, nextValue):string</code> [optional]</dt>
+            <dd>Must return the <strong>displayed text</strong>, for a given interval.</dd>
+            <dd>You can return an empty string or <code>null</code> if you don't want labels to be displayed. By
+              default, this method returns <code>value.toString()</code>.</dd>
+
+            <dt>The method <code>stop(value):boolean</code> [optional]</dt>
+            <dd>Return true to stop the scale generating ticks from a given value.</dd>
+            <dd>This method returns false by default.</dd>
+
+            <dt>The function <code>format(tickContainer, tickStartValue, tickEndValue)</code> [optional]</dt>
+            <dd>Can be used to customise the tick container DOM element. First argument is passed as a jQuery object.
+            </dd>
+          </dl>
+
+          <!--
+          Step  
+        -->
+
+          <h2 id="stepOption">Step</h2>
+
+          <p>The option <code>step</code> allows to customize values rounding, and graphically render this rounding.
+            Considering you configured a slider with a step value of 10: it'll only allow your user to choose a value
+            corresponding to <code>minBound + 10n</code>.</p>
+
+
+          <div class="alert alert-info">
+            <strong>Info</strong>: This option is <strong>deactivated by default</strong>
+          </div>
+
+
+          <div class="example">
+            <div class="sliderContainer">
+              <div id="stepExample"></div>
+            </div>
+
+            <dl>
+              <dt>Basic slider (example above)</dt>
+              <dd>
+                <pre
+                  class="prettyprint linenums"><code class="language-js">$("#stepExample").rangeSlider({step: 10});</code></pre>
+              </dd>
+              <dt>Edit slider</dt>
+              <dd>
+                <pre
+                  class="prettyprint linenums"><code class="language-js">$("#stepExample").rangeSlider({step: 10});</code></pre>
+              </dd>
+              <dt>Date slider</dt>
+              <dd>
+                <pre class="prettyprint linenums"><code class="language-js">$("#rangeExample").dateRangeSlider({
+  step:{
+    days: 2
+  }});</code></pre>
+              </dd>
+              <dt>Step deactivation</dt>
+              <dd>
+                <pre
+                  class="prettyprint linenums"><code class="language-js">$("#rangeExample").rangeSlider({step: false});</code></pre>
+              </dd>
+            </dl>
+          </div>
+
+          <p>Steps in date sliders have to be set using an object, specifying at least one property in this list below.
+          </p>
+
+          <ul>
+            <li>years</li>
+            <li>months</li>
+            <li>weeks</li>
+            <li>days</li>
+            <li>hours</li>
+            <li>minutes</li>
+            <li>seconds</li>
+          </ul>
+
+          <!--
+          Symmetric positionning
+        -->
+
+          <h2 id="symmetricPositionningOption">Symmetric positionning</h2>
+
+          <p>The option <code>symmetricPositionning</code> changes the way handles are positionned on the slider. This
+            option is usefull when customizing how the slider is displayed.</p>
+
+          <p>Use this option when you want to show handles and make them clearly select the range.</p>
+
+          <div class="alert alert-warning">
+            <strong>Warning</strong>: This option <strong>must</strong> be used with a minimum (possibly equal to 0) <a
+              href="#rangeOption">range value</a>.
+          </div>
+
+          <div class="alert alert-warning">
+            <strong>Warning</strong>: This option <strong>must not</strong> be used with a scale. Positionning in this
+            case does not corresponds to a possible scale.
+          </div>
+
+          <div class="example">
+            <div class="sliderContainer">
+              <div id="symmetricExample"></div>
+            </div>
+
+            <dl>
+              <dt>Basic slider (example above)</dt>
+              <dd>
+                <pre class="prettyprint linenums"><code class="language-js">$("#symmetricExample").rangeSlider({
+  symmetricPositionning: true,
+  range: {min: 0}  
+});</code></pre>
+              </dd>
+            </dl>
+          </div>
+
+          <!--
+          Type  
+        -->
+
+          <h2 id="typeOption">Type</h2>
+
+          <p>The option <code>type</code> allows to specify input types in edit slider. Possible values are
+            <code>text</code> (default) and <code>number</code>.</p>
+
+
+          <div class="alert alert-info">
+            <strong>Info</strong>: This option is only available on <strong>edit sliders</strong>
+          </div>
+
+
+          <div class="example">
+            <div class="sliderContainer">
+              <div id="typeExample"></div>
+            </div>
+
+            <dl>
+              <dt>Edit slider (example above)</dt>
+              <dd>
+                <pre class="prettyprint linenums"><code class="language-js">// Browser needs to support number type
+// otherwise you won't see any difference
+$("#typeExample").editRangeSlider({type: "number"});</code></pre>
+              </dd>
+            </dl>
+          </div>
+
+          <!--
+          Value labels
+        -->
+
+          <h2 id="valueLabelsOption">Value labels</h2>
+
+          <p>The option <code>valueLabels</code> lets you specify a display mode for value labels: hidden, shown, or
+            only shown when moving. Possible values are: <code>show</code>, <code>hide</code> and <code>change</code>.
+          </p>
+
+
+          <div class="alert alert-info">
+            <strong>Info</strong>: By default, labels are shown (<code>valueLabels: "show"</code>)
+          </div>
+
+
+          <div class="example">
+            <div class="sliderContainer">
+              <div id="valueLabelsExample"></div>
+            </div>
+
+            <dl>
+              <dt>Basic slider (example above)</dt>
+              <dd>
+                <pre
+                  class="prettyprint linenums"><code class="language-js">$("#valueLabelsExample").rangeSlider({valueLabels: "change"});</code></pre>
+              </dd>
+              <dt>Edit slider</dt>
+              <dd>
+                <pre
+                  class="prettyprint linenums"><code class="language-js">$("#valueLabelsExample").rangeSlider({valueLabels: "change"});</code></pre>
+              </dd>
+              <dt>Date slider</dt>
+              <dd>
+                <pre
+                  class="prettyprint linenums"><code class="language-js">$("#valueLabelsExample").dateRangeSlider({valueLabels: "change"});</code></pre>
+              </dd>
+            </dl>
+          </div>
+
+          <!--
+          Wheel mode  
+        -->
+
+          <h2 id="wheelModeOption">Wheel mode</h2>
+
+          <p>The option <code>wheelMode</code> allows to use the mouse wheel to scroll (translate) or zoom
+            (enlarge/shrink) the selected area in jQRangeSlider.</p>
+
+
+          <div class="alert alert-info">
+            <strong>Info</strong>: This option is <strong>deactivated by default</strong>
+          </div>
+
+          <div class="alert alert-warning">
+            <strong>Warning</strong>: This option requires the plugin <strong>jquery mousewheel</strong> to be loaded.
+          </div>
+
+
+          <div class="example">
+            <div class="sliderContainer">
+              <div id="wheelModeExample"></div>
+            </div>
+
+            <dl>
+              <dt>Basic slider (example above)</dt>
+              <dd>
+                <pre
+                  class="prettyprint linenums"><code class="language-js">$("#wheelModeExample").rangeSlider({wheelMode: "zoom"});</code></pre>
+              </dd>
+              <dt>Edit slider</dt>
+              <dd>
+                <pre
+                  class="prettyprint linenums"><code class="language-js">$("#wheelModeExample").rangeSlider({wheelMode: "zoom"});</code></pre>
+              </dd>
+              <dt>Date slider</dt>
+              <dd>
+                <pre
+                  class="prettyprint linenums"><code class="language-js">$("#wheelModeExample").dateRangeSlider({wheelMode: "zoom"});</code></pre>
+              </dd>
+              <dt>Wheel mode deactivation</dt>
+              <dd>
+                <pre
+                  class="prettyprint linenums"><code class="language-js">$("#wheelModeExample").rangeSlider({wheelMode: null});</code></pre>
+              </dd>
+            </dl>
+          </div>
+
+          <!--
+          Wheel speed  
+        -->
+
+          <h2 id="wheelSpeedOption">Wheel speed</h2>
+
+          <p>The option <code>wheelSpeed</code> lets you customize the speed of mouse wheel interactions. This parameter
+            requires the <code><a href="#wheelModeOption">wheelMode</a></code> to be set.</p>
+
+
+          <div class="alert alert-info">
+            <strong>Info</strong>: Default value for this option is 4. Increase this value to obtain faster
+            interactions. You can set a negative value if you want to reverse.
+          </div>
+
+          <div class="alert alert-warning">
+            <strong>Warning</strong>: This option requires the plugin <strong>jquery mousewheel</strong> to be loaded.
+          </div>
+
+          <div class="example">
+            <div class="sliderContainer">
+              <div id="wheelSpeedExample"></div>
+            </div>
+
+            <dl>
+              <dt>Basic slider (example above)</dt>
+              <dd>
+                <pre
+                  class="prettyprint linenums"><code class="language-js">$("#wheelSpeedExample").rangeSlider({wheelMode: "scroll", <strong>wheelSpeed: 30</strong>});</code></pre>
+              </dd>
+              <dt>Edit slider</dt>
+              <dd>
+                <pre
+                  class="prettyprint linenums"><code class="language-js">$("#wheelSpeedExample").rangeSlider({wheelMode: "scroll", <strong>wheelSpeed: 30</strong>});</code></pre>
+              </dd>
+              <dt>Date slider</dt>
+              <dd>
+                <pre
+                  class="prettyprint linenums"><code class="language-js">$("#wheelSpeedExample").dateRangeSlider({wheelMode: "scroll", <strong>wheelSpeed: 30</strong>});</code></pre>
+              </dd>
+            </dl>
+          </div>
+
+        </section>
+      </article>
+    </div>
+
+    <div class="row">
+      <footer class="col-md-offset-3 col-md-9">
+        <p>Thanks to <a href="https://twitter.github.com/bootstrap">twitter bootstrap</a> for its awesome CSS framework.
+        </p>
+      </footer>
+    </div>
+  </div>
+
+  <div id="donationContent" style="display:none">
+    <p>If you appreciate the slider, don't hesitate to donate to support the project. Even <strong>a small amount will
+        help</strong>.</p>
+
+    <p class="donation">
+      <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=guillaume%40ghusse%2ecom&amp;lc=US&amp;item_name=jQRangeSlider&amp;item_number=download&amp;amount=10%2e00&amp;currency_code=USD&amp;no_note=0&amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHostedGuest"
+        class="btn btn-default" onClick="_gaq.push(['_trackEvent', 'Donation', 'Donate10Gotcha', 'Donate $10', 10]);"><i
+          class="glyphicon glyphicon-thumbs-up"></i> $10</a>
+
+      <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=guillaume%40ghusse%2ecom&amp;lc=US&amp;item_name=jQRangeSlider&amp;item_number=download&amp;amount=20%2e00&amp;currency_code=USD&amp;no_note=0&amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHostedGuest"
+        class="btn btn-primary btn-lg"
+        onClick="_gaq.push(['_trackEvent', 'Donation', 'Donate20Gotcha', 'Donate $20', 20]);"><i
+          class="glyphicon glyphicon-gift"></i> $20</a>
+
+      <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=guillaume%40ghusse%2ecom&amp;lc=US&amp;item_name=jQRangeSlider&amp;item_number=download&amp;amount=50%2e00&amp;currency_code=USD&amp;no_note=0&amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHostedGuest"
+        class="btn btn-default" onClick="_gaq.push(['_trackEvent', 'Donation', 'Donate50Gotcha', 'Donate $50', 50]);"><i
+          class="glyphicon glyphicon-heart"></i> $50</a>
+    </p>
+
+    <p class="donation BTC">BTC: <input value="18HvbEBJ22HdzNdgDqWKLfHxYrVoGCiSMt"></p>
+
+    <p>Thank you!</p>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+  <script src="lib/prettify/prettify.js"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+  <script src="stable/lib/jquery.mousewheel.min.js"></script>
+
+  <script src="stable/jQRangeSliderMouseTouch.js"></script>
+  <script src="stable/jQRangeSliderDraggable.js"></script>
+  <script src="stable/jQRangeSliderHandle.js"></script>
+  <script src="stable/jQRangeSliderBar.js"></script>
+  <script src="stable/jQRangeSliderLabel.js"></script>
+  <script src="stable/jQRangeSlider.js"></script>
+
+  <script src="stable/jQDateRangeSliderHandle.js"></script>
+  <script src="stable/jQDateRangeSlider.js"></script>
+
+  <script src="stable/jQEditRangeSliderLabel.js"></script>
+  <script src="stable/jQEditRangeSlider.js"></script>
+
+  <script src="stable/jQRuler.js"></script>
+
+  <script>
+    //<!--
+    $(document).ready(function () {
+      prettyPrint();
+
+      $("#boundsExample").rangeSlider({ bounds: { min: 10, max: 90 } });
+      $("#defaultValuesExample").rangeSlider({ defaultValues: { min: 10, max: 90 } });
+      $("#rangeExample").rangeSlider({ range: { min: 10, max: 40 } });
+      $("#stepExample").rangeSlider({ step: 10 });
+      $("#wheelModeExample").rangeSlider({ wheelMode: "zoom" });
+      $("#wheelSpeedExample").rangeSlider({ wheelMode: "scroll", wheelSpeed: 30 });
+      $("#arrowsExample").rangeSlider({ arrows: false });
+      $("#valueLabelsExample").rangeSlider({ valueLabels: "change" });
+      $("#formatterExample").rangeSlider({
+        formatter: function (val) {
+          var value = Math.round(val * 5) / 5,
+            decimal = value - Math.round(val);
+
+          return decimal == 0 ? value.toString() + ".0" : value.toString();
+        }
+      });
+    });
+
+    $("#symmetricExample").rangeSlider({
+      symmetricPositionning: true,
+      range: { min: 0 }
+    });
+
+    $("#typeExample").editRangeSlider({ type: "number" });
+    $("#durationExample").rangeSlider({
+      valueLabels: "change",
+      durationIn: 1000,
+      durationOut: 1000
+    });
+
+    $("#delayExample").rangeSlider({
+      valueLabels: "change",
+      delayOut: 4000
+    });
+
+    $("#disabledExample").rangeSlider({
+      enabled: false
+    });
+
+    $("#rulersExample").rangeSlider({
+      scales: [{
+        first: function (val) { return val; },
+        next: function (val) { return val + 10 },
+        stop: function (val) { return false; },
+        label: function (val) { return val; }
+      }, {
+        first: function (val) { return val; },
+        next: function (val) {
+          if (val % 10 === 9) {
+            return val + 2;
+          }
+
+          return val + 1;
+        },
+        stop: function (val) { return false; },
+        label: function () { return null }
+      }]
+    });
+
+    var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
+    $("#dateRulersExample").dateRangeSlider({
+      bounds: { min: new Date(2012, 0, 1), max: new Date(2012, 11, 31, 12, 59, 59) },
+      defaultValues: { min: new Date(2012, 1, 10), max: new Date(2012, 4, 22) },
+      scales: [{
+        first: function (value) { return value; },
+        end: function (value) { return value; },
+        next: function (value) {
+          var next = new Date(value);
+
+          return new Date(next.setMonth(value.getMonth() + 1));
+        },
+        label: function (value) {
+          return months[value.getMonth()];
+        }
+      }]
+    });
+
+    $(".donateMenu").popover({
+      html: true,
+      placement: "bottom",
+      title: "Thank you for donating!",
+      container: "body",
+      content: function () { return $("#donationContent").html(); }
+    });
+  //-->
+  </script>
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-20560239-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function () {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+</body>
+
+</html>

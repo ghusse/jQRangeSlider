@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>jQRangeSlider - Documentation - Events</title>
+  <meta name="viewport" content="width=980" />
+  <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+  <link href="lib/prettify/prettify.css" rel="stylesheet" media="screen">
+  <link href="css/style.css" rel="stylesheet" media="screen">
+  <link href="css/documentation.css" rel="stylesheet" media="screen">
+  <link href="stable/css/iThing.css" rel="stylesheet" media="screen">
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+</head>
+
+<body data-spy="scroll" data-target="#tableOfContent" data-offset="60">
+  <nav class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">jQRangeSlider</a>
+    </div>
+
+    <div class="collapse navbar-collapse navbar-ex1-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html"><i class="glyphicon glyphicon-white glyphicon-home"></i> Home</a></li>
+        <li><a href="demo.html" onClick="_gaq.push(['_trackEvent', 'Demo', 'Menubar']);"><i
+              class="glyphicon glyphicon-white glyphicon-play"></i> Demo</a></li>
+        <li class="active">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
+              class="glyphicon glyphicon-white glyphicon-book"></i> Documentation <b class="caret"></b></a>
+
+          <ul class="dropdown-menu">
+            <li><a href="documentation.html">Quick start</a></li>
+            <li><a href="options.html">Options</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="methods.html">Methods</a></li>
+          </ul>
+        </li>
+        <li><a href="technicalDemo.html" onClick="_gaq.push(['_trackEvent', 'TechnicalDocumentation', 'Menubar']);"><i
+              class="glyphicon glyphicon-white glyphicon-fast-forward"></i> Technical demo</a></li>
+      </ul>
+      <ul class="navbar-right nav navbar-nav">
+        <li><a href="#" class="donateMenu"><i class="glyphicon glyphicon-gift"></i> Donate</a></li>
+        <li><a href="download.html" onClick="_gaq.push(['_trackEvent', 'Download', 'Menubar']);"><i
+              class="glyphicon glyphicon-white glyphicon-download-alt"></i> Download</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="row">
+      <nav id="tableOfContent" class="col-md-3">
+        <div class="navcontainer" data-spy="affix">
+
+          <ul class="nav nav-list hiddenprint">
+            <li><a href="documentation.html#quickStart">Quick start</a></li>
+            <li class="nav-header"><span class="trigger collapsed" data-toggle="collapse"
+                data-target="#optionsDetails">Options</span>
+              <ul id="optionsDetails" class="collapse out nav">
+                <li><a href="options.html#optionsUsage">Get and set options</a></li>
+                <li class="divider"></li>
+                <li><a href="options.html#arrowsOption">Arrows</a></li>
+                <li><a href="options.html#boundsOption">Bounds</a></li>
+                <li><a href="options.html#defaultValuesOption">Default values</a></li>
+                <li><a href="options.html#delayOption">Delay out</a></li>
+                <li><a href="options.html#durationOptions">Duration in/out</a></li>
+                <li><a href="options.html#enabledOption">Enabled</a></li>
+                <li><a href="options.html#formatterOption">Formatter</a></li>
+                <li><a href="options.html#rangeOption">Range</a></li>
+                <li><a href="options.html#scalesOption">Scales</a></li>
+                <li><a href="options.html#stepOption">Step</a></li>
+                <li><a href="options.html#typeOption">Type (edit slider)</a></li>
+                <li><a href="options.html#valueLabelsOption">Value labels</a></li>
+                <li><a href="options.html#wheelModeOption">Wheel mode</a></li>
+                <li><a href="options.html#wheelSpeedOption">Wheel speed</a></li>
+              </ul>
+            </li>
+            <li class="nav-header"><span class="trigger" data-toggle="collapse"
+                data-target="#eventsDetails">Events</span>
+              <ul id="eventsDetails" class="collapse in">
+                <li><a href="#bindingEvents">Binding events</a></li>
+                <li class="divider"></li>
+                <li><a href="#valuesChangingEvent">Values changing</a></li>
+                <li><a href="#valuesChangedEvent">Values changed</a></li>
+                <li><a href="#userValuesChangedEvent">User values changed</a></li>
+              </ul>
+            </li>
+            <li class="nav-header"><span class="trigger collapsed" data-toggle="collapse"
+                data-target="#methodsDetails">Methods</span>
+              <ul id="methodsDetails" class="collapse out">
+                <li><a href="methods.html#executingMethods">Executing methods</a></li>
+                <li class="divider"></li>
+                <li><a href="methods.html#boundsMethod">Bounds</a></li>
+                <li><a href="methods.html#destroyMethod">Destroy</a></li>
+                <li><a href="methods.html#enableDisableMethods">Enable / disable</a></li>
+                <li><a href="methods.html#minMaxMethods">Min / max</a></li>
+                <li><a href="methods.html#resizeMethod">Resize</a></li>
+                <li><a href="methods.html#scrollMethods">Scroll left/right</a></li>
+                <li><a href="methods.html#valuesMethod">Values</a></li>
+                <li><a href="methods.html#zoomMethods">Zoom in/out</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <article class="col-md-9">
+        <!--
+          EVENTS
+        -->
+
+        <section>
+          <div class="page-header">
+            <h1>Events</h1>
+          </div>
+
+          <h2 id="bindingEvents">Binding events</h2>
+
+          <p>You can attach event handlers to the slider using jQuery functions such as <code>bind()</code> or
+            <code>on()</code>.</p>
+
+          <pre class="prettyprint linenums"><code class="language-js">// For earlier versions if jQuery, but still supported
+$("#slider").bind("valuesChanging", function(e, data){
+  console.log("Something moved. min: " + data.values.min + " max: " + data.values.max);
+});
+
+// Preferred method
+$("#slider").on("valuesChanging", function(e, data){
+  console.log("Something moved. min: " + data.values.min + " max: " + data.values.max);
+});
+
+// Possible use, if sliders are constructed/destroyed many times
+$(document).on("valuesChanging", ".ui-rangeSlider", function(e, data){
+  console.log("Something moved. min: " + data.values.min + " max: " + data.values.max);
+});</code></pre>
+
+          <h2 id="valuesChangingEvent">Values changing</h2>
+
+          <p>Use the event <code>valuesChanging</code> if you want to intercept events <strong>while the user is moving
+              an element</strong> in the slider.</p>
+
+          <div class="alert alert-warning">
+            <strong>Warning</strong>: Use this event wisely, because it is fired very frequently. It can have impact on
+            performance. When possible, prefer the <code><a href="#valuesChangedEvent">valuesChanged</a></code> event.
+          </div>
+
+          <pre class="prettyprint linenums"><code class="language-js">$("#slider").bind("valuesChanging", function(e, data){
+  console.log("Something moved. min: " + data.values.min + " max: " + data.values.max);
+});</code></pre>
+
+
+          <h2 id="valuesChangedEvent">Values changed</h2>
+
+          <p>Use the event <code>valuesChanged</code> when you want to intercept events <strong>once values are
+              chosen</strong>. This event is only triggered once after a move.</p>
+
+          <pre class="prettyprint linenums"><code class="language-js">$("#slider").bind("valuesChanged", function(e, data){
+  console.log("Values just changed. min: " + data.values.min + " max: " + data.values.max);
+});</code></pre>
+
+          <h2 id="userValuesChangedEvent">User values changed</h2>
+
+          <p>Like the <code>valuesChanged</code> event, the <code>userValuesChanged</code> is fired after values
+            finished changing. But, unlike the previous one, <code>userValuesChanged</code> is only fired after the user
+            interacted with the slider. <strong>Not when you changed values programmatically</strong>.</p>
+
+          <pre class="prettyprint linenums"><code class="language-js">// This event will be fired
+$("#slider").bind("valuesChanged", function(e, data){
+  console.log("Will be executed");
+});
+
+// This event will not ne fired
+$("#slider").bind("userValuesChanged", function(e, data){
+  console.log("Will NOT be executed");
+});
+
+// Changing values programmatically
+$("#slider").rangeSlider("values", 10, 20);
+</code></pre>
+
+        </section>
+      </article>
+    </div>
+
+    <div class="row">
+      <footer class="col-md-offset-3 col-md-9">
+        <p>Thanks to <a href="https://twitter.github.com/bootstrap">twitter bootstrap</a> for its awesome CSS framework.
+        </p>
+      </footer>
+    </div>
+  </div>
+
+  <div id="donationContent" style="display:none">
+    <p>If you appreciate the slider, don't hesitate to donate to support the project. Even <strong>a small amount will
+        help</strong>.</p>
+
+    <p class="donation">
+      <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=guillaume%40ghusse%2ecom&amp;lc=US&amp;item_name=jQRangeSlider&amp;item_number=download&amp;amount=10%2e00&amp;currency_code=USD&amp;no_note=0&amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHostedGuest"
+        class="btn btn-default" onClick="_gaq.push(['_trackEvent', 'Donation', 'Donate10Gotcha', 'Donate $10', 10]);"><i
+          class="glyphicon glyphicon-thumbs-up"></i> $10</a>
+
+      <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=guillaume%40ghusse%2ecom&amp;lc=US&amp;item_name=jQRangeSlider&amp;item_number=download&amp;amount=20%2e00&amp;currency_code=USD&amp;no_note=0&amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHostedGuest"
+        class="btn btn-primary btn-lg"
+        onClick="_gaq.push(['_trackEvent', 'Donation', 'Donate20Gotcha', 'Donate $20', 20]);"><i
+          class="glyphicon glyphicon-gift"></i> $20</a>
+
+      <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=guillaume%40ghusse%2ecom&amp;lc=US&amp;item_name=jQRangeSlider&amp;item_number=download&amp;amount=50%2e00&amp;currency_code=USD&amp;no_note=0&amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHostedGuest"
+        class="btn btn-default" onClick="_gaq.push(['_trackEvent', 'Donation', 'Donate50Gotcha', 'Donate $50', 50]);"><i
+          class="glyphicon glyphicon-heart"></i> $50</a>
+    </p>
+
+    <p class="donation BTC">BTC: <input value="18HvbEBJ22HdzNdgDqWKLfHxYrVoGCiSMt"></p>
+
+    <p>Thank you!</p>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+  <script src="lib/prettify/prettify.js"></script>
+  <script>
+    //<!--
+    $(document).ready(function () {
+      prettyPrint();
+    });
+
+    $(".donateMenu").popover({
+      html: true,
+      placement: "bottom",
+      title: "Thank you for donating!",
+      container: "body",
+      content: function () { return $("#donationContent").html(); }
+    });
+  //-->
+  </script>
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-20560239-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function () {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+</body>
+
+</html>

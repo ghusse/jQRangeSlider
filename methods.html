@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>jQRangeSlider - Documentation - Methods</title>
+  <meta name="viewport" content="width=980" />
+  <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+  <link href="lib/prettify/prettify.css" rel="stylesheet" media="screen">
+  <link href="css/style.css" rel="stylesheet" media="screen">
+  <link href="css/documentation.css" rel="stylesheet" media="screen">
+  <link href="stable/css/iThing.css" rel="stylesheet" media="screen">
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+</head>
+
+<body data-spy="scroll" data-target="#tableOfContent" data-offset="60">
+  <nav class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">jQRangeSlider</a>
+    </div>
+
+    <div class="collapse navbar-collapse navbar-ex1-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html"><i class="glyphicon glyphicon-white glyphicon-home"></i> Home</a></li>
+        <li><a href="demo.html" onClick="_gaq.push(['_trackEvent', 'Demo', 'Menubar']);"><i
+              class="glyphicon glyphicon-white glyphicon-play"></i> Demo</a></li>
+        <li class="active">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
+              class="glyphicon glyphicon-white glyphicon-book"></i> Documentation <b class="caret"></b></a>
+
+          <ul class="dropdown-menu">
+            <li><a href="documentation.html">Quick start</a></li>
+            <li><a href="options.html">Options</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="methods.html">Methods</a></li>
+          </ul>
+        </li>
+        <li><a href="technicalDemo.html" onClick="_gaq.push(['_trackEvent', 'TechnicalDocumentation', 'Menubar']);"><i
+              class="glyphicon glyphicon-white glyphicon-fast-forward"></i> Technical demo</a></li>
+      </ul>
+      <ul class="navbar-right nav navbar-nav">
+        <li><a href="#" class="donateMenu"><i class="glyphicon glyphicon-gift"></i> Donate</a></li>
+        <li><a href="download.html" onClick="_gaq.push(['_trackEvent', 'Download', 'Menubar']);"><i
+              class="glyphicon glyphicon-white glyphicon-download-alt"></i> Download</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="row">
+      <nav id="tableOfContent" class="col-md-3">
+        <div class="navcontainer" data-spy="affix">
+
+          <ul class="nav nav-list hiddenprint">
+            <li><a href="documentation.html#quickStart">Quick start</a></li>
+            <li class="nav-header"><span class="trigger collapsed" data-toggle="collapse"
+                data-target="#optionsDetails">Options</span>
+              <ul id="optionsDetails" class="collapse out nav">
+                <li><a href="options.html#optionsUsage">Get and set options</a></li>
+                <li class="divider"></li>
+                <li><a href="options.html#arrowsOption">Arrows</a></li>
+                <li><a href="options.html#boundsOption">Bounds</a></li>
+                <li><a href="options.html#defaultValuesOption">Default values</a></li>
+                <li><a href="options.html#delayOption">Delay out</a></li>
+                <li><a href="options.html#durationOptions">Duration in/out</a></li>
+                <li><a href="options.html#enabledOption">Enabled</a></li>
+                <li><a href="options.html#formatterOption">Formatter</a></li>
+                <li><a href="options.html#rangeOption">Range</a></li>
+                <li><a href="options.html#scalesOption">Scales</a></li>
+                <li><a href="options.html#stepOption">Step</a></li>
+                <li><a href="options.html#typeOption">Type (edit slider)</a></li>
+                <li><a href="options.html#valueLabelsOption">Value labels</a></li>
+                <li><a href="options.html#wheelModeOption">Wheel mode</a></li>
+                <li><a href="options.html#wheelSpeedOption">Wheel speed</a></li>
+              </ul>
+            </li>
+            <li class="nav-header"><span class="trigger collapsed" data-toggle="collapse"
+                data-target="#eventsDetails">Events</span>
+              <ul id="eventsDetails" class="collapse out">
+                <li><a href="events.html#bindingEvents">Binding events</a></li>
+                <li class="divider"></li>
+                <li><a href="events.html#valuesChangingEvent">Values changing</a></li>
+                <li><a href="events.html#valuesChangedEvent">Values changed</a></li>
+                <li><a href="events.html#userValuesChangedEvent">User values changed</a></li>
+              </ul>
+            </li>
+            <li class="nav-header"><span class="trigger" data-toggle="collapse"
+                data-target="#methodsDetails">Methods</span>
+              <ul id="methodsDetails" class="collapse in">
+                <li><a href="#executingMethods">Executing methods</a></li>
+                <li class="divider"></li>
+                <li><a href="#boundsMethod">Bounds</a></li>
+                <li><a href="#destroyMethod">Destroy</a></li>
+                <li><a href="#enableDisableMethods">Enable / disable</a></li>
+                <li><a href="#minMaxMethods">Min / max</a></li>
+                <li><a href="#resizeMethod">Resize</a></li>
+                <li><a href="#scrollMethods">Scroll left/right</a></li>
+                <li><a href="#valuesMethod">Values</a></li>
+                <li><a href="#zoomMethods">Zoom in/out</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <article class="col-md-9">
+        <!--
+          METHODS
+        -->
+
+        <section>
+          <div class="page-header">
+            <h1>Methods</h1>
+          </div>
+
+          <h2 id="executingMethods">Executing methods</h2>
+
+          <p>Methods on sliders (as all jQuery UI widgets) have to be called in a special way. See examples below.</p>
+
+          <dl>
+            <dt>Basic slider</dt>
+            <dd>
+              <pre class="prettyprint linenums"><code class="language-js">// Use the slider method to call methods
+// First argument: method name
+// Next arguments: method arguments
+$("#slider").rangeSlider("values", 10, 20);
+</code></pre>
+            </dd>
+            <dt>Edit slider</dt>
+            <dd>
+              <pre class="prettyprint linenums"><code class="language-js">// Use the slider method to call methods
+// First argument: method name
+// Next arguments: method arguments
+$("#slider").editRangeSlider("values", 10, 20);
+</code></pre>
+            </dd>
+            <dt>Date slider</dt>
+            <dd>
+              <pre class="prettyprint linenums"><code class="language-js">// Use the slider method to call methods
+// First argument: method name
+// Next arguments: method arguments
+$("#slider").dateRangeSlider("values", new Date(2012, 0, 1), new Date(2012, 0, 31));
+</code></pre>
+            </dd>
+          </dl>
+
+          <h2 id="boundsMethod">Bounds</h2>
+
+          <p>The method <code>bounds([min, max])</code> gets or sets the bounds. You can get and change bounds with this
+            method or with the <a href="#boundsOption">bounds</a> option.</p>
+
+          <p><code>bounds()</code> accepts zero or two arguments. If both arguments are provided, then this method
+            initializes slider's bounds to given values. In both cases, it returns bounds values.</p>
+
+          <div class="alert alert-info">
+            <strong>Info</strong>: <code>bounds()</code> always returns an object containing the properties
+            <code>min</code> and <code>max</code>.
+          </div>
+
+          <dl>
+            <dt>Get values</dt>
+            <dd>
+              <pre class="prettyprint linenums"><code class="language-js">// Basic slider
+var basicSliderBounds = $("#slider").rangeSlider("bounds");
+console.log(basicSliderBounds.min + " " + basicSliderBounds.max);
+
+// Edit slider
+var editSliderBounds = $("#editSlider").editRangeSlider("bounds");
+console.log(editSliderBounds.min + " " + editSliderBounds.max);
+
+// Date slider
+var dateSliderBounds = $("#dateSlider").dateRangeSlider("bounds");
+console.log(dateSliderBounds.min.toString() + " " + dateSliderBounds.max.toString());
+</code></pre>
+            </dd>
+            <dt>Set values</dt>
+            <dd>
+              <pre class="prettyprint linenums"><code class="language-js">// Basic slider
+$("#slider").rangeSlider("bounds", 10, 20);
+
+// Edit slider
+$("#editSlider").editRangeSlider("bounds", 20, 100);
+
+// Date slider
+$("#dateSlider").dateRangeSlider("bounds", new Date(2012, 0, 1), new Date(2012, 0, 31));
+</code></pre>
+            </dd>
+          </dl>
+
+
+          <h2 id="destroyMethod">Destroy</h2>
+
+          <p>The method <code>destroy()</code> allows you to remove a slider from your page. It releases memory and
+            removes all DOM elements added by the slider constructor.</p>
+
+          <div class="example">
+            <div class="sliderContainer">
+              <div id="destroyExample"></div>
+            </div>
+            <p><a href="#" onClick="$('#destroyExample').rangeSlider('destroy');return false;" class="btn">Destroy</a>
+              <a href="#" onClick="$('#destroyExample').rangeSlider();return false;" class="btn">Re-create</a></p>
+
+            <dl>
+              <dt>Basic slider</dt>
+              <dd>
+                <pre class="prettyprint linenums"><code class="language-js">$("#slider").rangeSlider("destroy");
+  </code></pre>
+              </dd>
+              <dt>Edit slider</dt>
+              <dd>
+                <pre class="prettyprint linenums"><code class="language-js">$("#slider").editRangeSlider("destroy");
+  </code></pre>
+              </dd>
+              <dt>Date slider</dt>
+              <dd>
+                <pre class="prettyprint linenums"><code class="language-js">$("#slider").dateRangeSlider("destroy");
+  </code></pre>
+              </dd>
+            </dl>
+          </div>
+
+          <h2 id="enableDisableMethods">Enable / disable</h2>
+
+          <p>The methods <code>enable</code> and <code>disable</code> lets you enable or disable a slider. When a slider
+            is diabled, user can't modify its values.</p>
+
+          <div class="example">
+            <div class="sliderContainer">
+              <div id="disableMethodExample"></div>
+            </div>
+            <p>
+              <a href="#" onClick="$('#disableMethodExample').rangeSlider('disable');return false;"
+                class="btn">Disable</a>
+              <a href="#" onClick="$('#disableMethodExample').rangeSlider('enable');return false;"
+                class="btn">Enable</a>
+            </p>
+
+            <dl>
+              <dt>Basic slider</dt>
+              <dd>
+                <pre class="prettyprint linenums"><code class="language-js">$("#slider").rangeSlider("disable");
+$("#slider").rangeSlider("enable");</code></pre>
+              </dd>
+              <dt>Edit slider</dt>
+              <dd>
+                <pre class="prettyprint linenums"><code class="language-js">$("#slider").editRangeSlider("disable");
+$("#slider").editRangeSlider("enable");</code></pre>
+              </dd>
+              <dt>Date slider</dt>
+              <dd>
+                <pre class="prettyprint linenums"><code class="language-js">$("#slider").dateRangeSlider("disable");
+$("#slider").dateRangeSlider("enable");</code></pre>
+              </dd>
+            </dl>
+          </div>
+
+
+          <h2 id="minMaxMethods">Min / max</h2>
+
+          <p>Methods <code>min([value])</code> and <code>max([value])</code> can be used to get or set minimum/maximum
+            selected value in the slider.</p>
+
+          <p>Both methods accept one optional argument. When used, this value is set as a new minimum/maximum value for
+            the selected range. This methods always return new value for the minimum/maximum value of selected range.
+          </p>
+
+          <dl>
+            <dt>Get values</dt>
+            <dd>
+              <pre class="prettyprint linenums"><code class="language-js">// Basic slider
+var basicSliderMin = $("#slider").rangeSlider("min");
+console.log(basicSliderMin);
+
+// Edit slider
+var editSliderMin = $("#editSlider").editRangeSlider("min");
+console.log(editSliderMin);
+
+// Date slider
+var dateSliderMax = $("#dateSlider").dateRangeSlider("max");
+console.log(dateSliderMax.toString());
+</code></pre>
+            </dd>
+            <dt>Set values</dt>
+            <dd>
+              <pre class="prettyprint linenums"><code class="language-js">// Basic slider
+$("#slider").rangeSlider("min", 10);
+
+// Edit slider
+$("#editSlider").editRangeSlider("min", 20);
+
+// Date slider
+$("#dateSlider").dateRangeSlider("max", new Date(2012, 1, 1));
+</code></pre>
+            </dd>
+          </dl>
+
+          <h2 id="resizeMethod">Resize</h2>
+
+          <p>The method <code>resize()</code> can be used to update slider size after a change in parent's size. This
+            method is automatically called on window resize.</p>
+
+          <div class="alert alert-warning">
+            <strong>Warning</strong>: if you instanciate a slider in an hidden parent, <strong>you must</strong> call
+            <code>resize()</code> right after displaying the parent. Otherwise, sliders won't work.
+          </div>
+
+          <div class="example">
+            <div id="hiddenParent" class="sliderContainer" style="display:none">
+              <div id="hiddenSlider"></div>
+            </div>
+            <a class="btn btn-small" href="#"
+              onClick="$('#hiddenParent').show();$('#hiddenSlider').rangeSlider('resize'); $(this).detach(); return false;">Click
+              me to display hidden slider</a>
+
+            <pre class="prettyprint linenums afterExample"><code class="language-js">// Parent is hidden when instanciating this slider
+$("#hiddenSlider").rangeSlider();
+$("#magicButton").click(function(){
+  $('#hiddenParent').show();
+  
+  // Calling this method forces the slider to update itself
+  // and display correctly
+  $('#hiddenSlider').rangeSlider('resize');
+  
+  $(this).detach();
+  return false;
+});
+</code></pre>
+
+          </div>
+
+          <h2 id="scrollMethods">Scroll left/right</h2>
+
+          <p>Methods <code>scrollLeft(pixels)</code> and <code>scrollRight(pixels)</code> allow you to simulate click on
+            slider arrows. You can adjust speed by increasing/decreasing the amount.</p>
+
+          <div class="example">
+            <div class="sliderContainer">
+              <div id="scrollExample"></div>
+            </div>
+
+            <p>
+              <a class="btn btn-small" href="#"
+                onClick="$('#scrollExample').rangeSlider('scrollLeft', 10);return false;"><i
+                  class="icon-chevron-left"></i>Scroll left</a>
+              <a class="btn btn-small" href="#"
+                onClick="$('#scrollExample').rangeSlider('scrollRight', 10);return false;"><i
+                  class="icon-chevron-right"></i>Scroll right</a>
+            </p>
+
+            <pre class="prettyprint linenums afterExample" style="margin-top:20px;"><code class="language-js">$("#scrolledSlider").rangeSlider();
+
+$("#scrollLeft").click(function(){
+  $('#hiddenSlider').rangeSlider('scrollLeft', 10);
+  return false;
+});
+
+$("#scrollRight").click(function(){
+  $('#hiddenSlider').rangeSlider('scrollRight', 10);
+  return false;
+});
+</code></pre>
+          </div>
+
+          <h2 id="valuesMethod">Values</h2>
+
+          <p>The method <code>values([min, max])</code> can be used for getting current selected values, and setting new
+            values.</p>
+
+          <div class="alert alert-info">
+            <strong>Info</strong>: <code>values()</code> returns an object containing properties <code>min</code> and
+            <code>max</code>.
+          </div>
+
+          <dl>
+            <dt>Get values</dt>
+            <dd>
+              <pre class="prettyprint linenums"><code class="language-js">// Basic slider
+var basicValues = $("#slider").rangeSlider("values");
+console.log(basicValues.min + " " + basicValues.max);
+
+// Edit slider
+var editValues = $("#editSlider").editRangeSlider("values");
+console.log(editValues.min + " " + editValues.max);
+
+// Date slider
+var dateValues = $("#dateSlider").dateRangeSlider("values");
+console.log(dateValues.min.toString() + " " + dateValues.max.toString());
+</code></pre>
+            </dd>
+            <dt>Set values</dt>
+            <dd>
+              <pre class="prettyprint linenums"><code class="language-js">// Basic slider
+$("#slider").rangeSlider("values", 10, 20);
+
+// Edit slider
+$("#editSlider").editRangeSlider("values", 20, 100);
+
+// Date slider
+$("#dateSlider").dateRangeSlider("values", new Date(2012, 0, 1), new Date(2012, 0, 31));
+</code></pre>
+            </dd>
+          </dl>
+
+
+          <h2 id="zoomMethods">Zoom in/out</h2>
+
+          <p>Methods <code>zoomIn(speed)</code> and <code>zoomOut(speed)</code> allow you to enlarge/reduce selected
+            range in the slider.</p>
+
+          <div class="example">
+            <div class="sliderContainer">
+              <div id="zoomExample"></div>
+            </div>
+
+            <p>
+              <a class="btn btn-small" href="#" onClick="$('#zoomExample').rangeSlider('zoomIn', 10);return false;"><i
+                  class="icon-zoom-in"></i>Zoom in</a>
+              <a class="btn btn-small" href="#" onClick="$('#zoomExample').rangeSlider('zoomOut', 10);return false;"><i
+                  class="icon-zoom-out"></i>Zoom out</a>
+            </p>
+
+            <pre class="prettyprint linenums afterExample"><code class="language-js">// Basic slider
+$("#slider").rangeSlider("zoomIn", 10);
+
+// Edit slider
+$("#editSlider").editRangeSlider("zoomIn", 27);
+
+// Date slider
+$("#dateSlider").dateRangeSlider("zoomOut", 42);
+</code></pre>
+
+          </div>
+
+        </section>
+
+
+      </article>
+    </div>
+
+    <div class="row">
+      <footer class="cold-md-offset-3 col-md-9">
+        <p>Thanks to <a href="https://twitter.github.com/bootstrap">twitter bootstrap</a> for its awesome CSS framework.
+        </p>
+      </footer>
+    </div>
+  </div>
+
+  <div id="donationContent" style="display:none">
+    <p>If you appreciate the slider, don't hesitate to donate to support the project. Even <strong>a small amount will
+        help</strong>.</p>
+
+    <p class="donation">
+      <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=guillaume%40ghusse%2ecom&amp;lc=US&amp;item_name=jQRangeSlider&amp;item_number=download&amp;amount=10%2e00&amp;currency_code=USD&amp;no_note=0&amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHostedGuest"
+        class="btn btn-default" onClick="_gaq.push(['_trackEvent', 'Donation', 'Donate10Gotcha', 'Donate $10', 10]);"><i
+          class="glyphicon glyphicon-thumbs-up"></i> $10</a>
+
+      <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=guillaume%40ghusse%2ecom&amp;lc=US&amp;item_name=jQRangeSlider&amp;item_number=download&amp;amount=20%2e00&amp;currency_code=USD&amp;no_note=0&amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHostedGuest"
+        class="btn btn-primary btn-lg"
+        onClick="_gaq.push(['_trackEvent', 'Donation', 'Donate20Gotcha', 'Donate $20', 20]);"><i
+          class="glyphicon glyphicon-gift"></i> $20</a>
+
+      <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=guillaume%40ghusse%2ecom&amp;lc=US&amp;item_name=jQRangeSlider&amp;item_number=download&amp;amount=50%2e00&amp;currency_code=USD&amp;no_note=0&amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHostedGuest"
+        class="btn btn-default" onClick="_gaq.push(['_trackEvent', 'Donation', 'Donate50Gotcha', 'Donate $50', 50]);"><i
+          class="glyphicon glyphicon-heart"></i> $50</a>
+    </p>
+
+    <p class="donation BTC">BTC: <input value="18HvbEBJ22HdzNdgDqWKLfHxYrVoGCiSMt"></p>
+
+    <p>Thank you!</p>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+  <script src="lib/prettify/prettify.js"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+  <script src="stable/lib/jquery.mousewheel.min.js"></script>
+
+  <script src="stable/jQRangeSliderMouseTouch.js"></script>
+  <script src="stable/jQRangeSliderDraggable.js"></script>
+  <script src="stable/jQRangeSliderHandle.js"></script>
+  <script src="stable/jQRangeSliderBar.js"></script>
+  <script src="stable/jQRangeSliderLabel.js"></script>
+  <script src="stable/jQRangeSlider.js"></script>
+
+  <script src="stable/jQDateRangeSliderHandle.js"></script>
+  <script src="stable/jQDateRangeSlider.js"></script>
+
+  <script src="stable/jQEditRangeSliderLabel.js"></script>
+  <script src="stable/jQEditRangeSlider.js"></script>
+
+  <script src="stable/jQRuler.js"></script>
+
+  <script>
+    //<!--
+    $(document).ready(function () {
+      prettyPrint();
+
+      $("#hiddenSlider").rangeSlider();
+
+      $("#scrollExample, #zoomExample").rangeSlider();
+      $('#destroyExample').rangeSlider();
+      $("#disableMethodExample").rangeSlider();
+    });
+
+    $(".donateMenu").popover({
+      html: true,
+      placement: "bottom",
+      title: "Thank you for donating!",
+      container: "body",
+      content: function () { return $("#donationContent").html(); }
+    });
+  //-->
+  </script>
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-20560239-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function () {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+</body>
+
+</html>
