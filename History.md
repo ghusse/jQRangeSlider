@@ -1,5 +1,8 @@
 ## jQRangeSlider
-
+- 5.8.2: 2023-10-19
+  - Fixed an issue with edit labels introduced by v5.8.0: reverting label merge
+- 5.8.1: 2023-10-19
+  - Fixed #238: Loosing labels/handles with JQuery 1.13.0
 - 5.8.0: 2019-08-14
   - Fixed #233: Differentiate left and right labels and merge if identical (author: @BistroStu)
 - 5.7.2: 2016-01-18
