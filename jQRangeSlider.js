@@ -43,7 +43,8 @@
 		labels: null,
 		changing: {min:false, max:false},
 		changed: {min:false, max:false},
-		ruler: null,
+        ruler: null,
+        push: {min: 0, max: 0, center: 0, click: 0, withLeft: false},
 
 		_create: function(){
 			this._super();
@@ -242,15 +243,10 @@
 			this.container = $("<div class='ui-rangeSlider-container' />")
 				.css("position", "absolute")
 				.appendTo(this.element);
-			
-			this.innerBar = $("<div class='ui-rangeSlider-innerBar' />")
-				.css("position", "absolute")
-				.css("top", 0)
-				.css("left", 0);
-
+						
 			this._createHandles();
-			this._createBar();
-			this.container.prepend(this.innerBar);
+            this._createBar();
+            this._createInnerBar();
 			this._createArrows();
 
 			if (this.options.valueLabels !== "hide"){
@@ -292,7 +288,8 @@
 			this.bar = $("<div />")
 				.prependTo(this.container)
 				.bind("sliderDrag scroll zoom", $.proxy(this._changing, this))
-				.bind("stop", $.proxy(this._changed, this));
+                .bind("stop", $.proxy(this._changed, this))
+                .bind("mousedown touchstart", $.proxy(this._pushClick, this));
 			
 			this._bar({
 					leftHandle: this.leftHandle,
@@ -307,7 +304,19 @@
 			this.options.range = this._bar("option", "range");
 			this.options.wheelMode = this._bar("option", "wheelMode");
 			this.options.wheelSpeed = this._bar("option", "wheelSpeed");
-		},
+        },
+
+        _createInnerBar: function () {
+            this.innerBar = $("<div class='ui-rangeSlider-innerBar' />")
+                .css("position", "absolute")
+                .css("top", 0)
+                .css("left", 0);
+
+            var target = $.proxy(this._pushClick, this);
+            this.innerBar.bind("mousedown touchstart", target);
+
+            this.container.prepend(this.innerBar);
+        },
 
 		_createArrows: function(){
 			this.arrows.left = this._createArrow("left");
@@ -581,8 +590,8 @@
 
 				that._continueScrolling(action, timeout, quantity, timesBeforeSpeedingUp);
 			}, timeout);
-		},
-
+        },
+        
 		_scrollLeftClick: function(e){
 			if (!this.options.enabled) return false;
 
@@ -609,7 +618,27 @@
 			this._stopScrollHandle = null;
 			this._bar("stopScroll");
 			clearTimeout(this._scrollTimeout);
-		},
+        },
+
+        _pushClick: function (e) {
+            if (!this.options.enabled) return false;
+
+            e.preventDefault();
+
+            this.push.min = this._leftHandle("position");
+            this.push.max = this._rightHandle("position");
+            this.push.center = ((this.push.max - this.push.min) / 2) + this.push.min;
+            this.push.click = e.pageX;
+            this.push.withLeft = this.push.click <= this.push.center;
+            
+            if (this.push.withLeft) {
+                this._leftHandle("position", this.push.click);
+            } else {
+                this._rightHandle("position", this.push.click);
+            }
+
+            this._changed(false);
+        },
 
 		/*
 		 * Ruler
