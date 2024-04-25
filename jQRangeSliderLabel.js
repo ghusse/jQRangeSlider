@@ -42,9 +42,9 @@
 			this._toggleClass();
 
 			this.options.handle
-				.bind("moving.label", $.proxy(this._onMoving, this))
-				.bind("update.label", $.proxy(this._onUpdate, this))
-				.bind("switch.label", $.proxy(this._onSwitch, this));
+				.on("moving.label", $.proxy(this._onMoving, this))
+				.on("update.label", $.proxy(this._onUpdate, this))
+				.on("switch.label", $.proxy(this._onSwitch, this));
 
 			if (this.options.show !== "show"){
 				this.element.hide();
@@ -54,7 +54,7 @@
 		},
 
 		destroy: function(){
-			this.options.handle.unbind(".label");
+			this.options.handle.off(".label");
 			this.options.handle = null;
 
 			this._valueContainer = null;
@@ -245,18 +245,18 @@
 
 			this._resizeProxy = $.proxy(this.onWindowResize, this);
 
-			$(window).resize(this._resizeProxy);
+			$(window).on("resize", this._resizeProxy);
 		}
 
 		this.Destroy = function(){
 			if (this._resizeProxy){
-				$(window).unbind("resize", this._resizeProxy);
+				$(window).off("resize", this._resizeProxy);
 				this._resizeProxy = null;
 
-				this.handle1.unbind(".positionner");
+				this.handle1.off(".positionner");
 				this.handle1 = null;
 
-				this.handle2.unbind(".positionner");
+				this.handle2.off(".positionner");
 				this.handle2 = null;
 
 				this.label1 = null;
@@ -333,10 +333,10 @@
 		}
 
 		this.BindHandle = function(handle){
-			handle.bind("updating.positionner", $.proxy(this.onHandleUpdating, this));
-			handle.bind("update.positionner", $.proxy(this.onHandleUpdated, this));
-			handle.bind("moving.positionner", $.proxy(this.onHandleMoving, this));
-			handle.bind("stop.positionner", $.proxy(this.onHandleStop, this));
+			handle.on("updating.positionner", $.proxy(this.onHandleUpdating, this));
+			handle.on("update.positionner", $.proxy(this.onHandleUpdated, this));
+			handle.on("moving.positionner", $.proxy(this.onHandleMoving, this));
+			handle.on("stop.positionner", $.proxy(this.onHandleStop, this));
 		}
 
 		this.PositionLabels = function(){

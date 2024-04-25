@@ -18,15 +18,15 @@
 			this._super();
 			this._mouseDownEvent = false;
 
-			this.element.bind('touchstart.' + this.widgetName, function(event) {
+			this.element.on('touchstart.' + this.widgetName, function(event) {
 				return that._touchStart(event);
 			});
 		},
 
 		_mouseDestroy: function(){
 			$(document)
-				.unbind('touchmove.' + this.widgetName, this._touchMoveDelegate)
-				.unbind('touchend.' + this.widgetName, this._touchEndDelegate);
+				.off('touchmove.' + this.widgetName, this._touchMoveDelegate)
+				.off('touchend.' + this.widgetName, this._touchEndDelegate);
 
 				this._super();
 		},
@@ -71,8 +71,8 @@
 				}
 
 				$(document)
-				.bind('touchmove.' + this.widgetName, this._touchMoveDelegate)
-				.bind('touchend.' + this.widgetName, this._touchEndDelegate);
+				.on('touchmove.' + this.widgetName, this._touchMoveDelegate)
+				.on('touchend.' + this.widgetName, this._touchEndDelegate);
 			}
 		},
 
@@ -87,8 +87,8 @@
 			this._mouseUp(event);
 
 			$(document)
-			.unbind('touchmove.' + this.widgetName, this._touchMoveDelegate)
-			.unbind('touchend.' + this.widgetName, this._touchEndDelegate);
+			.off('touchmove.' + this.widgetName, this._touchMoveDelegate)
+			.off('touchend.' + this.widgetName, this._touchEndDelegate);
 
 		this._mouseDownEvent = false;
 

@@ -45,14 +45,14 @@
 				.addClass("ui-rangeSlider-bar");
 
 			this.options.leftHandle
-				.bind("initialize", $.proxy(this._onInitialized, this))
-				.bind("mousestart", $.proxy(this._cache, this))
-				.bind("stop", $.proxy(this._onHandleStop, this));
+				.on("initialize", $.proxy(this._onInitialized, this))
+				.on("mousestart", $.proxy(this._cache, this))
+				.on("stop", $.proxy(this._onHandleStop, this));
 
 			this.options.rightHandle
-				.bind("initialize", $.proxy(this._onInitialized, this))
-				.bind("mousestart", $.proxy(this._cache, this))
-				.bind("stop", $.proxy(this._onHandleStop, this));
+				.on("initialize", $.proxy(this._onInitialized, this))
+				.on("mousestart", $.proxy(this._cache, this))
+				.on("stop", $.proxy(this._onHandleStop, this));
 
 			this._bindHandles();
 
@@ -61,8 +61,8 @@
 		},
 
 		destroy: function(){
-			this.options.leftHandle.unbind(".bar");
-			this.options.rightHandle.unbind(".bar");
+			this.options.leftHandle.off(".bar");
+			this.options.rightHandle.off(".bar");
 			this.options = null;
 
 			this._super();
@@ -112,7 +112,7 @@
 		_setWheelModeOption: function(value){
 			if (value === null || value === false || value === "zoom" || value === "scroll"){
 				if (this.options.wheelMode !== value){
-					this.element.parent().unbind("mousewheel.bar");
+					this.element.parent().off("mousewheel.bar");
 				}
 
 				this._bindMouseWheel(value);
@@ -122,9 +122,9 @@
 
 		_bindMouseWheel: function(mode){
 			if (mode === "zoom"){
-				this.element.parent().bind("mousewheel.bar", $.proxy(this._mouseWheelZoom, this));
+				this.element.parent().on("mousewheel.bar", $.proxy(this._mouseWheelZoom, this));
 			}else if (mode === "scroll"){
-				this.element.parent().bind("mousewheel.bar", $.proxy(this._mouseWheelScroll, this));
+				this.element.parent().on("mousewheel.bar", $.proxy(this._mouseWheelScroll, this));
 			}
 		},
 
@@ -338,12 +338,12 @@
 
 		_bindHandles: function(){
 			this.options.leftHandle
-				.unbind(".bar")
-				.bind("sliderDrag.bar update.bar moving.bar", $.proxy(this._onDragLeftHandle, this));
+				.off(".bar")
+				.on("sliderDrag.bar update.bar moving.bar", $.proxy(this._onDragLeftHandle, this));
 
 			this.options.rightHandle
-				.unbind(".bar")
-				.bind("sliderDrag.bar update.bar moving.bar", $.proxy(this._onDragRightHandle, this));
+				.off(".bar")
+				.on("sliderDrag.bar update.bar moving.bar", $.proxy(this._onDragRightHandle, this));
 		},
 
 		_constraintPosition: function(left){
@@ -523,8 +523,8 @@
 					maxValue = Math.max(min, max);
 
 				this._deactivateRange();
-				this.options.leftHandle.unbind(".bar");
-				this.options.rightHandle.unbind(".bar");
+				this.options.leftHandle.off(".bar");
+				this.options.rightHandle.off(".bar");
 
 				this._values.min = this._leftHandle("value", minValue);
 				this._values.max = this._rightHandle("value", maxValue);

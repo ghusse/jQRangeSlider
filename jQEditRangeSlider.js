@@ -37,7 +37,7 @@
 				this.options[key] = this.labels.left === null ? value : this._leftLabel("option", key);
 			}
 
-			this._super(label,handle);
+			this._super(key, value);
 		},
 
 		_setLabelOption: function(key, value){
@@ -55,7 +55,7 @@
 			var result = this._super(label,handle);
 			
 			if (label === null){
-				result.bind("valueChange", $.proxy(this._onValueChange, this));
+				result.on("valueChange", $.proxy(this._onValueChange, this));
 			}
 
 			return result;
