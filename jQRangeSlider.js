@@ -77,7 +77,7 @@
 				that.resize(e);
 			};
 
-			$(window).resize(this._resizeProxy);
+			$(window).on("resize", this._resizeProxy);
 		},
 
 		_initWidth: function(){
@@ -266,8 +266,8 @@
 
 		_createHandle: function(options){
 			return $("<div />")[this._handleType()](options)
-				.bind("sliderDrag", $.proxy(this._changing, this))
-				.bind("stop", $.proxy(this._changed, this));
+				.on("sliderDrag", $.proxy(this._changing, this))
+				.on("stop", $.proxy(this._changed, this));
 		},
 
 		_createHandles: function(){
@@ -291,8 +291,8 @@
 		_createBar: function(){
 			this.bar = $("<div />")
 				.prependTo(this.container)
-				.bind("sliderDrag scroll zoom", $.proxy(this._changing, this))
-				.bind("stop", $.proxy(this._changed, this));
+				.on("sliderDrag scroll zoom", $.proxy(this._changing, this))
+				.on("stop", $.proxy(this._changed, this));
 			
 			this._bar({
 					leftHandle: this.leftHandle,
@@ -337,7 +337,7 @@
 				target = $.proxy(this._scrollLeftClick, this);
 			}
 
-			arrow.bind("mousedown touchstart", target);
+			arrow.on("mousedown touchstart", target);
 
 			return arrow;
 		},
@@ -601,11 +601,11 @@
 				that._stopScroll();
 			};
 
-			$(document).bind("mouseup touchend", this._stopScrollHandle);
+			$(document).on("mouseup touchend", this._stopScrollHandle);
 		},
 
 		_stopScroll: function(){
-			$(document).unbind("mouseup touchend", this._stopScrollHandle);
+			$(document).off("mouseup touchend", this._stopScrollHandle);
 			this._stopScrollHandle = null;
 			this._bar("stopScroll");
 			clearTimeout(this._scrollTimeout);
@@ -779,7 +779,7 @@
 			this.element.removeClass("ui-rangeSlider");
 			this.options = null;
 
-			$(window).unbind("resize", this._resizeProxy);
+			$(window).off("resize", this._resizeProxy);
 			this._resizeProxy = null;
 			this._bindResize = null;
 

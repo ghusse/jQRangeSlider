@@ -43,7 +43,7 @@
 
 			this._setInputName();
 
-			this._input.bind("keyup", $.proxy(this._onKeyUp, this));
+			this._input.on("keyup", $.proxy(this._onKeyUp, this));
 			this._input.blur($.proxy(this._onChange, this));
 
 			if (this.options.type === "number"){
