@@ -1,21 +1,22 @@
 {
   "name": "jQRangeSlider",
-  "version": "5.8.2",
+  "version": "5.8.3",
   "scripts": {
     "test": "grunt ci --verbose",
     "build": "grunt"
   },
   "devDependencies": {
+    "connect": "^3.1.0",
+    "grunt-cli": "^1.4.3",
     "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-compress": "^2.0.0",
+    "grunt-contrib-connect": "^0.8.0",
     "grunt-contrib-copy": "^0.5.0",
     "grunt-contrib-cssmin": "^0.10.0",
-    "jshint": "^2.5.2",
     "grunt-contrib-jshint": "^1.1.0",
-    "grunt-contrib-connect": "^0.8.0",
-    "connect": "^3.1.0",
+    "grunt-contrib-qunit": "^8.0.1",
     "grunt-contrib-uglify": ">= 0.4.x",
-    "grunt-contrib-compress": ">= 0.8.0",
-    "grunt-contrib-qunit": ">= 0.5.2"
+    "jshint": "^2.5.2"
   },
   "dependencies": {
     "grunt": "^0.4.5"

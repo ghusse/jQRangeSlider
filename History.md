@@ -1,4 +1,6 @@
 ## jQRangeSlider
+- 5.8.3: 2024-04-28
+  - Remove jQuery deprecated methods and fix _setOption function by HoffmannTom
 - 5.8.2: 2023-10-19
   - Fixed an issue with edit labels introduced by v5.8.0: reverting label merge
 - 5.8.1: 2023-10-19
