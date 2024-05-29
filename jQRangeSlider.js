@@ -398,7 +398,8 @@
 			setTimeout(function(){
 				that.element.trigger(eventName, {
 						label: that.element,
-						values: that.values()
+						values: that.values(),
+						lastHandle: that._lastHandle ? that._lastHandle : null
 					});
 			}, 1);
 		},
@@ -454,7 +455,28 @@
 			this._values.min = this._min(left, right);
 			this._values.max = this._max(left, right);
 
+			this._updateLastValues();
+
 			return changing;
+		},
+
+		_updateLastValues: function() {
+			var left = this._leftHandle("value"),
+				right = this._rightHandle("value");
+
+			if (this._lastValues) {
+				if (this._lastValues.min !== left && this._lastValues.max === right) {
+					this._lastHandle = 'left';
+				}
+				if (this._lastValues.min !== left && this._lastValues.max !== right) {
+					this._lastHandle = 'middle';
+				}
+				if (this._lastValues.min === left && this._lastValues.max !== right) {
+					this._lastHandle = 'right';
+				}
+			}
+			
+			this._lastValues = {min: this._values.min, max: this._values.max};
 		},
 
 		_min: function(value1, value2){
