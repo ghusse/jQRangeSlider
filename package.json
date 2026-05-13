@@ -19,6 +19,6 @@
     "jshint": "^2.5.2"
   },
   "dependencies": {
-    "grunt": "^0.4.5"
+    "grunt": "^1.6.2"
   }
 }
